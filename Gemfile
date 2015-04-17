@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.2.1'
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+gem 'pg',             '0.17.1'
 
 
 gem 'sass',         '~> 3.4.13'
@@ -11,6 +11,9 @@ gem 'sass-rails',   '~> 5.0'
 gem 'uglifier',     '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
+gem 'haml',         '~> 4.0.6'
+gem 'haml-rails',   '~> 0.9.0'
+
 
 
 # See https://github.com/rails/execjs#readme for more supported runtimes
@@ -47,6 +50,5 @@ group :test do
 end
 
 group :production do
-  gem 'pg',             '0.17.1'
   gem 'rails_12factor', '0.0.2'
 end
