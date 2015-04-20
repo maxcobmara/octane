@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+
+   <table>
+	<Row>
+		<Cell><Data ss:Type="String">unit_id</Data></Cell>
+		<Cell><Data ss:Type="String">issue_date</Data></Cell>
+		<Cell><Data ss:Type="String">d_vessel</Data></Cell>
+		<Cell><Data ss:Type="String">d_vehicle</Data></Cell>
+		<Cell><Data ss:Type="String">d_misctool</Data></Cell>
+		<Cell><Data ss:Type="String">d_boat</Data></Cell>
+		<Cell><Data ss:Type="String">p_vehicle</Data></Cell>
+		<Cell><Data ss:Type="String">p_misctool</Data></Cell>
+		<Cell><Data ss:Type="String">p_boat</Data></Cell>
+		<Cell><Data ss:Type="String">diesel_usage</Data></Cell>
+		<Cell><Data ss:Type="String">petrol_usage</Data></Cell>
+	</Row>
+	
+	<% @unit_fuels.each do |unit_fuel| %>
+		<Row>
+			<Cell><Data ss:Type="String"><%= check_kin {unit_fuel.unit.name} %></Data></Cell>
+			<Cell><Data ss:Type="String"><%= check_kin {l(unit_fuel.issue_date)} %></Data></Cell>
+			<Cell><Data ss:Type="String"><%= unit_fuel.d_vessel %></Data></Cell>
+			<Cell><Data ss:Type="String"><%= unit_fuel.d_vehicle %></Data></Cell>
+			<Cell><Data ss:Type="String"><%= unit_fuel.d_misctool %></Data></Cell>
+			<Cell><Data ss:Type="String"><%= unit_fuel.d_boat %></Data></Cell>
+			<Cell><Data ss:Type="String"><%= unit_fuel.p_vehicle %></Data></Cell>
+			<Cell><Data ss:Type="String"><%= unit_fuel.p_misctool %></Data></Cell>
+			<Cell><Data ss:Type="String"><%= unit_fuel.p_boat %></Data></Cell>
+			<Cell><Data ss:Type="String"><%= UnitFuel.diesel_usage(unit_fuel) %></Data></Cell>
+			<Cell><Data ss:Type="String"><%= UnitFuel.petrol_usage(unit_fuel)  %></Data></Cell>
+		</Row>
+		<% end %>
+		</table>
+	</Worksheet>
+</Workbook>

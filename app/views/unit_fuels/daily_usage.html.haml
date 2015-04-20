@@ -1,0 +1,53 @@
+.navbar
+  %ul.nav
+    %li= link_to(fa_icon("print", text: (t 'actions.print')), "javascript:print()")
+
+- provide(:title, 'UnitFuel')
+- model_class = UnitFuel
+.page-header
+  %h1= t 'menu.fuel_type_per_quarter', :default => model_class.model_name.human
+
+
+Annual Diesel Usage
+%table.table.table-bordered
+  %thead
+    %tr
+      %th= t 'unit_fuels.unit_id'  
+      %th= t 'unit_fuels.issue_date'
+      %th= t 'unit_fuels.d_vessel'
+      %th= t 'unit_fuels.d_vehicle'
+      %th= t 'unit_fuels.d_misctool'
+      %th= t 'unit_fuels.d_boat'
+      %th= t 'unit_fuels.diesel_usage'
+
+  %tbody
+    - @daily_annual_usage_report.each do |unit_fuel|
+      %tr
+        %td= check_kin {unit_fuel.unit.name}
+        %td= check_kin {l(unit_fuel.issue_date)}
+        %td= unit_fuel.d_vessel
+        %td= unit_fuel.d_vehicle
+        %td= unit_fuel.d_misctool
+        %td= unit_fuel.d_boat
+        %td= UnitFuel.diesel_usage(unit_fuel)
+
+Annual Petrol Usage 
+%table.table.table-bordered
+  %thead
+    %tr
+      %th= t 'unit_fuels.unit_id'  
+      %th= t 'unit_fuels.issue_date'
+      %th= t 'unit_fuels.d_vehicle'
+      %th= t 'unit_fuels.d_misctool'
+      %th= t 'unit_fuels.d_boat'
+      %th= t 'unit_fuels.petrol_usage'
+
+  %tbody
+    - @daily_annual_usage_report.each do |unit_fuel|
+      %tr
+        %td= check_kin {unit_fuel.unit.name}
+        %td= check_kin {l(unit_fuel.issue_date)}  
+        %td= unit_fuel.p_vehicle
+        %td= unit_fuel.p_misctool
+        %td= unit_fuel.p_boat
+        %td= UnitFuel.diesel_usage(unit_fuel)

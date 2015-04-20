@@ -1,0 +1,226 @@
+- provide(:title, 'UnitFuel')
+- model_class = UnitFuel
+.page-header
+  %h1= t 'unit_fuels.title', :default => model_class.model_name.human
+%p#notice= notice
+%dl.dl-horizontal
+  %dt= t 'unit_fuels.unit_id', :default => model_class.human_attribute_name(:id_no) + ":"
+  %dd= check_kin {@unit_fuel.unit.name}
+%dl.dl-horizontal
+  %dt= t 'unit_fuels.issue_date', :default => model_class.human_attribute_name(:rank_id) + ":"
+  %dd= check_kin {l(@unit_fuel.issue_date)}
+%br
+
+%ul.nav.nav-tabs
+  %li.active= link_to t('unit_fuels.diesel_usage'),  '#tab1', data: {toggle: 'tab'}
+  %li= link_to t('unit_fuels.petrol_usage'),  '#tab2', data: {toggle: 'tab'}
+  %li= link_to t('unit_fuels.other_usage'),  '#tab3', data: {toggle: 'tab'}
+  %li= link_to t('unit_fuels.external_supplied'),  '#tab4', data: {toggle: 'tab'}
+  %li= link_to t('unit_fuels.external_issued'),  '#tab5', data: {toggle: 'tab'}
+  %li= link_to t('inden_cards.title'),  '#tab6', data: {toggle: 'tab'}
+      
+#myTabContent.tab-content{:style => "padding-left:50px;"}		
+  #tab1.tab-pane.active
+    .div{:style => "padding: 15px 50px 10px 50px; "}
+      %table{:width => "75%"}
+        %thead
+          %tr
+            %th{:align => "left"}= t 'unit_fuels.usage'
+            %th= t 'unit_fuels.quantity_ltr'
+        %tbody 
+          %tr
+            %td{:align => "left"}= t 'unit_fuels.d_vessel'
+            %td{:align => "center"}
+              - if @unit_fuel.d_vessel==0
+                NIL 
+              - else
+                =@unit_fuel.d_vessel.to_i
+          %tr
+            %td{:align => "left"}= t 'unit_fuels.d_vehicle'
+            %td{:align => "center"}
+              - if @unit_fuel.d_vehicle==0
+                NIL 
+              - else
+                =@unit_fuel.d_vehicle.to_i
+          %tr
+            %td{:align => "left"}= t 'unit_fuels.d_misctool'
+            %td{:align => "center"}
+              - if @unit_fuel.d_misctool==0
+                NIL 
+              - else
+                =@unit_fuel.d_misctool.to_i
+          %tr
+            %td{:align => "left"}= t 'unit_fuels.d_boat'
+            %td{:align => "center"}
+              - if @unit_fuel.d_boat==0
+                NIL 
+              - else
+                =@unit_fuel.d_boat.to_i
+							
+  #tab2.tab-pane
+    .div{:style => "padding: 15px 50px 10px 50px; "}
+      %table{:width => "75%"}
+        %thead
+          %tr
+            %th{:align => "left"}= t 'unit_fuels.usage'
+            %th= t 'unit_fuels.quantity_ltr'
+        %tbody 
+          %tr
+            %td{:align => "left"}= t 'unit_fuels.p_vehicle'
+            %td{:align => "center"}
+              - if @unit_fuel.p_vehicle==0
+                NIL 
+              - else
+                =@unit_fuel.p_vehicle.to_i
+          %tr
+            %td{:align => "left"}= t 'unit_fuels.p_misctool'
+            %td{:align => "center"}
+              - if @unit_fuel.p_misctool==0
+                NIL 
+              - else
+                =@unit_fuel.p_misctool.to_i
+          %tr
+            %td{:align => "left"}= t 'unit_fuels.p_boat'
+            %td{:align => "center"}
+              - if @unit_fuel.p_boat==0
+                NIL 
+              - else
+                =@unit_fuel.p_boat.to_i
+
+  #tab3.tab-pane
+    .row
+      .span8
+        %font{:size => "-1"}
+          =t 'helpers.prompt.other_fuel'
+    .div{:style => "padding: 15px 50px 10px 50px; "}
+    - if @unit_fuel.add_fuels == []
+      = t 'helpers.prompt.no_items'
+    - else
+      %table{:width => "75%"}
+        %thead
+          %tr
+            %th{:align => "left"}= t 'unit_fuels.fuel_type_id'
+            %th= t 'unit_fuels.description'
+            %th= t 'unit_fuels.quantity'
+            %th= t 'unit_fuels.unit_type_id'
+            %th
+        %tbody 
+          - for unit_fuel_add in @unit_fuel.add_fuels
+            %tr
+              %td= check_kin {unit_fuel_add.fuel_type.name}
+              %td{:align => "center"}= unit_fuel_add.description
+              %td{:align => "center"}= unit_fuel_add.quantity.to_i
+              %td{:align => "center"}= check_kin {unit_fuel_add.unit_type.description}
+              %td 
+
+
+  #tab4.tab-pane
+    .row
+      .span8
+        %font{:size => "-1"}
+          /=t 'helpers.prompt.other_fuel'
+    .div{:style => "padding: 15px 50px 10px 50px; "}
+    - if @unit_fuel.external_supplieds == []
+      = t 'helpers.prompt.no_items'
+    - else
+      %table{:width => "75%"}
+        %thead
+          %tr
+            %th{:align => "left"}= t 'external_supplieds.fuel_type_id'
+            %th= t 'external_supplieds.quantity'
+            %th= t 'external_supplieds.unit_type_id'
+            %th= t 'external_supplieds.source'
+            %th
+        %tbody 
+          - for unit_external_supplied in @unit_fuel.external_supplieds
+            %tr
+              %td= check_kin {unit_external_supplied.fuel_type.name}
+              %td{:align => "center"}= unit_external_supplied.quantity.to_i
+              %td{:align => "center"}= check_kin {unit_external_supplied.unit_type.description}
+              %td{:align => "center"}= unit_external_supplied.resource.name
+              %td 
+	
+
+  #tab5.tab-pane
+    - @depot_ids=Unit.where("id IN(?)",FuelTank.pluck(:unit_id)).pluck(:id)
+    - if (!@unit_fuel.nil? || !@unit_fuel.blank?) && @unit_fuel.id && @depot_ids.include?(@unit_fuel.unit_id)
+      .row
+        .span8
+          %font{:size => "-1"}
+            /=t 'helpers.prompt.other_fuel'
+      .div{:style => "padding: 15px 50px 10px 50px; "}
+      - if @unit_fuel.external_issueds == []
+        = t 'helpers.prompt.no_items'
+      - else
+        %table{:width => "75%"}
+          %thead
+            %tr
+              %th{:align => "left"}= t 'external_issueds.fuel_type_id'
+              %th= t 'external_issueds.quantity'
+              %th= t 'external_issueds.unit_type_id'
+              %th= t 'external_issueds.source'
+              %th
+          %tbody 
+            - for unit_external_issued in @unit_fuel.external_issueds
+              %tr
+                %td= check_kin {unit_external_issued.fuel_type.name}
+                %td{:align => "center"}= unit_external_issued.quantity.to_i
+                %td{:align => "center"}= check_kin {unit_external_issued.unit_type.description}
+                %td{:align => "center"}= unit_external_issued.resource.name
+                %td
+    - else
+      .div{:style => "padding: 15px 50px 10px 50px; "}
+      %font{:color => "red"}=t 'helpers.prompt.caution_not_depot'
+
+  #tab6.tab-pane
+    .row
+      .span8
+        %font{:size => "-1"}
+          =t 'helpers.prompt.inden_card'
+    .div{:style => "padding: 15px 50px 10px 50px; "}
+    - if @unit_fuel.add_fuels == []
+      = t 'helpers.prompt.no_items'
+    - else
+      %table{:width => "75%"}
+        %thead
+          %tr
+            %th{:align => "left"}= t 'inden_cards.card_holder'
+            %th{:align => "left"}= t 'inden_cards.serial_no'
+            %th= t 'inden_usages.diesel_ltr'
+            %th= t 'inden_usages.petrol_ltr'
+            %th
+        %tbody 
+          - @begin = @unit_fuel.issue_date.at_beginning_of_month
+          - @end = @unit_fuel.issue_date.end_of_month
+		  
+          / for inden cards - own by unit
+          - for inden_card in @unit_fuel.unit.inden_cards
+            %tr
+              %td= inden_card.unit.name
+              %td= inden_card.serial_no 
+              - inden_card_usage = inden_card.inden_usages.where('issue_date >= ? AND issue_date <=?', @begin, @end) 
+              %td{:align => "center"}= inden_card_usage.sum(:diesel_ltr) 
+              %td{:align => "center"}= inden_card_usage.sum(:petrol_ltr) 
+              %td
+          / for cards - own by individual (senior officer - from current unit)
+          - for staff in @unit_fuel.unit.staffs
+            - if staff.inden_cards.nil? == false
+              %tr
+                %td= staff.staff_details
+                %td= staff.inden_cards[0].serial_no
+                - inden_card_usage = staff.inden_cards[0].inden_usages.where('issue_date >= ? AND issue_date <=?', @begin, @end) 
+                %td{:align => "center"}= inden_card_usage.sum(:diesel_ltr) 
+                %td{:align => "center"}= inden_card_usage.sum(:petrol_ltr) 
+
+    %br
+    = t 'helpers.prompt.add_edit_inden_usage'
+	
+.form-actions
+  = link_to content_tag(:i, "", :class => "fa fa-arrow-left ") + " " + t('.back', :default => t("helpers.links.back")), unit_fuels_path, :class => 'btn'
+  = link_to content_tag(:i, "", :class => "fa fa-edit") + " " + t('.edit', :default => t("helpers.links.edit")), |
+    edit_unit_fuel_path(@unit_fuel), :class => 'btn'
+  = link_to content_tag(:i, "", :class => "fa fa-trash-o icon-white") + " " + t('.destroy', :default => t("helpers.links.destroy")), |
+    unit_fuel_path(@unit_fuel),                                                                                                    |
+    :method => 'delete',                                                                                                           |
+    :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },                   |
+    :class => 'btn btn-danger'                                                                                                     |

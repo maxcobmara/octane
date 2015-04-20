@@ -1,0 +1,149 @@
+.navbar
+  %ul.nav
+    %li= link_to(fa_icon("print", text: (t 'actions.print')), "javascript:print()")
+
+- provide(:title, 'UnitFuel')
+- model_class = UnitFuel
+.page-header
+
+  %h1= t 'report.unit_fuel_graph', :default => model_class.model_name.human
+
+  //%h1= t 'menu.fuel_usage_report', :default => model_class.model_name.human
+
+
+
+  = javascript_include_tag "//www.google.com/jsapi", "chartkick"
+  = t 'report.diesel_vessel_usage'
+  = line_chart UnitFuel.group_by_month("issue_date").sum(:d_vessel)
+  = t 'report.diesel_vehicle_usage'
+  = line_chart UnitFuel.group_by_month("issue_date").sum(:d_vehicle)
+  = t 'report.diesel_misctool_usage'
+  = line_chart UnitFuel.group_by_month("issue_date").sum(:d_misctool)
+  = t 'report.diesel_boat_usage'
+  = line_chart UnitFuel.group_by_month("issue_date").sum(:d_boat)
+  = t 'report.petrol_vehicle_usage'
+  = line_chart UnitFuel.group_by_month("issue_date").sum(:p_vehicle)
+  = t 'report.petrol_misctool_usage'
+  = line_chart UnitFuel.group_by_month("issue_date").sum(:p_misctool)
+  = t 'report.petrol_boat_usage'
+  = line_chart UnitFuel.group_by_month("issue_date").sum(:p_boat)
+
+
+  = t 'report.diesel_usage_current'
+%table.table.table-bordered
+  %thead
+    %tr
+      %th= t 'unit_fuels.unit_id'  
+      %th= t 'unit_fuels.issue_date'
+      %th= t 'unit_fuels.d_vessel'
+      %th= t 'unit_fuels.d_vehicle'
+      %th= t 'unit_fuels.d_misctool'
+      %th= t 'unit_fuels.d_boat'
+      %th= t 'unit_fuels.diesel_usage'
+
+  %tbody
+    - @month_fuel_usage.each do |unit_fuel|
+      %tr
+        %td= check_kin {unit_fuel.unit.name}
+        %td= check_kin {l(unit_fuel.issue_date)}
+        %td= unit_fuel.d_vessel
+        %td= unit_fuel.d_vehicle
+        %td= unit_fuel.d_misctool
+        %td= unit_fuel.d_boat
+        %td= UnitFuel.diesel_usage(unit_fuel)
+
+    %tr
+      %td= t 'unit_fuels.Total'
+      %td= t 'unit_fuels.sum'
+      %td= UnitFuel.where('issue_date >=? AND issue_date <=?', @sdate, @edate).sum(:d_vessel)
+      %td= UnitFuel.where('issue_date >=? AND issue_date <=?', @sdate, @edate).sum(:d_vehicle)
+      %td= UnitFuel.where('issue_date >=? AND issue_date <=?', @sdate, @edate).sum(:d_misctool)
+      %td= UnitFuel.where('issue_date >=? AND issue_date <=?', @sdate, @edate).sum(:d_boat)
+      %td= UnitFuel.where('issue_date >=? AND issue_date <=?', @sdate, @edate).sum(:d_vessel) + UnitFuel.where('issue_date >=? AND issue_date <=?', @sdate, @edate).sum(:d_vehicle) + UnitFuel.where('issue_date >=? AND issue_date <=?', @sdate, @edate).sum(:d_misctool) + UnitFuel.where('issue_date >=? AND issue_date <=?', @sdate, @edate).sum(:d_boat)
+
+%br
+  = t 'report.petrol_usage_current'
+%table.table.table-bordered
+  %thead
+    %tr
+      %th= t 'unit_fuels.unit_id'  
+      %th= t 'unit_fuels.issue_date'
+      %th= t 'unit_fuels.d_vehicle'
+      %th= t 'unit_fuels.d_misctool'
+      %th= t 'unit_fuels.d_boat'
+      %th= t 'unit_fuels.petrol_usage'
+
+  %tbody
+    - @month_fuel_usage.each do |unit_fuel|
+      %tr
+        %td= check_kin {unit_fuel.unit.name}
+        %td= check_kin {l(unit_fuel.issue_date)}  
+        %td= unit_fuel.p_vehicle
+        %td= unit_fuel.p_misctool
+        %td= unit_fuel.p_boat
+        %td= UnitFuel.petrol_usage(unit_fuel)
+
+    %tr
+      %td= t 'unit_fuels.Total'
+      %td= t 'unit_fuels.sum'
+      %td= UnitFuel.where('issue_date >=? AND issue_date <=?', @sdate, @edate).sum(:p_vehicle)
+      %td= UnitFuel.where('issue_date >=? AND issue_date <=?', @sdate, @edate).sum(:p_misctool)
+      %td= UnitFuel.where('issue_date >=? AND issue_date <=?', @sdate, @edate).sum(:p_boat)
+      %td= UnitFuel.where('issue_date >=? AND issue_date <=?', @sdate, @edate).sum(:p_vehicle) + UnitFuel.where('issue_date >=? AND issue_date <=?', @sdate, @edate).sum(:p_misctool) + UnitFuel.where('issue_date >=? AND issue_date <=?', @sdate, @edate).sum(:p_boat)
+
+%br
+  = t 'report.other_usage_current'
+%table.table.table-bordered
+  %thead
+    %tr
+      %th= t 'add_fuels.unit_fuel_id'
+      %th= t 'unit_fuels.fuel_type_id'
+      %th= t 'unit_fuels.description'
+      %th= t 'unit_fuels.quantity'
+      %th= t 'unit_fuels.unit_type_id'
+
+  %tbody
+    - @month_other_fuel.each do |add_fuel|
+      %tr
+        %td= check_kin {add_fuel.unit_fuel.month_unit}
+        %td= check_kin {add_fuel.fuel_type.name}
+        %td= add_fuel.description
+        %td= add_fuel.quantity.to_i
+        %td= check_kin {add_fuel.unit_type.description}
+
+    %tr
+      %td= "-"
+      %td= "-"
+      %td= t 'unit_fuels.Total'
+      %td= AddFuel.where('created_at >=? AND created_at <=?', @sdate, @edate).sum(:quantity)
+      %td= "-"
+
+%br
+  = t 'report.month_external_supply'
+%table.table.table-bordered
+  %thead
+    %tr
+      %th= t 'add_fuels.unit_fuel_id'
+      %th= t 'external_supplieds.fuel_type_id'
+      %th= t 'external_supplieds.quantity'
+      %th= t 'external_supplieds.unit_type_id'
+      %th= t 'external_supplieds.source'
+
+  %tbody
+    - @month_external_supply.each do |external_supplied|
+      %tr
+        %td= check_kin {external_supplied.unit_fuel.month_unit}
+        %td= check_kin {external_supplied.fuel_type.name}
+        %td= external_supplied.quantity.to_i
+        %td= check_kin {external_supplied.unit_type.description}
+        %td= external_supplied.resource.name
+
+    %tr
+      %td= "-"
+      %td= t 'unit_fuels.Total'
+      %td= ExternalSupplied.where('created_at >=? AND created_at <=?', @sdate, @edate).sum(:quantity)
+      %td= "-"
+      %td= "-"
+
+
+

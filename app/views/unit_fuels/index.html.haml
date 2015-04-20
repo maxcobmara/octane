@@ -1,0 +1,62 @@
+- provide(:title, 'Unit Fuels')
+- model_class = UnitFuel
+.page-header
+  %h1= t 'unit_fuels.title', :default => model_class.model_name.human.pluralize
+  
+  
+.navbar.navbar-inverse
+  .navbar-inner
+    %ul.nav
+      %li= link_to content_tag(:li, fa_icon("truck", text: (t 'actions.new'))), new_unit_fuel_path
+    %ul.nav
+      //%li= link_to "CSV", vehicles_path(format: "csv") |
+      %li= link_to "Export Excel", unit_fuels_path(format: "xls")
+    %ul.nav.pull-right
+      %li.toga= link_to content_tag(:li, fa_icon("search", text: (t 'actions.search'))), "#", class: "toga"
+      %li= link_to(fa_icon("print", text: (t 'actions.print')), "javascript:print()")
+
+.row.searchit{style: "display:none;"}
+  .span9offset1
+    = search_form_for @search, class: "form-inline" do |f|
+      .field
+        = f.label :unit_name_cont, "Unit Contains:"
+        = f.text_field :unit_name_cont, class: "input-medium search-query"
+        = f.label :issue_date_gteq, "Issue Date From:"
+        = f.text_field :issue_date_gteq, class: "input-medium search-query", "data-behaviour" => "datepicker_std"
+        = f.label :issue_date_lteq, "Issue Date From:"
+        = f.text_field :issue_date_lteq, class: "input-medium search-query datepicker", "data-behaviour" => "datepicker_std"
+        = f.submit "Search", class: "btn btn-warning"
+      
+      
+%table.table.table-condensed.table-hover
+  %thead
+    %tr
+      %th= sort_link @search, :unit_name,     t( 'unit_fuels.unit_id')
+      %th= sort_link @search, :issue_date,    t('unit_fuels.issue_date')
+      %th= sort_link @search, :diesel_usage,  t('unit_fuels.diesel_usage')
+      %th= sort_link @search, :petrol_usage,  t('unit_fuels.petrol_usage')
+      %th 
+  %tbody
+    - total_d = 0
+    - total_p = 0
+    - @unit_fuels.each do |unit_fuel|
+      %tr
+        %td= check_kin {unit_fuel.unit.name}
+        %td= check_kin {l(unit_fuel.issue_date)}
+        %td
+          - total_d += (UnitFuel.diesel_usage(unit_fuel)).to_i
+          = UnitFuel.diesel_usage(unit_fuel)
+        %td
+          - total_p += (UnitFuel.petrol_usage(unit_fuel)).to_i
+          = UnitFuel.petrol_usage(unit_fuel)
+        = render :partial => 'action_menu', :locals => { :unit_fuel => unit_fuel }
+    %tr
+      %td
+      %th Totals
+      %th= litres(total_d)
+      %th= litres(total_p)
+      %td
+    
+      
+      
+
