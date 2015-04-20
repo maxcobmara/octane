@@ -1,5 +1,6 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "font-awesome";
 
 /* mixins, variables, etc. */
 $light-gray: #777;
@@ -55,7 +56,7 @@ p {
   line-height: 1.7em;
 }
 
-* header */
+/* header */
 
 #logo {
   float: left;

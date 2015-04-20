@@ -1,8 +1,68 @@
 %header.navbar.navbar-fixed-top.navbar-inverse
-  .container
-    = link_to "sample app", '#', id: "logo"
-    %nav
+  .container-fluid
+    / Brand and toggle get grouped for better mobile display
+    %ul.nav.navbar-nav
+      %li.dropdown.active
+        %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+          %span= fa_icon "bars"
+        %ul.dropdown-menu{:role => "menu"}
+          %li
+            %a{:href => "#"} TxPort
+          %li
+            %a{:href => "#"} Uniformity
+    .navbar-header
+      %button.navbar-toggle.collapsed{"data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", :type => "button"}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      %a.navbar-brand{:href => "#"} Octane
+    / Collect the nav links, forms, and other content for toggling
+    #bs-example-navbar-collapse-1.collapse.navbar-collapse
+      %ul.nav.navbar-nav
+        %li.active
+          %a{:href => "#"}
+            Link
+            %span.sr-only (current)
+        %li
+          %a{:href => "#"} Link
+        %li.dropdown
+          %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+            Dropdown
+            %span.caret
+          %ul.dropdown-menu{:role => "menu"}
+            %li
+              %a{:href => "#"} Action
+            %li
+              %a{:href => "#"} Another action
+            %li
+              %a{:href => "#"} Something else here
+            %li.divider
+            %li
+              %a{:href => "#"} Separated link
+            %li.divider
+            %li
+              %a{:href => "#"} One more separated link
+      %form.navbar-form.navbar-left{:role => "search"}
+        .form-group
+          %input.form-control{:placeholder => "Search", :type => "text"}
+        %button.btn.btn-default{:type => "submit"} Submit
       %ul.nav.navbar-nav.navbar-right
-        %li= link_to "Home",   '#'
-        %li= link_to "Help",   '#'
-        %li= link_to "Log in", '#'
+        %li
+          %a{:href => "#"} Link
+        %li.dropdown
+          %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+            Dropdown
+            %span.caret
+          %ul.dropdown-menu{:role => "menu"}
+            %li
+              %a{:href => "#"} Action
+            %li
+              %a{:href => "#"} Another action
+            %li
+              %a{:href => "#"} Something else here
+            %li.divider
+            %li
+              %a{:href => "#"} Separated link
+    / /.navbar-collapse
+  / /.container-fluid

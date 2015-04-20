@@ -1,7 +1,8 @@
 !!!
 %html
   %head
-    %title= full_title(yield(:title))
+    %title Octane
+    //= full_title(yield(:title))
     = stylesheet_link_tag 'application', media: 'all', |
       'data-turbolinks-track' => true                  |
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
@@ -10,7 +11,7 @@
       <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/r29/html5.min.js">
       </script>
   %body
-  = render "header.html.haml"
+    = render "layouts/header"
     .container
       = yield
-      = render "footer"
+      = render "layouts/footer"

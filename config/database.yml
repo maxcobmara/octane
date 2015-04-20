@@ -1,10 +1,10 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: rmn_development
+  database: navy_development
   host: localhost
   username: postgres
-  password: password
+  password: maximum8
   encoding: UTF8
   pool: 5
   timeout: 5000
@@ -12,10 +12,10 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: rmn_test
+  database: navy_test
   host: localhost
   username: postgres
-  password: password
+  password: maximum8
   encoding: UTF8
   pool: 5
   timeout: 5000

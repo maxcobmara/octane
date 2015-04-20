@@ -2,9 +2,12 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.2.1'
 # Use sqlite3 as the database for Active Record
-gem 'pg',             '0.17.1'
+#Operational Gems
+gem 'pg',             '~> 0.17.1'
+gem 'thin',           '~> 1.6.3'
+gem 'devise',         '~> 3.4.1'
 
-
+#Display Gems
 gem 'sass',         '~> 3.4.13'
 gem 'sass-rails',   '~> 5.0'
 gem 'bootstrap-sass','~> 3.2.0.0'
@@ -14,6 +17,9 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
 gem 'haml',         '~> 4.0.6'
 gem 'haml-rails',   '~> 0.9.0'
+gem "kaminari",     "~> 0.16.3"
+gem "bootstrap-kaminari-views", "~> 0.0.3"
+gem 'font-awesome-rails', '~> 4.3.0'
 
 
 
@@ -28,6 +34,7 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
+gem 'quiet_assets', '~> 1.1.0'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
