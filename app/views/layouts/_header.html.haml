@@ -6,10 +6,8 @@
         %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
           %span= fa_icon "bars"
         %ul.dropdown-menu{:role => "menu"}
-          %li
-            %a{:href => "#"} TxPort
-          %li
-            %a{:href => "#"} Uniformity
+          %li= link_to "TxPort", "http://#{request.host}:3101"
+          %li= link_to "Uniformity", "http://#{request.host}:3102"
     .navbar-header
       %button.navbar-toggle.collapsed{"data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", :type => "button"}
         %span.sr-only Toggle navigation
