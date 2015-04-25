@@ -19,5 +19,844 @@
 # To learn more, please read the Rails Internationalization guide
 # available at http://guides.rubyonrails.org/i18n.html.
 
+
+#language - actions, errors, dates, models, 
 en:
-  hello: "Hello world"
+  activerecord:
+    models:
+      vehicle: Vehicle
+      vehicle_fine: Summon
+      vehicle_card: "Touch N Go & Smart Tag"
+      vehicle_assignment_detail: Vehicle Details
+      staff: Staff
+    attributes:
+      vehicle:
+        reg_no: Registration No
+        chassis_no: Chassis No
+        engine_no: Engine No
+        status_id: Status
+      vehicle_fine:
+        code: Code
+        type_id: Summon Type
+        issued_at: Issued At
+        pay_before: Pay Before
+        compound: Compound
+      vehicle_card:
+        staff_id: Card Holder
+      vehicle_assignment:
+        document_code: Assignment No
+        unit_id: Receiving Unit
+        vehicle_assignment_details:
+          one: One vehicle
+          other: "%{count} vehicle"
+      vehicle_assignment_details: 
+        vehicle_id: Vehicle
+      staff:
+        id_no: Armed Force No
+        rank_id: Position
+        name: Name
+        position_id: Position
+        expertise_id: Expertise / Branch
+        gender: Gender
+        religion: Religion
+    errors:
+      template:
+        body: "There were problems with the following fields:"
+        header:
+          one: "1 errors prohibited this %{model} from being saved"
+          other: "%{count} prohibited this %{model} from being saved"
+      messages:
+          blank: "Can't Be Blank"
+          not_a_number: is not number
+          too_short: "is too short (minimum is {{count}} characters)"
+          taken: has already been taken
+          #record_invalid: is invalid
+          invalid: invalid
+
+  actions:
+    new: New
+    search: Search
+    print: Print
+    show: Show
+    edit: Edit
+    delete: Delete
+    create: Create
+    created: " was successfully created."
+    updated: " was successfully updated."
+    import_excel: Import Data From Excel
+    removed: " was successfully removed."
+  errors:
+    
+    
+  date:
+    formats:
+       default: "%d-%b-%Y"
+       short: "%d %b"
+       long: "%d %B %Y"
+       events: "%A, %e %b"
+       # Use the strftime parameters for formats.
+       # When no format has been given, it uses default.
+       # You can provide other formats here if you like!
+    day_names: [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
+    abbr_day_names: [Sun, Mon, Tue, Wed, Thu, Fri, Sat]
+    # Don't forget the nil at the beginning; there's no such thing as a 0th month
+    month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
+    abbr_month_names: [~, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
+    # Used in date_select and datime_select.
+    order: 
+       - day
+       - month
+       - year
+  time:
+    formats:
+      default:  "%l:%M %p"
+      short: "%l:%M %p"
+  datetime:
+    formats:
+      default: "%d %b %y, %l:%M %p"
+      short:   "%d %b %y, %l:%M %p"	   	
+  menu:
+    main: Menu
+    dropdown: Drop Downs  
+    fuel: Fuel
+    people: People
+    depot: Depots
+    depot_listing: Depot Listing
+    fuel_tank: Storage Tanks
+    fuel_tank_listing: Storage Tank Listing
+    inden_card: Inden Cards
+    inden_card_listing: Inden Card Listing
+    Report_list: Report List
+    summon_report: Summon Report
+    roadtax_report: Monthly Roadtax Report
+    maintenance_report: Maintenance Report
+    fuel_usage_report: Fuel Usage Report
+    maintenance_contract_report: Maintenance Contract Report
+    tank_capacity_report: Tank Capacity Report
+    Summary_report: Summary Report
+    detailed_report: Detailed Report
+    vehicle_report: Vehicle Report
+    vehicle_daily_report: Vehicle Daily Report
+    vehicle_monthly_report: Vehicle Monthly Report
+    vehicle_yearly_report: Vehicle Yearly Report
+    annual_usage_report: Annual Usage Report
+    fuel_type_per_quarter: Fuel Type Usage Daily Report
+    transport_summary: Transport Summary
+    PMP_usage: Monthly Fuel Usage Report
+
+  report:
+    unit_fuel_graph: Unit Fuel Graph
+    diesel_vessel_usage: Diesel Vessel Usage
+    diesel_vehicle_usage: Diesel Vehicle Usage
+    diesel_misctool_usage: Diesel Misctool Usage
+    diesel_boat_usage: Diesel Boat Usage
+    petrol_vehicle_usage: Petrol Vehicle Usage
+    petrol_misctool_usage: Petrol Misctool Usage
+    petrol_boat_usage: Petrol Boat Usage
+    diesel_usage_current: Diesel Usage Current Month
+    petrol_usage_current: Petrol Usage Current Month
+    other_usage_current: Other Usage Current Month
+    month_external_supply: External Supply Current Month
+  home: 
+    welcome: Welcome to Txport
+    txport: Transport Management System  
+    email: Email
+    password: Password
+    signin: Sign in
+  footer:
+    about: About
+    contact: Contact
+    news: News 
+  about:
+    title: About Us
+    about_txport: About this txport App
+  contact:
+    contact: Contact
+    contact_page: Contact Page
+  help:
+    title: Help
+    txport_help: Txport Help
+  #index, _action_menu, show  
+  vehicles:
+    title: Vehicles
+    title2: Vehicle
+    reg_no: Registration No
+    reg_no2: "Registration No (Civil)"
+    reg_on: Registration Date
+    chassis_no: Chasis No
+    engine_no: Engine No
+    manufacturer_year: Year of Manufacture
+    manufacturer_id: Manufacturer
+    model: Model
+    category_id: Category
+    acquired_on: Acquired On
+    price: "Price (RM)"
+    contract_id: Contract No
+    status_id: Status
+    new_vehicle_no: "Vehicle Replacement(Civil No)"
+    new_road_tax: New Road Tax
+    new_summons: New Summon
+    new_maintenance: New Maintenance
+    road_tax: Road Taxes
+    summons: Summons
+    maintenance: Maintenances
+    import_excel: Import Vehicle From Excel File
+    pre_conditions: "Pre-Conditions of Excel File"
+    condition_reg_no: "Registration No, Engine No & Chassis No - No duplicates allowed *"
+    condition_reg_on: "Register On (Mula Khidmat) - Only Excel data of DATE type will be saved"
+    condition_status: "Status - Must match with Vehicle Statuses (from menu - Vehicle | Drop Downs | Vehicle Statuses - Short Name)"
+    condition_acquired: "Acquired From - Must match to Acquired Type (from menu - Vehicle | Drop Downs | Acquired Types - Short Name)"
+    imported: Vehicles from Excel file are successfully imported
+    acquired_id: Acquired Type
+    condition_category_spanco: "Vehicles acquired from SPANCO must be categorised according to Vehicle Categories ie. KJU, KJK, KJT and KRJ"
+    condition_category_spanco2: " (from menu - Vehicle | Drop Downs | Vehicle Categories - Description)"
+    condition_model: "Model - should ONLY consist of Vehicle Manufacturer and Vehicle Model"
+    condition_category_others: "Vehicle acquired from other than SPANCO must match with Vehicle Categories (other than KJU, KJK, KJT and KRJ)" 
+    condition_assignment_particulars: "Vehicle Assignment Details : Assignment No dan Unit Name are compulsory."
+    condition_assignment_details_particulars: "VRO Details : 'Kuasa VRO', 'vro_start_date' & 'vro_type' are compulsory."
+    condition_release_type: "VRO Release Type (vro_type) - must be either 'Perjawatan', 'Penggantian', 'Tambahan' or 'Pinjaman'. "
+    condition_manufacturer: "Manufacturer Name - Must match with Vehicle Manufacturers (from menu - Vehicles | Drop Downs | Vehicles Manufacturers) OR Manufacturer data will not be saved."
+    invalid_excel: "Excel file data are invalid. "
+    errors_count: "Excel record(s) are invalid for import."
+    invalid_excel_data: Invalid Excel data
+    errors_counting: Total Errors
+    errors_description: Errors Description
+    failure: "* Failure to comply with condition no 1 will cause failure in import."
+    failure2: "Failure to comply with conditions no 2-7 & 11 may result inaccurate data saved into the system."
+    failure3: "Failure to comply with conditions no 8 - all Vehicle Assignment & VRO details will not be saved."
+    failure4: "Failure to comply with conditions no 9 - all VRO details will not be saved."
+    failure5: "Failure to comply with condition no 10 - VRO release type will not be saved."
+    failure6: "Failure to comply with condition no 11 - Vehicle Manufacturer data will not be saved."
+    excel_format: Excel Format
+    total: Total Vehicles
+    number: Number
+    unit: Unit
+    markas: Markas Pemerintahan
+    define_assignment: "Sila kemaskini 'Perjawatan Kenderaan'"
+  #-forms (other than FORMS LABEL) & show & controller
+  vehicle:
+    home: Rumah
+    vehicle_id: Vehicle   #use in index - other than vehicles
+    new: New Vehicle
+    chassis_no: Chassis No
+    engine_no: Engine No
+  vehicle_nos:
+    title: "Vehicle Replacement - Registration No (Civil)"
+    start_on: Start On
+    end_on: End On
+    new: "New Registration No (Civil)"
+    edit: "Edit Registration No (Civil)"
+    #civil_no: "Registration No (Civil)"
+    vehicle_army_id: Vehicle Army No
+  vehicle_armies:
+    title: "Army Vehicle Registration No (with Civil Registration No)"
+    v_army_no: Army Registration No
+    new: "New Registration No (Army)"
+    edit: "Edit Registration No (Army)"
+  maintenances:
+    title: Maintenance
+    work_order_no: Work Order No
+    contract_id: Contract No
+    repaired_by: Repaired By
+    supplied_by: Supplied By
+    maintenance_date: Maintenance Date
+    repair_date: Repair Date
+    repair_location: Repair Location
+    value_supplied: "Total Supplied"
+    value_repaired: "Total Repaired"
+    month_year: "Month - Year"	    
+    new: New Maintenance
+    edit: Edit Maintenance
+    imported: Maintenances from Excel file are successfully imported
+    invalid_excel_data: Invalid Excel data
+    import_excel: Import Maintenance From Excel File
+    condition_month_year: "Current month & year are compulsory (month - row 5,column ‘B’, year - row 6,column ‘B’)."
+    #condition_labelling: "Row 8 is compulsory - contains required labels for data import purpose."
+    condition_reg_no: "Registration No - is compulsory and must EXIST in vehicle records."
+    condition_work_order_no: "'Work Order No' - is compulsory for each maintenance record of a vehicle (column 'N')."
+    condition_maint_date: "Maintenance Date - for all rows of ONE vehicle must be entered OR default value i.e. last day of current month (as stated in item 1) will be assigned."
+    condition_repair_date: "Repair Date - must exist for first row (or any row) of each unique vehicle, or no value will be saved."
+    condition_maint_type: "Maintenance Type - must match with Maintenance Type (from menu - Vehicle | Drop Downs | Maintenance Type)"
+    condition_value_repaired: "Value Repaired (total) - must exist for first row (or any row) of each unique vehicle, or no value will be saved."
+    condition_supplied_parts: "Supplied Parts - description & price of each item must be included if there’s any. Format for description must be fulfilled."
+    condition_parts_format1: "Format 1: description + ‘ ' +qty+ ‘ ' +unit type (eg. Lens Side 2 Nos)"
+    condition_parts_format2: "Format 2: description + ‘ ‘ +qty+unit type (eg. Lens Side 2Nos)"
+    condition_value_supplied: "Value Supplied (total) - is a sum of supplied parts’ price (item 7) for each vehicle."
+    condition_repair_location: "Repair Location - must exist for first row (or any row) of each unique vehicle, or no value will be saved."
+    condition_supplier: "Supplier - must exist for first row (or any row) of each unique vehicle, or no value will be saved."
+    failure: "* Failure to comply with condition no. 1 - 3 will cause failure in import."
+    #failure2: "* Failure to comply with condition no 2, record will be ignored."
+    failure3: "* Failure to comply with conditions no 4 - 11 may result inaccurate data saved into the system."
+    failed_check_format: "Import FAILED. Condition3 no. 1 (Current Month & Year) are not complied. Use provided 'Format Excel' accordingly."
+    failed_vehicle_not_exist: "Import FAILED. Condition no. 2 (Vehicle record not exist for supplied registration no.)"
+    failed_work_order_no_exist: "Import FAILED. Condition no. 3 ('Work Order No' are not supplied)."
+    excel_format: Excel Format
+  vehicle_road_taxes:
+    title: Vehicle Road Taxes
+    title2: Vehicle Road Tax
+    start_on: Start On
+    end_on: End On
+    amount: Amount
+    new: New Vehicle Road Tax
+    edit: Edit Vehicle Road Tax
+    other_report: Other Vehicle Road Tax Report
+  vehicle_assignments:
+    title: Vehicle Assignment
+    document_code: Vehicle Assignment
+    document_code2: Assignment No
+    document_date: Assignment Date
+    authorised_by: Assignment Authoriser
+    new: New Vehicle Assignment
+    edit: Edit Vehicle Assignment	
+    vehicle_details: Vehicle Details
+    add_details: Add Details
+    user: User Name
+    assignment_dates: Assignment Dates
+    release_no: VRO No
+    release_type: Release Type
+    remark: Special Instructions
+    unit_id: Receiving Unit
+    authorising_unit: Authorising Unit
+  vehicle_fines:
+    title: Summons
+    title2: Summon
+    code: Code
+    pay_before: Pay Before
+    reason: Reason
+    compound: Compound
+    paid_on: Paid On
+    issued_at: Issued At
+    location: Location
+    receipt_no: Receipt No
+    paid_amount: Paid Amount
+    payment_status: Payment Status
+    new: New Summon
+    edit: Edit Summon
+    imported: Summons from Excel file are successfully imported
+    import_excel: Import Summons From Excel File
+    excel_format: Excel Format
+    not_exist: "Vehicle Not Exist."
+    issuer_is_required: "Summons Issuer is required."
+    condition_vehicle_code: "Registration no. and summon code are compulsory."
+    condition_vehicle_exist: All vehicles in Excel file must exist in the system, before the summons can be imported.
+    condition_summon_date: "Summon Date - Only Excel data of DATE type will be saved."
+    condition_summon_time: "Format time issued - 9999, eg. : 1205, 0010."
+    condition_issuer_exist: "Summon Issuer information is compulsory (row 3,column ‘B’) and must match Summon Types (refer menu - Vehicles | Drop Downs | Summon Types)."	
+    failure: "* Failure to comply with condition no. 1-5 will cause failure in import."
+  vehicle_cards:
+    title: "Touch N Go & Smart Tag"
+    new: "New Touch N Go & Smart Tag"
+    edit: "Edit Touch N Go & Smart Tag"
+    staff_id: Card Holder
+    unit_id: Unit
+    serial_no: Touch N Go Serial No
+    issue_date: Issued Date
+    start_date: Start Date
+    expired_date: Expired Date
+    smart_tag: Smart Tag
+    smarttag_serial: Smart Tag Serial No
+  contracts:
+    title: Contract
+    contract_no: Contract No
+    name: Contract Title
+    description: Description
+    company_id: Contractor
+    value: Value
+    starts_on: Starts On
+    ends_on: End On
+    issued_by: Issued By
+    contract_type: Contract Type
+  companies:
+    title: Contractor #suppliers #supplied by & repaired by
+    name: Name
+    address: Address
+    contact_person: Contact Person
+    phone: Phone
+    fax: Fax
+    email: Email
+    new: New Contractor
+    edit: Edit Contractor
+  contract_types:
+    title: Contract Types
+    short_name: Short Name
+    description: Description
+  unit_types:
+    title: Measurement Type
+    unit_type: Unit Type
+    shortname: Short Name
+    description: Description
+  fuel_tanks:    
+    title: Fuel Storage Tanks
+    title2: Fuel Storage Tanks
+    unit_id: "Depot / Unit"
+    locations: Tank
+    capacity: Capacity
+    new: New Storage Tank
+    edit: Edit Storage Tank
+    tank: "Tanks : "
+    maximum: Maximum
+  fuel_types:
+    title: Fuel Types
+    fuel_type_id: Fuel Type
+    shortname: Short Name
+    name: Name
+  units:
+    title: Units
+    title2: Depots
+    title3: Unit
+    shortname: Short Name
+    name: Name
+    parent_id: Parent Unit
+    new: New Unit
+    edit: Edit Unit
+    remark_create: "* Unit will become a Depot upon existance of at least one Fuel Storage Tank. To create a NEW depot, create a Fuel Storage Tank and select a Unit (not yet a depot) it located at."
+  staffs:
+    title: Staffs
+    staff_id : Staff
+    id_no: Armed Force No
+    rank_id: Rank
+    name: Name
+    position_id: Position
+    expertise_id: Expertise
+    gender: Gender
+    religion: Religion
+    new: New Staff
+    edit: Edit Staff
+    llp_expertise: "* LLP - Expertise / Branch"
+    peg_position: "* Pegawai - Position"
+  ranks:
+    title: Ranks
+    shortname: Short Name
+    name: Name
+    category: Category
+    rate: Rate
+  vehicle_manufacturers:
+    title: Vehicle Manufacturer #pengeluar kenderaan @ pembuat
+  vehicle_categories:
+    title: Vehicle Categories
+    short_name: Short Name
+    description: Description
+  vehicle_statuses:
+    title: Vehicle Statuses
+    short_name: Short Name
+    description: Description
+  vehicle_fine_types:
+    title: Summon Types
+    type_id: Summon Types
+    short_name: Short Name
+    description: Description
+  vehicle_manufacturers:
+    title: Vehicle Manufacturers
+    name: Name
+    country: Country
+  depot_fuels:
+    title: "Monthly Fuel"
+    new: "New Monthly Fuel (Depot)"
+    edit: "Edit Monthly Fuel (Depot)"
+    unit_id: Depot
+    issue_date: Issue Date
+    fuel_type: Fuel Type
+    start_bal: Initial Balance
+    received: Received
+    issued: Issue
+    tank_bal: Tank Balance
+    end_bal: New Balance
+    summary: Summary
+    and: and
+    must_match: must match
+    imported: Depot Fuels from Excel file are successfully imported
+    invalid_excel_data: Invalid Excel data
+    import_excel: Import Depot Fuel From Excel File
+    condition_month_year: "Current month & year are compulsory (month - row 4,column ‘B’, year - row 5,column ‘B’)."
+    condition_fuel_tank_qty_match: "Sheet1 : Capacity Statement - Quantity of storage tank in Excel file and system must match. Refer menu, Fuel | Depots | Depot Listing" 
+    condition_naming_rules: "Sheet1 : Capacity Statement - Storage Tank Names for petrol and diesel (in Excel file) should be ended with a 'space' and followed by a number OR just alphabet. Eg. 'Tank 1', 'Ops Tank'."
+    condition_naming_rules2: "Sheet1 : Capacity Statement - Storage Tank Names for avtur and avcat (in Excel file) should be ended with a number. Eg. 'Avcat H1', 'Avtur 2', 'Avcat3'."
+    condition_capacity: "Sheet1 : Capacity Statement - Capacity for each storage tank is compulsory."
+    condition_ftcm: "Sheet2 : Usage Statement - Fuel Type count in Excel file must MATCH Fuel Type count for Storage Tanks (in system) of a Depot."
+    condition_tank_group: "Sheet2 : Usage Statement - Depot/Unit of column B - Category/Group of Tanks without Fuel Type will be ommited from the list."
+    failed_check_format: "Import FAILED. Conditions no. 1 (Current Month & Year) are not complied. Use provided 'Excel Format' accordingly."
+    failure: "* Failure to comply with condition no. 1-7 will cause failure in import."
+    failed: "Import FAILED. "
+    stc: "Storage Tank COUNT did not matched."
+    tn: "Storage Tank NAMES did not matched."
+    cap: "Storage Tank CAPACITY is blank"
+    ftcm: "Fuel Type COUNT did not matched."
+    excel_format: Format Excel
+  fuel_issueds:
+    title: Fuel Issued
+    title2: Issued
+    title3: "Issueds/Usages"
+    add_details: Add Details
+    depot_fuel_id: "Depot - Month Year"
+    fuel_type_id: Fuel Type
+    unit_type_id: Unit Type
+    quantity: Quantity
+    new: New Fuel Issued
+    edit: Edit Fuel Issued
+    new_issued: New Fuel Issued
+  fuel_supplieds:
+    title: Fuel Supplied
+    title2: Supplied
+    title3: "Supplieds/Received"
+    add_details: Add Details
+    depot_fuel_id: "Depot - Month Year"
+    fuel_type_id: Fuel Type
+    unit_type_id: Unit Type
+    quantity: Quantity
+    new: New Fuel Supplied
+    edit: Edit Fuel Supplied
+    new_supplied: New Fuel Supplied
+  fuel_balances:
+    title: Storage Tank Balance
+    title2: Storage Tank Balance
+    add_details: Add Details
+    new: New Storage Tank Balance
+    edit: Edit Storage Tank Balance
+    depot_fuel_id: "Depot - Month Year"
+    fuel_tank_id: Storage Tank
+    current: Current Balance
+    unit_type_id: Unit Type
+    new_balance: New Tank Balance
+  unit_fuels:
+    title: Unit Fuels
+    title2: Unit Fuel Usage
+    unit_id: Unit
+    issue_date: Issue Date
+    petrol_usage: Petrol Usage
+    diesel_usage: Diesel Usage
+    other_usage: Other Fuel Type
+    external_issued: Issued To
+    external_supplied: Supplied By
+    new: New Unit Fuel
+    edit: Edit Unit Fuel
+    quantity_ltr: Quantity in Litre
+    usage: Usage
+    d_vessel: Vessel
+    d_vehicle: Vehicle
+    d_misctool: Misc Tool
+    d_boat: Boat
+    p_vehicle: Vehicle
+    p_misctool: Misc Tool
+    p_boat: Boat
+    fuel_type_id: Fuel Type
+    description: Description
+    quantity: Quantity
+    unit_type_id: Unit Type
+    tab_applicable: "(TAB) only applicable for" 
+    link_available: "link is available upon creation of 'Unit Fuel' for a "
+    in: "(In 'New / Edit Unit Fuel' page : For UNIT *, select a depot and click 'Submit'. Click 'Edit', select 'Issued To' and add details accordingly)"
+  add_fuels:
+    title: Other Fuel - Unit
+    title2: Other Fuel Usage - Unit
+    new: New Other Fuel - Unit 
+    edit: Edit Other Fuel - Unit
+    unit_fuel_id: "Unit - Month Year"
+    fuel_type_id: Fuel Type
+    description: Description
+    quantity: Quantity
+    unit_type_id: Unit Type
+    new_addfuel: New Other Fuel Type
+    add_details: Add Details
+  external_issueds:
+    title: External Issueds
+    new: New External Issued
+    edit: Edit External Issued
+    unit_fuel_id: "Unit - Month Year"
+    fuel_type_id: Fuel Type
+    unit_type_id: Unit Type
+    quantity: Quantity
+    source: Issued To
+    new_externalissued: New External Issued
+    add_details: Add Details
+  external_supplieds:
+    title: External Supplieds
+    new: New External Supplied
+    edit: Edit External Supplied
+    unit_fuel_id: "Unit - Month Year"
+    fuel_type_id: Fuel Type
+    unit_type_id: Unit Type
+    quantity: Quantity
+    source: Supplied By
+    new_externalsupplied: New External Supplied
+    add_details: Add Details
+  inden_cards:
+    title: Inden Cards
+    title2: Inden Card
+    new: New Inden Card
+    edit: Edit Inden Card
+    ru_staff: Staff?
+    staff_id: Staff
+    unit_id: Unit
+    card_holder: Card Holder
+    parent_unit: Unit
+    serial_no: Serial No
+    daily_limit: Daily Limit
+    monthly_limit: Monthly Limit
+    issue_date: Issue Date
+    start_date: Start Date
+    end_date: End Date
+    staff_id: Staff
+    unit_id: Unit
+  inden_usages:
+    title: Inden Card Usages
+    title2: Inden Card Usage
+    new: New Inden Card Usage
+    edit: Edit Inden Card Usage
+    inden_card_id: Inden Card
+    inden_card_serial: "Inden Card Serial No"
+    petrol_ltr: "Petrol (litre)"
+    petrol_price: "Petrol (RM)"
+    diesel_ltr: "Diesel (litre)"
+    diesel_price: "Diesel (RM)"
+    issue_date: Issue Date
+    issue_date2: Month-Year
+    issued_monthly: "* Usage & Petronas Quantity to be issued monthly"
+    add_details: Add Details
+    usage_details: Card Usage Details
+    usage_details2: "Card Usage Details & Petronas Quantity"	
+    petronas_p_ltr: "Petrol (litre)"
+    petronal_p_price: "Petrol (RM)"
+    petronas_d_ltr: "Diesel (litre)"
+    petronas_d_price: "Diesel (RM)"
+    petronas_qty: Petronas Quantity
+    usage: Usage
+  acquired_types:
+    title: Acquired Types (Vehicle)
+    title2: Acquired Types
+    short_name: Short Name
+    description: Description
+  maintenance_types:
+    title: Maintenance Type
+    type_name: Type
+    description: Description
+  maintenance_details:
+    title: Maintenance Details
+    title_parts: "Maintenance Details & Parts"
+    maintenance_type_id: Maintenance Type
+    line_item: Repairs / Parts Description
+    line_item_price: "Price (RM)"
+    quantity: Quantity
+    unit_type: Unit Type
+  #localization for forms label in activemodel (to use in haml)  --> refer helpers --> label
+  #http://stackoverflow.com/questions/4736396/how-do-you-localize-the-field-names-in-activemodel-error-messages    (solution #3)     
+  helpers:
+    links:
+      new: New
+      back: Back
+      cancel: Cancel
+      submit: Submit
+      destroy: Destroy
+      edit: Edit
+      back_to_vehicles: Vehicle List
+      back_to_depots: Depot List
+      back_to_units: Unit List
+    label:
+      vehicle:
+        reg_no: Registration No
+        reg_on: Registration Date
+        manufacturer_year: Year of Manufacture
+        manufacturer_id: Manufacturer
+        model: Model
+        category: Category
+        acquired_on: Acquired On
+        price: "Price (RM)"
+        contract_id: Contract No
+        status: Status
+        new: New Vehicle
+        chassis_no: Chasis No
+        engine_no: Engine No 
+      vehicle_no:
+        start_on: Start On
+        end_on: End On
+        #civil_no: "Registration No (Civil)"
+        vehicle_army_id: Vehicle Army No
+      vehicle_army:
+        v_army_no: Registration No (Army)
+      maintenance:
+        work_order_no: Work Order No
+        contract_id: Contract No
+        repaired_by: Repaired By
+        supplied_by: Supplied By
+        maintenance_date: Maintenance Date
+        repair_date: Repair Date
+        repair_location: Repair Location
+        value_supplied: "Total Supplied (RM)"
+        value_repaired: "Total Repaired (RM)"
+      vehicle_road_tax:
+        from: From
+        to: to
+        amount: Amount
+      vehicle_assignment:
+        assigned_on: Assigned On
+        assignment_end: Assignment End
+        document_code: Assignment No
+        document_date: Assignment Date
+        authorised_by: Assignment Authoriser
+        unit_id: Receiving Unit
+        authorising_unit: Authorising Unit
+      vehicle_assignment_detail:
+        release_no: VRO No
+        remark: Special Instructions
+      vehicle_fine:
+        code: Code
+        type_id: Summon Type
+        pay_before: Pay Before
+        reason: Reason
+        compound: Compound
+        paid_on: Paid On 
+        issued_at: Issued At
+        location: Location
+        receipt_no: Receipt No
+        paid_amount: Paid Amount
+      vehicle_card:
+        vehicle_id: Vehicle
+        staff_id: Card Holder
+        unit_id: Unit
+        serial_no: Touch N Go Serial No
+        issue_date: Issued Date
+        start_date: Start Date
+        expired_date: Expired Date
+        smart_tag: Smart Tag
+        smarttag_serial: Smart Tag Serial No
+      contract:
+        contract_no: Contract No
+        name: Contract Title
+        description: Description
+        company_id: Contractor
+        value: Value
+        starts_on: Starts On
+        issued_by: Issued By
+        contract_type: Contract Type
+        contract_dates: Contract Dates
+        to: to
+      company:
+        name: Name
+        address: Address
+        contact_person: Contact Person
+        phone: Phone
+        fax: Fax
+        email: Email  
+      fuel_tank: 
+        unit_id: "Depot / Unit"
+        locations: Tank
+        capacity: Capacity
+      staff:
+        id_no: Armed Force No
+        rank_id: Rank
+        name: Name
+      unit:
+        shortname: Short Name
+        name: Name
+        parent_id: Parent Unit
+      depot_fuel:
+        unit_id: Depot
+        issue_date: Issue Date
+      fuel_issued:
+        depot_fuel_id: "Depot - Month Year"
+        fuel_type_id: Fuel Type
+        quantity: Quantity
+        unit_type_id: Unit Type
+      fuel_supplied:
+        depot_fuel_id: "Depot - Month Year"
+        fuel_type_id: Fuel Type
+        quantity: Quantity
+        unit_type_id: Unit Type
+      fuel_balance:
+        depot_fuel_id: "Depot - Month Year"
+        fuel_tank_id: Storage Tank
+        current: Fuel Current Balance
+        unit_type_id: Unit Type
+      unit_fuel:
+        unit_id: "UNIT *"
+        issue_date: Issue Date
+        d_vessel: Vessel
+        d_vehicle: Vehicle
+        d_misctool: Misc Tools
+        d_boat: Boat
+        p_vehicle: Vehicle
+        p_misctool: Misc Tools
+        p_boat: Boat
+        sum: Sum Usage
+        Total: Total
+      add_fuel:
+        unit_fuel_id: "Unit - Month Year"
+        fuel_type_id: Fuel Type
+        description: Description
+        quantity: Quantity
+        unit_type_id: Unit Type
+      external_issued:
+        unit_fuel_id: "Unit - Month Year"
+        fuel_type_id: Fuel Type
+        unit_type_id: Unit Type
+        quantity: Quantity
+        source: Issued To
+      external_supplied:
+        unit_fuel_id: "Unit - Month Year"
+        fuel_type_id: Fuel Type
+        unit_type_id: Unit Type
+        quantity: Quantity
+        source: Supplied By
+      inden_card:
+        title: Inden Card
+        ru_staff: Staff?
+        card_holder: Card Holder
+        parent_unit: Unit
+        serial_no: Serial No
+        daily_limit: Daily Limit
+        monthly_limit: Monthly Limit
+        issue_date: Issue Date
+        start_date: Start Date
+        end_date: End Date
+        staff_id: Staff
+        unit_id: Unit
+      inden_usage:
+        inden_card_id: Inden Card
+        inden_card_serial: "Inden Card Serial No"
+        petrol_ltr: "Petrol (litre)"
+        petrol_price: "Petrol (RM)"
+        diesel_ltr: "Diesel (litre)"
+        diesel_price: "Diesel (RM)"
+        issue_date: Issue Date
+        petronas_p_ltr: "Petrol (litre)"
+        petronal_p_price: "Petrol (RM)"
+        petronas_d_ltr: "Diesel (litre)"
+        petronas_d_price: "Diesel (RM)"
+    prompt:
+      select_manufacturer: Select Manufacturer
+      select_category: Select Category
+      select_contract: Select Contract
+      select_status: Select Status 
+      select_repaired_by: Select Repaired By
+      select_supplied_by: Select Supplied By
+      select_rank: Select Rank
+      select_depot: "Select Depot / Unit"
+      select_unit_type: Select Unit Type
+      select_fuel_type: Select Fuel Type
+      select_vehicle: Select Vehicle 
+      select_staff: Select Staff
+      select_summon_type: Select Summon Type
+      select_unit: Select Unit
+      select_company: Select Contractor
+      select_issuer: Select Issuer
+      select_authoriser: Select Authoriser
+      sequence: Sequence
+      sequence_text: "Sequence format : 01 for 1, 11 for 11"
+      select_depot_fuel: Select Depot | Month Year
+      select_fuel_tank: Select Depot | Fuel Tank
+      supplied: "* Total supplieds (receive) per month according to the fuel type"
+      issued: "* Total issueds (usage) per month according to the fuel type"
+      balance: "* Current balance of fuel at the end of the month for each tank"
+      summary: "* Stock balance of fuel at the end of the month for each fuel type"
+      other_fuel: "* For fuel of type other than Diesel and Petrol"
+      select_source1: Select Recepient
+      select_source2: Select Supplier
+      caution_not_depot: Please note this part only applicable to Depot
+      select_inden_card: Select Inden Card
+      inden_card: Inden Card Usage in a Month
+      add_edit_inden_usage: "To Add / Edit Monthly Inden Card Usage Record, Please Proceed to Menu : Fuel | Inden Cards"
+      no_items: No Items
+      select_rank_category: Select Rank Category
+      select_rank_rate: Select Rate Group (for Kit)
+      select_maintenance_type: Select Maintenance Type
+      select_release_type: Select Release Type 
+      select_army_car: "Select Vehicle Registration No (Army) for Replacement"

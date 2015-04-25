@@ -62,5 +62,30 @@
             %li.divider
             %li
               %a{:href => "#"} Separated link
+
+        - if user_signed_in?
+          %li= link_to content_tag(:i,nil, class: 'fa fa-sign-out'), destroy_user_session_path, method: :delete
+        -else
+          %li= link_to "Login", "#", "data-toggle" => "modal",  "data-target" => "#loginModal"
     / /.navbar-collapse
   / /.container-fluid
+#loginModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "loginModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog.modal-sm
+    .modal-content
+      = form_for(resource, :as => resource_name, :url => session_path(resource_name), :role => 'form') do |f|
+        .modal-header
+          %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+            %span{"aria-hidden" => "true"} &times;
+          %h4#myModalLabel.modal-title Login
+        .modal-body
+          .form-group
+            //= f.label 'Email address', class: 'control-label'
+            = f.text_field :email, class: 'form-control', placeholder: (t 'home.email')
+
+          .form-group
+            //= f.label 'Password', class: 'control-label'
+            = f.password_field :password, class: 'form-control', :placeholder => (t 'home.password')
+
+          .modal-footer
+            %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close
+            = f.submit (t 'home.signin'), :type => "submit", class: 'btn btn-primary'

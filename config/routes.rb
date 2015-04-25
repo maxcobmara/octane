@@ -14,8 +14,8 @@ Rails.application.routes.draw do
 
   resources :units
 
-  #devise_for :users
-  #resources :users
+  devise_for :users
+  resources :users
 
   root to:  'static_pages#home'
   match '/help',    to: 'static_pages#help',    via: 'get'
