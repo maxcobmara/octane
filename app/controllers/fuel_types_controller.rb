@@ -58,11 +58,11 @@ class FuelTypesController < ApplicationController
   # DELETE /fuel_types/1
   # DELETE /fuel_types/1.json
   def destroy
-	@fuel_type = FuelType.find(params[:id])
+    @fuel_type = FuelType.find(params[:id])
     @fuel_type.destroy
     respond_to do |format|
       format.html { redirect_to fuel_types_url }
-	  format.js
+	    format.js
       format.json { head :no_content }
     end
   end
