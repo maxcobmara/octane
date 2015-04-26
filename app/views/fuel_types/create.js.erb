@@ -1,0 +1,4 @@
+$('#fuel_type_form').remove();
+$('#fuel_type_list tr:last').after('<%= j render("list") %>');
+location.reload(false);
+

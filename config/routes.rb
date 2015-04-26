@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       get 'daily_usage'
     end
   end
+  resources :fuel_types
 
   resources :units
 

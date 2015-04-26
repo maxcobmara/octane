@@ -18,15 +18,9 @@
     / Collect the nav links, forms, and other content for toggling
     #bs-example-navbar-collapse-1.collapse.navbar-collapse
       %ul.nav.navbar-nav
-        %li.active
-          %a{:href => "#"}
-            Link
-            %span.sr-only (current)
-        %li
-          %a{:href => "#"} Link
         %li.dropdown
           %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
-            Dropdown
+            Reports
             %span.caret
           %ul.dropdown-menu{:role => "menu"}
             %li
@@ -41,11 +35,24 @@
             %li.divider
             %li
               %a{:href => "#"} One more separated link
-      - if user_signed_in?
-        %form.navbar-form.navbar-left{:role => "search"}
-          .form-group
-            %input.form-control{:placeholder => "Search", :type => "text"}
-          %button.btn.btn-default{:type => "submit"} Submit
+        - if user_signed_in?
+          %li.dropdown
+            %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+              Manage
+              %span.caret
+            %ul.dropdown-menu{:role => "menu"}
+              %li= link_to "Fuel Types", fuel_types_path
+              %li= link_to "Units", '#', class: 'bogus'
+              %li= link_to "Units", '#', class: 'bogus'
+              %li.divider
+              %li= link_to "Units", '#', class: 'bogus'
+              %li.divider
+              %li= link_to "Units", '#', class: 'bogus'
+
+          %form.navbar-form.navbar-left{:role => "search"}
+            .form-group
+              %input.form-control{:placeholder => "Search", :type => "text"}
+            %button.btn.btn-default{:type => "submit"} Submit
       %ul.nav.navbar-nav.navbar-right
         - if user_signed_in?
           %li
