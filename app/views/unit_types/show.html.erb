@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Short name:</strong>
+  <%= @unit_type.short_name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @vunit_type.description %>
+</p>
+
+<%= link_to 'Edit', edit_unit_type_path(@unit_type) %> |
+<%= link_to 'Back', unit_types_path %>

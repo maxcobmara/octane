@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   end
   resources :fuel_types
 
+  resources :unit_types
   resources :units
 
   devise_for :users

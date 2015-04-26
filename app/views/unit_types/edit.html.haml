@@ -1,0 +1,14 @@
+
+%h1 Editing unit type
+
+
+= form_for @unit_type do |f|
+  %div#unit_type_errors{:style => "display:none;"}
+    = render 'shared/error_messages', object: f.object
+  
+  %td= f.text_field :short_name
+  %td= f.text_field :description
+  %td= f.submit
+= link_to 'Show', @unit_type
+|
+\#{link_to 'Back', unit_types_path}

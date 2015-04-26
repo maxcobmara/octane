@@ -1,0 +1,32 @@
+- provide(:title, 'Unit')
+- model_class = Unit
+.page-header
+
+- if @depot == 1 || @depot == '1'
+  %h1= t 'units.title2', :default => model_class.model_name.human.pluralize
+- else
+  %h1= t 'units.title', :default => model_class.model_name.human.pluralize
+
+.navbar.navbar-inverse
+  .navbar-inner
+    - unless @depot == 1 || @depot == '1'
+      %ul.nav
+        %li= link_to content_tag(:li, fa_icon("truck", text: (t 'actions.new'))), new_unit_path
+    %ul.nav.pull-right
+      %li.toga= link_to content_tag(:li, fa_icon("search", text: (t 'actions.search'))), "#", class: "toga"
+      %li= link_to content_tag(:li, fa_icon("print", text: (t 'actions.print'))), "#", class: 'bogus'
+
+.row.searchit{style: "display:none;"}
+  = search_form_for @search, class: "form-inline" do |f|
+    .field
+      = f.label :name_cont, "Unit Name Contains:"
+      = f.text_field :name_cont, class: "input-medium search-query"
+      = f.submit "Search", class: "btn btn-warning"
+
+.span8offset4.tree
+  = nested_groups(@units.arrange(:order => :combo_code))
+  - nested_groups(@units.arrange(:order => :ancestry))
+
+  %BR
+    - if @depot == 1 || @depot == '1'
+      = t 'units.remark_create'

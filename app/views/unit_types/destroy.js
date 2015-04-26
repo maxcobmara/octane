@@ -1,0 +1,1 @@
+$('#tr_<%= @unit_type.id =%>').remove();
