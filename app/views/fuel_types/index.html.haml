@@ -9,7 +9,7 @@
     .btn-group-vertical{"aria-label" => "sidebar", :role => "group"}
       .btn.btn-default= link_to content_tag(:i, fa_icon("asterisk", text: (t 'actions.new'))), new_fuel_type_path, id: "add_new_type", remote: true
 
-  .col-md-10{style: "border-left: 1px #CCC solid"}
+  .col-md-10.index_main
     %table.table.table-condensed.table-hover#fuel_type_list{:style => "width:60%;"}
       %thead
         %tr
