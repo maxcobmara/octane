@@ -2,7 +2,7 @@
   .container-fluid
     / Brand and toggle get grouped for better mobile display
     %ul.nav.navbar-nav
-      %li.dropdown.active
+      %li.dropdown
         %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
           %span= fa_icon "bars"
         %ul.dropdown-menu{:role => "menu"}
@@ -41,31 +41,32 @@
             %li.divider
             %li
               %a{:href => "#"} One more separated link
-      %form.navbar-form.navbar-left{:role => "search"}
-        .form-group
-          %input.form-control{:placeholder => "Search", :type => "text"}
-        %button.btn.btn-default{:type => "submit"} Submit
+      - if user_signed_in?
+        %form.navbar-form.navbar-left{:role => "search"}
+          .form-group
+            %input.form-control{:placeholder => "Search", :type => "text"}
+          %button.btn.btn-default{:type => "submit"} Submit
       %ul.nav.navbar-nav.navbar-right
-        %li
-          %a{:href => "#"} Link
-        %li.dropdown
-          %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
-            Dropdown
-            %span.caret
-          %ul.dropdown-menu{:role => "menu"}
-            %li
-              %a{:href => "#"} Action
-            %li
-              %a{:href => "#"} Another action
-            %li
-              %a{:href => "#"} Something else here
-            %li.divider
-            %li
-              %a{:href => "#"} Separated link
-
         - if user_signed_in?
+          %li
+            %a{:href => "#"} Link
+          %li.dropdown
+            %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+              Dropdown
+              %span.caret
+            %ul.dropdown-menu{:role => "menu"}
+              %li
+                %a{:href => "#"} Action
+              %li
+                %a{:href => "#"} Another action
+              %li
+                %a{:href => "#"} Something else here
+              %li.divider
+              %li
+                %a{:href => "#"} Separated link
+
           %li= link_to content_tag(:i,nil, class: 'fa fa-sign-out'), destroy_user_session_path, method: :delete
-        -else
+        - else
           %li= link_to "Login", "#", "data-toggle" => "modal",  "data-target" => "#loginModal"
     / /.navbar-collapse
   / /.container-fluid
