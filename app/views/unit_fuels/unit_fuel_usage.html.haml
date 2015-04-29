@@ -33,7 +33,7 @@
 %table.table.table-bordered
   %thead
     %tr
-      %th= t 'unit_fuels.unit_id'  
+      %th= t 'unit_fuels.unit_id'
       %th= t 'unit_fuels.issue_date'
       %th= t 'unit_fuels.d_vessel'
       %th= t 'unit_fuels.d_vehicle'
@@ -66,7 +66,7 @@
 %table.table.table-bordered
   %thead
     %tr
-      %th= t 'unit_fuels.unit_id'  
+      %th= t 'unit_fuels.unit_id'
       %th= t 'unit_fuels.issue_date'
       %th= t 'unit_fuels.d_vehicle'
       %th= t 'unit_fuels.d_misctool'
@@ -77,7 +77,7 @@
     - @month_fuel_usage.each do |unit_fuel|
       %tr
         %td= check_kin {unit_fuel.unit.name}
-        %td= check_kin {l(unit_fuel.issue_date)}  
+        %td= check_kin {l(unit_fuel.issue_date)}
         %td= unit_fuel.p_vehicle
         %td= unit_fuel.p_misctool
         %td= unit_fuel.p_boat
@@ -144,6 +144,3 @@
       %td= ExternalSupplied.where('created_at >=? AND created_at <=?', @sdate, @edate).sum(:quantity)
       %td= "-"
       %td= "-"
-
-
-

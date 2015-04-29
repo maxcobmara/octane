@@ -11,8 +11,12 @@ Rails.application.routes.draw do
       get 'daily_usage'
     end
   end
+  resources :fuel_tanks do
+    collection do
+      get 'tank_capacity'
+    end
+  end
   resources :fuel_types
-
   resources :unit_types
   resources :units
 

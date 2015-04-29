@@ -1,0 +1,50 @@
+.navbar
+  %ul.nav
+    %li= link_to(fa_icon("print", text: (t 'actions.print')), "javascript:print()")
+
+- model_class = FuelTank
+.page-header
+  %h1= t 'menu.tank_capacity_report', :default => model_class.model_name.human.pluralize
+
+
+%h2= t 'report.tank_capacity'
+%table.table.table-bordered
+  %thead
+    %tr
+      %th= t 'fuel_tanks.unit_id'
+      %th= t 'fuel_tanks.locations'
+      %th= t 'fuel_tanks.capacity'
+      %th= t 'fuel_types.fuel_type_id'
+      %th= t 'fuel_tanks.maximum'
+
+
+%table.table.table-bordered
+  - @fuel_tanks.group_by(&:unit).each do |unit, fuel_tanks|
+    %thead
+      %tr
+        %th= unit.name
+        %td{colspan: "4", style: "font-size:0.8em; padding-top:25px;"}
+          Petrol :
+          = check_kin {number_with_precision(((fuel_tanks.select {|p| p.fuel_type_id == 1 rescue false }).map(&:capacity).inject(:+)).to_f, :precision => 0)}
+          litres
+          &nbsp; | &nbsp
+          Diesel :
+          = check_kin {number_with_precision(((fuel_tanks.select {|p| p.fuel_type_id == 2 rescue false }).map(&:capacity).inject(:+)).to_f, :precision => 0)}
+          litres
+          &nbsp; | &nbsp
+          AVTUR :
+          = check_kin {number_with_precision(((fuel_tanks.select {|p| p.fuel_type_id == 5 rescue false }).map(&:capacity).inject(:+)).to_f, :precision => 0)}
+          litres
+      %tr
+        //%th=t 'fuel_tanks.unit_id'
+        %th=t 'fuel_tanks.locations'
+        %th=t 'fuel_types.fuel_type_id'
+        %th.centre{colspan: "2"}=t 'fuel_tanks.capacity'
+        %th
+    - for fuel_tank in fuel_tanks
+      %tbody
+        %tr
+          %td{style: "padding-left:20px;"}= fuel_tank.locations
+          %td= fuel_tank.fuel_type.try(:shortname)
+          %td.right= number_with_precision(fuel_tank.capacity, :precision => 0)
+          %td= fuel_tank.unittype.try(:description)

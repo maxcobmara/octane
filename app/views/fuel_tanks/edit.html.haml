@@ -1,0 +1,5 @@
+- provide(:title, 'Edit Fuel tank')
+- model_class = FuelTank
+.page-header
+  %h1= t 'fuel_tanks.edit', :default => [:'helpers.titles.new', 'Edit %{model}'], :model => model_class.model_name.human
+= render :partial => 'form'
