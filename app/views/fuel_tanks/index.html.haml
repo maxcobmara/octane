@@ -2,15 +2,15 @@
 - model_class = FuelTank
 .page-header
   %h1= t 'fuel_tanks.title2', :default => model_class.model_name.human.pluralize
-  
-  
+
+
 .navbar.navbar-inverse
   .navbar-inner
     %ul.nav
       %li= link_to content_tag(:li, fa_icon("truck", text: (t 'actions.new'))), new_fuel_tank_path
     %ul.nav.pull-right
       %li.toga= link_to content_tag(:li, fa_icon("search", text: (t 'actions.search'))), "#", class: "toga"
-      %li= link_to_function(fa_icon("print", text: (t 'actions.print')), "javascript:print()")
+      %li= link_to(fa_icon("print", text: (t 'actions.print')), "javascript:print()")
 
 .row.searchit{style: "display:none;"}
   .span9offset1
@@ -19,8 +19,8 @@
         = f.label :unit_id_cont, "Unit/Depot Contains:"
         = f.text_field :unit_name_cont, class: "input-medium search-query"
         = f.submit "Search", class: "btn btn-warning"
-      
-      
+
+
 %table.table.table-condensed.table-hover
   - @fuel_tanks.group_by(&:unit).each do |unit, fuel_tanks|
     %thead
@@ -39,10 +39,10 @@
           = check_kin {number_with_precision(((fuel_tanks.select {|p| p.fuel_type_id == 5 rescue false }).map(&:capacity).inject(:+)).to_f, :precision => 0)}
           litres
       %tr
-        //%th=t 'fuel_tanks.unit_id' 
+        //%th=t 'fuel_tanks.unit_id'
         %th=t 'fuel_tanks.locations'
         %th=t 'fuel_types.fuel_type_id'
-        %th.centre{colspan: "2"}=t 'fuel_tanks.capacity' 
+        %th.centre{colspan: "2"}=t 'fuel_tanks.capacity'
         %th
     - for fuel_tank in fuel_tanks
       %tbody
@@ -52,5 +52,3 @@
           %td.right= number_with_precision(fuel_tank.capacity, :precision => 0)
           %td= fuel_tank.unittype.try(:description)
           = render :partial => 'action_menu', :locals => { :fuel_tank => fuel_tank }
-      
-      
