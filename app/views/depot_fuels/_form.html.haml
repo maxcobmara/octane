@@ -1,0 +1,59 @@
+.container{:style => "padding-left: 60px;"}
+  = form_for @depot_fuel, :html => { :class => 'form-horizontal' }  do |f|
+    = render 'shared/error_messages', object: f.object
+          
+    .control-group
+      = f.label :unit_id, :class => 'control-label'
+      .controls= f.collection_select :unit_id, Unit.where("id IN(?)",FuelTank.pluck(:unit_id)), :id, :name, :include_blank => t('helpers.prompt.select_depot'), :html_options => {:class => 'selectpicker'}
+    
+    .control-group
+      = f.label :issue_date, :class => 'control-label'
+      .controls= f.text_field :issue_date, :class => 'text_field', :type => :text, 'data-behaviour' => 'datepicker_before'
+
+    %br
+ 
+    %ul.nav.nav-tabs
+      %li.active= link_to t('fuel_supplieds.title2'),        '#tab1', data: {toggle: 'tab'}
+      %li= link_to t('fuel_issueds.title2'),  '#tab2', data: {toggle: 'tab'}
+      %li= link_to t('fuel_balances.title2'),  '#tab3', data: {toggle: 'tab'}
+ 
+    #myTabContent.tab-content	
+      #tab1.tab-pane.active
+        .row
+          .span8
+            %font{:size => "-1"}
+              =t 'helpers.prompt.supplied'
+        .form-group
+          .col-lg-offset-2.col-lg-10
+            = f.fields_for :fuel_supplieds do |builder|
+              = render 'fuel_supplied_fields', f: builder
+            = link_to_add_fields (t 'fuel_supplieds.add_details'), f, :fuel_supplieds
+      
+      #tab2.tab-pane
+        .row
+          .span8
+            %font{:size => "-1"}
+              =t 'helpers.prompt.issued'
+        .form-group
+          .col-lg-offset-2.col-lg-10
+            = f.fields_for :fuel_issueds do |builder|
+              = render 'fuel_issued_fields', f: builder
+            = link_to_add_fields (t 'fuel_issueds.add_details'), f, :fuel_issueds
+
+
+      #tab3.tab-pane
+        .row
+          .span8
+            %font{:size => "-1"}
+              =t 'helpers.prompt.balance'
+        .form-group
+          .col-lg-offset-2.col-lg-10
+            = f.fields_for :fuel_balances do |builder|
+              = render 'fuel_balance_fields', f: builder
+            = link_to_add_fields (t 'fuel_balances.add_details'), f, :fuel_balances
+				
+    .form-actions
+      = f.submit (t 'helpers.links.submit'), :class => 'btn btn-primary'
+      = link_to t('.cancel', :default => t("helpers.links.cancel")), |
+        depot_fuels_path, :class => 'btn'     
+

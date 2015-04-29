@@ -1,0 +1,37 @@
+- provide(:title, 'Depot Fuels')
+- model_class = DepotFuel
+.page-header
+  %h1= t 'depot_fuels.title', :default => model_class.model_name.human.pluralize
+
+
+.navbar.navbar-inverse
+  .navbar-inner
+    %ul.nav
+      %li= link_to content_tag(:li, fa_icon("truck", text: (t 'actions.new'))), new_depot_fuel_path
+    %ul.nav
+      //%li= link_to content_tag(:li, fa_icon("truck", text: (t 'actions.import_excel'))), import_excel_depot_fuel_path
+    %ul.nav.pull-right
+      %li.toga= link_to content_tag(:li, fa_icon("search", text: (t 'actions.search'))), "#", class: "toga"
+      %li= link_to(fa_icon("print", text: (t 'actions.print')), "javascript:print()")
+
+.row.searchit{style: "display:none;"}
+  .span9offset1
+    = search_form_for @search, class: "form-inline" do |f|
+      .field
+        = f.label :depot_name_cont, "Depot Name Contains"
+        = f.text_field :depot_name_cont, class: "input-medium search-query"
+        = f.submit "Search", class: "btn btn-warning"
+
+
+%table.table.table-condensed.table-hover
+  %thead
+    %tr
+      %th= sort_link @search, :unit_id, t('depot_fuels.unit_id')
+      %th= sort_link @search, :issue_date, t('depot_fuels.issue_date')
+      %th
+  %tbody
+    - @depot_fuels.each do |depot_fuel|
+      %tr
+        %td= check_kin {depot_fuel.depot.unit_details}
+        %td= check_kin {l(depot_fuel.issue_date)}
+        = render :partial => 'action_menu', :locals => { :depot_fuel => depot_fuel }

@@ -1,0 +1,43 @@
+.navbar
+  %ul.nav
+    %li= link_to_function(fa_icon("print", text: (t 'actions.print')), "javascript:print()")
+
+- provide(:title, 'Depot Fuels')
+- model_class = DepotFuel
+.page-header
+  %h1= t 'PMP_usage.title', :default => model_class.model_name.human.pluralize
+
+
+%table.table.table-bordered
+  %thead
+    %tr
+      %th= t 'depot_fuels.unit_id'
+      %th= t 'depot_fuels.issue_date'
+      %th= t 'fuel_supplieds.fuel_type_id'
+      %th= t 'depot_fuels.received' 
+      %th= t 'depot_fuels.issued' 
+      %th= t 'fuel_balances.current' 
+
+  %tbody
+    - @month_usage.each do |unit_fuel|
+      %tr
+        %td= check_kin {depot_fuel.depot.unit_details}
+        %td= check_kin {l(depot_fuel.issue_date)}
+        %td= check_kin {depot_fuel_supplied.fuel_type.name}
+        %td= check_kin {depot_fuel_supplied.quantity}
+        %td= check_kin {depot_fuel_issued.quantity}
+        %td= check_kin {depot_fuel_balance.current}
+
+
+             
+
+
+
+
+
+
+
+
+
+
+

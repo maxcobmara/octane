@@ -16,9 +16,21 @@ Rails.application.routes.draw do
       get 'tank_capacity'
     end
   end
+
+  resources :fuel_balances
   resources :fuel_types
   resources :unit_types
   resources :units
+  resources :fuel_supplieds
+
+  resources :fuel_issueds
+
+  resources :depot_fuels do
+    collection do
+      get 'PMP_monthly_usage'
+      post :import
+    end
+  end
 
   devise_for :users
   resources :users
