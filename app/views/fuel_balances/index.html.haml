@@ -1,0 +1,51 @@
+- provide(:title, 'Fuel Balances')
+- model_class = FuelBalance
+.page-header
+  %h1= t 'fuel_balances.title', :default => model_class.model_name.human.pluralize
+  
+  
+.navbar.navbar-inverse
+  .navbar-inner
+    %ul.nav
+      /%li= link_to content_tag(:li, fa_icon("truck", text: (t 'actions.new'))), new_fuel_balance_path
+    %ul.nav.pull-right
+      %li.toga= link_to content_tag(:li, fa_icon("search", text: (t 'actions.search'))), "#", class: "toga"
+      %li= link_to_function(fa_icon("print", text: (t 'actions.print')), "javascript:print()")
+
+.row.searchit{style: "display:none;"}
+  .span9offset1
+    = search_form_for @search, class: "form-inline" do |f|
+      .field
+        = f.label :depot_fuel_depot_name_cont, "Depot Name Contains:"
+        = f.text_field :depot_fuel_depot_name_cont, class: "input-medium search-query"
+        = f.label :depot_fuel_issue_date_gteq, "Issued On From:"
+        = f.text_field :depot_fuel_issue_date_gteq, class: "input-medium search-query", "data-behaviour" => "datepicker_std"
+        = f.label :depot_fuel_issue_date_lteq, "To:"
+        = f.text_field :depot_fuel_issue_date_lteq, class: "input-medium search-query datepicker", "data-behaviour" => "datepicker_std"
+        = f.label :fuel_tank_locations_cont, "Storage Tank Name Contains:"
+        = f.text_field :fuel_tank_locations_cont, class: "input-medium search-query"
+        = f.submit "Search", class: "btn btn-warning"
+      
+      
+%table.table.table-condensed.table-hover
+  %thead
+    %tr
+      %th= t 'fuel_balances.depot_fuel_id'
+      %th= t 'fuel_balances.fuel_tank_id'
+      %th= t 'fuel_balances.current'
+      %th= t 'fuel_balances.unit_type_id'
+      %th
+  %tbody
+    - @fuel_balances.each do |fuel_balance|
+      %tr
+        %td= check_kin {fuel_balance.depot_fuel.month_depot}
+        %td= check_kin {fuel_balance.fuel_tank.locations}
+        %td= fuel_balance.current.to_i
+        %td= check_kin {fuel_balance.unit_type.description}
+        %td
+        = render :partial => 'action_menu', :locals => { :fuel_balance => fuel_balance }
+      
+      
+
+
+
