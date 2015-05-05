@@ -6,7 +6,11 @@
 .page-header
   %h1= t 'menu.tank_capacity_report', :default => model_class.model_name.human.pluralize
 
+.row
+  - diesel = FuelTank.where(fuel_type_id: 1)
+  = column_chart diesel.group(:unit).sum(:capacity)
 
+.row
 %h2= t 'report.tank_capacity'
 %table.table.table-bordered
   %thead
@@ -22,7 +26,9 @@
   - @fuel_tanks.group_by(&:unit).each do |unit, fuel_tanks|
     %thead
       %tr
-        %th= unit.name
+        %th
+          = unit.name
+          = unit.id
         %td{colspan: "4", style: "font-size:0.8em; padding-top:25px;"}
           Petrol :
           = check_kin {number_with_precision(((fuel_tanks.select {|p| p.fuel_type_id == 1 rescue false }).map(&:capacity).inject(:+)).to_f, :precision => 0)}
