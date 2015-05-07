@@ -7,9 +7,12 @@
   %h1= t 'menu.tank_capacity_report', :default => model_class.model_name.human.pluralize
 
 .row
-  - diesel = FuelTank.where(fuel_type_id: 1)
-  = column_chart diesel.group(:unit).sum(:capacity)
-
+  .col-md-7
+    = bar_chart @diesels.each.map{|row| [row.name, row.capacity] }
+  .col-md-5
+    = pie_chart @diesels.each.map{|row| [row.name, row.capacity] }
+  //=  column_chart diesel.eac.each.map{|row| [row.name, row.amount] }h.map{|row| [((Unit.where(id: row.unit_id).first.name) rescue "Unlisted"), row.capacity] unless row.capacity ==0 }
+  //= column_chart diesel.group(:unit_id).sum(:capacity)
 .row
 %h2= t 'report.tank_capacity'
 %table.table.table-bordered
@@ -53,4 +56,4 @@
           %td{style: "padding-left:20px;"}= fuel_tank.locations
           %td= fuel_tank.fuel_type.try(:shortname)
           %td.right= number_with_precision(fuel_tank.capacity, :precision => 0)
-          %td= fuel_tank.unittype.try(:description)
+          %td= fuel_tank.unit_type.try(:description)

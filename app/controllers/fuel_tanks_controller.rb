@@ -63,15 +63,27 @@ class FuelTanksController < ApplicationController
     end
   end
 
+  #def tank_capacity
+  #    @fuel_tanks = FuelTank.all.order(:unit_id)
+  #end
+
   def tank_capacity
-      @fuel_tanks = FuelTank.all.order(:unit_id)
-  end
-  
-  def tank_capacity
+    #diesel
+    #diesels = FuelTank.where(fuel_type_id: 2).where("capacity > ?", 0).group("units.name").sum("fuel_tanks.capacity")
+    diesels = FuelTank.find_by_sql("
+      SELECT u.name as name, sum(ft.capacity) as capacity
+      FROM fuel_tanks ft
+      LEFT JOIN units u ON ft.unit_id = u.id
+      WHERE ft.fuel_type_id = 2
+      AND capacity > 0
+      GROUP BY name
+      ;")
+
+    @diesels = diesels
+
     @fuel_tanks = FuelTank.where("capacity > ?", 0).order(fuel_type_id: :asc).all
-    
   end
-  
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_fuel_tank
