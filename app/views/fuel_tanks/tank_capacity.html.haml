@@ -7,6 +7,7 @@
   %h1= t 'menu.tank_capacity_report', :default => model_class.model_name.human.pluralize
 
 .row
+  %h3 Diesel
   .col-md-7
     = bar_chart @diesels.each.map{|row| [row.name, row.capacity] }
   .col-md-5
@@ -14,6 +15,21 @@
   //=  column_chart diesel.eac.each.map{|row| [row.name, row.amount] }h.map{|row| [((Unit.where(id: row.unit_id).first.name) rescue "Unlisted"), row.capacity] unless row.capacity ==0 }
   //= column_chart diesel.group(:unit_id).sum(:capacity)
 .row
+  %h3 Petrol
+  .col-md-7
+    = bar_chart @petrol.each.map{|x, y| [x.name, y]}
+  .col-md-5
+    = pie_chart @petrol.each.map{|x, y| [x.name, y]}
+
+.row
+  %h3 AVTUR
+  .col-md-7
+    = bar_chart @avtur.each.map{|x, y| [x.name, y]}
+  .col-md-5
+    = pie_chart @avtur.each.map{|x, y| [x.name, y]}
+
+.row
+
 %h2= t 'report.tank_capacity'
 %table.table.table-bordered
   %thead
