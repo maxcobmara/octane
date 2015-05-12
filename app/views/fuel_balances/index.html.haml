@@ -2,15 +2,15 @@
 - model_class = FuelBalance
 .page-header
   %h1= t 'fuel_balances.title', :default => model_class.model_name.human.pluralize
-  
-  
+
+
 .navbar.navbar-inverse
   .navbar-inner
     %ul.nav
       /%li= link_to content_tag(:li, fa_icon("truck", text: (t 'actions.new'))), new_fuel_balance_path
     %ul.nav.pull-right
       %li.toga= link_to content_tag(:li, fa_icon("search", text: (t 'actions.search'))), "#", class: "toga"
-      %li= link_to_function(fa_icon("print", text: (t 'actions.print')), "javascript:print()")
+      %li= link_to(fa_icon("print", text: (t 'actions.print')), "javascript:print()")
 
 .row.searchit{style: "display:none;"}
   .span9offset1
@@ -25,8 +25,8 @@
         = f.label :fuel_tank_locations_cont, "Storage Tank Name Contains:"
         = f.text_field :fuel_tank_locations_cont, class: "input-medium search-query"
         = f.submit "Search", class: "btn btn-warning"
-      
-      
+
+
 %table.table.table-condensed.table-hover
   %thead
     %tr
@@ -44,8 +44,3 @@
         %td= check_kin {fuel_balance.unit_type.description}
         %td
         = render :partial => 'action_menu', :locals => { :fuel_balance => fuel_balance }
-      
-      
-
-
-

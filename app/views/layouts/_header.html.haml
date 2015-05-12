@@ -24,6 +24,8 @@
             %span.caret
           %ul.dropdown-menu{:role => "menu"}
             %li= link_to (t 'menu.tank_capacity_report'),   tank_capacity_fuel_tanks_path
+            %li= link_to (t 'menu.fuel_balances'), fuel_balances_path
+            %li.divider
             %li= link_to (t 'menu.fuel_type_per_quarter'),  daily_usage_unit_fuels_path
             %li= link_to (t 'menu.fuel_usage_report'),      unit_fuel_usage_unit_fuels_path
             %li= link_to (t 'menu.annual_usage_report'),    annual_usage_report_unit_fuels_path
