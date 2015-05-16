@@ -33,6 +33,10 @@ Rails.application.routes.draw do
     end
   end
 
+  match '/public/excel_format/DepotFuel_Excel.xls', to: 'depot_fuels#download_excel_format', via: 'get', target: '_self'
+  match 'import_excel_depot_fuel', to:'depot_fuels#import_excel', via: 'get'
+
+
   devise_for :users
   resources :users
 
