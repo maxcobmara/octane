@@ -3,15 +3,6 @@
 .page-header
   %h1= t 'fuel_tanks.title2', :default => model_class.model_name.human.pluralize
 
-
-.navbar.navbar-inverse
-  .navbar-inner
-    %ul.nav
-      %li= link_to content_tag(:li, fa_icon("truck", text: (t 'actions.new'))), new_fuel_tank_path
-    %ul.nav.pull-right
-      %li.toga= link_to content_tag(:li, fa_icon("search", text: (t 'actions.search'))), "#", class: "toga"
-      %li= link_to(fa_icon("print", text: (t 'actions.print')), "javascript:print()")
-
 .row.searchit{style: "display:none;"}
   .span9offset1
     = search_form_for @search, class: "form-inline" do |f|
@@ -19,6 +10,11 @@
         = f.label :unit_id_cont, "Unit/Depot Contains:"
         = f.text_field :unit_name_cont, class: "input-medium search-query"
         = f.submit "Search", class: "btn btn-warning"
+
+.btn-group{"aria-label" => "sidebar", :role => "group", style: "float:right;"}
+  .btn.btn-default= link_to content_tag(:i, fa_icon("asterisk", text: (t 'actions.new'))), new_fuel_tank_path
+  .btn.btn-default= link_to content_tag(:i, fa_icon("search", text: (t 'actions.search'))), "#", class: "toga"
+  .btn.btn-default= link_to(fa_icon("print", text: (t 'actions.print')), "javascript:print()")
 
 
 %table.table.table-condensed.table-hover
