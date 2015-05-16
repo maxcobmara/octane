@@ -67,7 +67,7 @@ class FuelTanksController < ApplicationController
   #    @fuel_tanks = FuelTank.all.order(:unit_id)
   #end
 
-  def tank_capacity
+  def tank_capacity_chart
     #diesel
     #diesels = FuelTank.where(fuel_type_id: 2).where("capacity > ?", 0).group("units.name").sum("fuel_tanks.capacity")
     diesels = FuelTank.find_by_sql("
@@ -79,14 +79,17 @@ class FuelTanksController < ApplicationController
       GROUP BY name
       ;")
 
-    @diesels = diesels
-
     @capacity = FuelTank.where("capacity > ?", 0).joins(:unit)
 
-    @petrol = @capacity.where(fuel_type_id: 1).group(:unit).sum(:capacity)
+    @diesel = @capacity.where(fuel_type: (FuelType.where(name: 'DIESEL'))).group(:unit).sum(:capacity)
+    @petrol = @capacity.where(fuel_type: (FuelType.where(name: 'PETROL'))).group(:unit).sum(:capacity)
     @avtur  = @capacity.where(fuel_type: (FuelType.where(name: 'AVTUR'))).group(:unit).sum(:capacity)
 
 
+    @fuel_tanks = FuelTank.where("capacity > ?", 0).order(fuel_type_id: :asc).all
+  end
+
+  def tank_capacity_list
     @fuel_tanks = FuelTank.where("capacity > ?", 0).order(fuel_type_id: :asc).all
   end
 

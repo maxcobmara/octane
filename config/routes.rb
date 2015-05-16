@@ -13,7 +13,8 @@ Rails.application.routes.draw do
   end
   resources :fuel_tanks do
     collection do
-      get 'tank_capacity'
+      get 'tank_capacity_list'
+      get 'tank_capacity_chart'
     end
   end
 

@@ -20,7 +20,7 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 
-#language - actions, errors, dates, models, 
+#language - actions, errors, dates, models,
 en:
   activerecord:
     models:
@@ -49,7 +49,7 @@ en:
         vehicle_assignment_details:
           one: One vehicle
           other: "%{count} vehicle"
-      vehicle_assignment_details: 
+      vehicle_assignment_details:
         vehicle_id: Vehicle
       staff:
         id_no: Armed Force No
@@ -86,8 +86,8 @@ en:
     import_excel: Import Data From Excel
     removed: " was successfully removed."
   errors:
-    
-    
+
+
   date:
     formats:
        default: "%d-%b-%Y"
@@ -103,7 +103,7 @@ en:
     month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
     abbr_month_names: [~, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
     # Used in date_select and datime_select.
-    order: 
+    order:
        - day
        - month
        - year
@@ -114,10 +114,10 @@ en:
   datetime:
     formats:
       default: "%d %b %y, %l:%M %p"
-      short:   "%d %b %y, %l:%M %p"	   	
+      short:   "%d %b %y, %l:%M %p"
   menu:
     main: Menu
-    dropdown: Drop Downs  
+    dropdown: Drop Downs
     fuel: Fuel
     people: People
     depot: Depots
@@ -132,7 +132,8 @@ en:
     maintenance_report: Maintenance Report
     fuel_usage_report: Fuel Usage Report
     maintenance_contract_report: Maintenance Contract Report
-    tank_capacity_report: Tank Capacity Report
+    tank_capacity_chart_report: Tank Capacity Chart Report
+    tank_capacity_list_report: Tank Capacity List Report
     Summary_report: Summary Report
     detailed_report: Detailed Report
     vehicle_report: Vehicle Report
@@ -157,16 +158,16 @@ en:
     petrol_usage_current: Petrol Usage Current Month
     other_usage_current: Other Usage Current Month
     month_external_supply: External Supply Current Month
-  home: 
+  home:
     welcome: Welcome to Txport
-    txport: Transport Management System  
+    txport: Transport Management System
     email: Email
     password: Password
     signin: Sign in
   footer:
     about: About
     contact: Contact
-    news: News 
+    news: News
   about:
     title: About Us
     about_txport: About this txport App
@@ -176,7 +177,7 @@ en:
   help:
     title: Help
     txport_help: Txport Help
-  #index, _action_menu, show  
+  #index, _action_menu, show
   vehicles:
     title: Vehicles
     title2: Vehicle
@@ -211,7 +212,7 @@ en:
     condition_category_spanco: "Vehicles acquired from SPANCO must be categorised according to Vehicle Categories ie. KJU, KJK, KJT and KRJ"
     condition_category_spanco2: " (from menu - Vehicle | Drop Downs | Vehicle Categories - Description)"
     condition_model: "Model - should ONLY consist of Vehicle Manufacturer and Vehicle Model"
-    condition_category_others: "Vehicle acquired from other than SPANCO must match with Vehicle Categories (other than KJU, KJK, KJT and KRJ)" 
+    condition_category_others: "Vehicle acquired from other than SPANCO must match with Vehicle Categories (other than KJU, KJK, KJT and KRJ)"
     condition_assignment_particulars: "Vehicle Assignment Details : Assignment No dan Unit Name are compulsory."
     condition_assignment_details_particulars: "VRO Details : 'Kuasa VRO', 'vro_start_date' & 'vro_type' are compulsory."
     condition_release_type: "VRO Release Type (vro_type) - must be either 'Perjawatan', 'Penggantian', 'Tambahan' or 'Pinjaman'. "
@@ -264,7 +265,7 @@ en:
     repair_location: Repair Location
     value_supplied: "Total Supplied"
     value_repaired: "Total Repaired"
-    month_year: "Month - Year"	    
+    month_year: "Month - Year"
     new: New Maintenance
     edit: Edit Maintenance
     imported: Maintenances from Excel file are successfully imported
@@ -307,7 +308,7 @@ en:
     document_date: Assignment Date
     authorised_by: Assignment Authoriser
     new: New Vehicle Assignment
-    edit: Edit Vehicle Assignment	
+    edit: Edit Vehicle Assignment
     vehicle_details: Vehicle Details
     add_details: Add Details
     user: User Name
@@ -341,7 +342,7 @@ en:
     condition_vehicle_exist: All vehicles in Excel file must exist in the system, before the summons can be imported.
     condition_summon_date: "Summon Date - Only Excel data of DATE type will be saved."
     condition_summon_time: "Format time issued - 9999, eg. : 1205, 0010."
-    condition_issuer_exist: "Summon Issuer information is compulsory (row 3,column ‘B’) and must match Summon Types (refer menu - Vehicles | Drop Downs | Summon Types)."	
+    condition_issuer_exist: "Summon Issuer information is compulsory (row 3,column ‘B’) and must match Summon Types (refer menu - Vehicles | Drop Downs | Summon Types)."
     failure: "* Failure to comply with condition no. 1-5 will cause failure in import."
   vehicle_cards:
     title: "Touch N Go & Smart Tag"
@@ -385,7 +386,7 @@ en:
     unit_type: Unit Type
     shortname: Short Name
     description: Description
-  fuel_tanks:    
+  fuel_tanks:
     title: Fuel Storage Tanks
     title2: Fuel Storage Tanks
     unit_id: "Depot / Unit"
@@ -468,7 +469,7 @@ en:
     invalid_excel_data: Invalid Excel data
     import_excel: Import Depot Fuel From Excel File
     condition_month_year: "Current month & year are compulsory (month - row 4,column ‘B’, year - row 5,column ‘B’)."
-    condition_fuel_tank_qty_match: "Sheet1 : Capacity Statement - Quantity of storage tank in Excel file and system must match. Refer menu, Fuel | Depots | Depot Listing" 
+    condition_fuel_tank_qty_match: "Sheet1 : Capacity Statement - Quantity of storage tank in Excel file and system must match. Refer menu, Fuel | Depots | Depot Listing"
     condition_naming_rules: "Sheet1 : Capacity Statement - Storage Tank Names for petrol and diesel (in Excel file) should be ended with a 'space' and followed by a number OR just alphabet. Eg. 'Tank 1', 'Ops Tank'."
     condition_naming_rules2: "Sheet1 : Capacity Statement - Storage Tank Names for avtur and avcat (in Excel file) should be ended with a number. Eg. 'Avcat H1', 'Avtur 2', 'Avcat3'."
     condition_capacity: "Sheet1 : Capacity Statement - Capacity for each storage tank is compulsory."
@@ -542,13 +543,13 @@ en:
     description: Description
     quantity: Quantity
     unit_type_id: Unit Type
-    tab_applicable: "(TAB) only applicable for" 
+    tab_applicable: "(TAB) only applicable for"
     link_available: "link is available upon creation of 'Unit Fuel' for a "
     in: "(In 'New / Edit Unit Fuel' page : For UNIT *, select a depot and click 'Submit'. Click 'Edit', select 'Issued To' and add details accordingly)"
   add_fuels:
     title: Other Fuel - Unit
     title2: Other Fuel Usage - Unit
-    new: New Other Fuel - Unit 
+    new: New Other Fuel - Unit
     edit: Edit Other Fuel - Unit
     unit_fuel_id: "Unit - Month Year"
     fuel_type_id: Fuel Type
@@ -613,7 +614,7 @@ en:
     issued_monthly: "* Usage & Petronas Quantity to be issued monthly"
     add_details: Add Details
     usage_details: Card Usage Details
-    usage_details2: "Card Usage Details & Petronas Quantity"	
+    usage_details2: "Card Usage Details & Petronas Quantity"
     petronas_p_ltr: "Petrol (litre)"
     petronal_p_price: "Petrol (RM)"
     petronas_d_ltr: "Diesel (litre)"
@@ -638,7 +639,7 @@ en:
     quantity: Quantity
     unit_type: Unit Type
   #localization for forms label in activemodel (to use in haml)  --> refer helpers --> label
-  #http://stackoverflow.com/questions/4736396/how-do-you-localize-the-field-names-in-activemodel-error-messages    (solution #3)     
+  #http://stackoverflow.com/questions/4736396/how-do-you-localize-the-field-names-in-activemodel-error-messages    (solution #3)
   helpers:
     links:
       new: New
@@ -664,7 +665,7 @@ en:
         status: Status
         new: New Vehicle
         chassis_no: Chasis No
-        engine_no: Engine No 
+        engine_no: Engine No
       vehicle_no:
         start_on: Start On
         end_on: End On
@@ -703,7 +704,7 @@ en:
         pay_before: Pay Before
         reason: Reason
         compound: Compound
-        paid_on: Paid On 
+        paid_on: Paid On
         issued_at: Issued At
         location: Location
         receipt_no: Receipt No
@@ -735,8 +736,8 @@ en:
         contact_person: Contact Person
         phone: Phone
         fax: Fax
-        email: Email  
-      fuel_tank: 
+        email: Email
+      fuel_tank:
         unit_id: "Depot / Unit"
         locations: Tank
         capacity: Capacity
@@ -825,14 +826,14 @@ en:
       select_manufacturer: Select Manufacturer
       select_category: Select Category
       select_contract: Select Contract
-      select_status: Select Status 
+      select_status: Select Status
       select_repaired_by: Select Repaired By
       select_supplied_by: Select Supplied By
       select_rank: Select Rank
       select_depot: "Select Depot / Unit"
       select_unit_type: Select Unit Type
       select_fuel_type: Select Fuel Type
-      select_vehicle: Select Vehicle 
+      select_vehicle: Select Vehicle
       select_staff: Select Staff
       select_summon_type: Select Summon Type
       select_unit: Select Unit
@@ -858,5 +859,5 @@ en:
       select_rank_category: Select Rank Category
       select_rank_rate: Select Rate Group (for Kit)
       select_maintenance_type: Select Maintenance Type
-      select_release_type: Select Release Type 
+      select_release_type: Select Release Type
       select_army_car: "Select Vehicle Registration No (Army) for Replacement"

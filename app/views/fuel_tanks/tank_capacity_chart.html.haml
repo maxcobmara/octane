@@ -1,0 +1,24 @@
+- model_class = FuelTank
+.page-header
+  %h1= t 'menu.tank_capacity_chart_report', :default => model_class.model_name.human.pluralize
+
+.row
+  %h3 Diesel
+  .col-md-7
+    = bar_chart @diesel.each.map{|x, y| [x.name, y]}
+  .col-md-5
+    = pie_chart @diesel.each.map{|x, y| [x.name, y]}
+
+.row
+  %h3 Petrol
+  .col-md-7
+    = bar_chart @petrol.each.map{|x, y| [x.name, y]}
+  .col-md-5
+    = pie_chart @petrol.each.map{|x, y| [x.name, y]}
+
+.row
+  %h3 AVTUR
+  .col-md-7
+    = bar_chart @avtur.each.map{|x, y| [x.name, y]}
+  .col-md-5
+    = pie_chart @avtur.each.map{|x, y| [x.name, y]}

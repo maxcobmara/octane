@@ -26,7 +26,7 @@ ms_MY:
         vehicle_assignment_details:
           one: Satu kenderaan
           other: "%{count} kenderaan"
-      vehicle_assignment_details: 
+      vehicle_assignment_details:
         vehicle_id: Kenderaan
       staff:
         id_no: "No. Tentera"
@@ -78,7 +78,7 @@ ms_MY:
     month_names: [~, Januari, Februari, Mac, April, Mei, Jun, Julai, Ogos, September, Oktober, November, Disember]
     abbr_month_names: [~, Jan, Feb, Mar, Apr, Mei, Jun, Jul, Ogo, Sep, Okt, Nov, Dis]
       # Used in date_select and datime_select.
-    order: 
+    order:
     - day
     - month
     - year
@@ -94,13 +94,14 @@ ms_MY:
     inden_card: Kad Inden
     inden_card_listing: Senarai Kad Inden
     report_list: Senarai Laporan
-    summon_report: Laporan Senarai Saman 
+    summon_report: Laporan Senarai Saman
     roadtax_report: Laporan Cukai Jalan Bulanan
     maintenance_report: Laporan Penyelenggaraan
     fuel_usage_report: Laporan Penggunaan Bahan PMP
     maintenance_contract_report: Laporan Kontrak Penyelenggaraan
-    tank_capacity_report: Laporan Kapasiti Tangki
-    Summary_report: Laporan Ringkasan 
+    tank_capacity_chart_report: Carta Laporan Kapasiti Tangki
+    tank_capacity_list_report: Senarai Laporan Kapasiti Tangki
+    Summary_report: Laporan Ringkasan
     detailed_report: Laporan Terperinci
     vehicle_report: Laporan Kenderaan
     vehicle_daily_report: Laporan Kenderaan Harian
@@ -110,7 +111,7 @@ ms_MY:
     fuel_type_per_quarter: Laporan Penyata Purata Pengunaan Harian Per Quarter
     transport_summary: Laporan Pengangkutan
     PMP_usage: Laporan Penyata Penggunaan Bahan PMP Bulanan
-  report: 
+  report:
     unit_fuel_graph: Graf Penggunaan Minyak
     diesel_vessel_usage: Penggunaan Diesel Kapal
     diesel_vehicle_usage: Penggunaan Diesel Kenderaan
@@ -118,7 +119,7 @@ ms_MY:
     diesel_boat_usage: Penggunaan Diesel Bot
     petrol_vehicle_usage: Penggunaan Petrol Kenderaan
     petrol_misctool_usage: Penggunaan Petrol Alat Pelbagai
-    petrol_boat_usage: Penggunaan Petrol Bot   
+    petrol_boat_usage: Penggunaan Petrol Bot
     diesel_usage_current: Penggunaan Diesel Bulan Ini
     petrol_usage_current: Penggunaan Petrol Bulan Ini
     other_usage_current: Lain-lain Penggunaan Bulan Ini
@@ -134,15 +135,15 @@ ms_MY:
     contact: Hubungi Kami
     news: Berita
   about:
-    title: Tentang Kami  
+    title: Tentang Kami
     about_txport: Tentang Txport
   contact:
     contact: Hubungi Kami
-    contact_page: Maklumat Perhubungan 
+    contact_page: Maklumat Perhubungan
   help:
     title: Bantuan
-    txport_help: Bantuan Txport  
-  #index & _action_menu & show      
+    txport_help: Bantuan Txport
+  #index & _action_menu & show
   vehicles:
     title: Kenderaan
     reg_no: "No. Daftar"
@@ -157,14 +158,14 @@ ms_MY:
     acquired_on: Tarikh Perolehan #Mula Khidmat
     price: "Harga (RM)"
     contract_id: "No. Kontrak" #Kuasa VRO
-    status_id: Status    
+    status_id: Status
     new_vehicle_no: "Penggantian Kenderaan(No. Awam)"
     new_road_tax: Cukai Jalan Baru
     new_summons: Saman Baru
     new_maintenance: Penyelenggaraan Baru
     road_tax: Cukai Jalan
     summons: Saman
-    maintenance: Penyelenggaraan  
+    maintenance: Penyelenggaraan
     edit: Sunting Kenderaan
     import_excel: Import Kenderaan Dari Fail Excel
     pre_conditions: "Pra-Syarat Fail Excel"
@@ -177,7 +178,7 @@ ms_MY:
     condition_category_spanco: "Kategori Kenderaan bagi (Jenis Diperolehi = SPANCO) - Mesti terdiri daripada KJU, KJK, KJT and KRJ"
     condition_category_spanco2: " (dari menu - Kenderaan | Data Asas | Kategori Kenderaan - Deskripsi)"
     condition_model: "Model - Mesti terdiri daripada Pembuat Kenderaan dan Model Kenderaan SAHAJA"
-    condition_category_others: "Kategori Kenderaan bagi (Jenis Diperolehi = selain SPANCO) mesti sepadan dengan Kategori Kenderaan (selain KJU, KJK, KJT dan KRJ)" 
+    condition_category_others: "Kategori Kenderaan bagi (Jenis Diperolehi = selain SPANCO) mesti sepadan dengan Kategori Kenderaan (selain KJU, KJK, KJT dan KRJ)"
     condition_assignment_particulars: "Maklumat Perjawatan : No. Perjawatan dan Nama Unit bagi setiap kenderaan mesti diisi."
     condition_assignment_details_particulars: "Maklumat VRO : Kuasa VRO, Tarikh Pengambilan, Jenis Pengeluaran mesti diisi"
     condition_release_type: "Jenis Pengeluaran (VRO) - mesti terdiri daripada 'Perjawatan', 'Penggantian', 'Tambahan' atau 'Pinjaman'. "
@@ -201,7 +202,7 @@ ms_MY:
     define_assignment: "Please update 'Vehicle Assignment'"
   #-forms (other than FORMS LABEL) & show & controller
   vehicle:
-    home: Rumah  
+    home: Rumah
     vehicle_id: Kenderaan   #use in index - other than vehicles
     new: Kenderaan Baru
     chassis_no: "No. Casis"
@@ -224,7 +225,7 @@ ms_MY:
     work_order_no: Work Order No
     contract_id: "No. Kontrak"
     repaired_by: Dibaiki Oleh
-    supplied_by: Pembekal    
+    supplied_by: Pembekal
     maintenance_date: Tarikh Senggaraan
     repair_date: Tarikh Pembaikan
     repair_location: Lokasi Pembaikan
@@ -234,7 +235,7 @@ ms_MY:
     new: Penyelenggaraan Baru
     edit: Sunting Penyelenggaraan
     imported: Penyelenggaraan dari fail Excel telah berjaya diimport
-    invalid_excel: "Data fail Excel tidak sah. "  
+    invalid_excel: "Data fail Excel tidak sah. "
     import_excel: Import Penyelenggaraan dari Fail Excel
     condition_month_year: "Bulan & tahun semasa mesti diisi (bulan - baris 5,lajur ‘B’, tahun - baris 6,lajur ‘B’)."
     #condition_labelling: "Row 8 is compulsory - contains required labels for data import purpose."
@@ -289,7 +290,7 @@ ms_MY:
     pay_before: Bayar Sebelum
     reason: Sebab
     compound: Kompaun
-    paid_on: Dibayar Pada    
+    paid_on: Dibayar Pada
     issued_at: Dikeluarkan Pada
     location: Lokasi
     receipt_no: "No. Resit"
@@ -309,7 +310,7 @@ ms_MY:
     condition_issuer_exist: "Maklumat Pengeluar Saman mesti diisi (baris 3,lajur ‘B’) dan mesti sepadan dengan Jenis Saman (rujuk menu - Kenderaan | Data Asas | Jenis Saman)."
     failure: "* Data tidak akan diimport jika syarat 1 - 5 tidak dipenuhi."
   vehicle_cards:
-    title: "Touch N Go & Smart Tag"  
+    title: "Touch N Go & Smart Tag"
     new: "Touch N Go & Smart Tag Baru"
     edit: "Sunting Touch N Go & Smart Tag"
     staff_id: Pemegang Kad
@@ -324,7 +325,7 @@ ms_MY:
     title: Kontrak
     contract_no: "No. Kontrak"
     name: Tajuk Kontrak
-    description: Deskripsi  
+    description: Deskripsi
     company_id: Kontraktor
     value: Nilai
     starts_on: Tarikh Mula
@@ -352,21 +353,21 @@ ms_MY:
     unit_type: Jenis Unit Pengukuran
     shortname: Nama Ringkas
     description: Deskripsi
-  fuel_tanks:    
+  fuel_tanks:
     title: Tangki Penyimpanan
     title2: Tangki Penyimpanan Bahan PMP
     unit_id: "Depot / Unit"
     locations: Tangki
-    capacity: Kapasiti    
+    capacity: Kapasiti
     new: Tangki Penyimpanan Baru
     edit: Sunting Tangki Penyimpanan
-    tank: "Tangki : " 
+    tank: "Tangki : "
     maximum: Maksima
   fuel_types:
     title: Jenis Bahan PMP
     fuel_type_id: Jenis Bahan PMP
     shortname: Nama Ringkas
-    name: Nama    
+    name: Nama
   units:
     title: Unit
     title2: Depot
@@ -432,18 +433,18 @@ ms_MY:
     and: dan
     must_match: mesti sama
     imported: "Bahan PMP (Depot) dari fail Excel telah berjaya diimport"
-    invalid_excel: "Data fail Excel tidak sah. "  
+    invalid_excel: "Data fail Excel tidak sah. "
     import_excel: "Import Bahan PMP (Depot) dari Fail Excel"
     condition_month_year: "Bulan & tahun semasa mesti diisi (bulan - baris 4,lajur ‘B’, tahun - baris 5,lajur ‘B’)."
-    condition_fuel_tank_qty_match: "Sheet1 : Penyata Kapasiti - Kuantiti tangki dalam fail Excel dan sistem mestilah bersamaan. Rujuk menu, Bahan PMP | Tangki Penyimpanan | Senarai Tangki. " 
+    condition_fuel_tank_qty_match: "Sheet1 : Penyata Kapasiti - Kuantiti tangki dalam fail Excel dan sistem mestilah bersamaan. Rujuk menu, Bahan PMP | Tangki Penyimpanan | Senarai Tangki. "
     condition_naming_rules: "Sheet1 : Penyata Kapasiti - Nama tangki penyimpanan bagi petrol dan diesel (dalam fail Excel) mestilah diakhiri dengan 'ruang kosong' dan nombor, ATAU huruf sahaja. Contohnya, 'Tank 1', 'Ops Tank'."
     condition_naming_rules2: "Sheet1 : Penyata Kapasiti - Nama tangki penyimpanan bagi avtur dan avcat (dalam fail Excel) mestilah diakhiri dengan nombor. Contohnya, 'Avcat H1', 'Avtur 2'."
     condition_capacity: "Sheet1 : Penyata Kapasiti - Kapasiti setiap tangki penyimpanan mestilah diisi."
-    condition_ftcm: "Sheet2 : Penyata Penggunaan - Bilangan Jenis Bahan PMP dalam fail Excel mesti SEPADAN dengan bilangan Jenis Bahan PMP di Tangki-Tangki Penyimpanan bagi satu-satu Depot (di dalam s1stem)."    
+    condition_ftcm: "Sheet2 : Penyata Penggunaan - Bilangan Jenis Bahan PMP dalam fail Excel mesti SEPADAN dengan bilangan Jenis Bahan PMP di Tangki-Tangki Penyimpanan bagi satu-satu Depot (di dalam s1stem)."
     condition_tank_group: "Sheet2 : Penyata Penggunaan - Depot/Unit dalam lajur B - Penamaan kategori/kumpulan tangki tanpa JENIS Bahan PMP akan diabaikan dari senarai."
     failed_check_format: "Import GAGAL. Syarat no. 1 (Bulan dan Tahun Semasa) tidak dipenuhi. Gunakan 'Format Excel' yang disediakan sebagai panduan."
     failure: "* Data tidak akan diimport jika syarat 1-7 tidak dipenuhi."
-    failed: "Import GAGAL. " 
+    failed: "Import GAGAL. "
     stc: "Storage Tank COUNT did not matched."
     tn: "Storage Tank NAMES did not matched."
     cap: "Storage Tank CAPACITY is blank"
@@ -480,8 +481,8 @@ ms_MY:
     new: Baki Semasa Bahan PMP Baru
     edit: Sunting Baki Semasa Bahan PMP
     depot_fuel_id: "Depot - Bulan Tahun"
-    fuel_tank_id: Tangki Penyimpanan 
-    current: Baki Semasa 
+    fuel_tank_id: Tangki Penyimpanan
+    current: Baki Semasa
     unit_type_id: Unit Ukuran
     new_balance: Baki Tangki Baru
   unit_fuels:
@@ -494,7 +495,7 @@ ms_MY:
     external_issued: Bekal Kepada
     external_supplied: Ambil Daripada
     other_usage: Lain-Lain Bahan PMP
-    new: Bahan PMP Baru di Unit 
+    new: Bahan PMP Baru di Unit
     edit: Sunting Bahan PMP di Unit
     quantity_ltr: Kuantiti dalam Liter
     usage: Penggunaan
@@ -506,14 +507,14 @@ ms_MY:
     p_misctool: Alat Pelbagai
     p_boat: Bot
     fuel_type_id: Jenis Bahan PMP
-    description: Deskripsi 
+    description: Deskripsi
     quantity: Kuantiti
     unit_type_id: Unit Ukuran
-    tab_applicable: "(TAB) hanya terpakai untuk" 
+    tab_applicable: "(TAB) hanya terpakai untuk"
     link_available: "(pautan) hanya wujud setelah rekod 'Bahan PMP di Unit' dicipta untuk "
     in: "(Dalam laman 'Bahan PMP Baru di Unit / Sunting Bahan PMP di Unit' : Untuk UNIT *, pilih depot and klik 'Hantar'. Klik 'Sunting', pilih 'Bekal Kepada' dan masukkan butiran berkaitan)"
     sum: Jumlah Penggunaan
-    Total: Total 
+    Total: Total
   add_fuels:
     title: Lain-Lain Bahan PMP di Unit
     title2: Bahan PMP Lain di Unit
@@ -521,7 +522,7 @@ ms_MY:
     edit: Sunting Lain-Lain Bahan PMP di Unit
     unit_fuel_id: "Unit - Bulan Tahun"
     fuel_type_id: Jenis Bahan PMP
-    description: Deskripsi 
+    description: Deskripsi
     quantity: Kuantiti
     unit_type_id: Unit Ukuran
     new_addfuel: Lain-Lain Bahan PMP Baru
@@ -605,7 +606,7 @@ ms_MY:
     quantity: Kuantiti
     unit_type: Unit Ukuran
   #localization for FORMS LABEL in activemodel (to use in haml)
-  #http://stackoverflow.com/questions/4736396/how-do-you-localize-the-field-names-in-activemodel-error-messages    (solution #3)     
+  #http://stackoverflow.com/questions/4736396/how-do-you-localize-the-field-names-in-activemodel-error-messages    (solution #3)
   helpers:
     links:
       new: Cipta
@@ -628,7 +629,7 @@ ms_MY:
         acquired_on: Tarikh Perolehan #Mula Khidmat
         price: "Harga (RM)"
         contract_id: "No. Kontrak" #Kuasa VRO
-        status_id: Status    
+        status_id: Status
         new: Kenderaan Baru
         chassis_no: "No. Chasis"
         engine_no: "No. Enjin"
@@ -659,7 +660,7 @@ ms_MY:
         document_code: "No. Perjawatan"
         document_date: Tarikh Perjawatan
         authorised_by: Pengeluar Perjawatan
-        unit_id: Unit Penerima	
+        unit_id: Unit Penerima
         authorising_unit: Unit Pengeluar
       vehicle_assignment_detail:
         release_no: "No. VRO"
@@ -670,11 +671,11 @@ ms_MY:
         pay_before: Bayar Sebelum
         reason: Sebab
         compound: Kompaun
-        paid_on: Dibayar Pada    
+        paid_on: Dibayar Pada
         issued_at: Dikeluarkan Pada
         location: Lokasi
         receipt_no: "No. Resit"
-        paid_amount: Amaun Dibayar  
+        paid_amount: Amaun Dibayar
       vehicle_card:
         vehicle_id: Kenderaan
         staff_id: Pemegang Kad
@@ -688,7 +689,7 @@ ms_MY:
       contract:
         contract_no: "No. Kontrak"
         name: Tajuk Kontrak
-        description: Deskripsi  
+        description: Deskripsi
         company_id: Kontraktor
         value: Nilai
         starts_on: Tarikh Mula
@@ -703,8 +704,8 @@ ms_MY:
         phone: "No. Telefon"
         fax: "No. Faks"
         email: Emel
-      fuel_tank: 
-        unit_id: "Depot / Unit" 
+      fuel_tank:
+        unit_id: "Depot / Unit"
         locations: Tangki
         capacity: Kapasiti
         unit_type: Jenis Unit Ukuran
@@ -732,7 +733,7 @@ ms_MY:
         unit_type_id: Unit Ukuran
       fuel_balance:
         depot_fuel_id: "Depot - Bulan Tahun"
-        fuel_tank_id: Tangki Penyimpanan 
+        fuel_tank_id: Tangki Penyimpanan
         current: Baki Semasa Bahan PMP
         unit_type_id: Unit Ukuran
       unit_fuel:
@@ -748,7 +749,7 @@ ms_MY:
       add_fuel:
         unit_fuel_id: "Unit - Bulan Tahun"
         fuel_type_id: Jenis Bahan PMP
-        description: Deskripsi 
+        description: Deskripsi
         quantity: Kuantiti
         unit_type_id: Unit Ukuran
       external_issued:
@@ -788,11 +789,11 @@ ms_MY:
         petronal_p_price: "Petrol (RM)"
         petronas_d_ltr: "Diesel (liter)"
         petronas_d_price: "Diesel (RM)"
-    prompt:   
+    prompt:
       select_manufacturer: Pilih Pengeluar
       select_category: Pilih Kategori
       select_contract: Pilih Kontrak
-      select_status: Pilih Status  
+      select_status: Pilih Status
       select_repaired_by: Pilih Pembaikan Oleh
       select_supplied_by: Pilih Dibekalkan Oleh
       select_rank: Pilih Pangkat
@@ -828,6 +829,3 @@ ms_MY:
       select_maintenance_type: Pilih Jenis Senggaraan
       select_release_type: Pilih Jenis Pengeluaran
       select_army_car: "Pilih No. Pendaftaran Kenderaan Tentera Yang Ingin Digantikan"
-  
-  
-  
