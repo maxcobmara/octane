@@ -3,27 +3,22 @@
     = render 'shared/error_messages', object: f.object
     = f.hidden_field :depot_fuel_id
 
-    %dl.dl-horizontal
-      %dt
-        %strong= t 'fuel_balances.depot_fuel_id'
-      %dd
-        = h @fuel_balance.depot_fuel.month_depot
-    %br
+    .form-group
+      .col-sm-2= f.label t 'fuel_balances.depot_fuel_id', class: 'col-sm-2 control-label'
+      .col-sm-3= @fuel_balance.depot_fuel.month_depot#, class: 'form-control', readonly: true
 
-  
-    .control-group
-      = f.label :fuel_tank_id, :class => 'control-label'
-      .controls= f.collection_select :fuel_tank_id, FuelTank.where("capacity > ?", 0).order(:id), :id, :fuel_tank_details, :include_blank => t('helpers.prompt.select_fuel_tank'), :html_options => {:class => 'selectpicker'}
-		                
-    .control-group
-      = f.label :current, :class => 'control-label'
-      .controls= f.text_field :current, :class => 'text_field', :type => :text
-	  
-    .control-group
-      = f.label :unit_type_id, :class => 'control-label'
-      .controls= f.collection_select :unit_type_id, UnitType.all, :id, :description, :include_blank => t('helpers.prompt.select_unit_type'), :html_options => {:class => 'selectpicker'}
-		  		
+    .form-group
+      = f.label :fuel_tank_id, class: 'col-sm-2 control-label'
+      .col-sm-10= f.collection_select :fuel_tank_id, FuelTank.where("capacity > ?", 0).order(:id), :id, :fuel_tank_details, {:include_blank => t('helpers.prompt.select_fuel_tank')}, {class: 'selectpicker', 'data-width'=>"auto"}
+
+    .form-group
+      = f.label :current, class: 'col-sm-2 control-label'
+      .col-sm-3
+        .input-group
+          = f.text_field :current, class: 'form-control', style: "text-align: right;"
+          = f.collection_select :unit_type_id, UnitType.all, :id, :description, {:include_blank => t('helpers.prompt.select_unit_type')}, {:class => 'selectpicker', 'data-width'=>"auto"}
+
     .form-actions
-      = f.submit (t 'helpers.links.submit'), :class => 'btn btn-primary'
-      = link_to t('.cancel', :default => t("helpers.links.cancel")), |
-      fuel_balances_path, :class => 'btn'     
+      .col-sm-offset-2
+        = f.submit (t 'helpers.links.submit'), class: 'btn btn-primary'
+        = link_to t('.cancel', :default => t("helpers.links.cancel")), fuel_balances_path, class: 'btn btn-default'

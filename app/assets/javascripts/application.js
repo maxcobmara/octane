@@ -16,4 +16,5 @@
 //= require bootstrap-sprockets
 //= require turbolinks
 //= require highcharts.js
+//= require bootstrap-select
 //= require_tree .

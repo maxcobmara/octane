@@ -6,4 +6,6 @@ $(document).ready(function(){
   $(".bogus").click(function (e) {
       alert("Sorry! Feature not yet implemented");
   });
+
+  $('.selectpicker').selectpicker();
 })

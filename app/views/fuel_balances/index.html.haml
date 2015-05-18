@@ -3,14 +3,10 @@
 .page-header
   %h1= t 'fuel_balances.title', :default => model_class.model_name.human.pluralize
 
-
-.navbar.navbar-inverse
-  .navbar-inner
-    %ul.nav
-      /%li= link_to content_tag(:li, fa_icon("truck", text: (t 'actions.new'))), new_fuel_balance_path
-    %ul.nav.pull-right
-      %li.toga= link_to content_tag(:li, fa_icon("search", text: (t 'actions.search'))), "#", class: "toga"
-      %li= link_to(fa_icon("print", text: (t 'actions.print')), "javascript:print()")
+.btn-group{"aria-label" => "sidebar", :role => "group", style: "float:right;"}
+  //.btn.btn-default= link_to content_tag(:i, fa_icon("asterisk", text: (t 'actions.new'))), new_fuel_balance_path
+  .btn.btn-default= link_to content_tag(:i, fa_icon("search", text: (t 'actions.search'))), "#", class: "toga"
+  .btn.btn-default= link_to(fa_icon("print", text: (t 'actions.print')), "javascript:print()")
 
 .row.searchit{style: "display:none;"}
   .span9offset1
