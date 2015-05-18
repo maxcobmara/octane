@@ -3,24 +3,24 @@
     = f.hidden_field :parent_id
     = render 'shared/error_messages', object: f.object
 
-    .control-group
-      = f.label :code, :class => 'control-label'
-      .controls
-        .input-prepend
-          %span.add-on{:style => "height:30px"}= @unit.parent.shortname unless @unit.parent.nil?
-          = f.text_field :code,  :size => '50', :class => "span2", :id => "prependedInput", :placeholder => (t 'helpers.prompt.sequence') 
-        %div= (t 'helpers.prompt.sequence_text')
-		            
-    .control-group
-      = f.label :shortname, :class => 'control-label'
-      .controls= f.text_field :shortname, :class => 'text_field'
-    
-    .control-group
-      = f.label :name, :class => 'control-label'
-      .controls= f.text_field :name, :class => 'text_field input-xxlarge'
-    
-    .form-actions
-      = f.submit t("helpers.links.submit"), :class => 'btn btn-primary'
-      = link_to t('.cancel', :default => t("helpers.links.cancel")), |
-        units_path, :class => 'btn'     
+    .form-group
+      = f.label :code, class: 'col-sm-2 control-label'
+      .col-sm-4
+        .input-group
+          .input-group-addon= @unit.parent.shortname unless @unit.parent.nil?
+          = f.text_field :code, :placeholder => (t 'helpers.prompt.sequence'), class: 'form-control'
+        .help-block= (t 'helpers.prompt.sequence_text')
 
+    .form-group
+      = f.label :shortname, class: 'col-sm-2 control-label'
+      .col-sm-3= f.text_field :shortname, class: 'form-control'
+
+    .form-group
+      = f.label :name, class: 'col-sm-2 control-label'
+      .col-sm-5= f.text_field :name, class: 'form-control'
+
+    .form-actions
+      .col-sm-offset-2
+        = f.submit t("helpers.links.submit"), :class => 'btn btn-primary'
+        = link_to t('.cancel', :default => t("helpers.links.cancel")), |
+          units_path, :class => 'btn'
