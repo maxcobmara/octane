@@ -18,10 +18,9 @@
       = check_kin {@unit.parent.name}
 
 .form-actions
-  = link_to content_tag(:i, "", :class => "fa fa-arrow-left ") + " " + t('.back', :default => t("helpers.links.back_to_depots")), units_path(:id=>1), :class => 'btn'
-  = link_to content_tag(:i, "", :class => "fa fa-arrow-left ") + " " + t('.back', :default => t("helpers.links.back_to_units")), units_path, :class => 'btn'
-  = link_to content_tag(:i, "", :class => "fa fa-edit") + " " + t('.edit', :default => t("helpers.links.edit")), |
-    edit_unit_path(@unit), :class => 'btn'
+  .btn.btn-default= link_to content_tag(:i, "", class: "fa fa-arrow-left ") + " " + t('.back', :default => t("helpers.links.back_to_depots")), units_path(:id=>1)
+  .btn.btn-default= link_to content_tag(:i, "", class: "fa fa-arrow-left ") + " " + t('.back', :default => t("helpers.links.back_to_units")), units_path
+  .btn.btn-default= link_to content_tag(:i, "", class: "fa fa-edit") + " " + t('.edit', :default => t("helpers.links.edit")), edit_unit_path(@unit)
   = link_to content_tag(:i, " New Node", :class => "fa fa-leaf"), new_unit_path(:parent_id => @unit), :class => 'btn btn-info'
   = link_to content_tag(:i, "", :class => "fa fa-trash-o icon-white") + " " + t('.destroy', :default => t("helpers.links.destroy")), |
     unit_path(@unit),                                                                                                    |
