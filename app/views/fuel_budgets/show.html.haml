@@ -1,0 +1,27 @@
+%p#notice= notice
+
+%p
+  %b Parent:
+  = @fuel_budget.parent_id
+%p
+  %b Code:
+  = @fuel_budget.code
+%p
+  %b Unit:
+  = @fuel_budget.unit_id
+%p
+  %b Year starts on:
+  = @fuel_budget.year_starts_on
+%p
+  %b Fuel type:
+  = @fuel_budget.fuel_type_id
+%p
+  %b Amount:
+  = @fuel_budget.amount
+%p
+  %b Unit type:
+  = @fuel_budget.unit_type_id
+
+= link_to 'Edit', edit_fuel_budget_path(@fuel_budget)
+\|
+= link_to 'Back', fuel_budgets_path

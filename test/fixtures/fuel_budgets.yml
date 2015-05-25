@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  parent_id: 1
+  code: MyString
+  unit_id: 1
+  year_starts_on: 2015-05-25 22:25:54
+  fuel_type_id: 1
+  amount: 1
+  unit_type_id: 1
+
+two:
+  parent_id: 1
+  code: MyString
+  unit_id: 1
+  year_starts_on: 2015-05-25 22:25:54
+  fuel_type_id: 1
+  amount: 1
+  unit_type_id: 1

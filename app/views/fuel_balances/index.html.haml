@@ -34,7 +34,7 @@
   %tbody
     - @fuel_balances.each do |fuel_balance|
       %tr
-        %td= check_kin {fuel_balance.depot_fuel.month_depot}
+        %td= fuel_balance.try(:depot_fuel).try(:month_depot)
         %td= check_kin {fuel_balance.fuel_tank.locations}
         %td= fuel_balance.current.to_i
         %td= check_kin {fuel_balance.unit_type.description}

@@ -1,0 +1,37 @@
+- provide(:title, 'Fuel Budgets')
+- model_class = FuelBudget
+.page-header
+  %h1= t 'fuel_budgets.title', :default => model_class.model_name.human.pluralize
+
+%table.table.table-condensed.table-hover
+  %thead
+    %tr
+      %th Unit
+      %th Parent
+      %th Code
+      %th Unit
+      %th Year starts on
+      %th Fuel type
+      %th Amount
+      %th Unit type
+      %th
+      %th
+      %th
+
+  %tbody
+    - @fuel_budgets.each do |fuel_budget|
+      %tr
+        %td= fuel_budget.unit.name
+        %td= fuel_budget.code
+        %td= fuel_budget.unit_id
+        %td= fuel_budget.year_starts_on
+        %td= fuel_budget.fuel_type_id
+        %td= fuel_budget.amount
+        %td= fuel_budget.unit_type_id
+        %td= link_to 'Show', fuel_budget
+        %td= link_to 'Edit', edit_fuel_budget_path(fuel_budget)
+        %td= link_to 'Destroy', fuel_budget, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Fuel budget', new_fuel_budget_path

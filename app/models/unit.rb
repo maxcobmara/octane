@@ -15,6 +15,8 @@ class Unit < ActiveRecord::Base
   has_one  :authorisor_unit, class_name: "Vehicle Assignment"
   has_one  :receiving_unit, class_name: "Vehicle Assignment"
 
+  scope :is_depot, -> { where("id IN(?)",FuelTank.pluck(:unit_id)) }
+
   def set_combo_code
     if ancestry_depth == 0
       self.combo_code = code
