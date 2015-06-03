@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
 
+  resources :fuel_limits
   resources :fuel_budgets
   resources :external_issueds
   resources :external_supplieds
