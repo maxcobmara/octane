@@ -93,3 +93,17 @@ top:20%;
 }
 
 .index_main {border-left: 1px #CCC solid}
+
+
+/* home page */
+.jumbotron {
+background-image:url('cover_art.jpg');
+background-repeat:no-repeat;
+background-position:right center;
+margin-top: 40px;
+
+  .overlay {background: rgba(0,0,0,0.5); padding:15px;
+  h1 {color:#FFF !important; text-align:left;}
+  h2 {color:#FFF !important; text-align:left; font-weight:normal; letter-spacing:3px;}
+  }
+}
