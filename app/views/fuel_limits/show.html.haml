@@ -1,0 +1,33 @@
+%p#notice= notice
+
+%p
+  %b Code:
+  = @fuel_limit.code
+%p
+  %b Unit:
+  = @fuel_limit.unit_id
+%p
+  %b Limit amount:
+  = @fuel_limit.limit_amount
+%p
+  %b Limit unit type:
+  = @fuel_limit.limit_unit_type_id
+%p
+  %b Duration:
+  = @fuel_limit.duration
+%p
+  %b Fuel type:
+  = @fuel_limit.fuel_type_id
+%p
+  %b Fuel unit type:
+  = @fuel_limit.fuel_unit_type_id
+%p
+  %b Emails:
+  = @fuel_limit.emails
+%p
+  %b Data:
+  = @fuel_limit.data
+
+= link_to 'Edit', edit_fuel_limit_path(@fuel_limit)
+\|
+= link_to 'Back', fuel_limits_path

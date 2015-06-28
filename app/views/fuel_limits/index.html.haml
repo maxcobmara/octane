@@ -1,0 +1,37 @@
+%h1 Listing fuel_limits
+
+%table
+  %thead
+    %tr
+      %th Code
+      %th Unit
+      %th Limit amount
+      %th Limit unit type
+      %th Duration
+      %th Fuel type
+      %th Fuel unit type
+      %th Emails
+      %th Data
+      %th
+      %th
+      %th
+
+  %tbody
+    - @fuel_limits.each do |fuel_limit|
+      %tr
+        %td= fuel_limit.code
+        %td= fuel_limit.unit_id
+        %td= fuel_limit.limit_amount
+        %td= fuel_limit.limit_unit_type_id
+        %td= fuel_limit.duration
+        %td= fuel_limit.fuel_type_id
+        %td= fuel_limit.fuel_unit_type_id
+        %td= fuel_limit.emails
+        %td= fuel_limit.data
+        %td= link_to 'Show', fuel_limit
+        %td= link_to 'Edit', edit_fuel_limit_path(fuel_limit)
+        %td= link_to 'Destroy', fuel_limit, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Fuel limit', new_fuel_limit_path
