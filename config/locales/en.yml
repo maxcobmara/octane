@@ -159,8 +159,8 @@ en:
     other_usage_current: Other Usage Current Month
     month_external_supply: External Supply Current Month
   home:
-    welcome: Welcome to Txport
-    txport: Transport Management System
+    welcome: Welcome to Octane
+    octane: Fuel Management System
     email: Email
     password: Password
     signin: Sign in
