@@ -3,8 +3,8 @@ development:
   encoding: unicode
   database: navy_development
   host: localhost
-  username: tldm
-  password: password
+  username: postgres
+  password: maximum8
   encoding: UTF8
   pool: 5
   timeout: 5000
