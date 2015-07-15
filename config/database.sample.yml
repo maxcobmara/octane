@@ -4,7 +4,7 @@ development:
   database: navy_development
   host: localhost
   username: postgres
-  password: maximum8
+  password: password
   encoding: UTF8
   pool: 5
   timeout: 5000
@@ -15,7 +15,7 @@ test:
   database: navy_test
   host: localhost
   username: postgres
-  password: maximum8
+  password: password
   encoding: UTF8
   pool: 5
   timeout: 5000
