@@ -6,4 +6,10 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     tank_capacity_chart_fuel_tanks_path
   end
+
+  before_filter { |c| Authorization.current_user = c.current_user }
+  def permission_denied
+    flash[:danger] = "Sorry, you are not allowed to access that page.";
+    redirect_to root_url
+  end
 end

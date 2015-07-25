@@ -114,6 +114,7 @@ ms_MY:
 
     admin: Sistem
     users: Pengurusan Pengguna
+    authorisation: Perundangan Kebenaran
 
   report:
     unit_fuel_graph: Graf Penggunaan Minyak
