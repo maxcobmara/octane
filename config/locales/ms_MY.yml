@@ -111,6 +111,10 @@ ms_MY:
     fuel_type_per_quarter: Laporan Penyata Purata Pengunaan Harian Per Quarter
     transport_summary: Laporan Pengangkutan
     PMP_usage: Laporan Penyata Penggunaan Bahan PMP Bulanan
+
+    admin: Sistem
+    users: Pengurusan Pengguna
+
   report:
     unit_fuel_graph: Graf Penggunaan Minyak
     diesel_vessel_usage: Penggunaan Diesel Kapal

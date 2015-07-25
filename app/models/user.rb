@@ -4,7 +4,24 @@ class User < ActiveRecord::Base
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-         
+
+
+
+  #stuff for roles
+  serialize :roles, Hash
+
+  def user_roles=(value)
+    roles[:user_roles] = value
+  end
+
+  def user_roles
+    roles[:user_roles]
+  end
+
+  def role_symbols
+    user_roles.find_all{|key, value| value == '1'}.map(&:first).map(&:to_sym)
+  end
+
 end
 
 # == Schema Information

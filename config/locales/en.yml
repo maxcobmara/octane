@@ -145,6 +145,10 @@ en:
     transport_summary: Transport Summary
     PMP_usage: Monthly Fuel Usage Report
 
+    admin: Administration
+    users: User Management
+
+
   report:
     unit_fuel_graph: Unit Fuel Graph
     diesel_vessel_usage: Diesel Vessel Usage

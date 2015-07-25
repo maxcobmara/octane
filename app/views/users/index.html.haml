@@ -1,0 +1,23 @@
+//- provide(:title, 'Users')
+- model_class = User
+.page-header
+  %h1= t 'users.title', :default => model_class.model_name.human.pluralize
+
+.row
+  = render 'shared/flashes'
+
+.row
+  .col-md-2
+    .btn-group-vertical{"aria-label" => "sideBar", :role => "group"}
+      .btn.btn-default= link_to content_tag(:i, fa_icon("asterisk", text: (t 'actions.new'))), new_user_path
+      .btn.btn-default= link_to content_tag(:i, fa_icon("search", text: (t 'actions.search'))), "#", class: "toga"
+      .btn.btn-default= link_to(fa_icon("print", text: (t 'actions.print')), "javascript:print()")
+  .col-md-10.index_main
+    %table.table.table-condensed.table-hover#unit_type_list{:style => "width:60%;"}
+      %thead
+        %tr
+          %th=t 'users.email'
+      - @users.each do |user|
+        %tbody
+          %tr
+            %td= link_to user.email, edit_user_path(user)

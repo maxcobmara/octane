@@ -5,11 +5,12 @@ gem 'rails', '4.2.1'
 #Operational Gems
 gem 'pg',             '~> 0.17.1'
 gem 'thin',           '~> 1.6.3'
-gem 'devise',         '~> 3.4.1'
+gem 'devise',         '~> 3.5.1'
 gem 'ancestry',       '~> 2.1.0'
 gem 'ransack',        '~> 1.6.6'
 gem 'chartkick',      '~> 1.3.2'
 gem 'groupdate',      '~> 2.4.0'
+gem 'declarative_authorization', '~> 0.5.7'
 
 #Display Gems
 gem 'sass',         '~> 3.4.13'

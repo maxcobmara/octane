@@ -1,0 +1,19 @@
+- model_class = User
+.page-header
+  %h1= t 'users.edit', :default => model_class.model_name.human.pluralize
+
+.row
+  = render 'shared/flashes'
+  = form_for @user, :html => { :class => 'form-horizontal'} do |f|
+
+    .form-group
+      .col-sm-3.control-label
+        = f.label :email
+      .col-sm-4
+        = f.text_field :email, class: 'form-control mandatory'
+
+    = render partial: "roles", locals: {:f => f}
+
+    .form-group
+      .col-sm-offset-3.col-sm-6
+        = f.submit "Update User", :class => 'btn btn-primary'

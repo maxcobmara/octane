@@ -1,0 +1,12 @@
+//TODO Define roles centrally
+- roles_list = ["Administration", "Guest", "Data Entry"]
+.form-group
+  .col-sm-3.control-label
+    = f.label :roles
+  .col-sm-7
+    = f.fields_for :user_roles do |r|
+      - roles_list.each do |rl|
+        - prl = rl.parameterize.downcase.underscore
+        .row.roles_box{style: "margin-left: 30px;"}
+          = r.check_box prl, checked: ((@user.user_roles[prl] == '1' ? "checked" : "") rescue "")
+          = rl
