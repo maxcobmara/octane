@@ -21,6 +21,8 @@ class Vehicle < ActiveRecord::Base
   belongs_to :vehicleacquired,  :class_name => "AcquiredType",        :foreign_key => "acquired_id"
   belongs_to :manufacturer,     :class_name => "VehicleManufacturer", :foreign_key => "manufacturer_id"
   belongs_to :vehiclecategory,  :class_name => "VehicleCategory",     :foreign_key => "category_id"
+  belongs_to :fueltype, :class_name => "FuelType", :foreign_key => "fuel_type_id"
+  belongs_to :unittype, :class_name => "UnitType", :foreign_key => "fuel_unit_type_id"
 
   #txport
   #txporthas_attached_file :photo, :styles => { :medium => "300x300>", :thumb => "100x100>" },:default_url => "/assets/:style/no-photo.gif"
@@ -199,6 +201,23 @@ end
         errors.add(:base, I18n.t('vehicles.proses_teb_action_menu'))
       end
     end
+  end
+  
+  def self.groupped
+    groupped_vehicle=[]
+    Vehicle.all.group_by(&:fuel_type_id).each do |fuelid, vehicles|
+      vehicles_of_type=[]
+      vehicles.sort_by(&:reg_no).each do |vehicle|
+        vehicles_of_type << [vehicle.reg_no, vehicle.id]
+      end
+      unless fuelid.nil?
+        fuelname=FuelType.find(fuelid).name
+      else
+        fuelname='Not Defined'
+      end
+      groupped_vehicle << [fuelname, vehicles_of_type] 
+    end
+    groupped_vehicle
   end
 
 end

@@ -28,6 +28,22 @@ class FuelTank < ActiveRecord::Base
 	where('locations ILIKE (?) AND unit_id=? AND fuel_type_id=? AND capacity=?',"%#{tankno}",depot_id,fuel_type_id, capacity)[0].id	
   end
   
+  def self.groupped
+    groupped_tank=[]
+    groupped_tank2=[]
+    all_tanks=[]
+    FuelTank.all.group_by{|x|x.fuel_type.shortname}.each do |fuelname, fuel_tanks|
+      tanks_of_type=[]
+      fuel_tanks.each do |tank|
+        tanks_of_type << [tank.fuel_tank_details, tank.id]
+        all_tanks << [tank.fuel_tank_details, tank.id]
+      end
+      groupped_tank << [fuelname, tanks_of_type]
+    end
+    groupped_tank << ['Not Defined', all_tanks]
+    groupped_tank
+  end
+  
 end
 
 # == Schema Information
