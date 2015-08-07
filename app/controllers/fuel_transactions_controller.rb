@@ -14,7 +14,13 @@ class FuelTransactionsController < ApplicationController
 
   # GET /fuel_transactions/new
   def new
+    @fuel_transaction = FuelTransaction.new(transaction_type: params[:transaction_type])
+    #@fuel_transaction.transaction_type = "Usage"
+  end
+
+  def new_resupply
     @fuel_transaction = FuelTransaction.new
+    #@fuel_transaction.transaction_type = "Resupply"
   end
 
   # GET /fuel_transactions/1/edit
