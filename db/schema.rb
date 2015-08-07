@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150725071345) do
+ActiveRecord::Schema.define(version: 20150807014522) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -108,6 +108,11 @@ ActiveRecord::Schema.define(version: 20150725071345) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "unit_type_id"
+    t.integer  "usage_transactions"
+    t.decimal  "usage_amount"
+    t.integer  "resupply_transactions"
+    t.decimal  "resupply_amount"
+    t.text     "data"
   end
 
   create_table "fuel_budgets", force: :cascade do |t|
@@ -163,6 +168,21 @@ ActiveRecord::Schema.define(version: 20150725071345) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.decimal  "maximum"
+  end
+
+  create_table "fuel_transactions", force: :cascade do |t|
+    t.string   "document_code"
+    t.string   "transaction_type"
+    t.decimal  "amount"
+    t.integer  "fuel_type_id"
+    t.integer  "fuel_unit_type_id"
+    t.integer  "fuel_tank_id"
+    t.integer  "vehicle_id"
+    t.text     "data"
+    t.integer  "created_by"
+    t.integer  "updated_by"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
   create_table "fuel_types", force: :cascade do |t|
@@ -558,6 +578,12 @@ ActiveRecord::Schema.define(version: 20150725071345) do
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
     t.integer  "acquired_id"
+    t.integer  "fuel_type_id"
+    t.decimal  "fuel_capacity"
+    t.integer  "fuel_unit_type_id"
+    t.text     "data"
+    t.integer  "updated_by"
+    t.integer  "created_by"
   end
 
 end

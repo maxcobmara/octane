@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  document_code: MyString
+  amount: 9.99
+  fuel_type_id: 1
+  fuel_unit_type_id: 1
+  fuel_tank_id: 1
+  vehicle_id: 1
+  data: MyText
+
+two:
+  document_code: MyString
+  amount: 9.99
+  fuel_type_id: 1
+  fuel_unit_type_id: 1
+  fuel_tank_id: 1
+  vehicle_id: 1
+  data: MyText

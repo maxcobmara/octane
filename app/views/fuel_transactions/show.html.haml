@@ -1,0 +1,27 @@
+%p#notice= notice
+
+%p
+  %b Document code:
+  = @fuel_transaction.document_code
+%p
+  %b Amount:
+  = @fuel_transaction.amount
+%p
+  %b Fuel type:
+  = @fuel_transaction.fuel_type_id
+%p
+  %b Fuel unit type:
+  = @fuel_transaction.fuel_unit_type_id
+%p
+  %b Fuel tank:
+  = @fuel_transaction.fuel_tank_id
+%p
+  %b Vehicle:
+  = @fuel_transaction.vehicle_id
+%p
+  %b Data:
+  = @fuel_transaction.data
+
+= link_to 'Edit', edit_fuel_transaction_path(@fuel_transaction)
+\|
+= link_to 'Back', fuel_transactions_path

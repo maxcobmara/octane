@@ -1,5 +1,5 @@
 rails generate migration FuelTransactions document_code:string amount:decimal fuel_type_id:integer fuel_unit_type_id:integer fuel_tank_id:integer vehicle_id:integer data:text
-rails generate migration AddColumnToVehicles fuel_type_id:integer fuel_capacity:decimal fuel_unit_type_id:integer data:text
+rails generate migration AddColumnToVehicles fuel_type_id:integer fuel_capacity:decimal fuel_unit_type_id:integer data:text updated_by:integer created_by:integer
 rails generate migration AddColumnToFuelBalance usage_transactions:integer usage_amount:decimal resupply_transactions:integer resupply:amount data:text
 
 def use

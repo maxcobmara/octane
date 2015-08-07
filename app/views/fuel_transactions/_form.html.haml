@@ -1,0 +1,31 @@
+= form_for @fuel_transaction do |f|
+  - if @fuel_transaction.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@fuel_transaction.errors.count, "error")} prohibited this fuel_transaction from being saved:"
+      %ul
+        - @fuel_transaction.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :document_code
+    = f.text_field :document_code
+  .field
+    = f.label :amount
+    = f.text_field :amount
+  .field
+    = f.label :fuel_type_id
+    = f.number_field :fuel_type_id
+  .field
+    = f.label :fuel_unit_type_id
+    = f.number_field :fuel_unit_type_id
+  .field
+    = f.label :fuel_tank_id
+    = f.number_field :fuel_tank_id
+  .field
+    = f.label :vehicle_id
+    = f.number_field :vehicle_id
+  .field
+    = f.label :data
+    = f.text_area :data
+  .actions
+    = f.submit 'Save'

@@ -1,0 +1,33 @@
+%h1 Listing fuel_transactions
+
+%table
+  %thead
+    %tr
+      %th Document code
+      %th Amount
+      %th Fuel type
+      %th Fuel unit type
+      %th Fuel tank
+      %th Vehicle
+      %th Data
+      %th
+      %th
+      %th
+
+  %tbody
+    - @fuel_transactions.each do |fuel_transaction|
+      %tr
+        %td= fuel_transaction.document_code
+        %td= fuel_transaction.amount
+        %td= fuel_transaction.fuel_type_id
+        %td= fuel_transaction.fuel_unit_type_id
+        %td= fuel_transaction.fuel_tank_id
+        %td= fuel_transaction.vehicle_id
+        %td= fuel_transaction.data
+        %td= link_to 'Show', fuel_transaction
+        %td= link_to 'Edit', edit_fuel_transaction_path(fuel_transaction)
+        %td= link_to 'Destroy', fuel_transaction, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Fuel transaction', new_fuel_transaction_path
