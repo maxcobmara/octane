@@ -1,6 +1,9 @@
 %h1 Editing fuel_transaction
 
-= render 'form'
+- if @fuel_transaction.transaction_type == "Usage"
+  = render 'form_usage'
+-else
+  = render 'form_resupply'
 
 = link_to 'Show', @fuel_transaction
 \|

@@ -1,11 +1,16 @@
 = form_for @fuel_transaction, :html => { :class => 'form-horizontal' } do |f|
-  = f.hidden_field :transaction_type
+  = f.hidden_field :transaction_type, value: @fuel_transaction.transaction_type
+  = f.hidden_field :created_by, value: current_user.id
   - if @fuel_transaction.errors.any?
     #error_explanation
       %h2= "#{pluralize(@fuel_transaction.errors.count, "error")} prohibited this fuel_transaction from being saved:"
       %ul
         - @fuel_transaction.errors.full_messages.each do |msg|
           %li= msg
+
+  .form-group
+    = f.label :fuel_tank_id, class: 'col-sm-2 control-label'
+    .col-sm-3= f.collection_select :fuel_tank_id, FuelTank.order(:locations), :id, :fuel_tank_details, {}, {class: 'selectpicker', 'data-width'=>"auto"}
 
   .form-group
     = f.label :document_code, class: 'col-sm-2 control-label'
@@ -22,13 +27,6 @@
     = f.label :fuel_type_id, class: 'col-sm-2 control-label'
     .col-sm-3= f.collection_select :fuel_type_id, FuelType.order(:name), :id, :name, {}, {class: 'selectpicker', 'data-width'=>"auto"}
 
-  .form-group
-    = f.label :fuel_tank_id, class: 'col-sm-2 control-label'
-    .col-sm-3= f.collection_select :fuel_tank_id, FuelTank.order(:locations), :id, :fuel_tank_details, {}, {class: 'selectpicker', 'data-width'=>"auto"}
-
-  .form-group
-    = f.label :vehicle_id, class: 'col-sm-2 control-label'
-    .col-sm-3= f.collection_select :vehicle_id, Vehicle.order(:reg_no), :id, :reg_no, {}, {class: 'selectpicker', 'data-width'=>"auto"}
 
   .col-sm-2.col-sm-offset-2
     = f.submit 'Save', class: "btn btn-primary"
