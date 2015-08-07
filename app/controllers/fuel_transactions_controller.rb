@@ -75,6 +75,6 @@ class FuelTransactionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def fuel_transaction_params
-      params.require(:fuel_transaction).permit(:document_code, :amount, :fuel_type_id, :fuel_unit_type_id, :fuel_tank_id, :vehicle_id, :data)
+      params.require(:fuel_transaction).permit(:document_code, :transaction_type, :amount, :fuel_type_id, :fuel_unit_type_id, :fuel_tank_id, :vehicle_id, :data, :created_by, :updated_by)
     end
 end

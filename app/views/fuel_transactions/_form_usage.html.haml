@@ -1,5 +1,6 @@
 = form_for @fuel_transaction, :html => { :class => 'form-horizontal' } do |f|
-  = f.hidden_field :transaction_type
+  = f.hidden_field :transaction_type, value: @fuel_transaction.transaction_type
+  = f.hidden_field :created_by, value: current_user.id
   - if @fuel_transaction.errors.any?
     #error_explanation
       %h2= "#{pluralize(@fuel_transaction.errors.count, "error")} prohibited this fuel_transaction from being saved:"
