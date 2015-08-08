@@ -3,11 +3,12 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 jQuery ->
- 
-  vehicles = $('#fuel_transaction_vehicle_id').html()
-  tanks = $('#fuel_transaction_fuel_tank_id').html()
 
   $(document).on 'ready page:load', ->
+    $('.selectpicker').selectpicker('refresh');
+    vehicles = $('#fuel_transaction_vehicle_id').html()
+    tanks = $('#fuel_transaction_fuel_tank_id').html()
+    
     fueltype = $('#fuel_transaction_fuel_type_id :selected').text()
     escaped_fueltype = fueltype.replace(/([ #;&,.+*~\':"!^$[\]()=>|\/@])/g, '\\$1')
     options = $(vehicles).filter("optgroup[label=#{escaped_fueltype}]").html()
@@ -27,6 +28,10 @@ jQuery ->
       $('#fuel_transaction_fuel_tank_id').parent().hide()
 
   $('#fuel_transaction_fuel_type_id').change ->
+    $('.selectpicker').selectpicker('refresh');
+    vehicles = $('#fuel_transaction_vehicle_id').html()
+    tanks = $('#fuel_transaction_fuel_tank_id').html()
+  
     fueltype = $('#fuel_transaction_fuel_type_id :selected').text()
     escaped_fueltype = fueltype.replace(/([ #;&,.+*~\':"!^$[\]()=>|\/@])/g, '\\$1')
     options = $(vehicles).filter("optgroup[label=#{escaped_fueltype}]").html()
