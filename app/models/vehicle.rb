@@ -210,7 +210,7 @@ end
       vehicles.sort_by(&:reg_no).each do |vehicle|
         vehicles_of_type << [vehicle.reg_no, vehicle.id]
       end
-      unless fuelid.nil?
+      unless fuelid==nil
         fuelname=FuelType.find(fuelid).name
       else
         fuelname='Not Defined'

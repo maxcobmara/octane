@@ -21,11 +21,12 @@
 
   .form-group
     = f.label :fuel_type_id, class: 'col-sm-2 control-label'
-    .col-sm-3= f.collection_select :fuel_type_id, FuelType.order(:name), :id, :name, {:prompt => 'Not Defined'}, {class: 'selectpicker', 'data-width'=>"auto"}
+    .col-sm-3= f.collection_select :fuel_type_id, FuelType.order(:name), :id, :name, {:prompt => 'Not Defined'}, {:class => 'form-control'}
+    /{class: 'selectpicker', 'data-width'=>"auto"}
 
   .form-group
     = f.label :vehicle_id, class: 'col-sm-2 control-label'
-    .col-sm-3= select_tag("fuel_transaction_vehicle_id", grouped_options_for_select(Vehicle.groupped, 'Not Defined'), :class => 'selectpicker')
+    .col-sm-3= select_tag("fuel_transaction_vehicle_id", grouped_options_for_select(Vehicle.groupped, 'Not Defined'), :class => 'form-control')
   
   .form-group
     = f.label :fuel_tank_id, class: 'col-sm-2 control-label'
@@ -33,3 +34,9 @@
 
   .col-sm-2.col-sm-offset-2
     = f.submit 'Save', class: "btn btn-primary"
+    
+  
+:javascript
+  $(document).ready(function () {
+    $(".selectpicker").selectpicker();
+  });

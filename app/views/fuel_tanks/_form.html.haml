@@ -4,7 +4,7 @@
 
     .control-group
       = f.label :unit_id, :class => 'control-label'
-      .controls= f.collection_select :unit_id, Unit.all, :id, :name, :include_blank => t('helpers.prompt.select_depot'), :html_options => {:class => 'selectpicker'}
+      .controls= f.collection_select :unit_id, Unit.all, :id, :name, {:include_blank => t('helpers.prompt.select_depot')}, {:class => 'selectpicker'}
 
     .control-group
       = f.label :locations, :class => 'control-label'
@@ -14,11 +14,11 @@
       = f.label :capacity, :class => 'control-label'
       .controls
         = f.text_field :capacity, :class => 'text_field'
-        = f.collection_select :unit_type, UnitType.order(description: :asc).all, :id, :description, :include_blank => t('helpers.prompt.select_unit_type'), :html_options => {:class => 'selectpicker'}
+        = f.collection_select :unit_type, UnitType.order(description: :asc).all, :id, :description,{:include_blank => t('helpers.prompt.select_unit_type')},  {:class => 'selectpicker'}
 
     .control-group
       = f.label :fuel_type_id, :class => 'control-label'
-      .controls= f.collection_select :fuel_type_id, FuelType.all, :id, :name, :include_blank => t('helpers.prompt.select_fuel_type'), :html_options => {:class => 'selectpicker'}
+      .controls= f.collection_select :fuel_type_id, FuelType.all, :id, :name, {:include_blank => t('helpers.prompt.select_fuel_type')}, {:class => 'selectpicker'}
 
     .form-actions
       = f.submit (t 'helpers.links.submit'), :class => 'btn btn-primary'

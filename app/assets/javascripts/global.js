@@ -8,4 +8,8 @@ $(document).ready(function(){
   });
 
   $('.selectpicker').selectpicker();
-})
+});
+
+$(document).on('page:change', function () {
+  $('.selectpicker').selectpicker();
+});
