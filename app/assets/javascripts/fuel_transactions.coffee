@@ -24,6 +24,7 @@
 $(document).on "page:change", ->
   #alert "change"
   #jQuery ->
+  $('.selectpicker').selectpicker('refresh');
   vehicles = $('#fuel_transaction_vehicle_id').html()
   tanks = $('#fuel_transaction_fuel_tank_id').html()
   $('#fuel_transaction_fuel_type_id').change ->
@@ -31,7 +32,7 @@ $(document).on "page:change", ->
     escaped_fueltype = fueltype.replace(/([ #;&,.+*~\':"!^$[\]()=>|\/@])/g, '\\$1')
     options = $(vehicles).filter("optgroup[label=#{escaped_fueltype}]").html()
     options2 = $(tanks).filter("optgroup[label=#{escaped_fueltype}]").html()
-    if options
+    if options2
       $('#fuel_transaction_vehicle_id').html(options)
       $('#fuel_transaction_vehicle_id').parent().show()
       $('#fuel_transaction_fuel_tank_id').html(options2)
