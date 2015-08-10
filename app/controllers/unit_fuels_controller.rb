@@ -86,6 +86,7 @@ class UnitFuelsController < ApplicationController
      @year_annual_usage_report = UnitFuel.where( "issue_date >= ? AND issue_date <= ? ", @sdate, @edate ) 
      @year_other_fuel = AddFuel.where( "created_at >= ? AND created_at <= ? ", @sdate, @edate )
      @year_external_supply = ExternalSupplied.where( "created_at >= ? AND created_at <= ? ", @sdate, @edate )
+     @year_external_issue = ExternalIssued.where( "created_at >= ? AND created_at <= ? ", @sdate, @edate )
      @unit_fuels = UnitFuel.where( "issue_date >= ? AND issue_date <= ? ", @sdate, @edate )
      @add_fuels = AddFuel.where( "issue_date >= ? AND issue_date <= ? ", @sdate, @edate )
   end
