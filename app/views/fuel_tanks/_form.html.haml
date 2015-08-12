@@ -20,7 +20,8 @@
       = f.label :fuel_type_id, :class => 'control-label'
       .controls= f.collection_select :fuel_type_id, FuelType.all, :id, :name, {:include_blank => t('helpers.prompt.select_fuel_type')}, {:class => 'selectpicker'}
 
+    %br
     .form-actions
       = f.submit (t 'helpers.links.submit'), :class => 'btn btn-primary'
       = link_to t('.cancel', :default => t("helpers.links.cancel")), |
-        fuel_tanks_path, :class => 'btn'
+        fuel_tanks_path, :class => "btn btn-default"

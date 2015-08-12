@@ -33,5 +33,7 @@
     = f.label :emails, class: 'col-sm-2 control-label'
     .col-sm-5= f.text_field :emails, class: 'form-control', placeholder: "Emails"
 
-  .col-sm-offset-2.actions
+  /.col-sm-offset-2.actions
+  .col-sm-offset-2
     = f.submit 'Save', class: 'btn btn-primary'
+    = link_to 'Back', fuel_limits_path, class: "btn btn-default"
