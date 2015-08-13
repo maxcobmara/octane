@@ -7,6 +7,7 @@ class UnitType < ActiveRecord::Base
   #has_many :external_issueds, dependent: :nullify
   #has_many :external_supplieds, dependent: :nullify
   #has_many :maintenance_details, dependent: :nullify
+  has_many :fuel_limits
 
   def self.get_type(fr_excel,arr_fr_excel)
     utype_desc = UnitType.get_type_desc(fr_excel)

@@ -1,7 +1,6 @@
-%h1 Edit Fuel Limit
-
+- model_class = FuelLimit
+.page-header
+  %h1=  t 'fuel_limits.new', :default => [:'helpers.titles.new', 'Edit %{model}'], :model => model_class.model_name.human
+ 
 = render 'form'
 
-= link_to 'Show', @fuel_limit
-\|
-= link_to 'Back', fuel_limits_path

@@ -6,6 +6,7 @@ class FuelType < ActiveRecord::Base
   #has_many :external_issueds, dependent: :nullify
   #has_many :external_supplieds, dependent: :nullify
   has_many :vehicles, dependent: :nullify
+  has_many :fuel_limits
 
   def self.exclude_petrol_diesel
     where('name LIKE (?) OR name LIKE (?)','PETROL','DIESEL').pluck(:id)

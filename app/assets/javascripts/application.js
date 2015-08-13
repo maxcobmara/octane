@@ -17,4 +17,4 @@
 //= require turbolinks
 //= require highcharts.js
 //= require bootstrap-select
-//= require_tree
+//= require_tree .
