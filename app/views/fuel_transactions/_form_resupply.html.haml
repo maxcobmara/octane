@@ -20,7 +20,7 @@
 
   .form-group
     = f.label :fuel_type_id, class: 'col-sm-2 control-label'
-    .col-sm-3= f.collection_select :fuel_type_id, FuelType.order(:name), :id, :name, {:prompt => 'Not Defined'}, {:class => 'form-control'}
+    .col-sm-3= f.collection_select :fuel_type_id, FuelType.main_use.order(:name), :id, :name, {:prompt => 'Not Defined'}, {:class => 'form-control'}
 
   .form-group
     = f.label :fuel_tank_id, class: 'col-sm-2 control-label'

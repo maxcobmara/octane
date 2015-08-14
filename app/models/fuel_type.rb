@@ -9,6 +9,8 @@ class FuelType < ActiveRecord::Base
   has_many :fuel_limits
   has_many :fuel_transactions
 
+  scope :main_use, -> { where(id: [FuelTank.where('fuel_type_id is not null').pluck(:fuel_type_id)])} #for use in Add Fuel & Use Fuel
+
   def self.exclude_petrol_diesel
     where('name LIKE (?) OR name LIKE (?)','PETROL','DIESEL').pluck(:id)
   end
