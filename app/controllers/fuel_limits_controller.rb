@@ -5,6 +5,8 @@ class FuelLimitsController < ApplicationController
   # GET /fuel_limits.json
   def index
     @fuel_limits = FuelLimit.all
+    @search = FuelLimit.search(params[:q])
+    @fuel_limits = @search.result
   end
 
   # GET /fuel_limits/1

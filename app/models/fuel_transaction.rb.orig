@@ -1,0 +1,14 @@
+class FuelTransaction < ActiveRecord::Base
+<<<<<<< HEAD
+
+  def self.by_type(transaction_type)
+    where(transaction_type: transaction_type)
+  end
+  
+=======
+  belongs_to :fuel_unit_type, :class_name => "UnitType" , :foreign_key => "fuel_unit_type_id"
+  belongs_to :fuel_type
+  belongs_to :fuel_tank
+  belongs_to :vehicle #usage only
+>>>>>>> 5185a81bdc851b7b24df9c821878f82961852825
+end

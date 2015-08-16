@@ -1,33 +1,39 @@
+- provide(:title, 'Fuel Limit Details')
+- model_class = FuelLimit
+.page-header
+  %h1 Fuel Limit
 %p#notice= notice
+%dl.dl-horizontal
+  %dt Code
+  %dd= @fuel_limit.code
+%dl.dl-horizontal
+  %dt Unit
+  %dd= @fuel_limit.unit.name
+%dl.dl-horizontal
+  %dt Limit Amount
+  %dd
+    = @fuel_limit.limit_amount
+    = @fuel_limit.limit_unit_type.short_name
+%dl.dl-horizontal
+  %dt Duration
+  %dd= @fuel_limit.duration.blank? ? " " : @fuel_limit.duration.to_s+" days"
+%dl.dl-horizontal
+  %dt Fuel Type
+  %dd= @fuel_limit.fuel_type.try(:shortname)
+%dl.dl-horizontal
+  %dt Fuel Unit Type
+  %dd= @fuel_limit.fuel_unit_type.try(:short_name)
+%dl.dl-horizontal
+  %dt Emails
+  %dd= @fuel_limit.emails
 
-%p
-  %b Code:
-  = @fuel_limit.code
-%p
-  %b Unit:
-  = @fuel_limit.unit_id
-%p
-  %b Limit amount:
-  = @fuel_limit.limit_amount
-%p
-  %b Limit unit type:
-  = @fuel_limit.limit_unit_type_id
-%p
-  %b Duration:
-  = @fuel_limit.duration
-%p
-  %b Fuel type:
-  = @fuel_limit.fuel_type_id
-%p
-  %b Fuel unit type:
-  = @fuel_limit.fuel_unit_type_id
-%p
-  %b Emails:
-  = @fuel_limit.emails
-%p
-  %b Data:
-  = @fuel_limit.data
+.form-actions
+  = link_to content_tag(:i, "", :class => "fa fa-arrow-left ") + " " + t('.back', :default => t("helpers.links.back")), fuel_limits_path, :class => 'btn'
+  = link_to content_tag(:i, "", :class => "fa fa-edit") + " " + t('.edit', :default => t("helpers.links.edit")), |
+    edit_fuel_limit_path(@fuel_limit), :class => 'btn'
+  = link_to content_tag(:i, "", :class => "fa fa-trash-o icon-white") + " " + t('.destroy', :default => t("helpers.links.destroy")), |
+    fuel_limit_path(@fuel_limit),                                                                                                    |
+    :method => 'delete',                                                                                                           |
+    :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },                   |
+    :class => 'btn btn-danger'                                                                                                     |
 
-= link_to 'Edit', edit_fuel_limit_path(@fuel_limit)
-\|
-= link_to 'Back', fuel_limits_path

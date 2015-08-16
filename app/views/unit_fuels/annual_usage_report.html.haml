@@ -120,6 +120,31 @@ Annual External Supplied
       %td= "-"
       %td= "-"
 
+Annual External Issued
+%table.table.table-bordered
+  %thead
+    %tr
+      %th= t 'add_fuels.unit_fuel_id'
+      %th= t 'external_supplieds.fuel_type_id'
+      %th= t 'external_supplieds.quantity'
+      %th= t 'external_supplieds.unit_type_id'
+      %th= t 'external_supplieds.source'
+
+  %tbody
+    - @year_external_issue.each do |external_issued|
+      %tr
+        %td= check_kin {external_issued.unit_fuel.month_unit}
+        %td= check_kin {external_issued.fuel_type.name}
+        %td= external_issued.quantity.to_i
+        %td= check_kin {external_issued.unit_type.description}
+        %td= check_kin {external_issued.resource.name}
+    %tr
+      %td= "-"
+      %td= t 'unit_fuels.total'
+      %td= ExternalSupplied.where('created_at >=? AND created_at <=?', @sdate, @edate).sum(:quantity)
+      %td= "-"
+      %td= "-"
+
 %table.table.table-condensed.table-hover
   - @unit_fuels.group_by(&:unit_id).each do |unit_id, unit_fuels, add_fuels|
     %thead

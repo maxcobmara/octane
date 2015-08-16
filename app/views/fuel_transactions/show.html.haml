@@ -1,27 +1,37 @@
+- provide(:title, 'Fuel Transaction')
+- model_class = FuelTransaction
+.page-header
+  %h1 
+    Fuel
+    = @fuel_transaction.transaction_type
 %p#notice= notice
+%dl.dl-horizontal
+  %dt Document Code
+  %dd= @fuel_transaction.document_code
+%dl.dl-horizontal
+  %dt Amount
+  %dd
+    = @fuel_transaction.amount
+    = @fuel_transaction.fuel_unit_type.try(:short_name)
+%dl.dl-horizontal
+  %dt Fuel Type
+  %dd= @fuel_transaction.fuel_type.try(:shortname)
+%dl.dl-horizontal
+  %dt Fuel Tank
+  %dd=@fuel_transaction.fuel_tank.try(:fuel_tank_details)
+- if @fuel_transaction.transaction_type=="Usage"
+  %dl.dl-horizontal
+    %dt Vehicle
+    %dd= @fuel_transaction.vehicle.try(:reg_no)
+%dl.dl-horizontal
+  %dt Data
+  %dd= @fuel_transaction.data
 
-%p
-  %b Document code:
-  = @fuel_transaction.document_code
-%p
-  %b Amount:
-  = @fuel_transaction.amount
-%p
-  %b Fuel type:
-  = @fuel_transaction.fuel_type_id
-%p
-  %b Fuel unit type:
-  = @fuel_transaction.fuel_unit_type_id
-%p
-  %b Fuel tank:
-  = @fuel_transaction.fuel_tank_id
-%p
-  %b Vehicle:
-  = @fuel_transaction.vehicle_id
-%p
-  %b Data:
-  = @fuel_transaction.data
-
-= link_to 'Edit', edit_fuel_transaction_path(@fuel_transaction)
-\|
-= link_to 'Back', fuel_transactions_path
+.form-actions
+  .btn.btn-default= link_to content_tag(:i, "", class: "fa fa-arrow-left ") + " " + t('.back', :default => t("helpers.links.back")), fuel_transactions_path
+  .btn.btn-default= link_to content_tag(:i, "", class: "fa fa-edit") + " " + t('.edit', :default => t("helpers.links.edit")), edit_fuel_transaction_path(@fuel_transaction)
+  = link_to content_tag(:i, "", :class => "fa fa-trash-o icon-white") + " " + t('.destroy', :default => t("helpers.links.destroy")), |
+    fuel_transaction_path(@fuel_transaction),                                                                                                    |
+    :method => 'delete',                                                                                                           |
+    :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },                   |
+    :class => 'btn btn-danger'                                                                                                     |

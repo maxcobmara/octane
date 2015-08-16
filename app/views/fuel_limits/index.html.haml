@@ -3,38 +3,42 @@
 .page-header
   %h1= t 'fuel_limits.title', :default => model_class.model_name.human.pluralize
 
+.row.searchit{style: "display:none;"}
+  .span9offset1
+    = search_form_for @search, class: "form-inline" do |f|
+      .field
+        = f.label :unit_id_cont, "Unit/Depot Contains:"
+        = f.text_field :unit_name_cont, class: "input-medium search-query"
+        = f.submit "Search", class: "btn btn-warning"
+
+.btn-group{"aria-label" => "sidebar", :role => "group", style: "float:right;"}
+  .btn.btn-default= link_to content_tag(:i, fa_icon("asterisk", text: (t 'actions.new'))), new_fuel_limit_path
+  .btn.btn-default= link_to content_tag(:i, fa_icon("search", text: (t 'actions.search'))), "#", class: "toga"
+  .btn.btn-default= link_to(fa_icon("print", text: (t 'actions.print')), "javascript:print()")
+  
+%BR
+%BR
 %table.table.table-condensed.table-hover
   %thead
     %tr
       %th Code
       %th Unit
-      %th Limit amount
-      %th Limit unit type
+      %th Limit Amount
       %th Duration
-      %th Fuel type
-      %th Fuel unit type
+      %th Fuel Type
+      %th Fuel Unit Type
       %th Emails
-      %th Data
-      %th
-      %th
       %th
 
   %tbody
     - @fuel_limits.each do |fuel_limit|
       %tr
         %td= fuel_limit.code
-        %td= fuel_limit.unit_id
-        %td= fuel_limit.limit_amount
-        %td= fuel_limit.limit_unit_type_id
-        %td= fuel_limit.duration
-        %td= fuel_limit.fuel_type_id
-        %td= fuel_limit.fuel_unit_type_id
+        %td= fuel_limit.unit.name
+        %td= fuel_limit.limit_amount.to_s+" "+fuel_limit.limit_unit_type.short_name
+        %td= fuel_limit.duration.to_s+" days"
+        %td= fuel_limit.fuel_type.shortname
+        %td= fuel_limit.fuel_unit_type.try(:short_name)
         %td= fuel_limit.emails
         %td= fuel_limit.data
-        %td= link_to 'Show', fuel_limit
-        %td= link_to 'Edit', edit_fuel_limit_path(fuel_limit)
-        %td= link_to 'Destroy', fuel_limit, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
-= link_to 'New Fuel limit', new_fuel_limit_path
+        = render :partial => 'action_menu', :locals => { :fuel_limit => fuel_limit }
