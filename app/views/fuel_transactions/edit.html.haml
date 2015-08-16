@@ -1,7 +1,11 @@
-%h1 Editing fuel_transaction
+.page-header
+  %h1
+    Edit 
+    = @fuel_transaction.transaction_type
 
-= render 'form'
+- if @fuel_transaction.transaction_type == "Usage"
+  = render 'form_usage'
+-else
+  = render 'form_resupply'
 
-= link_to 'Show', @fuel_transaction
-\|
-= link_to 'Back', fuel_transactions_path
+= link_to 'Back', fuel_transactions_path, class: "btn btn-default"

@@ -3,6 +3,7 @@ class FuelTank < ActiveRecord::Base
   belongs_to :unittype,   :class_name => "UnitType",   :foreign_key => "unit_type"
   belongs_to :fuel_type,   :class_name => "FuelType",   :foreign_key => "fuel_type_id"
   has_many :fuel_balances, dependent: :destroy
+  has_many :fuel_transactions
   
   def fuel_tank_type
     "#{locations}"+" - #{fuel_type.name}"

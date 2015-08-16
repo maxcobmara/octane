@@ -136,7 +136,7 @@
         %td= check_kin {external_supplied.fuel_type.name}
         %td= external_supplied.quantity.to_i
         %td= check_kin {external_supplied.unit_type.description}
-        %td= external_supplied.resource.name
+        %td= external_supplied.resource.try(:name)
 
     %tr
       %td= "-"
