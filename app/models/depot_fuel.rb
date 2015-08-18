@@ -67,19 +67,19 @@ class DepotFuel < ActiveRecord::Base
 	(11..spreadsheet.last_row).each do |i|
 		tank_excel = spreadsheet.cell(i,'C')
 		unless (tank_excel.nil? || tank_excel.blank? || tank_excel==" " || tank_excel=="-")
-			storage_tank_excel<<tank_excel
+			storage_tank_excel<< tank_excel
 			lastitem = tank_excel.split("")[tank_excel.split("").count-1]
 			if (lastitem.is_a? Numeric) 	
 			elsif (lastitem.is_a? String)
 			else	#if not a number or string
-				tank_naming_err<<tank_excel
+				tank_naming_err<< tank_excel
 			end
 		end
 		capacity_val = spreadsheet.cell(i,'D')
 		current_val = spreadsheet.cell(i,'F')
 		unless (current_val.nil? || current_val.blank? || current_val==" " || current_val=="-")
 			if (capacity_val.nil? || capacity_val.blank? || capacity_val==" " || capacity_val=="-")
-				capacity_err<<capacity_val
+				capacity_err<< capacity_val
 			end
 		end
 	end
@@ -186,7 +186,7 @@ class DepotFuel < ActiveRecord::Base
 					unless (df.tank.nil? || df.tank.blank?)
 						fuel_type_name=df.tank.split(" ")[0] #eg. Avcat H1, Avtur H2 etc
 						fuel_type_id=FuelType.get_fuel_type2(fuel_type_name, fuel_types)
-						fuel_types<<fuel_type_name if FuelType.all.pluck(:shortname).include?(fuel_type_name)
+						fuel_types<< fuel_type_name if FuelType.all.pluck(:shortname).include?(fuel_type_name)
 					end
 					ftank_id = FuelTank.get_tank2(df.tank, depot_id, fuel_type_id, capacity3)
 					unless (ftank_id.nil? || ftank_id.blank? || ftank_id==" " || ftank_id=="-")	
@@ -323,9 +323,9 @@ class DepotFuel < ActiveRecord::Base
      
   def self.open_spreadsheet(file) 
     case File.extname(file.original_filename) 
-      when ".csv" then Roo::Csv.new(file.path, nil, :ignore) 
-      when ".xls" then Roo::Excel.new(file.path, nil, :ignore) 
-      when ".xlsx" then Roo::Excelx.new(file.path, nil, :ignore) 
+      when ".csv" then Roo::Csv.new(file.path)#, nil, :ignore) 
+      when ".xls" then Roo::Excel.new(file.path)#, nil, :ignore) 
+      when ".xlsx" then Roo::Excelx.new(file.path)#, nil, :ignore) 
       else raise "Unknown file type: #{file.original_filename}" 
     end
   end
