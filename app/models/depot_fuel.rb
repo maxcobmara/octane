@@ -25,7 +25,7 @@ class DepotFuel < ActiveRecord::Base
     depot_fuel.depot.fuel_tanks.group_by(&:fuel_type_id).sort.each do |fuel_type, items|
         @tanks_by_type = depot_fuel.depot.fuel_tanks.where('fuel_type_id=?',fuel_type).pluck(:id)
         if @prevmonth_depot_fuel.count!=0
-            @bal_of_tank = @prevmonth_depot_fuel[0].fuel_balances.where('fuel_tank_id IN (?)',@tanks_by_type).sum(&:current) 
+            @bal_of_tank = @prevmonth_depot_fuel[0].fuel_balances.where('fuel_tank_id IN (?)',@tanks_by_type).sum(:current) 
             @balance_before << @bal_of_tank if @bal_of_tank!=0
         else
             @balance_before << 0
@@ -33,19 +33,19 @@ class DepotFuel < ActiveRecord::Base
     end
     return @balance_before
   end
-  
-  def self.supplied(depot_fuel, fuel_type)
-    return depot_fuel.fuel_supplieds.where('fuel_type_id=?',fuel_type).sum(&:quantity).to_i
+
+  def supplied(fuel_type)
+    fuel_supplieds.where(fuel_type_id: fuel_type).sum(:quantity).to_i
   end
   
-  def self.issued(depot_fuel, fuel_type)
-    return depot_fuel.fuel_issueds.where('fuel_type_id=?',fuel_type).sum(&:quantity).to_i	
+  def issued(fuel_type)
+    fuel_issueds.where('fuel_type_id=?',fuel_type).sum(:quantity).to_i
   end
   
   #tank balance
-  def self.balance(depot_fuel, fuel_type) 
-    @tanks_by_type = depot_fuel.depot.fuel_tanks.where('fuel_type_id=?',fuel_type).pluck(:id)
-    return depot_fuel.fuel_balances.where('fuel_tank_id IN (?)',@tanks_by_type).sum(&:current).to_i
+  def balance(fuel_type) 
+    tanks_by_type = depot.fuel_tanks.where('fuel_type_id=?',fuel_type).pluck(:id)
+    return fuel_balances.where('fuel_tank_id IN (?)', tanks_by_type).sum(:current).to_i
   end
   
   def self.import(file) 

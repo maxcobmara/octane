@@ -27,7 +27,7 @@
           .col-lg-offset-2.col-lg-10
             = f.fields_for :fuel_supplieds do |builder|
               = render 'fuel_supplied_fields', f: builder
-            = link_to_add_fields (t 'fuel_supplieds.add_details'), f, :fuel_supplieds
+            /= link_to_add_fields (t 'fuel_supplieds.add_details'), f, :fuel_supplieds
       
       #tab2.tab-pane
         .row
@@ -38,7 +38,7 @@
           .col-lg-offset-2.col-lg-10
             = f.fields_for :fuel_issueds do |builder|
               = render 'fuel_issued_fields', f: builder
-            = link_to_add_fields (t 'fuel_issueds.add_details'), f, :fuel_issueds
+            /= link_to_add_fields (t 'fuel_issueds.add_details'), f, :fuel_issueds
 
 
       #tab3.tab-pane
@@ -50,7 +50,7 @@
           .col-lg-offset-2.col-lg-10
             = f.fields_for :fuel_balances do |builder|
               = render 'fuel_balance_fields', f: builder
-            = link_to_add_fields (t 'fuel_balances.add_details'), f, :fuel_balances
+            /= link_to_add_fields (t 'fuel_balances.add_details'), f, :fuel_balances
 				
     .form-actions
       = f.submit (t 'helpers.links.submit'), :class => 'btn btn-primary'

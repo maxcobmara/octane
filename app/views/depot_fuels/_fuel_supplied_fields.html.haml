@@ -4,4 +4,4 @@
     = f.text_field :quantity, :class => 'text_field input-small', :placeholder => 'Quantity'
     = f.collection_select :unit_type_id, UnitType.all, :id, :description, :include_blank => (t 'helpers.prompt.select_unit_type'), :html_options => {:class => 'selectpicker'}
     = f.hidden_field :_destroy
-    = link_to_remove_fields (fa_icon "trash-o"), f     
+    /= link_to_remove_fields (fa_icon "trash-o"), f     

@@ -74,6 +74,7 @@ class DepotFuelsController < ApplicationController
   end
   
   def import
+    unless params[:file].nil?
 	a=DepotFuel.import(params[:file]) 		#errorneous : "stc" " tn" " cap" " ftcm"
 	if a == "stc"				
 		redirect_to import_excel_depot_fuel_url, notice: (t 'depot_fuels.failed')+(t 'depot_fuels.stc')# "stc"
@@ -102,7 +103,10 @@ class DepotFuelsController < ApplicationController
 	elsif a == "cap ftcm"
 		redirect_to import_excel_depot_fuel_url, notice:  (t 'depot_fuels.failed')+(t 'depot_fuels.cap')+(t 'depot_fuels.ftcm')#"cap"+"ftcm"
 	else
-      redirect_to depot_fuels_url, notice:(t 'depot_fuels.imported')
+		redirect_to depot_fuels_url, notice:(t 'depot_fuels.imported')
+	end 
+    else
+      redirect_to import_excel_depot_fuel_url, notice: "Please select an Excel file for import."
     end
   end
   

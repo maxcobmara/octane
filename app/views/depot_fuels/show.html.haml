@@ -125,9 +125,9 @@
           %tr
             %td=FuelType.find(fuel_type).name
             %td{:align => "center"}=@bal_before[@just_count].to_i
-            %td{:align => "center"}=@supplied=DepotFuel.supplied(@depot_fuel, fuel_type) 
-            %td{:align => "center"}=@issued=DepotFuel.issued(@depot_fuel, fuel_type)
-            %td{:align => "center"}=@balance=DepotFuel.balance(@depot_fuel, fuel_type) 
+            %td{:align => "center"}=@supplied=@depot_fuel.supplied(fuel_type)
+            %td{:align => "center"}=@issued=@depot_fuel.issued(fuel_type)
+            %td{:align => "center"}=@balance=@depot_fuel.balance(fuel_type) 
             %td{:align => "center"}=@bal_after =(@bal_before[@just_count].to_i+@supplied-@issued).to_i
             %td 
               - if @balance!=@bal_after
