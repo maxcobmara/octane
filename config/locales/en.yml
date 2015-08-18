@@ -573,6 +573,15 @@ en:
     data: Data
     resupply: IN
     usage: OUT
+  fuel_budgets:
+    title: Fuel Budgets
+    title2: Fuel Budget
+    unit_id: Depot
+    code: Reference No
+    year_starts_on: Year Starts on
+    fuel_type_id: Fuel Type
+    amount: Amount
+    unit_type_id: Unit Type
   external_issueds:
     title: External Issueds
     new: New External Issued

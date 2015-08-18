@@ -7,6 +7,7 @@ class FuelType < ActiveRecord::Base
   #has_many :external_supplieds, dependent: :nullify
   has_many :vehicles, dependent: :nullify
   has_many :fuel_limits
+  has_many :fuel_budgets
   has_many :fuel_transactions
 
   scope :main_use, -> { where(id: [FuelTank.where('fuel_type_id is not null').pluck(:fuel_type_id)])} #for use in Add Fuel & Use Fuel

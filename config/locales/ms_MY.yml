@@ -542,6 +542,15 @@ ms_MY:
     data: Data
     resupply: Penerimaan
     usage: Penggunaan
+  fuel_budgets:
+    title: Belanjawan Bahan PMP
+    title2: Belanjawan Bahan PMP
+    unit_id: Depot
+    code: No Rujukan
+    year_starts_on: Tahun Bermula
+    fuel_type_id: Jenis Bahan PMP
+    amount: Amaun
+    unit_type_id: Unit Ukuran
   external_issueds:
     title: "Bekal Darat / Udara"
     new: "Bekal Darat / Udara Baru"

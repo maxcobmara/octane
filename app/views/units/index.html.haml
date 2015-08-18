@@ -12,15 +12,16 @@
     .btn-group-vertical{"aria-label" => "sideBar", :role => "group"}
       - unless @depot == 1 || @depot == '1'
         .btn.btn-default= link_to content_tag(:i, fa_icon("truck", text: (t 'actions.new'))), new_unit_path
-      .btn.btn-default.toga= link_to content_tag(:i, fa_icon("search", text: (t 'actions.search'))), "#", class: "toga"
+      .btn.btn-default= link_to content_tag(:i, fa_icon("search", text: (t 'actions.search'))), "#", class: "toga"
       .btn.btn-default= link_to content_tag(:i, fa_icon("print", text: (t 'actions.print'))), "#", class: 'bogus'
 
   .col-md-10.index_main
     .row.searchit{style: "display:none;"}
       = search_form_for @search, class: "form-inline" do |f|
         .field
-          = f.label :name_cont, "Unit Name Contains:"
+          = f.label :name_cont, "Depot Contains:"
           = f.text_field :name_cont, class: "input-medium search-query"
+          = hidden_field_tag :id, params[:id], :value => @depot
           = f.submit "Search", class: "btn btn-warning"
 
 

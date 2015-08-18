@@ -34,5 +34,8 @@
         = f.text_field :amount, class: 'form-control', style: "text-align: right;"
         = f.collection_select :unit_type_id, UnitType.all, :id, :description, {:include_blank => t('helpers.prompt.select_unit_type')}, {:class => 'selectpicker', 'data-width'=>"auto"}
 
-  .col-sm-offset-2.actions
-    = f.submit 'Save', class: 'btn btn-primary'
+  /.col-sm-offset-2.actions
+  /  = f.submit 'Save', class: 'btn btn-primary'
+
+  .col-sm-2.col-sm-offset-2
+    = f.submit 'Save', class: "btn btn-primary"

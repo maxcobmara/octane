@@ -4,21 +4,15 @@ class UnitsController < ApplicationController
   # GET /units
   # GET /units.json
   def index
-    #@units = Unit.all  
     #depot vs unit
     @depot = params[:id]
-	@search = Unit.search(params[:q])
     if @depot == 1 || @depot == '1'
-      @units = Unit.where("id IN(?)",FuelTank.pluck(:unit_id))
-      #@units = Unit.find(:all, :conditions=>['id IN (?)',FuelTank.all.map(&:unit_id)])
-    elsif @depot == 0 || @depot == '0'
-      @units = Unit.all
-	else 
-	 @units = @search.result
+      @search = Unit.search(params[:q])
+      @units = @search.result.where("id IN(?)",FuelTank.pluck(:unit_id))
+    else 
+      @search = Unit.search(params[:q])
+      @units = @search.result
     end 
-    
-    #@search = Unit.search(params[:q])
-    #@units = @search.result
   end
 
   # GET /units/1
