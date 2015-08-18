@@ -1,33 +1,68 @@
-%h1 Listing fuel_transactions
+- model_class = FuelTransaction
+.page-header
+  %h1= t 'fuel_transactions.title', :default => model_class.model_name.human.pluralize
 
-%table
-  %thead
-    %tr
-      %th Document code
-      %th Amount
-      %th Fuel type
-      %th Fuel unit type
-      %th Fuel tank
-      %th Vehicle
-      %th Data
-      %th
-      %th
-      %th
+.row.searchit{style: "display:none;"}
+  .span9offset1.center
+    = search_form_for @search, class: "form-inline" do |f|
+      .field
+        = f.label :fuel_tank_unit_name_cont, "Depot / Unit Contains:"
+        = f.text_field :fuel_tank_unit_name_cont, class: "input-medium search-query"
+        = f.label :fuel_tank_locations_cont, "Fuel Tank Contains:"
+        = f.text_field :fuel_tank_locations_cont, class: "input-medium search-query"
+        %br
+        = f.label :transaction_type_cont, "Resupply / Usage:"
+        = f.text_field :transaction_type_cont, class: "input-medium search-query"
+        = f.label :vehicle_reg_no_cont, "Vehicle Reg No Contains:"
+        = f.text_field :vehicle_reg_no_cont, class: "input-medium search-query"
+        = f.submit "Search", class: "btn btn-warning"
+      %br
 
-  %tbody
-    - @fuel_transactions.each do |fuel_transaction|
+.btn-group{"aria-label" => "sidebar", :role => "group", style: "float:right;"}
+  .btn.btn-default= link_to content_tag(:i, fa_icon("search", text: (t 'actions.search'))), "#", class: "toga"
+  .btn.btn-default= link_to(fa_icon("print", text: (t 'actions.print')), "javascript:print()")
+
+%table.table.table-condensed.table-hover
+  - @fuel_transactions.group_by{|x|x.fuel_tank.fuel_tank_details}.sort.each do |fuel_tank, fuel_transactions|
+    %thead
       %tr
-        %td= fuel_transaction.document_code
-        %td= fuel_transaction.amount
-        %td= fuel_transaction.fuel_type_id
-        %td= fuel_transaction.fuel_unit_type_id
-        %td= fuel_transaction.fuel_tank_id
-        %td= fuel_transaction.vehicle_id
-        %td= fuel_transaction.data
-        %td= link_to 'Show', fuel_transaction
-        %td= link_to 'Edit', edit_fuel_transaction_path(fuel_transaction)
-        %td= link_to 'Destroy', fuel_transaction, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
-= link_to 'New Fuel transaction', new_fuel_transaction_path
+        %th=fuel_tank
+        %td{colspan: "6", style: "font-size:0.8em; padding-top:25px;"}
+          Resupply :
+          = check_kin{number_with_precision(((fuel_transactions.select{|p|p.transaction_type=="Resupply" rescue false}).map(&:amount).inject(:+)).to_f, :precision => 2)}
+          litres
+          &nbsp; | &nbsp;
+          Usage :
+          = check_kin{number_with_precision(((fuel_transactions.select{|p|p.transaction_type=="Usage" rescue false}).map(&:amount).inject(:+)).to_f, :precision => 2)}
+          litres
+        
+      %tr
+        %th=t 'fuel_transactions.document_code'
+        %th=t 'fuel_transactions.resupply'
+        %th=t 'fuel_transactions.usage'
+        %th Unit
+        %th.left=t 'fuel_transactions.vehicle_id'
+        %th=t 'fuel_transactions.data'
+        %th
+    - for fuel_transaction in fuel_transactions.sort_by{|x|[x.fuel_type_id, x.fuel_tank_id]}
+      %tbody
+        %tr
+          %td{style: "padding-left:20px;"}= fuel_transaction.document_code
+          %td.right
+            - if fuel_transaction.transaction_type=="Resupply"
+              = fuel_transaction.amount 
+            - else
+              \-
+          %td.right
+            - if fuel_transaction.transaction_type=="Usage"
+              = fuel_transaction.amount
+            - else
+              \-
+          %td.left= fuel_transaction.fuel_unit_type.description
+          %td.left
+            - if fuel_transaction.transaction_type=="Usage"
+              = fuel_transaction.vehicle.try(:reg_no) 
+            - else
+              \-
+          %td= fuel_transaction.try(:data)
+          = render :partial => 'action_menu', :locals => { :fuel_transaction => fuel_transaction }
