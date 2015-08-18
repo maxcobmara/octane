@@ -4,7 +4,8 @@ class FuelBudgetsController < ApplicationController
   # GET /fuel_budgets
   # GET /fuel_budgets.json
   def index
-    @fuel_budgets = FuelBudget.all
+    @search = FuelBudget.search(params[:q])
+    @fuel_budgets  = @search.result
   end
 
   # GET /fuel_budgets/1

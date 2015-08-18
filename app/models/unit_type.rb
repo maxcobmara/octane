@@ -8,6 +8,7 @@ class UnitType < ActiveRecord::Base
   #has_many :external_supplieds, dependent: :nullify
   #has_many :maintenance_details, dependent: :nullify
   has_many :fuel_limits
+  has_many :fuel_budgets
   has_many :fuel_transactions
 
   def self.get_type(fr_excel,arr_fr_excel)

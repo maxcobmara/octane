@@ -1,7 +1,8 @@
-%h1 Editing fuel_budget
+%h1 Edit Fuel Budget
 
 = render 'form'
 
-= link_to 'Show', @fuel_budget
-\|
-= link_to 'Back', fuel_budgets_path
+/= link_to 'Show', @fuel_budget
+/\|
+/= link_to 'Back', fuel_budgets_path
+= link_to 'Back', fuel_budgets_path, class: "btn btn-default"

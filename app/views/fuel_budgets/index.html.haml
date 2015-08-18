@@ -3,35 +3,45 @@
 .page-header
   %h1= t 'fuel_budgets.title', :default => model_class.model_name.human.pluralize
 
+.row.searchit{style: "display:none;"}
+  .span9offset1.center
+    = search_form_for @search, class: "form-inline" do |f|
+      .field
+        = f.label :unit_id_cont, "Depot Contains:"
+        = f.text_field :unit_name_cont, class: "input-medium search-query"
+        = f.label :fuel_type_name_cont, "Fuel Type Contains:"
+        = f.text_field :fuel_type_name_cont, class: "input-medium search-query"
+        /= f.label :year_starts_on_gteq, "Fuel Budget starts on :"
+        /= f.text_field :year_starts_on_gteq, class: "input-medium search-query"
+        = f.submit "Search", class: "btn btn-warning"
+      %br
+
+.btn-group{"aria-label" => "sidebar", :role => "group", style: "float:right;"}
+  .btn.btn-default= link_to content_tag(:i, fa_icon("asterisk", text: (t 'actions.new'))), new_fuel_budget_path
+  .btn.btn-default= link_to content_tag(:i, fa_icon("search", text: (t 'actions.search'))), "#", class: "toga"
+  .btn.btn-default= link_to(fa_icon("print", text: (t 'actions.print')), "javascript:print()")
+
+
 %table.table.table-condensed.table-hover
-  %thead
-    %tr
-      %th Unit
-      %th Parent
-      %th Code
-      %th Unit
-      %th Year starts on
-      %th Fuel type
-      %th Amount
-      %th Unit type
-      %th
-      %th
-      %th
-
-  %tbody
-    - @fuel_budgets.each do |fuel_budget|
+  - @fuel_budgets.group_by(&:unit).each do |unit, fuel_budgets|
+    %thead
       %tr
-        %td= fuel_budget.unit.name
-        %td= fuel_budget.code
-        %td= fuel_budget.unit_id
-        %td= fuel_budget.year_starts_on
-        %td= fuel_budget.fuel_type_id
-        %td= fuel_budget.amount
-        %td= fuel_budget.unit_type_id
-        %td= link_to 'Show', fuel_budget
-        %td= link_to 'Edit', edit_fuel_budget_path(fuel_budget)
-        %td= link_to 'Destroy', fuel_budget, :method => :delete, :data => { :confirm => 'Are you sure?' }
+        %th= unit.name
+        %td{colspan: "4", style: "font-size:0.8em; padding-top:25px;"}
+      %tr
+        %th=t 'fuel_budgets.code'
+        %th=t 'fuel_budgets.year_starts_on'
+        %th=t 'fuel_budgets.fuel_type_id'
+        %th=t 'fuel_budgets.amount'
+        %th=t 'fuel_budgets.unit_type_id'
+        %th
+    - for fuel_budget in fuel_budgets
+      %tbody
+        %tr
+          %td{style: "padding-left:20px;"}= fuel_budget.code
+          %td= fuel_budget.year_starts_on.try(:strftime, '%d-%m-%Y, %H:%M')
+          %td= fuel_budget.fuel_type.name
+          %td.right= fuel_budget.amount
+          %td= fuel_budget.unit_type.description
+          = render :partial => 'action_menu', :locals => { :fuel_budget => fuel_budget }
 
-%br
-
-= link_to 'New Fuel budget', new_fuel_budget_path
