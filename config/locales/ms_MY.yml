@@ -532,6 +532,16 @@ ms_MY:
     unit_type_id: Unit Ukuran
     new_addfuel: Lain-Lain Bahan PMP Baru
     add_details: Tambah Butiran
+  fuel_transactions:
+    title: Transaksi Bahan PMP
+    document_code: No Rujukan
+    amount: Amaun
+    fuel_type: Jenis Bahan PMP
+    fuel_tank_id: Tangki Penyimpanan Bahan PMP
+    vehicle_id: Kenderaan
+    data: Data
+    resupply: Penerimaan
+    usage: Penggunaan
   external_issueds:
     title: "Bekal Darat / Udara"
     new: "Bekal Darat / Udara Baru"

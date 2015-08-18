@@ -563,6 +563,16 @@ en:
     unit_type_id: Unit Type
     new_addfuel: New Other Fuel Type
     add_details: Add Details
+  fuel_transactions:
+    title: Fuel Transactions
+    document_code: Reference No
+    amount: Amount
+    fuel_type_id: Fuel Type
+    fuel_tank_id: Fuel Tank
+    vehicle_id: Vehicle
+    data: Data
+    resupply: IN
+    usage: OUT
   external_issueds:
     title: External Issueds
     new: New External Issued
