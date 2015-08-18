@@ -7,16 +7,20 @@ $(document).ready(function(){
       alert("Sorry! Feature not yet implemented");
   });
   
-  $(".toga").click(function (e){
-     $('.searchit').toggle();
-  });
+  //$(".toga").click(function (e){
+  //   $('.searchit').toggle();
+  //});
 
   $('.selectpicker').selectpicker();
 });
 
 $(document).on('page:change', function () {
   $('.selectpicker').selectpicker();
-  //$(".toga").click(function (e){
-  //   $('.searchit').toggle();
-  //});
+  $(".toga").click(function (e){
+     $('.searchit').toggle();
+  });
+});
+
+$(document).on('click', 'toga', function(){
+  $('.searchit').toggle();
 });
