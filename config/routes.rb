@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
 
 
-  resources :fuel_transactions
+  resources :fuel_transactions do
+    collection do
+      get 'vehicle_vessel_usage'
+    end
+  end
   resources :fuel_limits
   resources :fuel_budgets
   resources :external_issueds

@@ -67,6 +67,17 @@ class FuelTransactionsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def vehicle_vessel_usage
+    @fuel_transactions=FuelTransaction.usage.where('vehicle_id is not null')
+    cars_category_ids=VehicleCategory.cars.pluck(:id)
+    lorries_category_ids=VehicleCategory.lorries.pluck(:id)
+    busses_category_ids=VehicleCategory.busses.pluck(:id)
+    @cars=Vehicle.where(category_id: cars_category_ids).pluck(:id)
+    @lorries=Vehicle.where(category_id: lorries_category_ids).pluck(:id)
+    @busses=Vehicle.where(category_id: busses_category_ids).pluck(:id)
+    @no_cat=Vehicle.where(category_id: nil).pluck(:id)
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
