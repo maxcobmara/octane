@@ -8,9 +8,13 @@
         - @fuel_transaction.errors.full_messages.each do |msg|
           %li= msg
 
+  - if @fuel_transaction.new_record?
+    - selected_tank='Not Defined'
+  - else
+    - selected_tank = @fuel_transaction.fuel_tank_id
   .form-group
     = f.label :fuel_tank_id, class: 'col-sm-2 control-label'
-    .col-sm-4= select_tag("fuel_transaction[fuel_tank_id]", grouped_options_for_select(FuelTank.groupped, 'Not Defined'), :class => 'form-control')
+    .col-sm-4= select_tag("fuel_transaction[fuel_tank_id]", grouped_options_for_select(FuelTank.groupped, selected_tank), :class => 'form-control')
   .form-group
     = f.label :document_code, class: 'col-sm-2 control-label'
     .col-sm-3= f.text_field :document_code, class: 'form-control'

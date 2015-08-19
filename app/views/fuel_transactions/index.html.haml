@@ -35,7 +35,12 @@
           Usage :
           = check_kin{number_with_precision(((fuel_transactions.select{|p|p.transaction_type=="Usage" rescue false}).map(&:amount).inject(:+)).to_f, :precision => 2)}
           litres
-        
+          &nbsp; | &nbsp;
+          Balance :
+          - total_supply= ((fuel_transactions.select{|p|p.transaction_type=="Resupply" rescue false}).map(&:amount).inject(:+)).to_f
+          - total_usage= ((fuel_transactions.select{|p|p.transaction_type=="Usage" rescue false}).map(&:amount).inject(:+)).to_f
+          = check_kin{number_with_precision((total_supply-total_usage), :precision => 2)}
+          litres
       %tr
         %th=t 'fuel_transactions.document_code'
         %th=t 'fuel_transactions.resupply'

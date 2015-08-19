@@ -54,6 +54,6 @@
 				
     .form-actions
       = f.submit (t 'helpers.links.submit'), :class => 'btn btn-primary'
-      = link_to t('.cancel', :default => t("helpers.links.cancel")), |
-        depot_fuels_path, :class => 'btn'     
+      .btn.btn-default= link_to t('.cancel', :default => t("helpers.links.cancel")), |
+        depot_fuels_path
 

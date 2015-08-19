@@ -28,9 +28,8 @@
   %dd= @fuel_limit.emails
 
 .form-actions
-  = link_to content_tag(:i, "", :class => "fa fa-arrow-left ") + " " + t('.back', :default => t("helpers.links.back")), fuel_limits_path, :class => 'btn'
-  = link_to content_tag(:i, "", :class => "fa fa-edit") + " " + t('.edit', :default => t("helpers.links.edit")), |
-    edit_fuel_limit_path(@fuel_limit), :class => 'btn'
+  .btn.btn-default= link_to content_tag(:i, "", class: "fa fa-arrow-left ") + " " + t('.back', :default => t("helpers.links.back")), fuel_limits_path
+  .btn.btn-default= link_to content_tag(:i, "", class: "fa fa-edit") + " " + t('.edit', :default => t("helpers.links.edit")), edit_fuel_limit_path(@fuel_limit)
   = link_to content_tag(:i, "", :class => "fa fa-trash-o icon-white") + " " + t('.destroy', :default => t("helpers.links.destroy")), |
     fuel_limit_path(@fuel_limit),                                                                                                    |
     :method => 'delete',                                                                                                           |
