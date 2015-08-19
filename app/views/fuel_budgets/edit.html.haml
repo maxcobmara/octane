@@ -1,8 +1,6 @@
-%h1 Edit Fuel Budget
-
-= render 'form'
-
-/= link_to 'Show', @fuel_budget
-/\|
-/= link_to 'Back', fuel_budgets_path
+- provide(:title, 'Edit Fuel Budget')
+- model_class = FuelBudget
+.page-header
+  %h1= t 'fuel_budgets.edit', :default => [:'helpers.titles.new', 'Edit %{model}'], :model => model_class.model_name.human
+= render :partial => 'form'
 = link_to 'Back', fuel_budgets_path, class: "btn btn-default"
