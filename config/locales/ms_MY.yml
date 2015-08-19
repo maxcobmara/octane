@@ -111,6 +111,7 @@ ms_MY:
     fuel_type_per_quarter: Laporan Penyata Purata Pengunaan Harian Per Quarter
     transport_summary: Laporan Pengangkutan
     PMP_usage: Laporan Penyata Penggunaan Bahan PMP Bulanan
+    fuel_balances: Baki Bahan PMP Bulanan
 
     admin: Sistem
     users: Pengurusan Pengguna
@@ -368,6 +369,7 @@ ms_MY:
     edit: Sunting Tangki Penyimpanan
     tank: "Tangki : "
     maximum: Maksima
+    current_balance: Baki Semasa
   fuel_types:
     title: Jenis Bahan PMP
     fuel_type_id: Jenis Bahan PMP

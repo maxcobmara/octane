@@ -141,7 +141,7 @@
               = t 'depot_fuels.and' 
               %b= t 'depot_fuels.end_bal' 
               = t 'depot_fuels.must_match'
-		
+%br
 .form-actions
   .btn.btn-default= link_to content_tag(:i, "", class: "fa fa-arrow-left ") + " " + t('.back', :default => t("helpers.links.back")), depot_fuels_path
   .btn.btn-default= link_to content_tag(:i, "", class: "fa fa-edit") + " " + t('.edit', :default => t("helpers.links.edit")), edit_depot_fuel_path(@depot_fuel)

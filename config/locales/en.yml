@@ -144,6 +144,7 @@ en:
     fuel_type_per_quarter: Fuel Type Usage Daily Report
     transport_summary: Transport Summary
     PMP_usage: Monthly Fuel Usage Report
+    fuel_balances: Monthly Fuel Balances
 
     admin: Administration
     users: User Management
@@ -401,6 +402,7 @@ en:
     edit: Edit Storage Tank
     tank: "Tanks : "
     maximum: Maximum
+    current_balance: Current Balance
   fuel_types:
     title: Fuel Types
     fuel_type_id: Fuel Type

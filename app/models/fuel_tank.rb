@@ -33,7 +33,7 @@ class FuelTank < ActiveRecord::Base
     groupped_tank=[]
     groupped_tank2=[]
     all_tanks=[]
-    FuelTank.all.group_by{|x|x.fuel_type.shortname}.each do |fuelname, fuel_tanks|
+    FuelTank.all.where('capacity > 0').group_by{|x|x.fuel_type.shortname}.each do |fuelname, fuel_tanks|
       tanks_of_type=[]
       fuel_tanks.each do |tank|
         tanks_of_type << [tank.fuel_tank_details, tank.id]

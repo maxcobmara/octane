@@ -4,7 +4,7 @@
           
     .control-group
       = f.label :unit_id, :class => 'control-label'
-      .controls= f.collection_select :unit_id, Unit.where("id IN(?)",FuelTank.pluck(:unit_id)), :id, :name, :include_blank => t('helpers.prompt.select_depot'), :html_options => {:class => 'selectpicker'}
+      .controls= f.collection_select :unit_id, Unit.where("id IN(?)",FuelTank.pluck(:unit_id)).order(name: :desc), :id, :name, :include_blank => t('helpers.prompt.select_depot'), :html_options => {:class => 'selectpicker'}
     
     .control-group
       = f.label :issue_date, :class => 'control-label'
@@ -51,7 +51,7 @@
             = f.fields_for :fuel_balances do |builder|
               = render 'fuel_balance_fields', f: builder
             /= link_to_add_fields (t 'fuel_balances.add_details'), f, :fuel_balances
-				
+
     .form-actions
       = f.submit (t 'helpers.links.submit'), :class => 'btn btn-primary'
       .btn.btn-default= link_to t('.cancel', :default => t("helpers.links.cancel")), |
