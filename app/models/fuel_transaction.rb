@@ -16,4 +16,7 @@ class FuelTransaction < ActiveRecord::Base
     end
   end
   
+  scope :resupply, -> { where(transaction_type: "Resupply")} #for use in Tank Capacity List - current balance
+  scope :usage, -> {where(transaction_type: "Usage")}
+  
 end

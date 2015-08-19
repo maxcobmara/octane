@@ -49,7 +49,7 @@
         %th.left=t 'fuel_transactions.vehicle_id'
         %th=t 'fuel_transactions.data'
         %th
-    - for fuel_transaction in fuel_transactions.sort_by{|x|[x.fuel_type_id, x.fuel_tank_id]}
+    - for fuel_transaction in fuel_transactions.sort_by{|x|[x.fuel_type_id, x.fuel_tank_id, x.created_at]}
       %tbody
         %tr
           %td{style: "padding-left:20px;"}= fuel_transaction.document_code
