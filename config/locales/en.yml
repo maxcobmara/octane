@@ -145,7 +145,8 @@ en:
     transport_summary: Transport Summary
     PMP_usage: Monthly Fuel Usage Report
     fuel_balances: Monthly Fuel Balances
-
+    fuel_usage_by_vehicle_vessel: "Fuel Type Usage by Categories"
+    
     admin: Administration
     users: User Management
     authorisation: Authorisation Rules

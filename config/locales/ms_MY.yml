@@ -112,6 +112,7 @@ ms_MY:
     transport_summary: Laporan Pengangkutan
     PMP_usage: Laporan Penyata Penggunaan Bahan PMP Bulanan
     fuel_balances: Baki Bahan PMP Bulanan
+    fuel_usage_by_vehicle_vessel: "Penggunaan Jenis Bahan PMP Mengikut Kategori"
 
     admin: Sistem
     users: Pengurusan Pengguna

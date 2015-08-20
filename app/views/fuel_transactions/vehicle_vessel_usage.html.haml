@@ -1,0 +1,115 @@
+- model_class = FuelTransaction
+.page-header
+  %h1= t 'menu.fuel_usage_by_vehicle_vessel', :default => model_class.model_name.human.pluralize
+
+
+- @fuel_transactions.group_by(&:fuel_type).each do |fuel_type, fuel_transactions|
+  - cars_transactions=FuelTransaction.where(id: fuel_transactions.map(&:id)).where(vehicle_id: @cars)
+  - lorries_transactions=FuelTransaction.where(id: fuel_transactions.map(&:id)).where(vehicle_id: @lorries)
+  - busses_transactions=FuelTransaction.where(id: fuel_transactions.map(&:id)).where(vehicle_id: @busses)
+  - no_cat_transactions=FuelTransaction.where(id: fuel_transactions.map(&:id)).where(vehicle_id: @no_cat)
+  
+  %table.table.table-bordered
+    %thead
+      %tr
+        %th{colspan: "2"}= fuel_type.name
+        %td{colspan: "4", style: "font-size:0.8em; padding-top:25px;"}
+          Cars :
+          = cars_transactions.sum(:amount)
+          litres
+          &nbsp; | &nbsp;
+          Lorries :
+          = lorries_transactions.sum(:amount)
+          litres
+          &nbsp; | &nbsp;
+          Busses :
+          = busses_transactions.sum(:amount)
+          litres
+          &nbsp; | &nbsp;
+          Not Define :
+          = no_cat_transactions.sum(:amount)
+          litres
+      
+    %tbody  
+      /Cars
+      %tr
+        %th{colspan: "6"}Group Category : Cars
+      %tr
+        %th=t 'fuel_transactions.vehicle_id'
+        %th Vehicle Category
+        %th= t 'fuel_transactions.document_code'
+        %th= t 'fuel_transactions.amount'
+        %th= t 'fuel_transactions.unit_type_id' 
+        %th
+      - cars_transactions.group_by(&:vehicle).each do |vehicle, fuel_transactions2|
+        - for fuel_transaction in fuel_transactions2
+          %tr
+            %td= fuel_transaction.vehicle.reg_no
+            %td= fuel_transaction.vehicle.vehiclecategory.description
+            %td= fuel_transaction.document_code
+            %td= fuel_transaction.amount
+            %td= fuel_transaction.fuel_unit_type.description
+            %td 
+
+      - if lorries_transactions.count > 0
+        /Lorries
+        %tr
+          %th{colspan: "6"}Group Category : Lorries
+        %tr
+          %th=t 'fuel_transactions.vehicle_id'
+          %th Vehicle Category
+          %th= t 'fuel_transactions.document_code'
+          %th= t 'fuel_transactions.amount'
+          %th= t 'fuel_transactions.unit_type_id' 
+          %th
+        - lorries_transactions.group_by(&:vehicle).each do |vehicle, fuel_transactions2|
+          - for fuel_transaction in fuel_transactions2
+            %tr
+              %td= fuel_transaction.vehicle.reg_no
+              %td= fuel_transaction.vehicle.vehiclecategory.description
+              %td= fuel_transaction.document_code
+              %td= fuel_transaction.amount
+              %td= fuel_transaction.fuel_unit_type.description
+              %td 
+
+      - if busses_transactions.count > 0
+        /Busses
+        %tr
+          %th{colspan: "6"}Group Category : Lorries
+        %tr
+          %th=t 'fuel_transactions.vehicle_id'
+          %th Vehicle Category
+          %th= t 'fuel_transactions.document_code'
+          %th= t 'fuel_transactions.amount'
+          %th= t 'fuel_transactions.unit_type_id' 
+          %th
+        - lorries_transactions.group_by(&:vehicle).each do |vehicle, fuel_transactions2|
+          - for fuel_transaction in fuel_transactions2
+            %tr
+              %td= fuel_transaction.vehicle.reg_no
+              %td= fuel_transaction.vehicle.vehiclecategory.description
+              %td= fuel_transaction.document_code
+              %td= fuel_transaction.amount
+              %td= fuel_transaction.fuel_unit_type.description
+              %td
+
+      - if no_cat_transactions.count > 0
+        /Not Define     
+        %tr
+          %th{colspan: "6"}Group Category : Not Define
+        %tr
+          %th=t 'fuel_transactions.vehicle_id'
+          %th Vehicle Category
+          %th= t 'fuel_transactions.document_code'
+          %th= t 'fuel_transactions.amount'
+          %th= t 'fuel_transactions.unit_type_id' 
+          %th
+        - no_cat_transactions.group_by(&:vehicle).each do |vehicle, fuel_transactions2|
+          - for fuel_transaction in fuel_transactions2
+            %tr
+              %td= fuel_transaction.vehicle.reg_no
+              %td -
+              %td= fuel_transaction.document_code
+              %td= fuel_transaction.amount
+              %td= fuel_transaction.fuel_unit_type.description
+              %td 
