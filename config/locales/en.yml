@@ -147,8 +147,8 @@ en:
     PMP_usage: Monthly Fuel Usage Report
     fuel_balances: Monthly Fuel Balances
     fuel_usage_by_vehicle_vessel: "Fuel Type Usage by Categories"
-    vessel_type: Vessel Type
-    vessel_category: Vessel Class
+    vessel_type: Vessel Types
+    vessel_category: Vessel Classes
     
     admin: Administration
     users: User Management
