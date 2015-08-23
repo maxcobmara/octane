@@ -1,0 +1,7 @@
+= form_for @vessel_type, remote: true do |f|
+  %div#vessel_type_errors{:style => "display:none;"}
+    = render 'shared/error_messages', object: f.object
+  
+  %td= f.text_field :short_name
+  %td= f.text_field :description
+  %td= f.submit (t 'actions.create'), :class => 'btn btn-primary'

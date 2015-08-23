@@ -2,7 +2,8 @@ class Unit < ActiveRecord::Base
   before_save :set_combo_code
   has_ancestry :cache_depth => true
 
-  has_many :fuel_tanks#, :foreign_key => "unit_id"
+  has_many :fuel_tanks
+  has_one :vessel
   has_many :subunits, class_name: "Unit", foreign_key: 'parent_id'
   belongs_to :parent, class_name: "Unit", foreign_key: 'parent_id'
   has_many :vehicle_cards, dependent: :nullify
@@ -19,6 +20,8 @@ class Unit < ActiveRecord::Base
 
   scope :is_depot, -> { where("id IN(?)",FuelTank.pluck(:unit_id)) }
 
+  attr_accessor :is_vessel
+  
   def set_combo_code
     if ancestry_depth == 0
       self.combo_code = code

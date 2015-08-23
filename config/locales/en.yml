@@ -122,6 +122,7 @@ en:
     people: People
     depot: Depots
     depot_listing: Depot Listing
+    vessel_listing: Vessel Listing
     fuel_tank: Storage Tanks
     fuel_tank_listing: Storage Tank Listing
     inden_card: Inden Cards
@@ -146,6 +147,8 @@ en:
     PMP_usage: Monthly Fuel Usage Report
     fuel_balances: Monthly Fuel Balances
     fuel_usage_by_vehicle_vessel: "Fuel Type Usage by Categories"
+    vessel_type: Vessel Type
+    vessel_category: Vessel Class
     
     admin: Administration
     users: User Management
@@ -585,6 +588,24 @@ en:
     fuel_type_id: Fuel Type
     amount: Amount
     unit_type_id: Unit Type
+  vessels:
+    title: Vessels
+    unit_id: Unit
+    name: Vessel Name
+    pennent_no: Pennent No
+    vessel_type_id: Vessel Type
+    vessel_category_id: Vessel Class
+  vessel_types:
+    title: Vessel Type
+    short_name: Name
+    description: Description
+  vessel_categories:
+    title: Vessel Class
+    new: New Vessel Class
+    edit: Edit Vessel Class
+    short_name: Name
+    description: Description
+    vessel_type_id: Vessel Type
   external_issueds:
     title: External Issueds
     new: New External Issued
@@ -677,6 +698,7 @@ en:
       edit: Edit
       back_to_vehicles: Vehicle List
       back_to_depots: Depot List
+      back_to_vessels: Vessel List
       back_to_units: Unit List
     label:
       vehicle:
@@ -867,6 +889,9 @@ en:
       select_company: Select Contractor
       select_issuer: Select Issuer
       select_authoriser: Select Authoriser
+      select_vessel: Select Unit Name
+      select_vessel_type: Select Vessel Type
+      select_vessel_class: Select Vessel Class
       sequence: Sequence
       sequence_text: "Sequence format : 01 for 1, 11 for 11"
       select_depot_fuel: Select Depot | Month Year

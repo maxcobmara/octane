@@ -18,9 +18,17 @@
     .form-group
       = f.label :name, class: 'col-sm-2 control-label'
       .col-sm-5= f.text_field :name, class: 'form-control'
+    
+    /.form-group
+    /  = f.label :is_vessel, class: 'col-sm-2 control-label'
+    /  .col-sm-1= check_box_tag :is_vessel
+    /  .col-sm-10= f.collection_select :vessel_id, Vessel.all, :id, :description, {:include_blank => t('helpers.prompt.select_vessel_type')}, {class: 'selectpicker', 'data-width'=>"auto"}
 
     .form-actions
       .col-sm-offset-2
         = f.submit t("helpers.links.submit"), :class => 'btn btn-primary'
         = link_to t('.cancel', :default => t("helpers.links.cancel")), |
           units_path, :class => 'btn'
+
+          
+          

@@ -1,0 +1,22 @@
+= form_for @vessel_category, :html => { :class => 'form-horizontal' } do |f|
+  - if @vessel_category.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@vessel_category.errors.count, "error")} prohibited this vessel class from being saved:"
+      %ul
+        - @vessel.errors.full_messages.each do |msg|
+          %li= msg
+
+  .form-group
+    = f.label :vessel_type_id, class: 'col-sm-2 control-label'
+    .col-sm-10= f.collection_select :vessel_type_id, VesselType.all, :id, :description, {:include_blank => t('helpers.prompt.select_vessel_type')}, {class: 'selectpicker', 'data-width'=>"auto"}
+
+  .form-group
+    = f.label :short_name, class: 'col-sm-2 control-label'
+    .col-sm-10= f.text_field :short_name, :class => 'text_field', :type => :text
+    
+  .form-group
+    = f.label :description, class: 'col-sm-2 control-label'
+    .col-sm-10= f.text_field :description, :class => 'text_field', :type => :text
+
+  .col-sm-2.col-sm-offset-2
+    = f.submit 'Save', class: "btn btn-primary"
