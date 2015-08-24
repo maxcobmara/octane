@@ -1,0 +1,43 @@
+- provide(:title, 'Vessel Info')
+- model_class = Vessel
+.page-header
+  %h1= t 'vessels.title', :default => model_class.model_name.human.pluralize
+
+.row.searchit{style: "display:none;"}
+  .span9offset1.center
+    = search_form_for @search, class: "form-inline" do |f|
+      .field
+        = f.label :unit_id_cont, "Name Contains:"
+        = f.text_field :unit_name_cont, class: "input-medium search-query"
+        = f.label :pennent_no_cont, " Pennant No Contains"
+        = f.text_field :pennent_no_cont, class: "input-medium search-query"
+        %br
+        = f.label :vessel_type_description_cont, "Vessel Type Contains:"
+        = f.text_field :vessel_category_vessel_type_description_cont, class: "input-medium search-query"
+        = f.label :vessel_category_description_cont, "Vessel Class Contains:"
+        = f.text_field :vessel_category_description_cont, class: "input-medium search-query"
+        = f.submit "Search", class: "btn btn-warning"
+    %br
+.btn-group{"aria-label" => "sidebar", :role => "group", style: "float:right;"}
+  .btn.btn-default= link_to content_tag(:i, fa_icon("asterisk", text: (t 'actions.new'))), new_vessel_path
+  .btn.btn-default= link_to content_tag(:i, fa_icon("search", text: (t 'actions.search'))), "#", class: "toga"
+  .btn.btn-default= link_to(fa_icon("print", text: (t 'actions.print')), "javascript:print()")
+  
+%BR
+%BR
+%table.table.table-condensed.table-hover
+  %thead
+    %tr
+      %th=sort_link @search, :pennent_no, t('vessels.pennent_no')
+      %th=sort_link @search, :unit_id, t('vessels.name')
+      %th=sort_link @search, :vessel_type_id, t('vessels.vessel_type_id')
+      %th=sort_link @search, :vessel_category_id, t('vessels.vessel_category_id')
+
+  %tbody
+    - @vessels.each do |vessel|
+      %tr
+        %td=vessel.pennent_no
+        %td=vessel.unit.name
+        %td=vessel.vessel_category.vessel_type.try(:description)
+        %td=vessel.vessel_category.try(:description)
+        = render :partial => 'action_menu', :locals => { :vessel => vessel }

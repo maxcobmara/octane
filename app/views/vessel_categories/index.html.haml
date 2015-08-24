@@ -1,0 +1,41 @@
+- provide(:title, 'Vessel Class')
+- model_class = VesselCategory
+.page-header
+  %h1= t 'vessel_categories.title', :default => model_class.model_name.human.pluralize
+
+.row.searchit{style: "display:none;"}
+  .span9offset1.center
+    = search_form_for @search, class: "form-inline" do |f|
+      .field
+        = f.label :short_name_cont, "Name Contains:"
+        = f.text_field :short_name_cont, class: "input-medium search-query"
+        = f.label :description_cont, "Description Contains"
+        = f.text_field :description_cont, class: "input-medium search-query"
+        = f.label :vessel_type_description_cont, "Vessel Type Contains:"
+        = f.text_field :vessel_type_description_cont, class: "input-medium search-query"
+        = f.submit "Search", class: "btn btn-warning"
+    %br
+.btn-group{"aria-label" => "sidebar", :role => "group", style: "float:right;"}
+  .btn.btn-default= link_to content_tag(:i, fa_icon("asterisk", text: (t 'actions.new'))), new_vessel_category_path
+  .btn.btn-default= link_to content_tag(:i, fa_icon("search", text: (t 'actions.search'))), "#", class: "toga"
+  .btn.btn-default= link_to(fa_icon("print", text: (t 'actions.print')), "javascript:print()")
+
+%BR
+%table.table.table-condensed.table-hover
+  %thead
+    %tr
+      %th &nbsp;
+    - @vessel_categories.group_by(&:vessel_type).each do |vessel_type, vessel_categories|
+      %tr
+        %th{colspan: "4"}
+          =t('vessel_types.title')+" : "
+          = vessel_type.description
+      %tr
+        %th=sort_link @search, :short_name, t('vessel_categories.short_name')
+        %th=sort_link @search, :description, t('vessel_categories.description')
+      - @vessel_categories.each do |vessel_category|
+        %tbody
+          %tr
+            %td=vessel_category.short_name
+            %td=vessel_category.description
+            = render :partial => 'action_menu', :locals => { :vessel_category => vessel_category}

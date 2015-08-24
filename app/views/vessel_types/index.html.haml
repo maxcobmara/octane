@@ -1,0 +1,24 @@
+- provide(:title, 'Vessel Type')
+- model_class = VesselType
+.page-header
+  %h1= t 'vessel_types.title', :default => model_class.model_name.human.pluralize
+
+.row
+  .col-md-1
+    .btn-group-vertical{"aria-label" => "sideBar", :role => "group"}
+      .btn.btn-default= link_to content_tag(:i, fa_icon("asterisk", text: (t 'actions.new'))), new_vessel_type_path, id: "add_new_type", remote: true
+  .col-md-10.index_main
+    %table.table.table-condensed.table-hover#vessel_type_list{:style => "width:60%;"}
+      %thead
+        %tr
+          %th= t 'vessel_types.short_name'
+          %th= t 'vessel_types.description'
+          %th
+      %tbody
+        %tr#vessel_type_form(style="display:none;")
+          = render :partial => 'form'
+        - @vessel_types.each do |vessel_type|
+          %tr{:id => "tr_#{vessel_type.id}"}
+            %td= vessel_type.short_name
+            %td= vessel_type.description
+            %td= link_to (fa_icon "trash-o"), vessel_type, method: :delete, data: { confirm: 'Are you sure?' }, remote: true

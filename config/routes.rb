@@ -32,7 +32,10 @@ Rails.application.routes.draw do
   resources :fuel_supplieds
 
   resources :fuel_issueds
-
+  resources :vessels
+  resources :vessel_types
+  resources :vessel_categories
+  
   resources :depot_fuels do
     collection do
       get 'PMP_monthly_usage'

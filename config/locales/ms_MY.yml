@@ -89,6 +89,7 @@ ms_MY:
     people: Pentadbiran
     depot: Depot
     depot_listing: Senarai Depot
+    vessel_listing: Senarai Kapal
     fuel_tank: Tangki Penyimpanan
     fuel_tank_listing: Senarai Tangki
     inden_card: Kad Inden
@@ -113,6 +114,8 @@ ms_MY:
     PMP_usage: Laporan Penyata Penggunaan Bahan PMP Bulanan
     fuel_balances: Baki Bahan PMP Bulanan
     fuel_usage_by_vehicle_vessel: "Penggunaan Jenis Bahan PMP Mengikut Kategori"
+    vessel_type: Jenis Kapal
+    vessel_category: Kelas Kapal
 
     admin: Sistem
     users: Pengurusan Pengguna
@@ -554,6 +557,24 @@ ms_MY:
     fuel_type_id: Jenis Bahan PMP
     amount: Amaun
     unit_type_id: Unit Ukuran
+  vessels:
+    title: Kapal
+    unit_id: Unit
+    name: Nama Kapal
+    pennent_no: No Pennent
+    vessel_type_id: Jenis Kapal
+    vessel_category_id: Kelas Kapal
+  vessel_types:
+    title: Jenis Kapal
+    short_name: Nama
+    description: Deskripsi
+  vessel_categories:
+    title: Kelas Kapal
+    new: Kelas Baru Kapal
+    edit: Sunting Kelas Kapal
+    short_name: Nama
+    description: Deskripsi
+    vessel_type_id: Jenis Kapal
   external_issueds:
     title: "Bekal Darat / Udara"
     new: "Bekal Darat / Udara Baru"
@@ -644,6 +665,7 @@ ms_MY:
       edit: Sunting
       back_to_vehicles: Senarai Kenderaan
       back_to_depots: Senarai Depot
+      back_to_vessels: Senarai Kapal
       back_to_units: Senarai Unit
     label:
       vehicle:
@@ -835,6 +857,9 @@ ms_MY:
       select_issuer: Pilih Pengeluar
       select_contract_type: Pilih Jenis Kontrak
       select_authoriser: Select Authoriser
+      select_vessel: Select Unit Name
+      select_vessel_type: Select Vessel Type
+      select_vessel_class: Select Vessel Class
       sequence: Urutan
       sequence_text: "Format Urutan : 01 untuk 1, 11 untuk 11"
       select_depot_fuel: Pilih Depot | Bulan Tahun

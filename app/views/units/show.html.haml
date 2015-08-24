@@ -18,7 +18,10 @@
       = check_kin {@unit.parent.name}
 
 .form-actions
-  .btn.btn-default= link_to content_tag(:i, "", class: "fa fa-arrow-left ") + " " + t('.back', :default => t("helpers.links.back_to_depots")), units_path(:id=>1)
+  - if FuelTank.pluck(:unit_id).include?(@unit.id)
+    .btn.btn-default= link_to content_tag(:i, "", class: "fa fa-arrow-left ") + " " + t('.back', :default => t("helpers.links.back_to_depots")), units_path(:id=>1)
+  - if Vessel.pluck(:unit_id).include?(@unit.id)
+    .btn.btn-default= link_to content_tag(:i, "", class: "fa fa-arrow-left ") + " " + t('.back', :default => t("helpers.links.back_to_vessels")), vessels_path
   .btn.btn-default= link_to content_tag(:i, "", class: "fa fa-arrow-left ") + " " + t('.back', :default => t("helpers.links.back_to_units")), units_path
   .btn.btn-default= link_to content_tag(:i, "", class: "fa fa-edit") + " " + t('.edit', :default => t("helpers.links.edit")), edit_unit_path(@unit)
   = link_to content_tag(:i, " New Node", :class => "fa fa-leaf"), new_unit_path(:parent_id => @unit), :class => 'btn btn-info'

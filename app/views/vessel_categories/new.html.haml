@@ -1,0 +1,7 @@
+- provide(:title, 'New Vessel Class')
+- model_class = VesselCategory
+.page-header
+  %h1=  t 'vessel_categories.new', :default => [:'helpers.titles.new', 'New %{model}'], :model => model_class.model_name.human
+= render 'form'
+
+= link_to 'Back', vessel_categories_path, class: "btn btn-default"

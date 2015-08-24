@@ -1,0 +1,32 @@
+= form_for @vessel, :html => { :class => 'form-horizontal' } do |f|
+  - if @vessel.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@vessel.errors.count, "error")} prohibited this vessel from being saved:"
+      %ul
+        - @vessel.errors.full_messages.each do |msg|
+          %li= msg
+
+  %h5 *Selecting a Unit shall indicates current Vessel is a UNIT of a selected unit name
+  - vessel_units=Vessel.pluck(:unit_id)
+  - if @vessel.new_record?
+    - if vessel_units ==[]
+      - @units_for = Unit.where('name ILIKE(?) or name LIKE(?)', '%kapal diraja%', 'KD%')
+    - else
+      - @units_for = Unit.where('(name ILIKE(?) or name LIKE(?)) and id NOT IN(?)', '%kapal diraja%', 'KD%', vessel_units)
+  - else
+    - @units_for = Unit.where('name ILIKE(?) or name LIKE(?)', '%kapal diraja%', 'KD%')
+  
+  .form-group
+    = f.label :unit_id, class: 'col-sm-2 control-label'
+    .col-sm-10= f.collection_select :unit_id, @units_for, :id, :name, {:include_blank => t('helpers.prompt.select_vessel')}, {class: 'selectpicker', 'data-width'=>"auto"}
+
+  .form-group
+    = f.label :pennent_no, class: 'col-sm-2 control-label'
+    .col-sm-10= f.text_field :pennent_no, :class => 'text_field', :type => :text
+
+  .form-group
+    = f.label :vessel_class_id, class: 'col-sm-2 control-label'
+    .col-sm-10= f.collection_select :vessel_category_id, VesselCategory.all, :id, :type_category, {:include_blank => t('helpers.prompt.select_vessel_class')}, {class: 'selectpicker', 'data-width'=>"auto"}
+
+  .col-sm-2.col-sm-offset-2
+    = f.submit 'Save', class: "btn btn-primary"
