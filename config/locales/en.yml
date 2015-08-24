@@ -871,6 +871,15 @@ en:
         petronal_p_price: "Petrol (RM)"
         petronas_d_ltr: "Diesel (litre)"
         petronas_d_price: "Diesel (RM)"
+      vessel:
+        unit_id: Unit
+        name: Vessel Name
+        pennent_no: Pennent No
+        vessel_category_id: Vessel Class
+      vessel_category:
+        short_name: Name
+        description: Description
+        vessel_type_id: Vessel Type
     prompt:
       select_manufacturer: Select Manufacturer
       select_category: Select Category

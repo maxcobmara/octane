@@ -3,7 +3,7 @@
     #error_explanation
       %h2= "#{pluralize(@vessel_category.errors.count, "error")} prohibited this vessel class from being saved:"
       %ul
-        - @vessel.errors.full_messages.each do |msg|
+        - @vessel_category.errors.full_messages.each do |msg|
           %li= msg
 
   .form-group
