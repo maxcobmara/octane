@@ -27,7 +27,7 @@
     %thead
       %tr
         %th=fuel_tank
-        %td{colspan: "6", style: "font-size:0.8em; padding-top:25px;"}
+        %td{colspan: "7", style: "font-size:0.8em; padding-top:25px;"}
           Resupply :
           = check_kin{number_with_precision(((fuel_transactions.select{|p|p.transaction_type=="Resupply" rescue false}).map(&:amount).inject(:+)).to_f, :precision => 2)}
           litres
@@ -47,6 +47,7 @@
         %th=t 'fuel_transactions.usage'
         %th Unit
         %th.left=t 'fuel_transactions.vehicle_id'
+        %th.left=t 'fuel_transactions.vessel_id'
         %th=t 'fuel_transactions.data'
         %th
     - for fuel_transaction in fuel_transactions.sort_by{|x|[x.fuel_type_id, x.fuel_tank_id, x.created_at]}
@@ -66,7 +67,12 @@
           %td.left= fuel_transaction.fuel_unit_type.description
           %td.left
             - if fuel_transaction.transaction_type=="Usage"
-              = fuel_transaction.vehicle.try(:reg_no) 
+              = fuel_transaction.is_vehicle? ? fuel_transaction.vehicle.try(:reg_no) : "-"
+            - else
+              \-
+          %td.left
+            - if fuel_transaction.transaction_type=="Usage"
+              = fuel_transaction.is_vehicle? ? "-" : fuel_transaction.try(:vessel).try(:unit).try(:shortname)
             - else
               \-
           %td= fuel_transaction.try(:data)

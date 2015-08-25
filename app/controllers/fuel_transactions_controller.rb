@@ -69,7 +69,7 @@ class FuelTransactionsController < ApplicationController
   end
   
   def vehicle_vessel_usage
-    @fuel_transactions=FuelTransaction.usage.where('vehicle_id is not null')
+    @fuel_transactions=FuelTransaction.usage
     cars_category_ids=VehicleCategory.cars.pluck(:id)
     lorries_category_ids=VehicleCategory.lorries.pluck(:id)
     busses_category_ids=VehicleCategory.busses.pluck(:id)
@@ -77,6 +77,7 @@ class FuelTransactionsController < ApplicationController
     @lorries=Vehicle.where(category_id: lorries_category_ids).pluck(:id)
     @busses=Vehicle.where(category_id: busses_category_ids).pluck(:id)
     @no_cat=Vehicle.where(category_id: nil).pluck(:id)
+    #@vessels=Vessel.all.pluck(:id)
   end
 
   private
@@ -87,6 +88,6 @@ class FuelTransactionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def fuel_transaction_params
-      params.require(:fuel_transaction).permit(:document_code, :transaction_type, :amount, :fuel_type_id, :fuel_unit_type_id, :fuel_tank_id, :vehicle_id, :data, :created_by, :updated_by)
+      params.require(:fuel_transaction).permit(:document_code, :transaction_type, :amount, :fuel_type_id, :fuel_unit_type_id, :fuel_tank_id, :vehicle_id, :data, :created_by, :updated_by, :vessel_id, :is_vehicle)
     end
 end

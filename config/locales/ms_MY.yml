@@ -545,6 +545,8 @@ ms_MY:
     fuel_type: Jenis Bahan PMP
     fuel_tank_id: Tangki Penyimpanan Bahan PMP
     vehicle_id: Kenderaan
+    vessel_id: Nama Kapal
+    pennent_no: No Pennent
     data: Data
     resupply: Penerimaan
     usage: Penggunaan

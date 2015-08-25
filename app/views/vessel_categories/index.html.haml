@@ -33,7 +33,7 @@
       %tr
         %th=sort_link @search, :short_name, t('vessel_categories.short_name')
         %th=sort_link @search, :description, t('vessel_categories.description')
-      - @vessel_categories.each do |vessel_category|
+      - vessel_categories.each do |vessel_category|
         %tbody
           %tr
             %td=vessel_category.short_name

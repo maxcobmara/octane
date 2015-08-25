@@ -576,6 +576,8 @@ en:
     fuel_type_id: Fuel Type
     fuel_tank_id: Fuel Tank
     vehicle_id: Vehicle
+    vessel_id: Vessel Name
+    pennent_no: Pennent No
     data: Data
     resupply: IN
     usage: OUT

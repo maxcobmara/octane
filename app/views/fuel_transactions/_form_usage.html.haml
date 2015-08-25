@@ -32,9 +32,18 @@
     /{class: 'selectpicker', 'data-width'=>"auto"}
 
   .form-group
+    = f.label :is_vehicle, class: 'col-sm-2 control-label'
+    .col-md-1= f.check_box :is_vehicle, :id => 'check_vehicle'
+    .col-md-3 Tick if Vehicle, untick if Vessel
+
+  .form-group#span_vehicle{style: "display:none;"}
     = f.label :vehicle_id, class: 'col-sm-2 control-label'
     .col-sm-3= select_tag("fuel_transaction[vehicle_id]", grouped_options_for_select(Vehicle.groupped, selected_vehicle), :class => 'form-control')
-  
+    
+  .form-group#span_vessel{style: "display:block;"}
+    = f.label :vessel_id, class: 'col-sm-2 control-label'
+    .col-sm-3= f.collection_select :vessel_id, Vessel.all, :id, :vessel_details, {:include_blank => 'Select a vessel'}, {class: 'selectpicker', 'data-width'=>"360px"}
+
   .form-group
     = f.label :fuel_tank_id, class: 'col-sm-2 control-label'
     .col-sm-4= select_tag("fuel_transaction[fuel_tank_id]", grouped_options_for_select(FuelTank.groupped, selected_tank), :class => 'form-control')
