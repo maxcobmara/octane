@@ -36,25 +36,26 @@
           litres
       
     %tbody  
-      /Cars
-      %tr
-        %th{colspan: "6"}Group Category : Cars
-      %tr
-        %th=t 'fuel_transactions.vehicle_id'
-        %th Vehicle Category
-        %th= t 'fuel_transactions.document_code'
-        %th= t 'fuel_transactions.amount'
-        %th= t 'fuel_transactions.unit_type_id' 
-        %th
-      - cars_transactions.group_by(&:vehicle).each do |vehicle, fuel_transactions2|
-        - for fuel_transaction in fuel_transactions2
-          %tr
-            %td= fuel_transaction.vehicle.reg_no
-            %td= fuel_transaction.vehicle.vehiclecategory.description
-            %td= fuel_transaction.document_code
-            %td= fuel_transaction.amount
-            %td= fuel_transaction.fuel_unit_type.description
-            %td 
+      - if cars_transactions.count > 0
+        /Cars
+        %tr
+          %th{colspan: "6"}Group Category : Cars
+        %tr
+          %th=t 'fuel_transactions.vehicle_id'
+          %th Vehicle Category
+          %th= t 'fuel_transactions.document_code'
+          %th= t 'fuel_transactions.amount'
+          %th= t 'fuel_transactions.unit_type_id' 
+          %th
+        - cars_transactions.group_by(&:vehicle).each do |vehicle, fuel_transactions2|
+          - for fuel_transaction in fuel_transactions2
+            %tr
+              %td= fuel_transaction.vehicle.reg_no
+              %td= fuel_transaction.vehicle.vehiclecategory.description
+              %td= fuel_transaction.document_code
+              %td= fuel_transaction.amount
+              %td= fuel_transaction.fuel_unit_type.description
+              %td 
 
       - if lorries_transactions.count > 0
         /Lorries
@@ -145,6 +146,8 @@
 
 - petrol_trans=@fuel_transactions.where(fuel_type_id: FuelType.where('shortname LIKE (?)', 'PETROL').first.id)
 - diesel_trans= @fuel_transactions.where(fuel_type_id: FuelType.where('shortname LIKE (?)', 'DIESEL').first.id)
+- avtur_trans= @fuel_transactions.where(fuel_type_id: FuelType.where('shortname LIKE (?)', 'AVTUR').first.id)
+- avcat_trans= @fuel_transactions.where(fuel_type_id: FuelType.where('shortname LIKE (?)', 'AVCAT').first.id)
 
 %table.table.table-bordered
   %thead
@@ -152,27 +155,37 @@
       %th GROUP CATEGORY (Vehicle)
       %th PETROL
       %th DIESEL
+      %th AVTUR
+      %th AVCAT
       %th &nbsp;
   %tbody
     %tr
       %th Car
       %td=petrol_trans.where(vehicle_id: @cars).sum(:amount).to_s+" litres"
       %td=diesel_trans.where(vehicle_id: @cars).sum(:amount).to_s+" litres"
+      %td=avtur_trans.where(vehicle_id: @cars).sum(:amount).to_s+" litres"
+      %td=avcat_trans.where(vehicle_id: @cars).sum(:amount).to_s+" litres"
       %td 
     %tr
       %th Lorry
       %td=petrol_trans.where(vehicle_id: @lorries).sum(:amount).to_s+" litres"
       %td=diesel_trans.where(vehicle_id: @lorries).sum(:amount).to_s+" litres"
+      %td=avtur_trans.where(vehicle_id: @lorries).sum(:amount).to_s+" litres"
+      %td=avcat_trans.where(vehicle_id: @lorries).sum(:amount).to_s+" litres"
       %td
     %tr
       %th Bus
       %td=petrol_trans.where(vehicle_id: @busses).sum(:amount).to_s+" litres"
       %td=diesel_trans.where(vehicle_id: @busses).sum(:amount).to_s+" litres"
+      %td=avtur_trans.where(vehicle_id: @busses).sum(:amount).to_s+" litres"
+      %td=avcat_trans.where(vehicle_id: @busses).sum(:amount).to_s+" litres"
       %td
     %tr
       %th Not Define (vehicle)
       %td=petrol_trans.where(vehicle_id: @no_cat).sum(:amount).to_s+" litres"
       %td=diesel_trans.where(vehicle_id: @no_cat).sum(:amount).to_s+" litres"
+      %td=avtur_trans.where(vehicle_id: @no_cat).sum(:amount).to_s+" litres"
+      %td=avcat_trans.where(vehicle_id: @no_cat).sum(:amount).to_s+" litres"
       %td
 
 %table.table.table-bordered
@@ -192,6 +205,8 @@
       %th Vessel Name
       %th PETROL
       %th DIESEL
+      %th AVTUR
+      %th AVCAT
       %th &nbsp;
   %tbody
     - @fuel_transactions.where('vessel_id is not null').group_by(&:vessel).each do |vessel, transactions|
@@ -200,6 +215,8 @@
         %td=vessel.unit.name
         %td=petrol_trans.where('vessel_id is not null').where(vessel_id: vessel.id).sum(:amount)
         %td=diesel_trans.where('vessel_id is not null').where(vessel_id: vessel.id).sum(:amount)
+        %td=avtur_trans.where('vessel_id is not null').where(vessel_id: vessel.id).sum(:amount)
+        %td=avcat_trans.where('vessel_id is not null').where(vessel_id: vessel.id).sum(:amount)
         %td &nbsp;
         
        

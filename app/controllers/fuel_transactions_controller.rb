@@ -69,7 +69,9 @@ class FuelTransactionsController < ApplicationController
   end
   
   def vehicle_vessel_usage
-    @fuel_transactions=FuelTransaction.usage
+    start=Date.today.beginning_of_year
+    current=Date.today+1.day
+    @fuel_transactions=FuelTransaction.usage.where('created_at >=? and created_at<=?', start, current)
     cars_category_ids=VehicleCategory.cars.pluck(:id)
     lorries_category_ids=VehicleCategory.lorries.pluck(:id)
     busses_category_ids=VehicleCategory.busses.pluck(:id)
@@ -77,7 +79,6 @@ class FuelTransactionsController < ApplicationController
     @lorries=Vehicle.where(category_id: lorries_category_ids).pluck(:id)
     @busses=Vehicle.where(category_id: busses_category_ids).pluck(:id)
     @no_cat=Vehicle.where(category_id: nil).pluck(:id)
-    #@vessels=Vessel.all.pluck(:id)
   end
 
   private
