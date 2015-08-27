@@ -149,6 +149,7 @@ en:
     fuel_usage_by_vehicle_vessel: "Fuel Type Usage by Categories"
     vessel_type: Vessel Types
     vessel_category: Vessel Classes
+    annual_budget: Annual Budget by Fuel Type
     
     admin: Administration
     users: User Management
