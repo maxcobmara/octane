@@ -21,8 +21,8 @@
   %dd=@fuel_transaction.fuel_tank.try(:fuel_tank_details)
 - if @fuel_transaction.transaction_type=="Usage"
   %dl.dl-horizontal
-    %dt Vehicle
-    %dd= @fuel_transaction.vehicle.try(:reg_no)
+    %dt= @fuel_transaction.is_vehicle? ? "Vehicle" : "Vessel"
+    %dd= @fuel_transaction.is_vehicle? ? @fuel_transaction.vehicle.reg_no : @fuel_transaction.vessel.unit.name
 %dl.dl-horizontal
   %dt Data
   %dd= @fuel_transaction.data

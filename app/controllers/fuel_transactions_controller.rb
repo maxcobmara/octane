@@ -69,7 +69,9 @@ class FuelTransactionsController < ApplicationController
   end
   
   def vehicle_vessel_usage
-    @fuel_transactions=FuelTransaction.usage.where('vehicle_id is not null')
+    start=Date.today.beginning_of_year
+    current=Date.today+1.day
+    @fuel_transactions=FuelTransaction.usage.where('created_at >=? and created_at<=?', start, current)
     cars_category_ids=VehicleCategory.cars.pluck(:id)
     lorries_category_ids=VehicleCategory.lorries.pluck(:id)
     busses_category_ids=VehicleCategory.busses.pluck(:id)
@@ -87,6 +89,6 @@ class FuelTransactionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def fuel_transaction_params
-      params.require(:fuel_transaction).permit(:document_code, :transaction_type, :amount, :fuel_type_id, :fuel_unit_type_id, :fuel_tank_id, :vehicle_id, :data, :created_by, :updated_by)
+      params.require(:fuel_transaction).permit(:document_code, :transaction_type, :amount, :fuel_type_id, :fuel_unit_type_id, :fuel_tank_id, :vehicle_id, :data, :created_by, :updated_by, :vessel_id, :is_vehicle)
     end
 end

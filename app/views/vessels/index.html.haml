@@ -28,13 +28,14 @@
 %table.table.table-condensed.table-hover
   %thead
     %tr
-      %th=sort_link @search, :pennent_no, t('vessels.pennent_no')
-      %th=sort_link @search, :unit_id, t('vessels.name')
-      %th=sort_link @search, :vessel_type_id, t('vessels.vessel_type_id')
-      %th=sort_link @search, :vessel_category_id, t('vessels.vessel_category_id')
+      /%th=sort_link @search, :pennent_no, t('vessels.pennent_no')
+      %th=t('vessels.pennent_no')
+      %th=sort_link @search, :unit_name, t('vessels.name')
+      %th=sort_link @search, :vessel_type_description, t('vessels.vessel_type_id')
+      %th=sort_link @search, :vessel_category_description, t('vessels.vessel_category_id')
 
   %tbody
-    - @vessels.each do |vessel|
+    - @vessels.sort_by{|x|x.pennent_no.to_i}.each do |vessel|
       %tr
         %td=vessel.pennent_no
         %td=vessel.unit.name
