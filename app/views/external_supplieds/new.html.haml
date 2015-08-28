@@ -1,0 +1,6 @@
+- provide(:title, 'New External Supplieds')
+- model_class = ExternalSupplied
+.page-header
+  %h1=  t 'external_supplieds.new', :default => [:'helpers.titles.new', 'New %{model}'], :model => model_class.model_name.human
+= render :partial => 'form'
+

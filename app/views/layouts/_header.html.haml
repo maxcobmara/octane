@@ -31,14 +31,17 @@
               %li.divider
               %li= link_to content_tag(:li, fa_icon("file-excel-o", text: (t 'actions.import_excel'))), import_excel_depot_fuel_path
               %li.divider
-              %li= link_to "Fuel Types", fuel_types_path
-              %li= link_to "Unit Types", unit_types_path
-              %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'menu.fuel_tank_listing'), fuel_tanks_path
+              %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'menu.depot_fuels'), depot_fuels_path
+              %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'fuel_supplieds.title3'), fuel_supplieds_path
+              %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'fuel_issueds.title3'), fuel_issueds_path
               %li.divider
-              %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'menu.depot_listing'), units_path(:id=>1)
+              %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'menu.unit_fuels'), unit_fuels_path
+              %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'add_fuels.title2'), add_fuels_path
+              %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'external_issueds.title'), external_issueds_path
+              %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'external_supplieds.title'), external_supplieds_path
+              %li.divider
               %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'menu.fuel_budgets'), fuel_budgets_path
               %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'menu.fuel_limits'), fuel_limits_path
-              //%li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'fuel_issueds.title3'), fuel_issueds_path
           %li.dropdown
             %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
               Manage
@@ -54,9 +57,9 @@
               %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'menu.vessel_category'), vessel_categories_path
               %li.divider
               %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'menu.fuel_tank_listing'), fuel_tanks_path
-              %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'depot_fuels.title'), depot_fuels_path
-              %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'fuel_supplieds.title3'), fuel_supplieds_path
-              %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'fuel_issueds.title3'), fuel_issueds_path
+              /%li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'depot_fuels.title'), depot_fuels_path
+              /%li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'fuel_supplieds.title3'), fuel_supplieds_path
+              /%li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'fuel_issueds.title3'), fuel_issueds_path
 
 
 
@@ -71,7 +74,8 @@
             %li.divider
             %li= link_to (t 'menu.fuel_usage_by_vehicle_vessel'), vehicle_vessel_usage_fuel_transactions_path
             %li= link_to (t 'menu.fuel_type_per_quarter'),  daily_usage_unit_fuels_path
-            %li= link_to (t 'menu.fuel_usage_report'),      unit_fuel_usage_unit_fuels_path
+            %li= link_to (t 'menu.fuel_usage_graph_report'),      unit_fuel_usage_unit_fuels_path
+            %li= link_to (t 'menu.fuel_usage_list_report'),      unit_fuel_list_usage_unit_fuels_path
             %li= link_to (t 'menu.annual_usage_report'),    annual_usage_report_unit_fuels_path
             %li.divider
             %li= link_to (t 'menu.annual_budget'), annual_budget_fuel_budgets_path

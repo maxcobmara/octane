@@ -98,7 +98,8 @@ ms_MY:
     summon_report: Laporan Senarai Saman
     roadtax_report: Laporan Cukai Jalan Bulanan
     maintenance_report: Laporan Penyelenggaraan
-    fuel_usage_report: Laporan Penggunaan Bahan PMP
+    fuel_usage_graph_report: "Laporan Penggunaan Bahan PMP (Graf)"
+    fuel_usage_list_report: "Laporan Penggunaan Bahan PMP (Senarai)"
     maintenance_contract_report: Laporan Kontrak Penyelenggaraan
     tank_capacity_chart_report: Carta Laporan Kapasiti Tangki
     tank_capacity_list_report: Senarai Laporan Kapasiti Tangki
@@ -123,7 +124,8 @@ ms_MY:
     authorisation: Perundangan Kebenaran
 
   report:
-    unit_fuel_graph: Graf Penggunaan Minyak
+    unit_fuel_graph: Graf Penggunaan Minyak Unit
+    unit_fuel_list: Laporan Penggunaan Minyak Unit
     diesel_vessel_usage: Penggunaan Diesel Kapal
     diesel_vehicle_usage: Penggunaan Diesel Kenderaan
     diesel_misctool_usage: Penggunaan Diesel Alat Pelbagai

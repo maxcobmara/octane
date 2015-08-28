@@ -1,0 +1,32 @@
+.container{:style => "padding-left: 60px;"}
+  = form_for @external_supplied, :html => { :class => 'form-horizontal' }  do |f|
+    = render 'shared/error_messages', object: f.object
+    = f.hidden_field :unit_fuel_id
+
+    %dl.dl-horizontal
+      %dt
+        %strong= t 'external_supplieds.unit_fuel_id'
+      %dd
+        = h @external_supplied.unit_fuel.month_unit
+    %br
+
+    .control-group
+      = f.label :fuel_type_id, :class => 'control-label'
+      .controls= f.collection_select :fuel_type_id, FuelType.all, :id, :name, :include_blank => t('helpers.prompt.select_fuel_type'), :html_options => {:class => 'selectpicker'}
+		          
+    .control-group
+      = f.label :quantity, :class => 'control-label'
+      .controls= f.text_field :quantity, :class => 'text_field', :type => :text
+	  
+    .control-group
+      = f.label :unit_type_id, :class => 'control-label'
+      .controls= f.collection_select :unit_type_id, UnitType.all, :id, :description, :include_blank => t('helpers.prompt.select_unit_type'), :html_options => {:class => 'selectpicker'}
+
+    .control-group
+      = f.label :source, :class => 'control-label'
+      .controls= f.collection_select :source, Unit.where('name LIKE (?) OR name LIKE (?)','Tentera Darat', 'Tentera Udara DiRaja Malaysia' ), :id, :name, :include_blank => t('helpers.prompt.select_source2'), :html_options => {:class => 'selectpicker'}
+		 		
+    .form-actions
+      = f.submit (t 'helpers.links.submit'), :class => 'btn btn-primary'
+      = link_to t('.cancel', :default => t("helpers.links.cancel")), |
+      add_fuels_path, :class => 'btn'     

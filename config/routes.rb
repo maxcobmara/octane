@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   resources :unit_fuels do
     collection do
       get 'unit_fuel_usage'
+      get 'unit_fuel_list_usage'
       get 'annual_usage_report'
       get 'daily_usage'
     end

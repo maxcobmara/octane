@@ -131,7 +131,8 @@ en:
     summon_report: Summon Report
     roadtax_report: Monthly Roadtax Report
     maintenance_report: Maintenance Report
-    fuel_usage_report: Fuel Usage Report
+    fuel_usage_graph_report: Fuel Usage Graph Report
+    fuel_usage_list_report: Fuel Usage List Report
     maintenance_contract_report: Maintenance Contract Report
     tank_capacity_chart_report: Tank Capacity Chart Report
     tank_capacity_list_report: Tank Capacity List Report
@@ -150,6 +151,8 @@ en:
     vessel_type: Vessel Types
     vessel_category: Vessel Classes
     annual_budget: Annual Budget by Fuel Type
+    depot_fuels: "Monthly Fuel (Depot)"
+    unit_fuels: "Monthly Fuel (Unit)"
     
     admin: Administration
     users: User Management
@@ -157,7 +160,8 @@ en:
 
 
   report:
-    unit_fuel_graph: Unit Fuel Graph
+    unit_fuel_graph: Unit Fuel Usage Graph
+    unit_fuel_list: Unit Fuel Usage Report
     diesel_vessel_usage: Diesel Vessel Usage
     diesel_vehicle_usage: Diesel Vehicle Usage
     diesel_misctool_usage: Diesel Misctool Usage
