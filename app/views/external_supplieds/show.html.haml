@@ -1,0 +1,31 @@
+- provide(:title, 'External Supplieds')
+- model_class = ExternalSupplied
+.page-header
+  %h1= t 'external_supplieds.title', :default => model_class.model_name.human
+%p#notice= notice
+%dl.dl-horizontal
+  %dt= t 'external_supplieds.unit_fuel_id', :default => model_class.human_attribute_name(:depot_fuel_id) + ":"
+  %dd= check_kin {@external_supplied.unit_fuel.month_unit}
+%dl.dl-horizontal
+  %dt= t 'external_supplieds.fuel_type_id', :default => model_class.human_attribute_name(:fuel_tank_id) + ":"
+  %dd= check_kin {@external_supplied.fuel_type.name}
+%dl.dl-horizontal
+  %dt= t 'external_supplieds.quantity', :default => model_class.human_attribute_name(:current) + ":"
+  %dd= @external_supplied.quantity.to_i
+%dl.dl-horizontal
+  %dt= t 'external_supplieds.unit_type_id', :default => model_class.human_attribute_name(:unit_type_id) + ":"
+  %dd= check_kin {@aexternal_supplied.unit_type.description}
+%dl.dl-horizontal
+  %dt= t 'external_supplieds.source', :default => model_class.human_attribute_name(:current) + ":"
+  %dd= @external_supplied.source
+  
+.form-actions
+  = link_to content_tag(:i, "", :class => "fa fa-arrow-left ") + " " + t('.back', :default => t("helpers.links.back")), external_supplieds_path, :class => 'btn'
+  = link_to content_tag(:i, "", :class => "fa fa-edit") + " " + t('.edit', :default => t("helpers.links.edit")), |
+    edit_external_supplied_path(@external_supplied), :class => 'btn'
+  = link_to content_tag(:i, "", :class => "fa fa-trash-o icon-white") + " " + t('.destroy', :default => t("helpers.links.destroy")), |
+    external_supplied_path(@external_supplied),                                                                                                    |
+    :method => 'delete',                                                                                                           |
+    :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },                   |
+    :class => 'btn btn-danger'                                                                                                     |
+

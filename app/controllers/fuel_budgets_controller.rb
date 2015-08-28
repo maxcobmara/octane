@@ -61,6 +61,10 @@ class FuelBudgetsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def annual_budget
+    @fuel_budgets=FuelBudget.all
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

@@ -7,13 +7,18 @@ Rails.application.routes.draw do
     end
   end
   resources :fuel_limits
-  resources :fuel_budgets
+  resources :fuel_budgets do
+    collection do
+      get 'annual_budget'
+    end
+  end
   resources :external_issueds
   resources :external_supplieds
   resources :add_fuels
   resources :unit_fuels do
     collection do
       get 'unit_fuel_usage'
+      get 'unit_fuel_list_usage'
       get 'annual_usage_report'
       get 'daily_usage'
     end

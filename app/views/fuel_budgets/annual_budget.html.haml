@@ -1,0 +1,45 @@
+- model_class = FuelBudget
+.page-header
+  %h1= t 'menu.annual_budget', :default => model_class.model_name.human.pluralize
+
+
+- @fuel_budgets.group_by(&:unit).each do |depot, fuel_budgets|
+  
+  
+  %table.table.table-bordered
+    %thead
+      %tr
+        %th= depot.name
+        %td{colspan: "5", style: "font-size:0.8em; padding-top:25px;"}
+          Petrol :
+          = FuelBudget.where(id: fuel_budgets.map(&:id)).petrol.sum(:amount)
+          litres
+          &nbsp; | &nbsp;
+          Diesel :
+          = FuelBudget.where(id: fuel_budgets.map(&:id)).diesel.sum(:amount)
+          litres
+          &nbsp; | &nbsp;
+          AVTUR :
+          = FuelBudget.where(id: fuel_budgets.map(&:id)).avtur.sum(:amount)
+          litres
+          &nbsp; | &nbsp;
+          AVCAT :
+          = FuelBudget.where(id: fuel_budgets.map(&:id)).avcat.sum(:amount)
+          litres
+      
+    %tbody  
+      - fuel_budgets.group_by(&:fuel_type).each do |fuel_type, fuel_budgets2|
+        %tr
+          %th{colspan: "6"}=fuel_type.shortname
+        %tr
+          %th Code
+          %th start date
+          %th amount
+          %th unit type
+          %th
+        - fuel_budgets2.each do |fuel_budget|
+          %tr
+            %td= fuel_budget.code
+            %td= fuel_budget.year_starts_on.strftime('%d-%m-%Y, %H:%M')
+            %td= fuel_budget.amount
+            %td= fuel_budget.unit_type.description

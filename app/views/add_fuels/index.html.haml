@@ -1,0 +1,43 @@
+- provide(:title, 'Add Fuels')
+- model_class = AddFuel
+.page-header
+  %h1= t 'add_fuels.title', :default => model_class.model_name.human.pluralize
+  
+.btn-group{"aria-label" => "sidebar", :role => "group", style: "float:right;"}
+  //.btn.btn-default= link_to content_tag(:i, fa_icon("asterisk", text: (t 'actions.new'))), new_fuel_issued_path
+  .btn.btn-default= link_to content_tag(:i, fa_icon("search", text: (t 'actions.search'))), "#", class: "toga"
+  .btn.btn-default= link_to(fa_icon("print", text: (t 'actions.print')), "javascript:print()")
+
+.row.searchit{style: "display:none;"}
+  .span9offset1
+    = search_form_for @search, class: "form-inline" do |f|
+      .field
+        = f.text_field :unit_fuel_unit_name_cont, class: "input-medium search-query", placeholder: "Unit Contains" 
+        = f.text_field :fuel_type_name_cont, class: "input-medium search-query", placeholder: "Fuel Type Contains" 
+        = f.submit "Search", class: "btn btn-warning"
+      
+      
+%table.table.table-condensed.table-hover
+  %thead
+    %tr
+      %th= t 'add_fuels.unit_fuel_id'
+      %th= sort_link @search, :fuel_type_id, t('add_fuels.fuel_type_id')
+      %th= t 'add_fuels.description'
+      %th= t 'add_fuels.quantity'
+      %th= t 'add_fuels.unit_type_id'
+      %th
+  %tbody
+    - @add_fuels.each do |add_fuel|
+      %tr
+        %td= check_kin {add_fuel.unit_fuel.month_unit}
+        %td= check_kin {add_fuel.fuel_type.name}
+        %td= add_fuel.description
+        %td= add_fuel.quantity.to_i
+        %td= check_kin {add_fuel.unit_type.description}
+        %td
+        = render :partial => 'action_menu', :locals => { :add_fuel => add_fuel }
+      
+      
+
+
+

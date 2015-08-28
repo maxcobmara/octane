@@ -78,7 +78,7 @@
           .col-lg-offset-2.col-lg-10
             = f.fields_for :add_fuels do |builder|
               = render 'add_fuel_fields', f: builder
-            = link_to_add_fields (t 'add_fuels.add_details'), f, :add_fuels
+            /= link_to_add_fields (t 'add_fuels.add_details'), f, :add_fuels
 
       #tab4.tab-pane
         .row
@@ -89,7 +89,7 @@
           .col-lg-offset-2.col-lg-10
             = f.fields_for :external_supplieds do |builder|
               = render 'external_supplied_fields', f: builder
-            = link_to_add_fields (t 'external_supplieds.add_details'), f, :external_supplieds
+            /= link_to_add_fields (t 'external_supplieds.add_details'), f, :external_supplieds
 
       #tab5.tab-pane
         - @depot_ids=Unit.where("id IN(?)",FuelTank.pluck(:unit_id)).pluck(:id)
@@ -102,7 +102,7 @@
             .col-lg-offset-2.col-lg-10
               = f.fields_for :external_issueds do |builder|
                 = render 'external_issued_fields', f: builder
-              = link_to_add_fields (t 'external_issueds.add_details'), f, :external_issueds
+              /= link_to_add_fields (t 'external_issueds.add_details'), f, :external_issueds
         - else
           .row
             .span8

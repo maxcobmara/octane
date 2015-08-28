@@ -8,7 +8,7 @@
 
   .form-group
     = f.label :unit_id, class: 'col-sm-2 control-label'
-    .col-sm-10= f.collection_select :unit_id, Unit.is_depot.order(:name), :id, :name, {:include_blank => t('helpers.prompt.select_fuel_tank')}, {class: 'selectpicker', 'data-width'=>"auto"}
+    .col-sm-10= f.collection_select :unit_id, Unit.where('name not ILIKE(?)', '%kapal-kapal di%').where('name not ILIKE(?)', '%tentera darat%').where('name not ILIKE(?)', '%tentera udara%').order(:name), :id, :name, {:include_blank => t('helpers.prompt.select_unit')}, {class: 'selectpicker', 'data-width'=>"auto"}
 
   .form-group
     = f.label :code, class: 'col-sm-2 control-label'

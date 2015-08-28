@@ -7,11 +7,13 @@ $(document).ready(function(){
       alert("Sorry! Feature not yet implemented");
   });
   
-  //$(".toga").click(function (e){
-  //   $('.searchit').toggle();
-  //});
+  ///this must be activated if TURBOLINKS NOT in use
+  $(".toga").click(function (e){
+     $('.searchit').toggle();
+  });
 
   $('.selectpicker').selectpicker();
+  ///Turbolinks NOT in use
   
   ///Fuel Transaction - Use Fuel - start
   $("input[id='check_vehicle']").change(function() {  
@@ -37,6 +39,7 @@ $(document).ready(function(){
   
 });
 
+///searchit & selectpicker - if TURBOLINKS in use - ON PAGE CHANGE
 $(document).on('page:change', function () {
   $('.selectpicker').selectpicker();
   $(".toga").click(function (e){
@@ -65,6 +68,7 @@ $(document).on('page:change', function () {
   ///Fuel Transaction - Use Fuel - end
 });
 
+/////searchit & selectpicker - if TURBOLINKS in use - ONCLICK EVENT
 $(document).on('click', 'toga', function(){
   $('.searchit').toggle();
 });

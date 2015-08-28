@@ -1,0 +1,47 @@
+- provide(:title, 'External Supplieds')
+- model_class = ExternalSupplied
+.page-header
+  %h1= t 'external_supplieds.title', :default => model_class.model_name.human.pluralize
+  
+.row.searchit{style: "display:none;"}
+  .span9offset1.center
+    = search_form_for @search, class: "form-inline" do |f|
+      .field
+        = f.label :unit_fuel_unit_name_cont, "Unit Contains:"
+        = f.text_field :unit_fuel_unit_name_cont, class: "input-medium search-query"
+        = f.label :resource_name_cont, "Supplied by :"
+        = f.text_field :resource_name_cont, class: "input-medium search-query"
+        = f.submit "Search", class: "btn btn-warning"
+      %br
+
+.btn-group{"aria-label" => "sidebar", :role => "group", style: "float:right;"}
+  /.btn.btn-default= link_to content_tag(:i, fa_icon("asterisk", text: (t 'actions.new'))), new_unit_fuel_path
+  .btn.btn-default= link_to content_tag(:i, fa_icon("search", text: (t 'actions.search'))), "#", class: "toga"
+  .btn.btn-default= link_to(fa_icon("print", text: (t 'actions.print')), "javascript:print()")
+%BR
+%BR      
+
+%table.table.table-condensed.table-hover
+  %thead
+    %tr
+      %th= t 'external_supplieds.unit_fuel_id'
+      %th= sort_link @search, :fuel_type_id, t('external_supplieds.fuel_type_id')
+      %th= t 'external_supplieds.quantity'
+      %th= t 'external_supplieds.unit_type_id'
+      %th= sort_link @search, :source, t('external_supplieds.source')
+      %th
+  %tbody
+    - @external_supplieds.each do |external_supplied|
+      %tr
+        %td= check_kin {external_supplied.unit_fuel.month_unit}
+        %td= check_kin {external_supplied.fuel_type.name}
+        %td= external_supplied.quantity.to_i
+        %td= check_kin {external_supplied.unit_type.description}
+        %td= external_supplied.resource.try(:name)
+        %td
+        = render :partial => 'action_menu', :locals => { :external_supplied => external_supplied }
+      
+      
+
+
+

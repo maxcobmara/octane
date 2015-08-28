@@ -12,7 +12,7 @@
   %dd= @fuel_budget.unit.name
 %dl.dl-horizontal
   %dt=t 'fuel_budgets.year_starts_on'
-  %dd=@fuel_budget.year_starts_on.try(:strftime, '%d-%m-%Y, H:M')
+  %dd=@fuel_budget.year_starts_on.try(:strftime, '%d-%m-%Y, %H:%M')
 %dl.dl-horizontal
   %dt Fuel Type
   %dd= @fuel_budget.fuel_type.try(:name)
