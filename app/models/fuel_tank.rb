@@ -1,9 +1,14 @@
 class FuelTank < ActiveRecord::Base
+  before_save :set_default_maximum
   belongs_to :unit,   :class_name => "Unit",   :foreign_key => "unit_id"
   belongs_to :unittype,   :class_name => "UnitType",   :foreign_key => "unit_type"
   belongs_to :fuel_type,   :class_name => "FuelType",   :foreign_key => "fuel_type_id"
   has_many :fuel_balances, dependent: :destroy
   has_many :fuel_transactions
+  
+  def set_default_maximum
+    self.maximum=capacity*0.95
+  end
   
   def fuel_tank_type
     "#{locations}"+" - #{fuel_type.name}"
@@ -14,19 +19,21 @@ class FuelTank < ActiveRecord::Base
   end
   
 	
-  def self.get_tank(tank_name, depot_id, fuel_type_id, capacity)
+  def self.get_tank(tank_name, depot_id, fuel_type_id)#, capacity)
     tankno = tank_name.split(" ")[tank_name.split(" ").count-1]
 	#capacity = 20553
 	#tankname = tank_name.split(" ")[0]
 	#where('locations ILIKE (?)', "%kios%")[0].id
 	#where('locations ILIKE (?)',"%#{tankname}%")[0].id
 	#where('unit_id=? AND fuel_type_id=? AND capacity=?',depot_id, fuel_type_id, capacity)[0].id  
-	where('locations ILIKE (?) AND unit_id=? AND fuel_type_id=? AND capacity=?',"%#{tankno}",depot_id,fuel_type_id, capacity)[0].id	
+	#where('locations ILIKE (?) AND unit_id=? AND fuel_type_id=? AND capacity=?',"%#{tankno}",depot_id,fuel_type_id, capacity)[0].id
+	where('locations ILIKE (?) AND unit_id=? AND fuel_type_id=?',"%#{tankno}",depot_id,fuel_type_id)[0].id
   end
   
-  def self.get_tank2(tank_name, depot_id, fuel_type_id, capacity)
-	tankno = tank_name.split("")[tank_name.split("").count-1]
-	where('locations ILIKE (?) AND unit_id=? AND fuel_type_id=? AND capacity=?',"%#{tankno}",depot_id,fuel_type_id, capacity)[0].id	
+  def self.get_tank2(tank_name, depot_id, fuel_type_id)#, capacity)
+    tankno = tank_name.split("")[tank_name.split("").count-1]
+    where('locations ILIKE (?) AND unit_id=? AND fuel_type_id=?',"%#{tankno}",depot_id,fuel_type_id)[0].id
+    #where('locations ILIKE (?) AND unit_id=? AND fuel_type_id=? AND capacity=?',"%#{tankno}",depot_id,fuel_type_id, capacity)[0].id	
   end
   
   def self.groupped

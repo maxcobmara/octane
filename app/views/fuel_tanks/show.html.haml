@@ -17,7 +17,8 @@
 %dl.dl-horizontal
   %dt Maximum
   %dd
-    = number_with_precision((@fuel_tank.capacity).to_f*0.925, :precision => 0)
+    /= number_with_precision((@fuel_tank.capacity).to_f*0.925, :precision => 0)
+    = number_with_precision(@fuel_tank.maximum, :precision => 0)
     = @fuel_tank.unittype.try(:description)
 %dl.dl-horizontal
   %dt= t 'fuel_types.fuel_type_id', :default => model_class.human_attribute_name(:fuel_type_id) + ":"

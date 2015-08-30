@@ -9,7 +9,7 @@ class DepotFuel < ActiveRecord::Base
   
   validates_presence_of :unit_id, :issue_date
   
-  attr_accessor :tank, :current, :current2, :current3, :capacity, :capacity2, :capacity3, :prev_balance, :supplieds, :issueds
+  attr_accessor :tank, :current, :current2, :current3, :supplieds, :issueds #:capacity, :capacity2, :capacity3, #:prev_balance - not use
       
   def month_depot
     "#{depot.name} "+"#{issue_date.strftime("%b")} "+"#{issue_date.year}"
@@ -49,21 +49,23 @@ class DepotFuel < ActiveRecord::Base
   end
   
   def self.import(file) 
-    spreadsheet = open_spreadsheet(file) 
-    spreadsheet.default_sheet = spreadsheet.sheets.first
+	spreadsheet = open_spreadsheet(file) 
+	spreadsheet.default_sheet = spreadsheet.sheets.first
 	
 	#first sheet : Fuel Balances
 	excel_month = spreadsheet.cell(4,'B')
-    excel_year = spreadsheet.cell(5,'B')
+	excel_year = spreadsheet.cell(5,'B')
 	depot_name = spreadsheet.cell(11,'B')
-	depot_id = Unit.where('name ILIKE (?)',depot_name)[0].id
+	depot = Unit.where('name ILIKE (?)',depot_name)[0]
+    if depot
+	depot_id = depot.id
 	
 	storage_tank_exist = FuelTank.where('unit_id=?',depot_id)
 	storage_tank_exist_count= storage_tank_exist.count
 	storage_tank_exist_fueltype_count = storage_tank_exist.map(&:fuel_type_id).uniq.count
 	storage_tank_excel=[]
 	tank_naming_err=[]
-	capacity_err=[]
+	#capacity_err=[]
 	(11..spreadsheet.last_row).each do |i|
 		tank_excel = spreadsheet.cell(i,'C')
 		unless (tank_excel.nil? || tank_excel.blank? || tank_excel==" " || tank_excel=="-")
@@ -75,12 +77,12 @@ class DepotFuel < ActiveRecord::Base
 				tank_naming_err<< tank_excel
 			end
 		end
-		capacity_val = spreadsheet.cell(i,'D')
+		#capacity_val = spreadsheet.cell(i,'D')
 		current_val = spreadsheet.cell(i,'F')
 		unless (current_val.nil? || current_val.blank? || current_val==" " || current_val=="-")
-			if (capacity_val.nil? || capacity_val.blank? || capacity_val==" " || capacity_val=="-")
-				capacity_err<< capacity_val
-			end
+			#if (capacity_val.nil? || capacity_val.blank? || capacity_val==" " || capacity_val=="-")
+			#  capacity_err<< capacity_val
+			#end
 		end
 	end
 	if storage_tank_exist_count == storage_tank_excel.count
@@ -114,7 +116,7 @@ class DepotFuel < ActiveRecord::Base
 		fueltype_count_match = false
 	end
 	
-	if storage_tank_count_match==true && tank_naming_err.count==0 && capacity_err.count==0 && fueltype_count_match==true
+	if storage_tank_count_match==true && tank_naming_err.count==0 && fueltype_count_match==true #&& capacity_err.count==0 
 		unless (excel_month.nil? || excel_month.blank? || excel_month == " " || excel_month == "-") && (excel_year.nil? || excel_year.blank? || excel_year == " " || excel_year == "-") 
 
 			begin_month = Date.new(excel_year.to_i,excel_month.to_i,1)
@@ -128,7 +130,7 @@ class DepotFuel < ActiveRecord::Base
 				row = Hash[[header, spreadsheet.row(i)].transpose] 
 				df = where('unit_id =? AND issue_date>=? AND issue_date<?', depot_id, begin_month, next_month)[0] || new
 				df.unit_id = depot_id
-				df.attributes = row.to_hash.slice("tank","current","current2","current3","capacity","capacity2","capacity3" )
+				df.attributes = row.to_hash.slice("tank","current","current2","current3")#,"capacity","capacity2","capacity3" )
 			
 				#for new depot fuel only
 				if df.id.nil? || df.id.blank?
@@ -139,8 +141,8 @@ class DepotFuel < ActiveRecord::Base
 				unless (df.current.nil? || df.current.blank? || df.current == " " || df.current == "-") 
 					fuel_type_name="petrol"
 					fuel_type_id=FuelType.get_fuel_type(fuel_type_name) #1 
-					capacity = df.capacity
-					ftank_id = FuelTank.get_tank(df.tank, depot_id, fuel_type_id, capacity)
+					#capacity = df.capacity
+					ftank_id = FuelTank.get_tank(df.tank, depot_id, fuel_type_id)#, capacity)
 					if df.id.nil? || df.id.blank?
 						ind = 0
 						exist_balances = false
@@ -161,8 +163,8 @@ class DepotFuel < ActiveRecord::Base
 				unless (df.current2.nil? || df.current2.blank? || df.current2 == " " || df.current2 == "-") 
 					fuel_type_name="diesel"
 					fuel_type_id=FuelType.get_fuel_type(fuel_type_name) 
-					capacity2 = df.capacity2
-					ftank_id = FuelTank.get_tank(df.tank, depot_id, fuel_type_id, capacity2)
+					#capacity2 = df.capacity2
+					ftank_id = FuelTank.get_tank(df.tank, depot_id, fuel_type_id)#, capacity2)
 					if df.id.nil? || df.id.blank?
 						ind = 0
 						exist_balances2 = false
@@ -182,13 +184,13 @@ class DepotFuel < ActiveRecord::Base
 				#repeating fields - fuel_balances - avcat/avtur
 				fuel_types=[]
 				unless (df.current3.nil? || df.current3.blank? || df.current3 == " " || df.current3 == "-") 
-					capacity3 = df.capacity3
+					#capacity3 = df.capacity3
 					unless (df.tank.nil? || df.tank.blank?)
 						fuel_type_name=df.tank.split(" ")[0] #eg. Avcat H1, Avtur H2 etc
 						fuel_type_id=FuelType.get_fuel_type2(fuel_type_name, fuel_types)
 						fuel_types<< fuel_type_name if FuelType.all.pluck(:shortname).include?(fuel_type_name)
 					end
-					ftank_id = FuelTank.get_tank2(df.tank, depot_id, fuel_type_id, capacity3)
+					ftank_id = FuelTank.get_tank2(df.tank, depot_id, fuel_type_id)#, capacity3)
 					unless (ftank_id.nil? || ftank_id.blank? || ftank_id==" " || ftank_id=="-")	
 						if df.id.nil? || df.id.blank?
 							ind = 0
@@ -226,7 +228,7 @@ class DepotFuel < ActiveRecord::Base
 			(11..last_row_second).each do |i|
 				row2 = Hash[[header2, spreadsheet.row(i,second_sheet)].transpose]
 				df2 = where('unit_id =? AND issue_date>=? AND issue_date<?', depot_id2, begin_month2, next_month2)[0] #|| new
-				df2.attributes = row2.to_hash.slice("prev_balance","supplieds","issueds" )
+				df2.attributes = row2.to_hash.slice("supplieds","issueds") #"prev_balance",
 				#----fuel_supplieds section
 				unless (df2.supplieds.nil? || df2.supplieds.blank? || df2.supplieds==" " || df2.supplieds=="-")
 					fueltype_row = i-1
@@ -314,10 +316,13 @@ class DepotFuel < ActiveRecord::Base
 		msg_err=""
 		msg_err+="stc" if storage_tank_count_match==false
 		msg_err+=" tn" if tank_naming_err.count>0 
-		msg_err+=" cap" if capacity_err.count>0
+		#msg_err+=" cap" if capacity_err.count>0
 		msg_err+=" ftcm" if fueltype_count_match==false
 		return msg_err
-    end # end of - if storage_tank_count_match, tank_naming_err, capacity_err, fueltype_count etc.		
+	end # end of - if storage_tank_count_match, tank_naming_err, fueltype_count etc.  ##30Aug2015-capacity_err : removed
+    else
+      return "depot_not_exist"
+    end
   end 
    
      
