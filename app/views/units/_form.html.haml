@@ -22,8 +22,12 @@
     .form-actions
       .col-sm-offset-2
         = f.submit t("helpers.links.submit"), :class => 'btn btn-primary'
-        = link_to t('.cancel', :default => t("helpers.links.cancel")), |
-          units_path, :class => 'btn'
+        - if Unit.is_depot.pluck(:id).include?(@unit.id)
+          = link_to t('.cancel', :default => t("helpers.links.cancel")), |
+          units_path(:id=>1), :class => 'btn btn-default'
+        - else
+          = link_to t('.cancel', :default => t("helpers.links.cancel")), |
+          units_path, :class => 'btn btn-default'
 
           
           

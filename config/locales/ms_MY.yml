@@ -386,6 +386,10 @@ ms_MY:
     title: Unit
     title2: Depot
     title3: Unit
+    list2: Senarai Depoh
+    list3: Senarai Unit
+    edit2: Sunting Depoh
+    edit3: Sunting Unit
     shortname: Nama Ringkas
     name: Nama
     parent_id: Unit Induk
@@ -432,9 +436,9 @@ ms_MY:
     name: Nama
     country: Negara
   depot_fuels:
-    title: "Bahan PMP Bulanan"
-    new: "Bahan PMP Bulanan (Depot) Baru"
-    edit: "Sunting Bahan PMP Bulanan (Depot)"
+    title: "Bahan PMP Bulanan (Depoh)"
+    new: "Bahan PMP Bulanan (Depoh) Baru"
+    edit: "Sunting Bahan PMP Bulanan (Depoh)"
     unit_id: Depot
     issue_date: Tarikh
     fuel_type: Jenis Bahan PMP
@@ -446,9 +450,9 @@ ms_MY:
     summary: Rumusan
     and: dan
     must_match: mesti sama
-    imported: "Bahan PMP (Depot) dari fail Excel telah berjaya diimport"
+    imported: "Bahan PMP (Depoh) dari fail Excel telah berjaya diimport"
     invalid_excel: "Data fail Excel tidak sah. "
-    import_excel: "Import Bahan PMP (Depot) dari Fail Excel"
+    import_excel: "Import Bahan PMP (Depoh) dari Fail Excel"
     condition_month_year: "Bulan & tahun semasa mesti diisi (bulan - baris 4,lajur ‘B’, tahun - baris 5,lajur ‘B’)."
     condition_fuel_tank_qty_match: "Sheet1 : Penyata Kapasiti - Kuantiti tangki dalam fail Excel dan sistem mestilah bersamaan. Rujuk menu, Bahan PMP | Tangki Penyimpanan | Senarai Tangki. "
     condition_naming_rules: "Sheet1 : Penyata Kapasiti - Nama tangki penyimpanan bagi petrol dan diesel (dalam fail Excel) mestilah diakhiri dengan 'ruang kosong' dan nombor, ATAU huruf sahaja. Contohnya, 'Tank 1', 'Ops Tank'."

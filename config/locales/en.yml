@@ -419,8 +419,12 @@ en:
     name: Name
   units:
     title: Units
-    title2: Depots
+    title2: Depot
     title3: Unit
+    list2: Depot Listing
+    list3: Unit Listing
+    edit2: Edit Depot
+    edit3: Edit Unit
     shortname: Short Name
     name: Name
     parent_id: Parent Unit
@@ -467,7 +471,7 @@ en:
     name: Name
     country: Country
   depot_fuels:
-    title: "Monthly Fuel"
+    title: "Monthly Fuel (Depot)"
     new: "New Monthly Fuel (Depot)"
     edit: "Edit Monthly Fuel (Depot)"
     unit_id: Depot

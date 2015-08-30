@@ -4,7 +4,7 @@
 
     .control-group
       = f.label :unit_id, :class => 'control-label'
-      .controls= f.collection_select :unit_id, Unit.all, :id, :name, {:include_blank => t('helpers.prompt.select_depot')}, {:class => 'selectpicker'}
+      .controls= f.collection_select :unit_id, Unit.all.order(name: :asc), :id, :name, {:include_blank => t('helpers.prompt.select_depot')}, {:class => 'selectpicker'}
 
     .control-group
       = f.label :locations, :class => 'control-label'

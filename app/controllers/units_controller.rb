@@ -50,7 +50,12 @@ class UnitsController < ApplicationController
   def update
     respond_to do |format|
       if @unit.update(unit_params)
-        format.html { redirect_to @unit, notice: 'Unit was successfully updated.' }
+        if Unit.is_depot.pluck(:id).include?(@unit.id)
+          unitkind=(t 'units.title2')
+        else
+          unitkind=(t 'units.title3')
+        end
+        format.html { redirect_to @unit, notice: unitkind+' was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -62,9 +67,18 @@ class UnitsController < ApplicationController
   # DELETE /units/1
   # DELETE /units/1.json
   def destroy
+    if Unit.is_depot.pluck(:id).include?(@unit.id)
+      depot=1
+    else
+      depot=0
+    end
     @unit.destroy
     respond_to do |format|
-      format.html { redirect_to units_url }
+      if depot==1
+        format.html { redirect_to units_url(:id => 1)}
+      else
+        format.html { redirect_to units_url }
+      end
       format.json { head :no_content }
     end
   end
