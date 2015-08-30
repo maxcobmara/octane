@@ -20,9 +20,9 @@
   %dd= check_kin {@add_fuel.unit_type.description}
   
 .form-actions
-  = link_to content_tag(:i, "", :class => "fa fa-arrow-left ") + " " + t('.back', :default => t("helpers.links.back")), add_fuels_path, :class => 'btn'
-  = link_to content_tag(:i, "", :class => "fa fa-edit") + " " + t('.edit', :default => t("helpers.links.edit")), |
-    edit_add_fuel_path(@add_fuel), :class => 'btn'
+  .btn.btn-default= link_to content_tag(:i, "", :class => "fa fa-arrow-left ") + " " + t('.back', :default => t("helpers.links.back")), add_fuels_path
+  .btn.btn-default= link_to content_tag(:i, "", :class => "fa fa-edit") + " " + t('.edit', :default => t("helpers.links.edit")), |
+    edit_add_fuel_path(@add_fuel)
   = link_to content_tag(:i, "", :class => "fa fa-trash-o icon-white") + " " + t('.destroy', :default => t("helpers.links.destroy")), |
     add_fuel_path(@add_fuel),                                                                                                    |
     :method => 'delete',                                                                                                           |

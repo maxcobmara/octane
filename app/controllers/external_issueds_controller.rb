@@ -18,7 +18,6 @@ class ExternalIssuedsController < ApplicationController
   def new
     @unit_fuel = UnitFuel.find(params[:unit_fuel_id])
     @external_issued = @unit_fuel.external_issueds.new(params[:external_issued])
-    @external_issued.save
   end
 
   # GET /external_issueds/1/edit

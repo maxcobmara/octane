@@ -21,6 +21,12 @@ $(document).ready(function(){
     autoclose: true
     //todayBtn: true
   });
+  
+  $('[data-behaviour=datepicker_std]').datepicker({
+    format: "yyyy-mm-dd",
+    autoclose: true
+    //todayBtn: true
+  });
   //Date fields - end
   
   ///this must be activated if TURBOLINKS NOT in use

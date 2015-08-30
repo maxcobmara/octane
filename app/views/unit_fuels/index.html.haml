@@ -10,9 +10,9 @@
         = f.label :unit_name_cont, "Unit Contains:"
         = f.text_field :unit_name_cont, class: "input-medium search-query"
         = f.label :issue_date_gteq, "Issue Date From:"
-        = f.text_field :issue_date_gteq, class: "input-medium search-query", "data-behaviour" => "datepicker_std"
-        = f.label :issue_date_lteq, "Issue Date From:"
-        = f.text_field :issue_date_lteq, class: "input-medium search-query datepicker", "data-behaviour" => "datepicker_std"
+        = f.text_field :issue_date_gteq, :class => 'text_field', :type => :text, 'data-behaviour' => 'datepicker_std'
+        = f.label :issue_date_lteq, "Issue Date To:"
+        = f.text_field :issue_date_lteq, :class => 'text_field', :type => :text, "data-behaviour" => "datepicker_std"
         = f.submit "Search", class: "btn btn-warning"
       %br
 

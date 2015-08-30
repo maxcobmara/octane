@@ -506,8 +506,10 @@ ms_MY:
     unit_type_id: Unit Ukuran
     new_balance: Baki Tangki Baru
   unit_fuels:
-    title: Bahan PMP di Unit
-    title2: Penggunaan di Unit
+    title: Bahan PMP Bulanan di Unit
+    title2: Penggunaan Bahan PMP Bulanan di Unit
+    title3: "Bahan PMP Bulanan (Unit)"
+    edit: "Sunting Bahan PMP Bulanan (Unit)"
     unit_id: Unit
     issue_date: Tarikh
     petrol_usage: Penggunaan Petrol

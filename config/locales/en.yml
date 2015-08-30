@@ -541,8 +541,10 @@ en:
     unit_type_id: Unit Type
     new_balance: New Tank Balance
   unit_fuels:
-    title: Unit Fuels
-    title2: Unit Fuel Usage
+    title: Unit Monthly Fuels
+    title2: Unit Monthly Fuel Usage
+    title3: "Monthly Fuel (Unit)"
+    edit: "Edit Monthly Fuel (Unit)"
     unit_id: Unit
     issue_date: Issue Date
     petrol_usage: Petrol Usage

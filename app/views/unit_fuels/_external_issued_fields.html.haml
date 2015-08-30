@@ -5,4 +5,4 @@
     = f.collection_select :unit_type_id, UnitType.all, :id, :description, :include_blank => (t 'helpers.prompt.select_unit_type'), :html_options => {:class => 'selectpicker'}
     = f.collection_select :source, Unit.where('name LIKE (?) OR name LIKE (?)','Tentera Darat', 'Tentera Udara DiRaja Malaysia' ), :id, :name, :include_blank => t('helpers.prompt.select_source1'), :html_options => {:class => 'selectpicker'}
     = f.hidden_field :_destroy
-    = link_to_remove_fields (fa_icon "trash-o"), f     
+    /= link_to_remove_fields (fa_icon "trash-o"), f     
