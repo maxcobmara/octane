@@ -27,7 +27,8 @@
           .col-lg-offset-2.col-lg-10
             = f.fields_for :fuel_supplieds do |builder|
               = render 'fuel_supplied_fields', f: builder
-            /= link_to_add_fields (t 'fuel_supplieds.add_details'), f, :fuel_supplieds
+            .row
+              = link_to_add_fields t('actions.addmore'), f, :fuel_supplieds, "",  t('actions.addmore')
       
       #tab2.tab-pane
         .row
@@ -38,8 +39,8 @@
           .col-lg-offset-2.col-lg-10
             = f.fields_for :fuel_issueds do |builder|
               = render 'fuel_issued_fields', f: builder
-            /= link_to_add_fields (t 'fuel_issueds.add_details'), f, :fuel_issueds
-
+            .row
+              = link_to_add_fields t('actions.addmore'), f, :fuel_issueds, "",  t('actions.addmore')
 
       #tab3.tab-pane
         .row
@@ -50,10 +51,10 @@
           .col-lg-offset-2.col-lg-10
             = f.fields_for :fuel_balances do |builder|
               = render 'fuel_balance_fields', f: builder
-            /= link_to_add_fields (t 'fuel_balances.add_details'), f, :fuel_balances
+            .row
+              = link_to_add_fields t('actions.addmore'), f, :fuel_balances, "",  t('actions.addmore')
 
     .form-actions
       = f.submit (t 'helpers.links.submit'), :class => 'btn btn-primary'
       .btn.btn-default= link_to t('.cancel', :default => t("helpers.links.cancel")), |
         depot_fuels_path
-

@@ -94,3 +94,26 @@ $(document).ready(function(){
 // $(document).on('click', 'toga', function(){
 //   $('.searchit').toggle();
 // });
+
+//for use in generating repeating fields  -- Add more (Depot Fuels & Unit Fuels) - working ADD MORE for repeating fields but without Remove button
+  function add_fields(link, association, content) {
+    var new_id = new Date().getTime();
+    var regexp = new RegExp("new_" + association, "g");
+    $(link).parent().before(content.replace(regexp, new_id));
+  }
+  
+//    function remove_fields(link){
+//      $(link).previous("input[type=hidden]").value = "1";
+//      $(link).up(".fields").hide();
+//    }
+   
+//not working yet - 1 Sept 2015 -  refer fuel_balance_fields.html.haml 
+//    function test(link){
+//      alert(link);
+//      $(link).siblings("input[type=hidden]").value = "1";
+//      $(link).siblings().hide();
+//      $(link).hide();
+//      
+//     }
+
+  
