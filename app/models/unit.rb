@@ -38,7 +38,7 @@ class Unit < ActiveRecord::Base
   end
   
   def valid_for_removal
-    if depot_fuels.count > 0 || unit_fuels.count > 0 || fuel_limits.count > 0 || fuel_budgets.count > 0 || (vessel && vessel.count==1)
+    if depot_fuels.count > 0 || unit_fuels.count > 0 || fuel_limits.count > 0 || fuel_budgets.count > 0 || vessel
       return false
     else
       return true

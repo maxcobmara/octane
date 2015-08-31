@@ -32,10 +32,10 @@
           = vessel_type.description
       %tr
         %th=sort_link @search, :short_name, t('vessel_categories.short_name')
-        %th=sort_link @search, :description, t('vessel_categories.description')
+        %th{colspan: "3"}=sort_link @search, :description, t('vessel_categories.description')
       - vessel_categories.each do |vessel_category|
         %tbody
           %tr
             %td=vessel_category.short_name
-            %td=vessel_category.description
+            %td{colspan: "2"}=vessel_category.description
             = render :partial => 'action_menu', :locals => { :vessel_category => vessel_category}
