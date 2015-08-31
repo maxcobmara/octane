@@ -78,7 +78,8 @@
           .col-lg-offset-2.col-lg-10
             = f.fields_for :add_fuels do |builder|
               = render 'add_fuel_fields', f: builder
-            /= link_to_add_fields (t 'add_fuels.add_details'), f, :add_fuels
+            .row
+              = link_to_add_fields t('actions.addmore'), f, :add_fuels, "",  t('actions.addmore')
 
       #tab4.tab-pane
         .row
@@ -89,7 +90,8 @@
           .col-lg-offset-2.col-lg-10
             = f.fields_for :external_supplieds do |builder|
               = render 'external_supplied_fields', f: builder
-            /= link_to_add_fields (t 'external_supplieds.add_details'), f, :external_supplieds
+            .row
+              = link_to_add_fields t('actions.addmore'), f, :external_supplieds, "",  t('actions.addmore')
 
       #tab5.tab-pane
         - @depot_ids=Unit.where("id IN(?)",FuelTank.pluck(:unit_id)).pluck(:id)
@@ -102,7 +104,8 @@
             .col-lg-offset-2.col-lg-10
               = f.fields_for :external_issueds do |builder|
                 = render 'external_issued_fields', f: builder
-              /= link_to_add_fields (t 'external_issueds.add_details'), f, :external_issueds
+              .row
+                = link_to_add_fields t('actions.addmore'), f, :external_issueds, "",  t('actions.addmore')
         - else
           .row
             .span8
@@ -114,4 +117,3 @@
       = f.submit (t 'helpers.links.submit'), :class => 'btn btn-primary'
       = link_to t('.cancel', :default => t("helpers.links.cancel")), |
         unit_fuels_path, :class => 'btn btn-default'     
-

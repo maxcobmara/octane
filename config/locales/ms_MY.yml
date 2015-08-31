@@ -62,6 +62,7 @@ ms_MY:
     updated: " telah berjaya dikemaskini."
     import_excel: Import Data Dari Excel
     removed: " telah berjaya dibuang."
+    addmore: Tambah 
   errors:
   date:
     formats:

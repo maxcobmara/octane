@@ -4,4 +4,8 @@
     = f.text_field :current, :class => 'text_field input-small', :placeholder => 'Quantity'
     = f.collection_select :unit_type_id, UnitType.all, :id, :description, :include_blank => (t 'helpers.prompt.select_unit_type'), :html_options => {:class => 'selectpicker'}
     = f.hidden_field :_destroy
-    /= link_to_remove_fields (fa_icon "trash-o"), f     
+    /not working yet - 1 Sept 2015
+    //= link_to_remove_fields (fa_icon "trash-o"), f     
+    //= link_to "Remove", "javascript:void(0);", :id => "remove_link"
+    //= link_to "Remove", "#", :onclick => "test( \"#{f.object}\");"
+    /= link_to "Remove", "#", :onclick => "test(this);"
