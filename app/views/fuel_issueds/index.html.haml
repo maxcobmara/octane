@@ -33,3 +33,12 @@
         %td= check_kin {fuel_issued.unit_type.description}
         %td
         = render :partial => 'action_menu', :locals => { :fuel_issued => fuel_issued }
+
+    - if @fuel_issueds.group_by(&:fuel_type_id).count==1
+      %tr
+        %td
+        %th Total Fuel Issued
+        %th=@fuel_issueds.sum(:quantity)
+        %td
+        %td
+        %td

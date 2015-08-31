@@ -1,16 +1,15 @@
 class Unit < ActiveRecord::Base
   before_save :set_combo_code
+  before_destroy :valid_for_removal
   has_ancestry :cache_depth => true
 
-  has_many :fuel_tanks
+  has_many :fuel_tanks, dependent: :destroy
   has_one :vessel
   has_many :subunits, class_name: "Unit", foreign_key: 'parent_id'
   belongs_to :parent, class_name: "Unit", foreign_key: 'parent_id'
   has_many :vehicle_cards, dependent: :nullify
-  has_many :depot_fuels, dependent: :destroy #only for depot (unit having fuel tanks)
-  has_many :unit_fuels, dependent: :destroy #for all units
-  has_many :external_issueds
-  has_many :external_supplieds
+  has_many :depot_fuels#, dependent: :destroy #only for depot (unit having fuel tanks)
+  has_many :unit_fuels#, dependent: :destroy #for all units
   has_many :staffs, dependent: :nullify
   has_many :inden_cards, dependent: :nullify
   has_one  :authorisor_unit, class_name: "Vehicle Assignment"
@@ -19,8 +18,6 @@ class Unit < ActiveRecord::Base
   has_many :fuel_budgets
 
   scope :is_depot, -> { where("id IN(?)",FuelTank.pluck(:unit_id)) }
-
-  attr_accessor :is_vessel
   
   def set_combo_code
     if ancestry_depth == 0
@@ -38,6 +35,14 @@ class Unit < ActiveRecord::Base
 
    def self.get_rmn_unit(unitname)
     where('name ILIKE (?)', unitname)[0].id
+  end
+  
+  def valid_for_removal
+    if depot_fuels.count > 0 || unit_fuels.count > 0 || fuel_limits.count > 0 || fuel_budgets.count > 0 || vessel
+      return false
+    else
+      return true
+    end
   end
 end
 

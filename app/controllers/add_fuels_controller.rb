@@ -18,7 +18,6 @@ class AddFuelsController < ApplicationController
   def new
     @unit_fuel = UnitFuel.find(params[:unit_fuel_id])
     @add_fuel = @unit_fuel.add_fuels.new(params[:add_fuel])
-    @add_fuel.save
   end
 
   # GET /add_fuels/1/edit

@@ -101,6 +101,6 @@ class FuelTanksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def fuel_tank_params
-      params.require(:fuel_tank).permit(:unit_id, :locations, :capacity, :unit_type, :fuel_type_id)
+      params.require(:fuel_tank).permit(:unit_id, :locations, :capacity, :unit_type, :fuel_type_id, :maximum)
     end
 end

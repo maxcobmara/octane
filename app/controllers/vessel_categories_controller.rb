@@ -44,8 +44,6 @@ class VesselCategoriesController < ApplicationController
   # PATCH/PUT /vessel_categories/1
   # PATCH/PUT /vessel_categories/1.json
   def update
-# 	@vessel_categories = VesselType.all
-	@vessel_category = VesselCategory.find(params[:id])
     respond_to do |format|
       if @vessel_category.update(vessel_category_params)
         format.html { redirect_to @vessel_category, notice: 'Vessel class was successfully updated.' }
@@ -60,7 +58,6 @@ class VesselCategoriesController < ApplicationController
   # DELETE /vessel_categories/1
   # DELETE /vessel_categories/1.json
   def destroy
-    @vessel_category = VesselCategory(params[:id])
     @vessel_category.destroy
     respond_to do |format|
       format.html { redirect_to vessel_categories_url }

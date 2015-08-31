@@ -35,7 +35,7 @@ class UnitFuelsController < ApplicationController
 
     respond_to do |format|
       if @unit_fuel.save
-        format.html { redirect_to @unit_fuel, notice: (t 'unit_fuels.title')+(t 'actions.created') }
+        format.html { redirect_to @unit_fuel, notice: (t 'unit_fuels.title3')+(t 'actions.created') }
         format.json { render action: 'show', status: :created, location: @unit_fuel }
       else
         format.html { render action: 'new' }
@@ -49,7 +49,7 @@ class UnitFuelsController < ApplicationController
   def update
     respond_to do |format|
       if @unit_fuel.update(unit_fuel_params)
-        format.html { redirect_to @unit_fuel, notice: (t 'unit_fuels.title')+(t 'actions.updated') }
+        format.html { redirect_to @unit_fuel, notice: (t 'unit_fuels.title3')+(t 'actions.updated') }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

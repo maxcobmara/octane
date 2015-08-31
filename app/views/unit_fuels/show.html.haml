@@ -1,7 +1,7 @@
 - provide(:title, 'UnitFuel')
 - model_class = UnitFuel
 .page-header
-  %h1= t 'unit_fuels.title', :default => model_class.model_name.human
+  %h1= t 'unit_fuels.title3', :default => model_class.model_name.human
 %p#notice= notice
 %dl.dl-horizontal
   %dt= t 'unit_fuels.unit_id', :default => model_class.human_attribute_name(:id_no) + ":"
@@ -137,7 +137,7 @@
               %td= check_kin {unit_external_supplied.fuel_type.name}
               %td{:align => "center"}= unit_external_supplied.quantity.to_i
               %td{:align => "center"}= check_kin {unit_external_supplied.unit_type.description}
-              %td{:align => "center"}= unit_external_supplied.resource.name
+              %td{:align => "center"}= unit_external_supplied.resource.try(:name)
               %td 
 	
 
@@ -166,7 +166,7 @@
                 %td= check_kin {unit_external_issued.fuel_type.name}
                 %td{:align => "center"}= unit_external_issued.quantity.to_i
                 %td{:align => "center"}= check_kin {unit_external_issued.unit_type.description}
-                %td{:align => "center"}= unit_external_issued.resource.name
+                %td{:align => "center"}= unit_external_issued.resource.try(:name)
                 %td
     - else
       .div{:style => "padding: 15px 50px 10px 50px; "}
@@ -204,7 +204,8 @@
               %td
           / for cards - own by individual (senior officer - from current unit)
           - for staff in @unit_fuel.unit.staffs
-            - if staff.inden_cards.nil? == false
+            /- if staff.inden_cards.nil? == false
+            - if staff.inden_cards.count>0
               %tr
                 %td= staff.staff_details
                 %td= staff.inden_cards[0].serial_no
@@ -216,9 +217,9 @@
     = t 'helpers.prompt.add_edit_inden_usage'
 	
 .form-actions
-  = link_to content_tag(:i, "", :class => "fa fa-arrow-left ") + " " + t('.back', :default => t("helpers.links.back")), unit_fuels_path, :class => 'btn'
-  = link_to content_tag(:i, "", :class => "fa fa-edit") + " " + t('.edit', :default => t("helpers.links.edit")), |
-    edit_unit_fuel_path(@unit_fuel), :class => 'btn'
+  .btn.btn-default= link_to content_tag(:i, "", :class => "fa fa-arrow-left ") + " " + t('.back', :default => t("helpers.links.back")), unit_fuels_path
+  .btn.btn-default= link_to content_tag(:i, "", :class => "fa fa-edit") + " " + t('.edit', :default => t("helpers.links.edit")), |
+    edit_unit_fuel_path(@unit_fuel)
   = link_to content_tag(:i, "", :class => "fa fa-trash-o icon-white") + " " + t('.destroy', :default => t("helpers.links.destroy")), |
     unit_fuel_path(@unit_fuel),                                                                                                    |
     :method => 'delete',                                                                                                           |

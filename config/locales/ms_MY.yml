@@ -386,6 +386,10 @@ ms_MY:
     title: Unit
     title2: Depot
     title3: Unit
+    list2: Senarai Depoh
+    list3: Senarai Unit
+    edit2: Sunting Depoh
+    edit3: Sunting Unit
     shortname: Nama Ringkas
     name: Nama
     parent_id: Unit Induk
@@ -432,9 +436,9 @@ ms_MY:
     name: Nama
     country: Negara
   depot_fuels:
-    title: "Bahan PMP Bulanan"
-    new: "Bahan PMP Bulanan (Depot) Baru"
-    edit: "Sunting Bahan PMP Bulanan (Depot)"
+    title: "Bahan PMP Bulanan (Depoh)"
+    new: "Bahan PMP Bulanan (Depoh) Baru"
+    edit: "Sunting Bahan PMP Bulanan (Depoh)"
     unit_id: Depot
     issue_date: Tarikh
     fuel_type: Jenis Bahan PMP
@@ -446,14 +450,15 @@ ms_MY:
     summary: Rumusan
     and: dan
     must_match: mesti sama
-    imported: "Bahan PMP (Depot) dari fail Excel telah berjaya diimport"
+    imported: "Bahan PMP (Depoh) dari fail Excel telah berjaya diimport"
     invalid_excel: "Data fail Excel tidak sah. "
-    import_excel: "Import Bahan PMP (Depot) dari Fail Excel"
-    condition_month_year: "Bulan & tahun semasa mesti diisi (bulan - baris 4,lajur ‘B’, tahun - baris 5,lajur ‘B’)."
+    import_excel: "Import Bahan PMP (Depoh) dari Fail Excel"
+    condition_month_year: "Sheet1 & Sheet2 : Bulan & tahun semasa mesti diisi (bulan - baris 4, lajur ‘B’, tahun - baris 5, lajur ‘B’)."
+    condition_depot_name: "Sheet1 : Penyata Kapasiti - Nama depoh (baris 11, lajur 'B') mestilah wujud dalam sistem. Rujuk menu, Manage | Depot Listing"
     condition_fuel_tank_qty_match: "Sheet1 : Penyata Kapasiti - Kuantiti tangki dalam fail Excel dan sistem mestilah bersamaan. Rujuk menu, Bahan PMP | Tangki Penyimpanan | Senarai Tangki. "
     condition_naming_rules: "Sheet1 : Penyata Kapasiti - Nama tangki penyimpanan bagi petrol dan diesel (dalam fail Excel) mestilah diakhiri dengan 'ruang kosong' dan nombor, ATAU huruf sahaja. Contohnya, 'Tank 1', 'Ops Tank'."
     condition_naming_rules2: "Sheet1 : Penyata Kapasiti - Nama tangki penyimpanan bagi avtur dan avcat (dalam fail Excel) mestilah diakhiri dengan nombor. Contohnya, 'Avcat H1', 'Avtur 2'."
-    condition_capacity: "Sheet1 : Penyata Kapasiti - Kapasiti setiap tangki penyimpanan mestilah diisi."
+    #condition_capacity: "Sheet1 : Penyata Kapasiti - Kapasiti setiap tangki penyimpanan mestilah diisi."
     condition_ftcm: "Sheet2 : Penyata Penggunaan - Bilangan Jenis Bahan PMP dalam fail Excel mesti SEPADAN dengan bilangan Jenis Bahan PMP di Tangki-Tangki Penyimpanan bagi satu-satu Depot (di dalam s1stem)."
     condition_tank_group: "Sheet2 : Penyata Penggunaan - Depot/Unit dalam lajur B - Penamaan kategori/kumpulan tangki tanpa JENIS Bahan PMP akan diabaikan dari senarai."
     failed_check_format: "Import GAGAL. Syarat no. 1 (Bulan dan Tahun Semasa) tidak dipenuhi. Gunakan 'Format Excel' yang disediakan sebagai panduan."
@@ -461,9 +466,10 @@ ms_MY:
     failed: "Import GAGAL. "
     stc: "Storage Tank COUNT did not matched."
     tn: "Storage Tank NAMES did not matched."
-    cap: "Storage Tank CAPACITY is blank"
+    #cap: "Storage Tank CAPACITY is blank"
     ftcm: "Fuel Type COUNT did not matched."
     excel_format: Format Excel
+    depot_not_exist: "Depoh tidak wujud."
   fuel_issueds:
     title: Pengeluaran Bahan PMP
     title2: Pengeluaran
@@ -500,8 +506,10 @@ ms_MY:
     unit_type_id: Unit Ukuran
     new_balance: Baki Tangki Baru
   unit_fuels:
-    title: Bahan PMP di Unit
-    title2: Penggunaan di Unit
+    title: Bahan PMP Bulanan di Unit
+    title2: Penggunaan Bahan PMP Bulanan di Unit
+    title3: "Bahan PMP Bulanan (Unit)"
+    edit: "Sunting Bahan PMP Bulanan (Unit)"
     unit_id: Unit
     issue_date: Tarikh
     petrol_usage: Penggunaan Petrol

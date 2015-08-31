@@ -222,7 +222,7 @@ en:
     condition_reg_on: "Register On (Mula Khidmat) - Only Excel data of DATE type will be saved"
     condition_status: "Status - Must match with Vehicle Statuses (from menu - Vehicle | Drop Downs | Vehicle Statuses - Short Name)"
     condition_acquired: "Acquired From - Must match to Acquired Type (from menu - Vehicle | Drop Downs | Acquired Types - Short Name)"
-    imported: Vehicles from Excel file are successfully imported
+    imported: Vehicles from Excel file were successfully imported
     acquired_id: Acquired Type
     condition_category_spanco: "Vehicles acquired from SPANCO must be categorised according to Vehicle Categories ie. KJU, KJK, KJT and KRJ"
     condition_category_spanco2: " (from menu - Vehicle | Drop Downs | Vehicle Categories - Description)"
@@ -419,8 +419,12 @@ en:
     name: Name
   units:
     title: Units
-    title2: Depots
+    title2: Depot
     title3: Unit
+    list2: Depot Listing
+    list3: Unit Listing
+    edit2: Edit Depot
+    edit3: Edit Unit
     shortname: Short Name
     name: Name
     parent_id: Parent Unit
@@ -467,7 +471,7 @@ en:
     name: Name
     country: Country
   depot_fuels:
-    title: "Monthly Fuel"
+    title: "Monthly Fuel (Depot)"
     new: "New Monthly Fuel (Depot)"
     edit: "Edit Monthly Fuel (Depot)"
     unit_id: Depot
@@ -481,14 +485,15 @@ en:
     summary: Summary
     and: and
     must_match: must match
-    imported: Depot Fuels from Excel file are successfully imported
+    imported: Depot Fuels from Excel file were successfully imported
     invalid_excel_data: Invalid Excel data
     import_excel: Import Depot Fuel From Excel File
-    condition_month_year: "Current month & year are compulsory (month - row 4,column ‘B’, year - row 5,column ‘B’)."
+    condition_month_year: "Sheet1 & Sheet2 : Current month & year are compulsory (month - row 4, column ‘B’, year - row 5, column ‘B’)."
+    condition_depot_name: "Sheet1 : Capacity Statement - Depot Name (row 11, column B) must exist in the system. Refer menu, Manage | Depot Listing"
     condition_fuel_tank_qty_match: "Sheet1 : Capacity Statement - Quantity of storage tank in Excel file and system must match. Refer menu, Fuel | Depots | Depot Listing"
     condition_naming_rules: "Sheet1 : Capacity Statement - Storage Tank Names for petrol and diesel (in Excel file) should be ended with a 'space' and followed by a number OR just alphabet. Eg. 'Tank 1', 'Ops Tank'."
     condition_naming_rules2: "Sheet1 : Capacity Statement - Storage Tank Names for avtur and avcat (in Excel file) should be ended with a number. Eg. 'Avcat H1', 'Avtur 2', 'Avcat3'."
-    condition_capacity: "Sheet1 : Capacity Statement - Capacity for each storage tank is compulsory."
+    #condition_capacity: "Sheet1 : Capacity Statement - Capacity for each storage tank is compulsory."
     condition_ftcm: "Sheet2 : Usage Statement - Fuel Type count in Excel file must MATCH Fuel Type count for Storage Tanks (in system) of a Depot."
     condition_tank_group: "Sheet2 : Usage Statement - Depot/Unit of column B - Category/Group of Tanks without Fuel Type will be ommited from the list."
     failed_check_format: "Import FAILED. Conditions no. 1 (Current Month & Year) are not complied. Use provided 'Excel Format' accordingly."
@@ -496,9 +501,10 @@ en:
     failed: "Import FAILED. "
     stc: "Storage Tank COUNT did not matched."
     tn: "Storage Tank NAMES did not matched."
-    cap: "Storage Tank CAPACITY is blank"
+    #cap: "Storage Tank CAPACITY is blank"
     ftcm: "Fuel Type COUNT did not matched."
     excel_format: Format Excel
+    depot_not_exist: "Depot not exist."
   fuel_issueds:
     title: Fuel Issued
     title2: Issued
@@ -535,8 +541,10 @@ en:
     unit_type_id: Unit Type
     new_balance: New Tank Balance
   unit_fuels:
-    title: Unit Fuels
-    title2: Unit Fuel Usage
+    title: Unit Monthly Fuels
+    title2: Unit Monthly Fuel Usage
+    title3: "Monthly Fuel (Unit)"
+    edit: "Edit Monthly Fuel (Unit)"
     unit_id: Unit
     issue_date: Issue Date
     petrol_usage: Petrol Usage
