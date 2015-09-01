@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       post 'unit_fuel_list_usage'
       get 'annual_usage_report'
       get 'daily_usage'
+      get 'fuel_type_usage_category'
     end
   end
   resources :fuel_tanks do
