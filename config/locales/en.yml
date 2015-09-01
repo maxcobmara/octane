@@ -171,9 +171,19 @@ en:
     petrol_misctool_usage: Petrol Misctool Usage
     petrol_boat_usage: Petrol Boat Usage
     diesel_usage_current: Diesel Usage Current Month
+    diesel_usage_for: "Diesel Usage For : "
     petrol_usage_current: Petrol Usage Current Month
-    other_usage_current: Other Usage Current Month
-    month_external_supply: External Supply Current Month
+    petrol_usage_for: "Petrol Usage For : "
+    avtur_usage_current: AVTUR Usage Current Month
+    avtur_usage_for: "AVTUR Usage For : "
+    avcat_usage_current: AVCAT Usage Current Month
+    avcat_usage_for: "AVCAT Usage For : "
+    other_usage_current: Other Fuel Type Usage Current Month
+    other_usage_for: "Other Fuel Type Usage For : "
+    external_supply_current: External Supply Current Month
+    external_supply_for: "External Supply For : "
+    external_issue_current: External Issue Current Month
+    external_issue_for: "External Issue For : "
   home:
     welcome: Welcome to Octane
     octane: Fuel Management System
@@ -549,7 +559,13 @@ en:
     unit_id: Unit
     issue_date: Issue Date
     petrol_usage: Petrol Usage
+    petrol_usage_depot: Petrol Usage per Depot
+    petrol_usage_type: Petrol Usage by Type
     diesel_usage: Diesel Usage
+    diesel_usage_depot: Diesel Usage per Depot
+    diesel_usage_type: Petrol Usage by Type
+    avtur_usage: AVTUR Usage
+    avcat_usage: AVCAT Usage
     other_usage: Other Fuel Type
     external_issued: Issued To
     external_supplied: Supplied By

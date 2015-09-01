@@ -135,9 +135,19 @@ ms_MY:
     petrol_misctool_usage: Penggunaan Petrol Alat Pelbagai
     petrol_boat_usage: Penggunaan Petrol Bot
     diesel_usage_current: Penggunaan Diesel Bulan Ini
-    petrol_usage_current: Penggunaan Petrol Bulan Ini
-    other_usage_current: Lain-lain Penggunaan Bulan Ini
-    month_external_supply: Pengambilan Bulan Ini
+    diesel_usage_for: "Penggunaan Diesel Bagi : "
+    petrol_usage_current: Penggunaan Petrol Bulan Ini 
+    petrol_usage_for: "Penggunaan Petrol Bagi : "
+    avtur_usage_current: Penggunaan AVTUR Bulan Ini
+    avtur_usage_for: "Penggunaan AVTUR Bagi : "
+    avcat_usage_current: Penggunaan AVCAT Bulan Ini
+    avcat_usage_for: "Penggunaan AVCAT Bagi : "
+    other_usage_current: Penggunaan Lain- lain Bahan PMP Bulan Ini
+    other_usage_for: "Penggunaan Lain- lain Bahan PMP Bagi : "
+    external_supply_current: Pengambilan Luar Bulan Ini
+    external_supply_for: "Pengambilan Luar Bagi : "
+    external_supply_current: Pembekalan Luar Bulan Ini
+    external_supply_for: "Pembekalan Luar  : "
   home:
     welcome: Selamat Datang ke Octane
     octane: Sistem Pengurusan Bahanapi
@@ -514,7 +524,13 @@ ms_MY:
     unit_id: Unit
     issue_date: Tarikh
     petrol_usage: Penggunaan Petrol
+    petrol_usage_depot: Penggunaan Petrol Mengikut Depoh
+    petrol_usage_type: Penggunaan Petrol Mengikut Jenis Penggunaan
     diesel_usage: Penggunaan Diesel
+    diesel_usage_depot: Penggunaan Diesel Mengikut Depoh
+    diesel_usage_type: Jumlah Penggunaan Diesel Mengikut Jenis Penggunaan
+    avtur_usage: Penggunaan AVTUR
+    avcat_usage: Penggunaan AVCAT
     external_issued: Bekal Kepada
     external_supplied: Ambil Daripada
     other_usage: Lain-Lain Bahan PMP

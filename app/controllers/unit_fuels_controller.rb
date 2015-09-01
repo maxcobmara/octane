@@ -80,14 +80,22 @@ class UnitFuelsController < ApplicationController
   end
   
   def unit_fuel_list_usage  
-    c = Date.today
-    sdate = c.beginning_of_month
-    edate = c.end_of_month
-    @sdate = c.beginning_of_month
-    @edate = c.end_of_month
-     @month_fuel_usage = UnitFuel.where( "issue_date >= ? AND issue_date <= ? ", sdate, edate ) 
-     @month_other_fuel = AddFuel.where( "created_at >= ? AND created_at <= ? ", sdate, edate )
-     @month_external_supply = ExternalSupplied.where( "created_at >= ? AND created_at <= ? ", sdate, edate )
+    if params[:search].present? && params[:search][:start_date].present?
+      @start_from = Date.parse((params[:search][:start_date])).beginning_of_day.strftime('%Y-%m-%d %H:%M:%S')
+    else
+      @start_from = (Date.today.beginning_of_month).strftime('%Y-%m-%d')
+    end
+    if params[:search].present? && params[:search][:end_date].present?
+      @end_on = Date.parse(params[:search][:end_date]).end_of_day.strftime('%Y-%m-%d %H:%M:%S')
+    else
+      @end_on = (Date.today.end_of_day).strftime('%Y-%m-%d')
+    end
+    @summary=UnitFuel.where( "issue_date >= ? AND issue_date <= ? ", @start_from, @end_on) 
+    @avtur=AddFuel.joins(:unit_fuel).where( "unit_fuels.issue_date >= ? AND unit_fuels.issue_date <= ? ", @start_from, @end_on).where(fuel_type: FuelType.where('name LIKE (?)', 'AVTUR') )
+    @avcat=AddFuel.joins(:unit_fuel).where( "unit_fuels.issue_date >= ? AND unit_fuels.issue_date <= ? ", @start_from, @end_on).where(fuel_type: FuelType.where('name LIKE (?)', 'AVCAT') )
+    @other_fuels= AddFuel.joins(:unit_fuel).where( "unit_fuels.issue_date >= ? AND unit_fuels.issue_date <= ? ", @start_from, @end_on).where.not(id: @avtur.pluck(:id)+@avcat.pluck(:id))
+    @external_supply=ExternalSupplied.joins(:unit_fuel).where( "unit_fuels.issue_date >= ? AND unit_fuels.issue_date <= ? ", @start_from, @end_on)
+    @external_issue=ExternalIssued.joins(:unit_fuel).where( "unit_fuels.issue_date >= ? AND unit_fuels.issue_date <= ? ", @start_from, @end_on)
   end
   
   def annual_usage_report  
