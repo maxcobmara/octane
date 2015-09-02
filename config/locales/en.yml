@@ -161,8 +161,8 @@ en:
 
 
   report:
-    unit_fuel_graph: Unit Fuel Usage Graph
-    unit_fuel_list: Unit Fuel Usage Report
+    #unit_fuel_graph: Unit Fuel Usage Graph
+    #unit_fuel_list: Unit Fuel Usage Report
     diesel_vessel_usage: Diesel Vessel Usage
     diesel_vehicle_usage: Diesel Vehicle Usage
     diesel_misctool_usage: Diesel Misctool Usage
@@ -581,7 +581,7 @@ en:
     petrol_usage_type: Petrol Usage by Type
     diesel_usage: Diesel Usage
     diesel_usage_depot: Diesel Usage per Depot
-    diesel_usage_type: Petrol Usage by Type
+    diesel_usage_type: Diesel Usage by Type
     avtur_usage: AVTUR Usage
     avcat_usage: AVCAT Usage
     other_usage: Other Fuel Type

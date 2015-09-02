@@ -23,4 +23,10 @@
           %tr{:id => "tr_#{fuel_type.id}"}
             %td= fuel_type.shortname
             %td= fuel_type.name
-            %td= link_to (fa_icon "trash-o"), fuel_type, method: :delete, data: { confirm: 'Are you sure?' }, remote: true
+            %td
+              - if fuel_type.valid_for_removal==true
+                = link_to (fa_icon "trash-o"), fuel_type, method: :delete, data: { confirm: 'Are you sure?' }, remote: true
+              - else
+                *
+          
+    * Removal of record if prohibited as fuel type are still in use (Tank, Fuel Limit, Fuel Budget, Fuel Transaction)

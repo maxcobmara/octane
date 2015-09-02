@@ -6,7 +6,7 @@
 - model_class = UnitFuel
 .page-header
 
-  %h1= t 'report.unit_fuel_list', :default => model_class.model_name.human  
+  %h1= t 'menu.fuel_usage_list_report', :default => model_class.model_name.human  
   
 .row-fluid
   .block
@@ -41,7 +41,7 @@
       %th= t 'unit_fuels.d_vehicle'
       %th= t 'unit_fuels.d_misctool'
       %th= t 'unit_fuels.d_boat'
-      %th= t 'unit_fuels.diesel_usage_depot'
+      %th=( t 'unit_fuels.diesel_usage_depot')
 
   %tbody
     - @summary.each do |unit_fuel|

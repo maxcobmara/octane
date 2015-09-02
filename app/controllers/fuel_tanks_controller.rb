@@ -84,7 +84,7 @@ class FuelTanksController < ApplicationController
     @diesel = @capacity.where(fuel_type: (FuelType.where(name: 'DIESEL'))).group(:unit).sum(:capacity)
     @petrol = @capacity.where(fuel_type: (FuelType.where(name: 'PETROL'))).group(:unit).sum(:capacity)
     @avtur  = @capacity.where(fuel_type: (FuelType.where(name: 'AVTUR'))).group(:unit).sum(:capacity)
-
+    @avcat =  @capacity.where(fuel_type: (FuelType.where(name: 'AVCAT'))).group(:unit).sum(:capacity)
 
     @fuel_tanks = FuelTank.where("capacity > ?", 0).order(fuel_type_id: :asc).all
   end

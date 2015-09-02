@@ -21,4 +21,10 @@
           %tr{:id => "tr_#{unit_type.id}"}
             %td= unit_type.short_name
             %td= unit_type.description
-            %td= link_to (fa_icon "trash-o"), unit_type, method: :delete, data: { confirm: 'Are you sure?' }, remote: true
+            %td
+              - if unit_type.valid_for_removal==true
+                = link_to (fa_icon "trash-o"), unit_type, method: :delete, data: { confirm: 'Are you sure?' }, remote: true
+              - else
+                *
+          
+    * Removal of record if prohibited as unit type are still in use (Tank, Fuel Limit, Fuel Budget, Fuel Transaction)

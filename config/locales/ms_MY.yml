@@ -125,8 +125,8 @@ ms_MY:
     authorisation: Perundangan Kebenaran
 
   report:
-    unit_fuel_graph: Graf Penggunaan Minyak Unit
-    unit_fuel_list: Laporan Penggunaan Minyak Unit
+    #unit_fuel_graph: Graf Penggunaan Minyak Unit
+    #unit_fuel_list: Laporan Penggunaan Minyak Unit
     diesel_vessel_usage: Penggunaan Diesel Kapal
     diesel_vehicle_usage: Penggunaan Diesel Kenderaan
     diesel_misctool_usage: Penggunaan Diesel Alat Pelbagai
