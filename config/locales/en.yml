@@ -143,7 +143,7 @@ en:
     vehicle_daily_report: Vehicle Daily Report
     vehicle_monthly_report: Vehicle Monthly Report
     vehicle_yearly_report: Vehicle Yearly Report
-    annual_usage_report: Annual Usage Report
+    annual_usage_report: Annual Unit Fuel Usage Report
     fuel_type_per_quarter: Fuel Type Usage Daily Report
     transport_summary: Transport Summary
     PMP_usage: Monthly Fuel Usage Report
@@ -161,8 +161,8 @@ en:
 
 
   report:
-    unit_fuel_graph: Unit Fuel Usage Graph
-    unit_fuel_list: Unit Fuel Usage Report
+    #unit_fuel_graph: Unit Fuel Usage Graph
+    #unit_fuel_list: Unit Fuel Usage Report
     diesel_vessel_usage: Diesel Vessel Usage
     diesel_vehicle_usage: Diesel Vehicle Usage
     diesel_misctool_usage: Diesel Misctool Usage
@@ -171,9 +171,37 @@ en:
     petrol_misctool_usage: Petrol Misctool Usage
     petrol_boat_usage: Petrol Boat Usage
     diesel_usage_current: Diesel Usage Current Month
+    diesel_usage_for: "Diesel Usage For : "
     petrol_usage_current: Petrol Usage Current Month
-    other_usage_current: Other Usage Current Month
-    month_external_supply: External Supply Current Month
+    petrol_usage_for: "Petrol Usage For : "
+    avtur_usage_current: AVTUR Usage Current Month
+    avtur_usage_for: "AVTUR Usage For : "
+    avcat_usage_current: AVCAT Usage Current Month
+    avcat_usage_for: "AVCAT Usage For : "
+    other_usage_current: Other Fuel Type Usage Current Month
+    other_usage_for: "Other Fuel Type Usage For : "
+    external_supply_current: External Supply Current Month
+    external_supply_for: "External Supply For : "
+    external_issue_current: External Issue Current Month
+    external_issue_for: "External Issue For : "
+    petrol_usage: PETROL Usage
+    diesel_usage: DIESEL Usage
+    cars: Cars
+    lorries: Lorries
+    busses: Busses
+    vessels: Vessels
+    diesel_vessel: "DIESEL : Vessel Usage Breakdown"
+    avcat_vessel: "AVCAT : Vessel Usage Breakdown"
+    avtur_vessel: "AVTUR : Vessel Usage Breakdown"
+    avcat_others: "AVCAT : Other Usage"
+    avtur_others: "AVTUR : Other Usage"
+    category_usage_for: "Usage For : "
+    category_usage_current: Current Month Usage
+    external_supplied_pd: "External Supplied (Petrol / Diesel)"
+    external_issued_pd: "External Issued (Petrol / Diesel)"
+    external_supplied_pd2: "External Supplied (P/D) : "
+    external_issued_pd2: "External Issued (P/D) : "
+    
   home:
     welcome: Welcome to Octane
     octane: Fuel Management System
@@ -549,7 +577,13 @@ en:
     unit_id: Unit
     issue_date: Issue Date
     petrol_usage: Petrol Usage
+    petrol_usage_depot: Petrol Usage per Depot
+    petrol_usage_type: Petrol Usage by Type
     diesel_usage: Diesel Usage
+    diesel_usage_depot: Diesel Usage per Depot
+    diesel_usage_type: Diesel Usage by Type
+    avtur_usage: AVTUR Usage
+    avcat_usage: AVCAT Usage
     other_usage: Other Fuel Type
     external_issued: Issued To
     external_supplied: Supplied By

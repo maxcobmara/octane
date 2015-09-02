@@ -39,6 +39,10 @@
           AVTUR :
           = check_kin {number_with_precision(((fuel_tanks.select {|p| p.fuel_type_id == 5 rescue false }).map(&:capacity).inject(:+)).to_f, :precision => 0)}
           litres
+          &nbsp; | &nbsp
+          AVCAT :
+          = check_kin {number_with_precision(((fuel_tanks.select {|p| p.fuel_type_id == FuelType.where(name: "AVCAT").first.id rescue false }).map(&:capacity).inject(:+)).to_f, :precision => 0)}
+          litres
       %tr
         //%th=t 'fuel_tanks.unit_id'
         %th=t 'fuel_tanks.locations'

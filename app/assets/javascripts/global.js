@@ -27,6 +27,16 @@ $(document).ready(function(){
     autoclose: true
     //todayBtn: true
   });
+  
+  $('[data-behaviour=datepicker_year]').datepicker({
+      format: "yyyy-mm-dd",
+      endDate: "today",
+      autoclose: true
+//       startView: 1,
+//       minViewMode: 2,
+//        maxViewMode: 2,
+//       daysOfWeekDisabled: "6"
+  });
   //Date fields - end
   
   ///this must be activated if TURBOLINKS NOT in use

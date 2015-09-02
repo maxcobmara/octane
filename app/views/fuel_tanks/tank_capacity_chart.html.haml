@@ -22,3 +22,10 @@
     = bar_chart @avtur.each.map{|x, y| [x.name, y]}
   .col-md-5
     = pie_chart @avtur.each.map{|x, y| [x.name, y]}
+
+.row
+  %h3 AVCAT
+  .col-md-7
+    = bar_chart @avcat.each.map{|x, y| [x.name, y]}
+  .col-md-5
+    = pie_chart @avcat.each.map{|x, y| [x.name, y]}

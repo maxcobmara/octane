@@ -6,11 +6,7 @@
 - model_class = UnitFuel
 .page-header
 
-  %h1= t 'report.unit_fuel_graph', :default => model_class.model_name.human
-
-  //%h1= t 'menu.fuel_usage_report', :default => model_class.model_name.human
-
-
+  %h1= t 'menu.fuel_usage_graph_report', :default => model_class.model_name.human
 
   = javascript_include_tag "//www.google.com/jsapi", "chartkick"
   = t 'report.diesel_vessel_usage'

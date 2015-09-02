@@ -1,0 +1,123 @@
+.navbar
+  %ul.nav
+    %li= link_to(fa_icon("print", text: (t 'actions.print')), "javascript:print()")
+
+- provide(:title, 'UnitFuel')
+- model_class = UnitFuel
+.page-header
+
+  %h1= t 'menu.fuel_usage_by_vehicle_vessel', :default => model_class.model_name.human  
+  
+.row-fluid
+  .block
+    .block-heading.tool_bar
+      .col-sm-6
+        = form_for :search, :url => fuel_type_usage_category_unit_fuels_path, :role => "form", class: "form-inline" do |f|
+          .form-group
+            #datepicker.input-daterange.input-group
+              .input-group-addon From
+              = f.text_field :issue_date, :name => "search[start_date]" , type: "text", class: "form-control", 'data-behaviour' => 'datepicker_before', placeholder: @start_from,  value: (@params_start_date  = params[:search].try(:[], :start_date))
+              .input-group-addon To
+              = f.text_field :issue_date, :name => "search[end_date]"   , type: "text", class: "form-control", 'data-behaviour' => 'datepicker_before', placeholder: @end_on,      value: (@params_end_date    = params[:search].try(:[], :end_date))
+              %span.input-group-btn
+                %button.btn.btn-default{:type => "submit", :style => "height:34px;"}
+                  %i.glyphicon.glyphicon-search
+%BR
+%BR
+  %h4
+    - if params[:search].present? 
+      = t 'report.category_usage_for'
+      = Date.parse(params[:search][:start_date]).strftime('%d-%m-%Y')
+      \-
+      = Date.parse(params[:search][:end_date]).strftime('%d-%m-%Y')
+    - else
+      = t 'report.category_usage_current'
+%table.table.table-bordered
+  %thead
+    %tr
+      %th{colspan: "3"}= t 'report.petrol_usage'
+  %tbody
+    %tr
+      %td= t 'report.cars'
+      %td=litres(@car_usage)
+    %tr
+      %th{colspan: "3"}= t 'report.diesel_usage'
+    %tr
+      %td= t 'report.lorries'
+      %td=litres(@lorry_usage)
+    %tr
+      %td= t 'report.busses'
+      %td=litres(@bus_usage)
+    %tr
+      %td= t 'report.vessels'
+      %td=litres(@vessel_usage) 
+    %tr
+      %th= t 'unit_fuels.avcat_usage'
+      %td=litres(@avcat_usage) 
+    %tr
+      %th=t 'unit_fuels.avtur_usage'
+      %td=litres(@avtur_usage)
+      
+
+%table.table.table-bordered
+  %thead
+    %tr
+      %th{colspan: "3"}= t 'report.diesel_vessel'
+    %tr
+      %th= t 'vessels.pennent_no'
+      %th=t 'vessels.name'
+      %th= t 'unit_fuels.quantity'
+  %tbody
+    - @vessels.sort_by(&:unit_id).each do |vessel_usage|
+      %tr
+        %td=vessel_usage.unit.vessel.pennent_no
+        %td=vessel_usage.unit.name
+        %td=litres(vessel_usage.d_vessel)
+  
+%table.table.table-bordered
+  %thead
+    %tr
+      %th{colspan: "3"}= t 'report.avcat_vessel'
+    %tr
+      %th= t 'vessels.pennent_no'
+      %th=t 'vessels.name'
+      %th= t 'unit_fuels.quantity'
+  %tbody
+    - @avcat_vessel.each do |avcat|
+      %tr
+        %td=avcat.unit_fuel.unit.vessel.pennent_no
+        %td=avcat.unit_fuel.unit.name
+        %td=avcat.quantity
+    %tr
+      %th{colspan: "3"}= t 'report.avcat_others'
+    %tr
+      %th{colspan: "2"}= t 'fuel_tanks.unit_id'
+      %th Amount
+    - @avcat_others.each do |avcat|
+      %tr
+        %td{colspan: "2"}=avcat.unit_fuel.unit.name
+        %td=avcat.quantity
+
+%table.table.table-bordered
+  %thead
+    %tr
+      %th{colspan: "3"}= t 'report.avtur_vessel'
+    %tr
+      %th= t 'vessels.pennent_no'
+      %th=t 'vessels.name'
+      %th= t 'unit_fuels.quantity'
+  %tbody
+    - @avtur_vessel.each do |avtur|
+      %tr
+        %td=avtur.unit_fuel.unit.vessel.pennent_no
+        %td=avtur.unit_fuel.unit.name
+        %td=avtur.quantity
+    %tr
+      %th{colspan: "3"}= t 'report.avtur_others'
+    %tr
+      %th{colspan: "2"}= t 'fuel_tanks.unit_id'
+      %th= t 'unit_fuels.quantity'
+    - @avtur_others.each do |avtur|
+      %tr
+        %td{colspan: "2"}=avtur.unit_fuel.unit.name
+        %td=avtur.quantity

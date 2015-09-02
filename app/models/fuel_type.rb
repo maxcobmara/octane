@@ -1,10 +1,6 @@
 class FuelType < ActiveRecord::Base
-  has_many :fuel_tanks, :foreign_key => "fuel_type_id"
-  #has_many :fuel_issueds, dependent: :nullify
-  #has_many :fuel_supplieds, dependent: :nullify
-  #has_many :add_fuels, dependent: :nullify
-  #has_many :external_issueds, dependent: :nullify
-  #has_many :external_supplieds, dependent: :nullify
+  before_destroy :valid_for_removal
+  has_many :fuel_tanks
   has_many :vehicles, dependent: :nullify
   has_many :fuel_limits
   has_many :fuel_budgets
@@ -34,9 +30,14 @@ class FuelType < ActiveRecord::Base
     end
   end
 
-
-  #---
-
+  def valid_for_removal
+    if fuel_tanks.count > 0 || fuel_limits.count > 0|| fuel_budgets.count > 0 || fuel_transactions.count > 0
+      return false
+    else
+      return true
+    end
+  end
+  
 end
 
 # == Schema Information
