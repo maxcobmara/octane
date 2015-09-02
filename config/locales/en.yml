@@ -143,12 +143,12 @@ en:
     vehicle_daily_report: Vehicle Daily Report
     vehicle_monthly_report: Vehicle Monthly Report
     vehicle_yearly_report: Vehicle Yearly Report
-    annual_usage_report: Annual Unit Fuel Usage Report
+    annual_usage_report: Annual Fuel Usage Report
     fuel_type_per_quarter: Fuel Type Usage Daily Report
     transport_summary: Transport Summary
     PMP_usage: Monthly Fuel Usage Report
     fuel_balances: Monthly Fuel Balances
-    fuel_usage_by_vehicle_vessel: "Fuel Type Usage by Categories"
+    fuel_usage_by_vehicle_vessel: "Fuel Type Usage by Category"
     vessel_type: Vessel Types
     vessel_category: Vessel Classes
     annual_budget: Annual Budget by Fuel Type

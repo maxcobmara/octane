@@ -141,17 +141,16 @@ class UnitFuelsController < ApplicationController
     ###d_vehicle (in other Unit/department - ignored) - forklift?
     ###d_vessel (Vessels)
     
-    unit_fuel_vessel_ids=UnitFuel.where(unit_id: Vessel.pluck(:unit_id)).where( "issue_date >= ? AND issue_date <= ? ", @start_from, @end_on).pluck(:id)
-    @avcat=AddFuel.where(fuel_type_id: FuelType.where(name: 'AVCAT').first.id).where(unit_fuel_id: unit_fuel_vessel_ids)
-    @avcat_vessel=AddFuel.where(fuel_type_id: FuelType.where(name: 'AVCAT').first.id).where(unit_fuel_id: unit_fuel_vessel_ids)
-    @avcat_others=AddFuel.where(fuel_type_id: FuelType.where(name: 'AVCAT').first.id).where.not(unit_fuel_id: unit_fuel_vessel_ids)
-    @avcat_usage=@avcat.sum(:quantity)
+    @avcat=AddFuel.joins(:unit_fuel).where(fuel_type: FuelType.where(name: 'AVCAT')).where( "unit_fuels.issue_date >= ? AND unit_fuels.issue_date <= ? ", @start_from, @end_on) 
+    @avcat_vessel=@avcat.where('unit_fuels.unit_id IN(?)', Vessel.pluck(:unit_id))
+    @avcat_others=@avcat.where.not('unit_fuels.unit_id IN(?)', Vessel.pluck(:unit_id))
+    @avcat_usage=@avcat.sum(:quantity) 
     
-    #@avtur=UnitFuel.joins(:add_fuels).where('add_fuels.fuel_type_id=?', FuelType.where(name: 'AVTUR').first.id).where( "issue_date >= ? AND issue_date <= ? ", @start_from, @end_on) 
-    @avtur=AddFuel.where(fuel_type_id: FuelType.where(name: 'AVTUR').first.id).where(unit_fuel_id: unit_fuel_vessel_ids)
-    @avtur_vessel=AddFuel.where(fuel_type_id: FuelType.where(name: 'AVTUR').first.id).where(unit_fuel_id: unit_fuel_vessel_ids)
-    @avtur_others=AddFuel.where(fuel_type_id: FuelType.where(name: 'AVTUR').first.id).where.not(unit_fuel_id: unit_fuel_vessel_ids)
+    @avtur=AddFuel.joins(:unit_fuel).where(fuel_type: FuelType.where(name: 'AVTUR')).where( "unit_fuels.issue_date >= ? AND unit_fuels.issue_date <= ? ", @start_from, @end_on) 
+    @avtur_vessel=@avtur.where('unit_fuels.unit_id IN(?)', Vessel.pluck(:unit_id))
+    @avtur_others=@avtur.where.not('unit_fuels.unit_id IN(?)', Vessel.pluck(:unit_id))
     @avtur_usage=@avtur.sum(:quantity) 
+    
   end
   
   def annual_usage_report  
