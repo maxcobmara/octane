@@ -99,24 +99,35 @@ class UnitFuelsController < ApplicationController
   end
   
   def fuel_type_usage_category
+    if params[:search].present? && params[:search][:start_date].present?
+      @start_from = Date.parse((params[:search][:start_date])).beginning_of_day.strftime('%Y-%m-%d %H:%M:%S')
+    else
+      @start_from = (Date.today.beginning_of_month).strftime('%Y-%m-%d')
+    end
+    if params[:search].present? && params[:search][:end_date].present?
+      @end_on = Date.parse(params[:search][:end_date]).end_of_day.strftime('%Y-%m-%d %H:%M:%S')
+    else
+      @end_on = (Date.today.end_of_day).strftime('%Y-%m-%d')
+    end
+    ###
     #busses & cars - KD Malaya, KD Pelandok, KD Sultan Badlishah (bas - diesel, kereta - petrol), Conclusion: bas - d_vehicle, kereta - p_vehicle
     unit_ids_w_bus=Unit.where('name ILIKE(?) or name ILIKE(?) or name ILIKE(?)', '%malaya%', '%pelandok%', '%sultan badlishah%').pluck(:id)
-    @bus_usage=UnitFuel.where(unit: unit_ids_w_bus).sum(:d_vehicle)
+    @bus_usage=UnitFuel.where(unit: unit_ids_w_bus).where( "issue_date >= ? AND issue_date <= ? ", @start_from, @end_on).sum(:d_vehicle)
     #@car_usage_a=UnitFuel.where(unit: unit_ids_w_bus).sum(:p_vehicle)
     
     #cars only - other than above 3 units (kereta - petrol), Conclusion: kereta - p_vehicle
     #@car_usage_b=UnitFuel.where.not(unit: unit_ids_w_bus).sum(:p_vehicle)
     
     #@car_usage equal to @car_usage_a+@car_usage_b
-    @car_usage=UnitFuel.all.sum(:p_vehicle)
+    @car_usage=UnitFuel.where( "issue_date >= ? AND issue_date <= ? ", @start_from, @end_on).sum(:p_vehicle)
 
     #lories - Depoh Bekalan Armada, Depot Logistik Wilayah 1, Depot Logistik Wilayah 2, Depot Logistik Wilayah 3 (lori - diesel), Conclusion: lori - d_vehicle
     unit_ids_w_lorry=Unit.where('name ILIKE(?) or name ILIKE(?)', '%bekalan armada%', '%logistik wilayah%').pluck(:id)
-    @lorry_usage=UnitFuel.where(unit: unit_ids_w_lorry).sum(:d_vehicle)
+    @lorry_usage=UnitFuel.where(unit: unit_ids_w_lorry).where( "issue_date >= ? AND issue_date <= ? ", @start_from, @end_on).sum(:d_vehicle)
     
     #Option 1 : vessel - Units whereby vessel is a unit (Unit has one vessel) - better, only retrieve VALID vessel (vessel type, vessel class & vessel) - reporting by PENNENT NO
     vessel_ids=Vessel.pluck(:unit_id)
-    @vessels=UnitFuel.where(unit_id: vessel_ids)
+    @vessels=UnitFuel.where(unit_id: vessel_ids).where( "issue_date >= ? AND issue_date <= ? ", @start_from, @end_on) 
     @vessel_usage=@vessels.sum(:d_vessel)
     #Option 2 : d_vessel - retrieve ALL, ignore VALID vessel
     #@vessel_usage=UnitFuel.where('d_vessel IS NOT NULL').sum(:d_vessel)
@@ -130,28 +141,28 @@ class UnitFuelsController < ApplicationController
     ###d_vehicle (in other Unit/department - ignored) - forklift?
     ###d_vessel (Vessels)
     
-    @avcat=AddFuel.where(fuel_type_id: FuelType.where(name: 'AVCAT').first.id)
-    unit_fuel_vessel_ids=UnitFuel.where(unit_id: Vessel.pluck(:unit_id)).pluck(:id)
+    unit_fuel_vessel_ids=UnitFuel.where(unit_id: Vessel.pluck(:unit_id)).where( "issue_date >= ? AND issue_date <= ? ", @start_from, @end_on).pluck(:id)
+    @avcat=AddFuel.where(fuel_type_id: FuelType.where(name: 'AVCAT').first.id).where(unit_fuel_id: unit_fuel_vessel_ids)
     @avcat_vessel=AddFuel.where(fuel_type_id: FuelType.where(name: 'AVCAT').first.id).where(unit_fuel_id: unit_fuel_vessel_ids)
     @avcat_others=AddFuel.where(fuel_type_id: FuelType.where(name: 'AVCAT').first.id).where.not(unit_fuel_id: unit_fuel_vessel_ids)
     @avcat_usage=@avcat.sum(:quantity)
     
-    @avtur=UnitFuel.joins(:add_fuels).where('add_fuels.fuel_type_id=?', FuelType.where(name: 'AVTUR').first.id)
+    #@avtur=UnitFuel.joins(:add_fuels).where('add_fuels.fuel_type_id=?', FuelType.where(name: 'AVTUR').first.id).where( "issue_date >= ? AND issue_date <= ? ", @start_from, @end_on) 
+    @avtur=AddFuel.where(fuel_type_id: FuelType.where(name: 'AVTUR').first.id).where(unit_fuel_id: unit_fuel_vessel_ids)
     @avtur_vessel=AddFuel.where(fuel_type_id: FuelType.where(name: 'AVTUR').first.id).where(unit_fuel_id: unit_fuel_vessel_ids)
     @avtur_others=AddFuel.where(fuel_type_id: FuelType.where(name: 'AVTUR').first.id).where.not(unit_fuel_id: unit_fuel_vessel_ids)
     @avtur_usage=@avtur.sum(:quantity) 
   end
   
   def annual_usage_report  
-    c = Date.today
-    @sdate = c.beginning_of_year
-    @edate = c.end_of_year
-     @year_annual_usage_report = UnitFuel.where( "issue_date >= ? AND issue_date <= ? ", @sdate, @edate ) 
-     @year_other_fuel = AddFuel.where( "created_at >= ? AND created_at <= ? ", @sdate, @edate )
-     @year_external_supply = ExternalSupplied.where( "created_at >= ? AND created_at <= ? ", @sdate, @edate )
-     @year_external_issue = ExternalIssued.where( "created_at >= ? AND created_at <= ? ", @sdate, @edate )
-     @unit_fuels = UnitFuel.where( "issue_date >= ? AND issue_date <= ? ", @sdate, @edate )
-     @add_fuels = AddFuel.where( "issue_date >= ? AND issue_date <= ? ", @sdate, @edate )
+    if params[:search].present? && params[:search][:start_date].present?
+      @start_from = Date.parse((params[:search][:start_date])).beginning_of_year.strftime('%Y-%m-%d %H:%M:%S')
+      @end_on = Date.parse((params[:search][:start_date])).end_of_year.strftime('%Y-%m-%d %H:%M:%S')
+    else
+      @start_from = (Date.today.beginning_of_year).strftime('%Y-%m-%d')
+      @end_on = (Date.today.end_of_year).strftime('%Y-%m-%d')
+    end
+    @unit_fuels = UnitFuel.where( "issue_date >= ? AND issue_date <= ? ", @start_from, @end_on )
   end
   
   def daily_usage  
