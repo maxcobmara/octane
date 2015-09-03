@@ -69,24 +69,29 @@ class UnitFuelsController < ApplicationController
   end
   
   def unit_fuel_usage  
-#     c = Date.today
-#     sdate = c.beginning_of_month
-#     edate = c.end_of_month
-#     @sdate = c.beginning_of_month
-#     @edate = c.end_of_month
     if params[:search].present? && params[:search][:start_date].present?
-      @start_from = Date.parse((params[:search][:start_date])).beginning_of_day.strftime('%Y-%m-%d %H:%M:%S')
+      @start_from = Date.parse((params[:search][:start_date])).beginning_of_month.strftime('%Y-%m-%d')
     else
-      @start_from = (Date.today.beginning_of_month).strftime('%Y-%m-%d')
+      @start_from = (Date.today.beginning_of_month-1.month).strftime('%Y-%m-%d')
     end
     if params[:search].present? && params[:search][:end_date].present?
-      @end_on = Date.parse(params[:search][:end_date]).end_of_day.strftime('%Y-%m-%d %H:%M:%S')
+      @end_on = Date.parse(params[:search][:end_date]).end_of_month.strftime('%Y-%m-%d')
     else
-      @end_on = (Date.today.end_of_day).strftime('%Y-%m-%d')
+      @end_on = (Date.today.end_of_month).strftime('%Y-%m-%d')
     end
     @month_fuel_usage = UnitFuel.where( "issue_date >= ? AND issue_date <= ? ", @start_from, @end_on ) 
-    @month_other_fuel = AddFuel.where( "created_at >= ? AND created_at <= ? ", @start_from, @end_on )
-    @month_external_supply = ExternalSupplied.where( "created_at >= ? AND created_at <= ? ", @start_from, @end_on )
+    @month_other_usage = AddFuel.joins(:unit_fuel).where( "unit_fuels.issue_date >= ? AND unit_fuels.issue_date <= ? ", @start_from, @end_on ) 
+    @month_avtur_usage = @month_other_usage.where(fuel_type: FuelType.where(name: 'AVTUR'))
+    @month_avcat_usage = @month_other_usage.where(fuel_type: FuelType.where(name: 'AVCAT'))
+    @month_lubricant_usage = @month_other_usage.where(fuel_type: FuelType.where(name: 'PELINCIR'))
+    @month_grease_usage = @month_other_usage.where(fuel_type: FuelType.where(name: 'GRIS'))
+    @month_other_usage = @month_other_usage.where.not(fuel_type: FuelType.where(name: 'AVCAT')).where.not(fuel_type: FuelType.where(name: 'AVTUR')).where.not(fuel_type: FuelType.where(name: 'PELINCIR')).where.not(fuel_type: FuelType.where(name: 'GRIS'))
+    @month_external_supply=ExternalSupplied.joins(:unit_fuel).where( "unit_fuels.issue_date >= ? AND unit_fuels.issue_date <= ? ", @start_from, @end_on ) 
+    @month_external_supply_darat=@month_external_supply.where(resource: Unit.where(shortname: 'TD'))
+    @month_external_supply_udara=@month_external_supply.where(resource: Unit.where(shortname: 'TUDM'))
+    @month_external_issue=ExternalIssued.joins(:unit_fuel).where( "unit_fuels.issue_date >= ? AND unit_fuels.issue_date <= ? ", @start_from, @end_on ) 
+    @month_external_issue_darat=@month_external_issue.where(resource: Unit.where(shortname: 'TD'))
+    @month_external_issue_udara=@month_external_issue.where(resource: Unit.where(shortname: 'TUDM'))
   end
   
   def unit_fuel_list_usage  

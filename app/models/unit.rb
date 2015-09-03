@@ -16,6 +16,8 @@ class Unit < ActiveRecord::Base
   has_one  :receiving_unit, class_name: "Vehicle Assignment"
   has_many :fuel_limits
   has_many :fuel_budgets
+  
+  validates_uniqueness_of :shortname
 
   scope :is_depot, -> { where("id IN(?)",FuelTank.pluck(:unit_id)) }
   

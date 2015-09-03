@@ -161,8 +161,6 @@ en:
 
 
   report:
-    #unit_fuel_graph: Unit Fuel Usage Graph
-    #unit_fuel_list: Unit Fuel Usage Report
     diesel_vessel_usage: Diesel Vessel Usage
     diesel_vehicle_usage: Diesel Vehicle Usage
     diesel_misctool_usage: Diesel Misctool Usage
@@ -184,8 +182,18 @@ en:
     external_supply_for: "External Supply For : "
     external_issue_current: External Issue Current Month
     external_issue_for: "External Issue For : "
+    graph_usage_for: "Usage Trend For : "
     petrol_usage: PETROL Usage
     diesel_usage: DIESEL Usage
+    avtur_usage: AVTUR Usage
+    avcat_usage: AVCAT Usage
+    grease_usage: GREASE Usage
+    lubricant_usage: LUBRICANT Usage
+    other_usage: Other Fuel Usage
+    external_supply_main: EXTERNAL Supplied
+    external_supply: External Supplied
+    external_issue_main: EXTERNAL Issued
+    external_issue: External Issued
     cars: Cars
     lorries: Lorries
     busses: Busses

@@ -125,8 +125,6 @@ ms_MY:
     authorisation: Perundangan Kebenaran
 
   report:
-    #unit_fuel_graph: Graf Penggunaan Minyak Unit
-    #unit_fuel_list: Laporan Penggunaan Minyak Unit
     diesel_vessel_usage: Penggunaan Diesel Kapal
     diesel_vehicle_usage: Penggunaan Diesel Kenderaan
     diesel_misctool_usage: Penggunaan Diesel Alat Pelbagai
@@ -147,9 +145,19 @@ ms_MY:
     external_supply_current: Pengambilan Luar Bulan Ini
     external_supply_for: "Pengambilan Luar Bagi : "
     external_supply_current: Pembekalan Luar Bulan Ini
-    external_supply_for: "Pembekalan Luar  : "
+    external_supply_for: "Pembekalan Luar Bagi : "
+    graph_usage_for: "Trend Penggunaan Bagi : "
     petrol_usage: Penggunaan PETROL
     diesel_usage: Penggunaan DIESEL
+    avtur_usage: Penggunaan AVTUR
+    avcat_usage: Penggunaan AVCAT
+    grease_usage: Penggunaan GREASE
+    lubricant_usage: Penggunaan LUBRICANT
+    other_usage: Penggunaan Lain-Lain Bahan PMP
+    external_supply_main: "Pengeluaran / Pembekalan Bahan PMP (LUARAN)"
+    external_supply: "Pengeluaran / Pembekalan Bahan PMP"
+    external_issue_main: "Pengambilan Bahan PMP (LUARAN)"
+    external_issue: Pengambilan Bahan PMP
     cars: Kereta
     lorries: Lori
     busses: Bas
