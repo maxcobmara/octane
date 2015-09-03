@@ -209,10 +209,13 @@ en:
     avtur_others: "AVTUR : Other Usage"
     category_usage_for: "Usage For : "
     category_usage_current: Current Month Usage
-    external_supplied_pd: "External Supplied (Petrol / Diesel)"
-    external_issued_pd: "External Issued (Petrol / Diesel)"
-    external_supplied_pd2: "External Supplied (P/D) : "
-    external_issued_pd2: "External Issued (P/D) : "
+    external_supplied_pd: "External Supplied (P/D)"
+    external_issued_pd: "External Issued (P/D)"
+    external_supplied_pd2: "Ext Supplied (P/D) : "
+    external_issued_pd2: "Ext Issued (P/D) : "
+    lubricant: Lubricant
+    grease: Grease
+    others: Others
     
   home:
     welcome: Welcome to Octane

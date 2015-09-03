@@ -10,7 +10,8 @@ class UnitFuel < ActiveRecord::Base
   accepts_nested_attributes_for :external_supplieds, allow_destroy: true, reject_if: proc { |external_supplieds| external_supplieds[:quantity].blank? }
 
   validates_presence_of :unit_id, :issue_date
-
+  validate :valid_unique_record
+  
   def set_default_value
     self.d_vessel = 0 if d_vessel.blank?
     self.d_vehicle = 0 if d_vehicle.blank?
@@ -41,6 +42,13 @@ class UnitFuel < ActiveRecord::Base
        csv << unit_fuel.attributes.values_at(*column_names)
     end
   end
+  end
+
+  def valid_unique_record
+    exist_unitfuel=UnitFuel.where('unit_id=? and issue_date >=? and issue_date <=?', unit_id, issue_date.beginning_of_month, issue_date.end_of_month)
+    if exist_unitfuel.count > 0
+      errors.add(:base, 'Record already exist. Only 1 record of Unit Fuel allowed for each Unit (department) in a month.')
+    end
   end
 
 end

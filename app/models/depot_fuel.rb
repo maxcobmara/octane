@@ -8,9 +8,10 @@ class DepotFuel < ActiveRecord::Base
   accepts_nested_attributes_for :fuel_balances, allow_destroy: true, reject_if: proc { |fuel_balances| fuel_balances[:fuel_tank_id].blank? }
   
   validates_presence_of :unit_id, :issue_date
+  validate :valid_unique_record
   
   attr_accessor :tank, :current, :current2, :current3, :supplieds, :issueds #:capacity, :capacity2, :capacity3, #:prev_balance - not use
-      
+
   def month_depot
     "#{depot.name} "+"#{issue_date.strftime("%b")} "+"#{issue_date.year}"
   end 
@@ -332,6 +333,13 @@ class DepotFuel < ActiveRecord::Base
       when ".xls" then Roo::Excel.new(file.path)#, nil, :ignore) 
       when ".xlsx" then Roo::Excelx.new(file.path)#, nil, :ignore) 
       else raise "Unknown file type: #{file.original_filename}" 
+    end
+  end
+  
+  def valid_unique_record
+    exist_depot_fuel=DepotFuel.where('unit_id=? and issue_date >=? and issue_date <=?', unit_id, issue_date.beginning_of_month, issue_date.end_of_month)
+    if exist_depot_fuel.count > 0
+      errors.add(:base, 'Record already exist. Only 1 record of Depot Fuel allowed for each Depot in a month.')
     end
   end
    
