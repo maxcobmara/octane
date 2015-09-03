@@ -176,6 +176,10 @@ en:
     avtur_usage_for: "AVTUR Usage For : "
     avcat_usage_current: AVCAT Usage Current Month
     avcat_usage_for: "AVCAT Usage For : "
+    lubricant_usage_current: Lubricant Usage Current Month
+    lubricant_usage_for: "Lubricant Usage For : "
+    grease_usage_current: Grease Usage Current Month
+    grease_usage_for: "Grease Usage For : "
     other_usage_current: Other Fuel Type Usage Current Month
     other_usage_for: "Other Fuel Type Usage For : "
     external_supply_current: External Supply Current Month

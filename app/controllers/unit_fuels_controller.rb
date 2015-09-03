@@ -106,9 +106,12 @@ class UnitFuelsController < ApplicationController
       @end_on = (Date.today.end_of_day).strftime('%Y-%m-%d')
     end
     @summary=UnitFuel.where( "issue_date >= ? AND issue_date <= ? ", @start_from, @end_on) 
-    @avtur=AddFuel.joins(:unit_fuel).where( "unit_fuels.issue_date >= ? AND unit_fuels.issue_date <= ? ", @start_from, @end_on).where(fuel_type: FuelType.where('name LIKE (?)', 'AVTUR') )
-    @avcat=AddFuel.joins(:unit_fuel).where( "unit_fuels.issue_date >= ? AND unit_fuels.issue_date <= ? ", @start_from, @end_on).where(fuel_type: FuelType.where('name LIKE (?)', 'AVCAT') )
-    @other_fuels= AddFuel.joins(:unit_fuel).where( "unit_fuels.issue_date >= ? AND unit_fuels.issue_date <= ? ", @start_from, @end_on).where.not(id: @avtur.pluck(:id)+@avcat.pluck(:id))
+    @main_other_fuels=AddFuel.joins(:unit_fuel).where( "unit_fuels.issue_date >= ? AND unit_fuels.issue_date <= ? ", @start_from, @end_on)
+    @avtur=@main_other_fuels.where(fuel_type: FuelType.where('name LIKE (?)', 'AVTUR') )
+    @avcat=@main_other_fuels.where(fuel_type: FuelType.where('name LIKE (?)', 'AVCAT') )
+    @lubricant=@main_other_fuels.where(fuel_type: FuelType.where('name LIKE (?)', 'PELINCIR') )
+    @grease=@main_other_fuels.where(fuel_type: FuelType.where('name LIKE (?)', 'GRIS') )
+    @other_fuels= @main_other_fuels.where.not(id: @avtur.pluck(:id)+@avcat.pluck(:id)+@lubricant.pluck(:id)+@grease.pluck(:id))
     @external_supply=ExternalSupplied.joins(:unit_fuel).where( "unit_fuels.issue_date >= ? AND unit_fuels.issue_date <= ? ", @start_from, @end_on)
     @external_issue=ExternalIssued.joins(:unit_fuel).where( "unit_fuels.issue_date >= ? AND unit_fuels.issue_date <= ? ", @start_from, @end_on)
   end

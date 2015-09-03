@@ -140,6 +140,10 @@ ms_MY:
     avtur_usage_for: "Penggunaan AVTUR Bagi : "
     avcat_usage_current: Penggunaan AVCAT Bulan Ini
     avcat_usage_for: "Penggunaan AVCAT Bagi : "
+    lubricant_usage_current: Penggunaan Pelincir Bulan Ini
+    lubricant_usage_for: "Penggunaan Pelincir Bagi : "
+    grease_usage_current: Penggunaan Gris Bulan Ini
+    grease_usage_for: "Penggunaan Gris Bagi : "
     other_usage_current: Penggunaan Lain- lain Bahan PMP Bulan Ini
     other_usage_for: "Penggunaan Lain- lain Bahan PMP Bagi : "
     external_supply_current: Pengambilan Luar Bulan Ini
