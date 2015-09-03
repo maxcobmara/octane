@@ -58,7 +58,6 @@
       %th=t 'unit_fuels.avtur_usage'
       %td=litres(@avtur_usage)
       
-
 %table.table.table-bordered
   %thead
     %tr
@@ -68,11 +67,11 @@
       %th=t 'vessels.name'
       %th= t 'unit_fuels.quantity'
   %tbody
-    - @vessels.sort_by(&:unit_id).each do |vessel_usage|
+    - @vessels.group_by(&:unit).each do |unit, vessel_usages|
       %tr
-        %td=vessel_usage.unit.vessel.pennent_no
-        %td=vessel_usage.unit.name
-        %td=litres(vessel_usage.d_vessel)
+        %td=unit.vessel.pennent_no
+        %td=unit.name
+        %td=litres(vessel_usages.sum(&:d_vessel))
   
 %table.table.table-bordered
   %thead
@@ -83,20 +82,20 @@
       %th=t 'vessels.name'
       %th= t 'unit_fuels.quantity'
   %tbody
-    - @avcat_vessel.each do |avcat|
+    - @avcat_vessel.group_by{|x|x.unit_fuel.unit}.each do |unit, avcats|
       %tr
-        %td=avcat.unit_fuel.unit.vessel.pennent_no
-        %td=avcat.unit_fuel.unit.name
-        %td=avcat.quantity
+        %td= unit.vessel.pennent_no
+        %td= unit.name
+        %td=avcats.sum(&:quantity)
     %tr
       %th{colspan: "3"}= t 'report.avcat_others'
     %tr
       %th{colspan: "2"}= t 'fuel_tanks.unit_id'
       %th Amount
-    - @avcat_others.each do |avcat|
+    - @avcat_others.group_by{|x|x.unit_fuel.unit}.each do |unit, avcats|
       %tr
-        %td{colspan: "2"}=avcat.unit_fuel.unit.name
-        %td=avcat.quantity
+        %td{colspan: "2"}= unit.name
+        %td=avcats.sum(&:quantity)
 
 %table.table.table-bordered
   %thead
@@ -107,17 +106,17 @@
       %th=t 'vessels.name'
       %th= t 'unit_fuels.quantity'
   %tbody
-    - @avtur_vessel.each do |avtur|
+    - @avtur_vessel.group_by{|x|x.unit_fuel.unit}.each do |unit, avturs|
       %tr
-        %td=avtur.unit_fuel.unit.vessel.pennent_no
-        %td=avtur.unit_fuel.unit.name
-        %td=avtur.quantity
+        %td= unit.vessel.pennent_no
+        %td= unit.name
+        %td=avturs.sum(&:quantity)
     %tr
       %th{colspan: "3"}= t 'report.avtur_others'
     %tr
       %th{colspan: "2"}= t 'fuel_tanks.unit_id'
       %th= t 'unit_fuels.quantity'
-    - @avtur_others.each do |avtur|
+    - @avtur_others.group_by{|x|x.unit_fuel.unit}.each do |unit, avturs|
       %tr
-        %td{colspan: "2"}=avtur.unit_fuel.unit.name
-        %td=avtur.quantity
+        %td{colspan: "2"}= unit.name
+        %td=avturs.sum(&:quantity)
