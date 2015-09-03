@@ -22,19 +22,31 @@
               %span.input-group-btn
                 %button.btn.btn-default{:type => "submit", :style => "height:34px;"}
                   %i.glyphicon.glyphicon-search
+/Diesel Usage
 %BR
 %BR
   %h4
     - if params[:search].present? 
-      = t 'report.diesel_usage_for'
-      = Date.parse(params[:search][:start_date]).strftime('%d-%m-%Y')
-      \-
-      = Date.parse(params[:search][:end_date]).strftime('%d-%m-%Y')
+      - if !params[:search][:start_date].present? && !params[:search][:end_date].present?
+        = t 'report.diesel_usage_current'
+      - else
+        = t 'report.diesel_usage_for'
+        - if params[:search][:start_date].present? 
+          = Date.parse(params[:search][:start_date]).strftime('%d-%m-%Y')
+        - else
+          = (Date.today.beginning_of_month).strftime('%d-%m-%Y')
+        \-
+        - if params[:search][:end_date].present?
+          = Date.parse(params[:search][:end_date]).strftime('%d-%m-%Y')
+        - else
+          = (Date.today.end_of_day).strftime('%d-%m-%Y')
     - else
       = t 'report.diesel_usage_current'
+
 %table.table.table-bordered
   %thead
     %tr
+      %th No
       %th= t 'unit_fuels.unit_id'
       %th= t 'unit_fuels.issue_date'
       %th= t 'unit_fuels.d_vessel'
@@ -44,8 +56,9 @@
       %th=( t 'unit_fuels.diesel_usage_depot')
 
   %tbody
-    - @summary.each do |unit_fuel|
+    - @summary.each_with_index do |unit_fuel, index|
       %tr
+        %td=index+1
         %td= check_kin {unit_fuel.unit.name}
         %td= check_kin {l(unit_fuel.issue_date)}
         %td= unit_fuel.d_vessel
@@ -55,25 +68,37 @@
         %td= UnitFuel.diesel_usage(unit_fuel)
 
     %tr
-      %th{colspan: "2"}= t 'unit_fuels.diesel_usage_type'
+      %th{colspan: "3"}= t 'unit_fuels.diesel_usage_type'
       %td=a=@summary.sum(:d_vessel)
       %td=b=@summary.sum(:d_vehicle)
       %td=c=@summary.sum(:d_misctool)
       %td=d=@summary.sum(:d_boat)
       %th= litres(a+b+c+d)
-
-%br
+/Petrol Usage
+%BR
+%BR
   %h4
     - if params[:search].present? 
-      = t 'report.petrol_usage_for'
-      = Date.parse(params[:search][:start_date]).strftime('%d-%m-%Y')
-      \-
-      = Date.parse(params[:search][:end_date]).strftime('%d-%m-%Y')
+      - if !params[:search][:start_date].present? && !params[:search][:end_date].present?
+        = t 'report.petrol_usage_current'
+      - else
+        = t 'report.petrol_usage_for'
+        - if params[:search][:start_date].present? 
+          = Date.parse(params[:search][:start_date]).strftime('%d-%m-%Y')
+        - else
+          = (Date.today.beginning_of_month).strftime('%d-%m-%Y')
+        \-
+        - if params[:search][:end_date].present?
+          = Date.parse(params[:search][:end_date]).strftime('%d-%m-%Y')
+        - else
+          = (Date.today.end_of_day).strftime('%d-%m-%Y')
     - else
       = t 'report.petrol_usage_current'
+
 %table.table.table-bordered
   %thead
     %tr
+      %th No
       %th= t 'unit_fuels.unit_id'
       %th= t 'unit_fuels.issue_date'
       %th= t 'unit_fuels.d_vehicle'
@@ -82,8 +107,9 @@
       %th= t 'unit_fuels.petrol_usage_depot'
 
   %tbody
-    - @summary.each do |unit_fuel|
+    - @summary.each_with_index do |unit_fuel, index|
       %tr
+        %td= index+1
         %td= check_kin {unit_fuel.unit.name}
         %td= check_kin {l(unit_fuel.issue_date)}
         %td= unit_fuel.p_vehicle
@@ -92,7 +118,7 @@
         %td= UnitFuel.petrol_usage(unit_fuel)
 
     %tr
-      %th{colspan: "2"}= t 'unit_fuels.petrol_usage_type'
+      %th{colspan: "3"}= t 'unit_fuels.petrol_usage_type'
       %td=e=@summary.sum(:p_vehicle)
       %td=f=@summary.sum(:p_misctool)
       %td=g=@summary.sum(:p_boat)
@@ -102,12 +128,22 @@
 %br
   %h4
     - if params[:search].present? 
-      = t 'report.avtur_usage_for'
-      = Date.parse(params[:search][:start_date]).strftime('%d-%m-%Y')
-      \-
-      = Date.parse(params[:search][:end_date]).strftime('%d-%m-%Y')
+      - if !params[:search][:start_date].present? && !params[:search][:end_date].present?
+        = t 'report.avtur_usage_current'
+      - else
+        = t 'report.avtur_usage_for'
+        - if params[:search][:start_date].present? 
+          = Date.parse(params[:search][:start_date]).strftime('%d-%m-%Y')
+        - else
+          = (Date.today.beginning_of_month).strftime('%d-%m-%Y')
+        \-
+        - if params[:search][:end_date].present?
+          = Date.parse(params[:search][:end_date]).strftime('%d-%m-%Y')
+        - else
+          = (Date.today.end_of_day).strftime('%d-%m-%Y')
     - else
       = t 'report.avtur_usage_current'
+      
 %table.table.table-bordered
   %thead
     %tr
@@ -117,55 +153,76 @@
       %th= t 'unit_fuels.unit_type_id'
 
   %tbody
-    - @avtur.each do |avtur|
+    - @avtur.each_with_index do |avtur, index|
       %tr
+        %td= index+1
         %td= check_kin {avtur.unit_fuel.unit.name}
         %td= check_kin {l(avtur.unit_fuel.issue_date)}
         %td= avtur.quantity
         %td= avtur.unit_type.description
 
     %tr
-      %th{colspan: "2"}= t 'unit_fuels.total'
+      %th{colspan: "3"}= t 'unit_fuels.total'
       %th=litres(@avtur.sum(:quantity))
 
 /AVCAT Usage
 %br
   %h4
     - if params[:search].present? 
-      = t 'report.avcat_usage_for'
-      = Date.parse(params[:search][:start_date]).strftime('%d-%m-%Y')
-      \-
-      = Date.parse(params[:search][:end_date]).strftime('%d-%m-%Y')
+      - if !params[:search][:start_date].present? && !params[:search][:end_date].present?
+        = t 'report.avcat_usage_current'
+      - else
+        = t 'report.avcat_usage_for'
+        - if params[:search][:start_date].present? 
+          = Date.parse(params[:search][:start_date]).strftime('%d-%m-%Y')
+        - else
+          = (Date.today.beginning_of_month).strftime('%d-%m-%Y')
+        \-
+        - if params[:search][:end_date].present?
+          = Date.parse(params[:search][:end_date]).strftime('%d-%m-%Y')
+        - else
+          = (Date.today.end_of_day).strftime('%d-%m-%Y')
     - else
       = t 'report.avcat_usage_current'
 %table.table.table-bordered
   %thead
     %tr
+      %th No
       %th= t 'unit_fuels.unit_id'
       %th= t 'unit_fuels.issue_date'
       %th= t 'unit_fuels.quantity'
       %th= t 'unit_fuels.unit_type_id'
 
   %tbody
-    - @avcat.each do |avcat|
+    - @avcat.each_with_index do |avcat, index|
       %tr
+        %td= index+1
         %td= check_kin {avcat.unit_fuel.unit.name}
         %td= check_kin {l(avcat.unit_fuel.issue_date)}
         %td= avcat.quantity
         %td= avcat.unit_type.description
 
     %tr
-      %th{colspan: "2"}= t 'unit_fuels.total'
+      %th{colspan: "3"}= t 'unit_fuels.total'
       %th=litres(@avcat.sum(:quantity))
       
 /Other Fuels
 %br
   %h4
     - if params[:search].present? 
-      = t 'report.other_usage_for'
-      = Date.parse(params[:search][:start_date]).strftime('%d-%m-%Y')
-      \-
-      = Date.parse(params[:search][:end_date]).strftime('%d-%m-%Y')
+      - if !params[:search][:start_date].present? && !params[:search][:end_date].present?
+        = t 'report.other_usage_current'
+      - else
+        = t 'report.other_usage_for'
+        - if params[:search][:start_date].present? 
+          = Date.parse(params[:search][:start_date]).strftime('%d-%m-%Y')
+        - else
+          = (Date.today.beginning_of_month).strftime('%d-%m-%Y')
+        \-
+        - if params[:search][:end_date].present?
+          = Date.parse(params[:search][:end_date]).strftime('%d-%m-%Y')
+        - else
+          = (Date.today.end_of_day).strftime('%d-%m-%Y')
     - else
       = t 'report.other_usage_current'
 %table.table.table-bordered
@@ -181,6 +238,7 @@
           - if count < @other_fuels.group_by(&:fuel_type).count
             &nbsp; | &nbsp;
     %tr
+      %th No
       %th= t 'add_fuels.unit_fuel_id'
       %th= t 'unit_fuels.fuel_type_id'
       %th= t 'unit_fuels.description'
@@ -188,8 +246,9 @@
       %th= t 'unit_fuels.unit_type_id'
   %tbody
     - @other_fuels.group_by(&:fuel_type).each do |fueltype, add_fuels|
-      - add_fuels.each do |add_fuel|
+      - add_fuels.each_with_index do |add_fuel, index|
         %tr
+          %td= index+1
           %td= check_kin {add_fuel.unit_fuel.month_unit}
           %td= check_kin {add_fuel.fuel_type.name}
           %td= add_fuel.description
@@ -197,19 +256,29 @@
           %td= check_kin {add_fuel.unit_type.description}
       
     %tr
-      %th{colspan: "3"}= t 'unit_fuels.total'
+      %th{colspan: "4"}= t 'unit_fuels.total'
       %th=@other_fuels.sum(:quantity)
 
 /AMBIL DARAT & AMBIL UDARA
 %br
   %h4
     - if params[:search].present? 
-      = t 'report.external_supply_for'
-      = Date.parse(params[:search][:start_date]).strftime('%d-%m-%Y')
-      \-
-      = Date.parse(params[:search][:end_date]).strftime('%d-%m-%Y')
+      - if !params[:search][:start_date].present? && !params[:search][:end_date].present?
+        = t 'report.external_supply_current'
+      - else
+        = t 'report.external_supply_for'
+        - if params[:search][:start_date].present? 
+          = Date.parse(params[:search][:start_date]).strftime('%d-%m-%Y')
+        - else
+          = (Date.today.beginning_of_month).strftime('%d-%m-%Y')
+        \-
+        - if params[:search][:end_date].present?
+          = Date.parse(params[:search][:end_date]).strftime('%d-%m-%Y')
+        - else
+          = (Date.today.end_of_day).strftime('%d-%m-%Y')
     - else
       = t 'report.external_supply_current'
+
 %table.table.table-bordered
   %thead
     %tr
@@ -225,6 +294,7 @@
           = check_kin {number_with_precision(((external_supplieds.select {|p| p.fuel_type_id == 2 rescue false }).map(&:quantity).inject(:+)).to_f, :precision => 0)}
           litres
     %tr
+      %th No
       %th= t 'add_fuels.unit_fuel_id'
       %th= t 'external_supplieds.fuel_type_id'
       %th= t 'external_supplieds.quantity'
@@ -232,8 +302,9 @@
       %th= t 'external_supplieds.source'
 
   %tbody
-    - @external_supply.each do |external_supplied|
+    - @external_supply.each_with_index do |external_supplied, index|
       %tr
+        %td= index+1
         %td= check_kin {external_supplied.unit_fuel.month_unit}
         %td= check_kin {external_supplied.fuel_type.name}
         %td= external_supplied.quantity.to_i
@@ -244,12 +315,22 @@
 %br
   %h4
     - if params[:search].present? 
-      = t 'report.external_issue_for'
-      = Date.parse(params[:search][:start_date]).strftime('%d-%m-%Y')
-      \-
-      = Date.parse(params[:search][:end_date]).strftime('%d-%m-%Y')
+      - if !params[:search][:start_date].present? && !params[:search][:end_date].present?
+        = t 'report.external_issue_current'
+      - else
+        = t 'report.external_issue_for'
+        - if params[:search][:start_date].present? 
+          = Date.parse(params[:search][:start_date]).strftime('%d-%m-%Y')
+        - else
+          = (Date.today.beginning_of_month).strftime('%d-%m-%Y')
+        \-
+        - if params[:search][:end_date].present?
+          = Date.parse(params[:search][:end_date]).strftime('%d-%m-%Y')
+        - else
+          = (Date.today.end_of_day).strftime('%d-%m-%Y')
     - else
-      = t 'report.external_supply_current'
+      = t 'report.external_issue_current'
+  
 %table.table.table-bordered
   %thead
     %tr
@@ -265,6 +346,7 @@
           = check_kin {number_with_precision(((external_supplieds.select {|p| p.fuel_type_id == 2 rescue false }).map(&:quantity).inject(:+)).to_f, :precision => 0)}
           litres
     %tr
+      %th No
       %th= t 'add_fuels.unit_fuel_id'
       %th= t 'external_supplieds.fuel_type_id'
       %th= t 'external_supplieds.quantity'
@@ -272,8 +354,9 @@
       %th= t 'external_supplieds.source'
 
   %tbody
-    - @external_supply.each do |external_supplied|
+    - @external_supply.each_with_index do |external_supplied, index|
       %tr
+        %td= index+1
         %td= check_kin {external_supplied.unit_fuel.month_unit}
         %td= check_kin {external_supplied.fuel_type.name}
         %td= external_supplied.quantity.to_i

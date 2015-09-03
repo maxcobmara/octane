@@ -7,7 +7,36 @@
 .page-header
 
   %h1= t 'menu.fuel_usage_graph_report', :default => model_class.model_name.human
+  
+.row-fluid
+  .block
+    .block-heading.tool_bar
+      .col-sm-6
+        = form_for :search, :url => unit_fuel_usage_unit_fuels_path, :role => "form", class: "form-inline" do |f|
+          .form-group
+            #datepicker.input-daterange.input-group
+              .input-group-addon From
+              = f.text_field :issue_date, :name => "search[start_date]" , type: "text", class: "form-control", 'data-behaviour' => 'datepicker_before', placeholder: @start_from,  value: (@params_start_date  = params[:search].try(:[], :start_date))
+              .input-group-addon To
+              = f.text_field :issue_date, :name => "search[end_date]"   , type: "text", class: "form-control", 'data-behaviour' => 'datepicker_before', placeholder: @end_on,      value: (@params_end_date    = params[:search].try(:[], :end_date))
+              %span.input-group-btn
+                %button.btn.btn-default{:type => "submit", :style => "height:34px;"}
+                  %i.glyphicon.glyphicon-search
+%BR
+%BR
+  %h4
+    - if params[:search].present? 
+      /= t 'report.diesel_usage_for'
+      Usage Trend For :
+      = Date.parse(params[:search][:start_date]).strftime('%d-%m-%Y')
+      \-
+      = Date.parse(params[:search][:end_date]).strftime('%d-%m-%Y')
+    - else
+      /= t 'report.diesel_usage_current'
+      No date selected
 
+  %br
+      
   = javascript_include_tag "//www.google.com/jsapi", "chartkick"
   = t 'report.diesel_vessel_usage'
   = line_chart UnitFuel.group_by_month("issue_date").sum(:d_vessel)

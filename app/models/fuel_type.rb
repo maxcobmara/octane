@@ -5,6 +5,11 @@ class FuelType < ActiveRecord::Base
   has_many :fuel_limits
   has_many :fuel_budgets
   has_many :fuel_transactions
+  has_many :add_fuels
+  has_many :external_supplieds
+  has_many :external_issueds
+  has_many :fuel_issueds
+  has_many :fuel_supplieds
 
   scope :main_use, -> { where(id: [FuelTank.where('fuel_type_id is not null').pluck(:fuel_type_id)])} #for use in Add Fuel & Use Fuel
 
@@ -31,7 +36,7 @@ class FuelType < ActiveRecord::Base
   end
 
   def valid_for_removal
-    if fuel_tanks.count > 0 || fuel_limits.count > 0|| fuel_budgets.count > 0 || fuel_transactions.count > 0
+    if fuel_tanks.count > 0 || fuel_limits.count > 0|| fuel_budgets.count > 0 || fuel_transactions.count > 0 || add_fuels.count > 0 || external_issueds.count > 0 || external_supplieds.count > 0 ||  fuel_issueds.count > 0 || fuel_supplieds.count > 0 
       return false
     else
       return true

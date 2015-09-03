@@ -26,12 +26,22 @@
 %BR
   %h4
     - if params[:search].present? 
-      = t 'report.category_usage_for'
-      = Date.parse(params[:search][:start_date]).strftime('%d-%m-%Y')
-      \-
-      = Date.parse(params[:search][:end_date]).strftime('%d-%m-%Y')
+      - if !params[:search][:start_date].present? && !params[:search][:end_date].present?
+        = t 'report.category_usage_current'
+      - else
+        = t 'report.category_usage_for'
+        - if params[:search][:start_date].present? 
+          = Date.parse(params[:search][:start_date]).strftime('%d-%m-%Y')
+        - else
+          = (Date.today.beginning_of_month).strftime('%d-%m-%Y')
+        \-
+        - if params[:search][:end_date].present?
+          = Date.parse(params[:search][:end_date]).strftime('%d-%m-%Y')
+        - else
+          = (Date.today.end_of_day).strftime('%d-%m-%Y')
     - else
       = t 'report.category_usage_current'
+
 %table.table.table-bordered
   %thead
     %tr

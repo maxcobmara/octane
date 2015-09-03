@@ -41,7 +41,6 @@ class DepotFuelsController < ApplicationController
   # PATCH/PUT /depot_fuels/1
   # PATCH/PUT /depot_fuels/1.json
   def update
-    raise params.inspect
     respond_to do |format|
       if @depot_fuel.update(depot_fuel_params)
         format.html { redirect_to @depot_fuel, notice:  (t 'depot_fuels.title')+(t 'actions.updated') }

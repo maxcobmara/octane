@@ -4,6 +4,12 @@ class UnitType < ActiveRecord::Base
   has_many :fuel_limits, :foreign_key => "limit_unit_type_id"
   has_many :fuel_budgets
   has_many :fuel_transactions, :foreign_key => "fuel_unit_type_id"
+  has_many :add_fuels
+  has_many :external_supplieds
+  has_many :external_issueds
+  has_many :fuel_issueds
+  has_many :fuel_supplieds
+  has_many :fuel_balances
 
   def self.get_type(fr_excel,arr_fr_excel)
     utype_desc = UnitType.get_type_desc(fr_excel)
@@ -34,7 +40,7 @@ class UnitType < ActiveRecord::Base
   end
   
   def valid_for_removal
-    if fuel_tanks.count > 0 || fuel_limits.count > 0|| fuel_budgets.count > 0 || fuel_transactions.count > 0
+    if fuel_tanks.count > 0 || fuel_limits.count > 0|| fuel_budgets.count > 0 || fuel_transactions.count > 0 || add_fuels.count > 0  || external_issueds.count > 0 || external_supplieds.count > 0 || fuel_issueds.count > 0 || fuel_supplieds.count > 0 || fuel_balances.count > 0
       return false
     else
       return true
