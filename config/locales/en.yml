@@ -618,8 +618,7 @@ en:
     quantity: Quantity
     unit_type_id: Unit Type
     tab_applicable: "(TAB) only applicable for"
-    link_available: "link is available upon creation of 'Unit Fuel' for a "
-    in: "(In 'New / Edit Unit Fuel' page : For UNIT *, select a depot and click 'Submit'. Click 'Edit', select 'Issued To' and add details accordingly)"
+    link_available: "link is available upon selection of "
   add_fuels:
     title: Other Fuel - Unit
     title2: Other Fuel Usage - Unit

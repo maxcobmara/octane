@@ -583,8 +583,7 @@ ms_MY:
     quantity: Kuantiti
     unit_type_id: Unit Ukuran
     tab_applicable: "(TAB) hanya terpakai untuk"
-    link_available: "(pautan) hanya wujud setelah rekod 'Bahan PMP di Unit' dicipta untuk "
-    in: "(Dalam laman 'Bahan PMP Baru di Unit / Sunting Bahan PMP di Unit' : Untuk UNIT *, pilih depot and klik 'Hantar'. Klik 'Sunting', pilih 'Bekal Kepada' dan masukkan butiran berkaitan)"
+    link_available: "(pautan) hanya wujud jika unit dipilih merupakan sebuah "
     sum: Jumlah Penggunaan
     Total: Total
   add_fuels:
