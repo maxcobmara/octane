@@ -4,17 +4,20 @@
   %h1= t 'fuel_issueds.title', :default => model_class.model_name.human
 %p#notice= notice
 %dl.dl-horizontal
-  %dt= t 'fuel_issueds.depot_fuel_id', :default => model_class.human_attribute_name(:id_no) + ":"
+  %dt= t 'fuel_issueds.depot_fuel_id', :default => model_class.human_attribute_name(:depot_fuel_id) + ":"
   %dd= check_kin {@fuel_issued.depot_fuel.month_depot}
 %dl.dl-horizontal
-  %dt= t 'fuel_issueds.fuel_type_id', :default => model_class.human_attribute_name(:rank_id) + ":"
+  %dt= t 'fuel_issueds.fuel_type_id', :default => model_class.human_attribute_name(:fuel_type_id) + ":"
   %dd= check_kin {@fuel_issued.fuel_type.name}
 %dl.dl-horizontal
-  %dt= t 'fuel_issueds.quantity', :default => model_class.human_attribute_name(:rank_id) + ":"
+  %dt= t 'fuel_issueds.quantity', :default => model_class.human_attribute_name(:quantity) + ":"
   %dd= @fuel_issued.quantity
 %dl.dl-horizontal
-  %dt= t 'fuel_issueds.unit_type_id', :default => model_class.human_attribute_name(:rank_id) + ":"
+  %dt= t 'fuel_issueds.unit_type_id', :default => model_class.human_attribute_name(:unit_type_id) + ":"
   %dd= check_kin {@fuel_issued.unit_type.description}
+%dl.dl-horizontal
+  %dt= t 'fuel_issueds.unit_id', :default => model_class.human_attribute_name(:unit_id) + ":"
+  %dd= check_kin {@fuel_issued.receiver.name}
   
 %dl.dl-horizontal
   %dt= link_to content_tag(:i, "", class: "fa fa-arrow-left ") + " " + t('.back', :default =>( t("helpers.links.back")+" Monthly Fuel")), depot_fuels_path, :class => 'btn btn-default'

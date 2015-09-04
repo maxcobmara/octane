@@ -561,6 +561,7 @@ en:
     new: New Fuel Issued
     edit: Edit Fuel Issued
     new_issued: New Fuel Issued
+    unit_id: Receiving Unit
   fuel_supplieds:
     title: Fuel Supplied
     title2: Supplied
@@ -870,6 +871,7 @@ en:
         fuel_type_id: Fuel Type
         quantity: Quantity
         unit_type_id: Unit Type
+        unit_id: Receiving Unit
       fuel_supplied:
         depot_fuel_id: "Depot - Month Year"
         fuel_type_id: Fuel Type
@@ -970,7 +972,7 @@ en:
       select_depot_fuel: Select Depot | Month Year
       select_fuel_tank: Select Depot | Fuel Tank
       supplied: "* Total supplieds (receive) per month according to the fuel type"
-      issued: "* Total issueds (usage) per month according to the fuel type"
+      issued: "* Total issueds (usage) for each Receiving Unit in a month according to fuel type"
       balance: "* Current balance of fuel at the end of the month for each tank"
       summary: "* Stock balance of fuel at the end of the month for each fuel type"
       other_fuel: "* For fuel of type other than Diesel and Petrol"

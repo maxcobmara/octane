@@ -50,4 +50,19 @@
           %td= fuel_tank.fuel_type.try(:shortname)
           %td.right= number_with_precision(fuel_tank.capacity, :precision => 0)
           %td= fuel_tank.unittype.try(:description)
-          %td= fuel_tank.fuel_transactions.resupply.sum(:amount)- fuel_tank.fuel_transactions.usage.sum(:amount)
+          %td
+            - if fuel_tank.fuel_transactions.count > 0
+              = fuel_tank.fuel_transactions.resupply.sum(:amount)- fuel_tank.fuel_transactions.usage.sum(:amount)
+              %font{color: "blue"}*
+            - else
+              = balance = FuelBalance.where(fuel_tank_id: fuel_tank.id).last.try(:current)
+              - if balance
+                %font{color: "red"}*
+         
+%b Remark :
+%br
+%font{color: "blue"}* 
+based on Fuel Transactions records
+%br
+%font{color: "red"}* 
+based on Storage Tank Balance records

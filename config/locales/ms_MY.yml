@@ -526,6 +526,7 @@ ms_MY:
     unit_type_id: Unit Ukuran
     quantity: Kuantiti
     new_issued: Pengeluaran Baru
+    unit_id: Unit Penerima
   fuel_supplieds:
     title: Penerimaan Bahan PMP
     title2: Penerimaan
@@ -837,6 +838,7 @@ ms_MY:
         fuel_type_id: Jenis Bahan PMP
         quantity: Kuantiti
         unit_type_id: Unit Ukuran
+        unit_id: Unit Penerima
       fuel_supplied:
         depot_fuel_id: "Depot - Bulan Tahun"
         fuel_type_id: Jenis Bahan PMP
@@ -927,7 +929,7 @@ ms_MY:
       select_depot_fuel: Pilih Depot | Bulan Tahun
       select_fuel_tank: Pilih Depot | Tangki Penyimpanan
       supplied: "* Jumlah penerimaan sebulan mengikut jenis bahan PMP"
-      issued: "* Jumlah pengeluaran sebulan mengikut jenis bahan PMP"
+      issued: "* Jumlah pengeluaran sebulan mengikut jenis bahan PMP bagi setiap Unit Penerima"
       balance: "* Baki semasa bahan PMP pada akhir bulan untuk setiap tangki"
       summary: "* Baki stok bahan PMP pada akhir bulan untuk setiap jenis bahan PMP"
       other_fuel: "* Untuk bahan PMP selain daripada Diesel dan Petrol"
