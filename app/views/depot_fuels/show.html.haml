@@ -69,6 +69,7 @@
             %th{:align => "left"}= t 'fuel_issueds.fuel_type_id'
             %th= t 'fuel_issueds.quantity'
             %th= t 'fuel_issueds.unit_type_id'
+            %th= t 'fuel_issueds.unit_id'
             %th
         %tbody 
           - for depot_fuel_issued in @depot_fuel.fuel_issueds
@@ -76,8 +77,9 @@
               %td= check_kin {depot_fuel_issued.fuel_type.name}
               %td{:align => "center"}= depot_fuel_issued.quantity
               %td{:align => "center"}= check_kin {depot_fuel_issued.unit_type.description}
+              %td{:align => "center"}= check_kin {depot_fuel_issued.receiver.name}
               %td 
-			  
+  
   #tab3.tab-pane
     .row
       .span8

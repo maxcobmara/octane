@@ -7,19 +7,91 @@
 .page-header
 
   %h1= t 'menu.fuel_usage_graph_report', :default => model_class.model_name.human
+  
+.row-fluid
+  .block
+    .block-heading.tool_bar
+      .col-sm-6
+        = form_for :search, :url => unit_fuel_usage_unit_fuels_path, :role => "form", class: "form-inline" do |f|
+          .form-group
+            #datepicker.input-daterange.input-group
+              .input-group-addon From
+              = f.text_field :issue_date, :name => "search[start_date]" , type: "text", class: "form-control", 'data-behaviour' => 'datepicker_before', placeholder: @start_from,  value: (@params_start_date  = params[:search].try(:[], :start_date))
+              .input-group-addon To
+              = f.text_field :issue_date, :name => "search[end_date]"   , type: "text", class: "form-control", 'data-behaviour' => 'datepicker_before', placeholder: @end_on,      value: (@params_end_date    = params[:search].try(:[], :end_date))
+              %span.input-group-btn
+                %button.btn.btn-default{:type => "submit", :style => "height:34px;"}
+                  %i.glyphicon.glyphicon-search
+%BR
+%BR
+  %h4
+    = t 'report.graph_usage_for'
+    - if params[:search].present? 
+      - if !params[:search][:start_date].present? && !params[:search][:end_date].present?
+        = (Date.today.beginning_of_month-1.month).strftime('%b %Y')
+        \-
+        = (Date.today.end_of_day).strftime('%b %Y')
+      - else
+        - if params[:search][:start_date].present? 
+          = Date.parse(params[:search][:start_date]).strftime('%b %Y')
+        - else
+          = (Date.today.beginning_of_month-1.month).strftime('%b %Y')
+        \-
+        - if params[:search][:end_date].present?
+          = Date.parse(params[:search][:end_date]).strftime('%b %Y')
+        - else
+          = (Date.today.end_of_day).strftime('%b %Y')
+    - else
+      = (Date.today.beginning_of_month-1.month).strftime('%b %Y')
+      \-
+      = (Date.today.end_of_day).strftime('%b %Y')
 
   = javascript_include_tag "//www.google.com/jsapi", "chartkick"
+  %br
+  %h4= t 'report.diesel_usage'
   = t 'report.diesel_vessel_usage'
-  = line_chart UnitFuel.group_by_month("issue_date").sum(:d_vessel)
+  = line_chart @month_fuel_usage.group_by_month("issue_date").sum(:d_vessel)
   = t 'report.diesel_vehicle_usage'
-  = line_chart UnitFuel.group_by_month("issue_date").sum(:d_vehicle)
+  = line_chart @month_fuel_usage.group_by_month("issue_date").sum(:d_vehicle)
   = t 'report.diesel_misctool_usage'
-  = line_chart UnitFuel.group_by_month("issue_date").sum(:d_misctool)
+  = line_chart @month_fuel_usage.group_by_month("issue_date").sum(:d_misctool)
   = t 'report.diesel_boat_usage'
-  = line_chart UnitFuel.group_by_month("issue_date").sum(:d_boat)
+  = line_chart @month_fuel_usage.group_by_month("issue_date").sum(:d_boat)
+  %BR
+  %h4= t 'report.petrol_usage'
   = t 'report.petrol_vehicle_usage'
-  = line_chart UnitFuel.group_by_month("issue_date").sum(:p_vehicle)
+  = line_chart @month_fuel_usage.group_by_month("issue_date").sum(:p_vehicle)
   = t 'report.petrol_misctool_usage'
-  = line_chart UnitFuel.group_by_month("issue_date").sum(:p_misctool)
+  = line_chart @month_fuel_usage.group_by_month("issue_date").sum(:p_misctool)
   = t 'report.petrol_boat_usage'
-  = line_chart UnitFuel.group_by_month("issue_date").sum(:p_boat)
+  = line_chart @month_fuel_usage.group_by_month("issue_date").sum(:p_boat)
+  %BR
+  %h4=t 'report.avtur_usage'
+  = line_chart @month_avtur_usage.group_by_month("unit_fuels.issue_date").sum(:quantity)
+  %BR
+  %h4=t 'report.avcat_usage'
+  = line_chart @month_avcat_usage.group_by_month("unit_fuels.issue_date").sum(:quantity)
+  %BR
+  %h4=t 'report.lubricant_usage'
+  = line_chart @month_lubricant_usage.group_by_month("unit_fuels.issue_date").sum(:quantity)
+  %BR
+  %h4=t 'report.grease_usage'
+  = line_chart @month_grease_usage.group_by_month("unit_fuels.issue_date").sum(:quantity)
+  %BR
+  %h4=t 'report.other_usage'
+  = line_chart @month_other_usage.group_by_month("unit_fuels.issue_date").sum(:quantity)
+  %BR
+  %h4=t 'report.external_supply_main'
+  =t 'report.external_supply'+" : "+Unit.where(shortname: 'TD').first.name
+  = line_chart @month_external_supply_darat.group_by_month("unit_fuels.issue_date").sum(:quantity)
+  =t 'report.external_supply'+" : "+Unit.where(shortname: 'TUDM').first.name
+  = line_chart @month_external_supply_udara.group_by_month("unit_fuels.issue_date").sum(:quantity)
+  %BR
+  %h4=t 'report.external_issue_main'
+  =t 'report.external_issue'+" : "+Unit.where(shortname: 'TD').first.name
+  = line_chart @month_external_issue_darat.group_by_month("unit_fuels.issue_date").sum(:quantity)
+  =t 'report.external_issue'+" : "+Unit.where(shortname: 'TUDM').first.name
+  = line_chart @month_external_issue_udara.group_by_month("unit_fuels.issue_date").sum(:quantity)
+  
+  
+  

@@ -27,11 +27,11 @@
     - unit_fuel_ids=unit_fuels.map(&:id)
     %thead
       %tr
-        %th{colspan: "9"}
+        %th{colspan: "12"}
           = (t 'fuel_tanks.unit_id').upcase+ " : "
           = Unit.find(unit_id).name
       %tr
-        %td{colspan: "9", style: "font-size:0.8em; padding-top:25px; text-align: left;"}
+        %td{colspan: "12", style: "font-size:0.8em; padding-top:25px; text-align: left;"}
           Petrol :
           = UnitFuel.where('unit_id =?', unit_id ).sum(:p_vehicle) + UnitFuel.where('unit_id =?', unit_id ).sum(:p_boat) + UnitFuel.where('unit_id =?', unit_id ).sum(:p_misctool)
           litres
@@ -41,32 +41,41 @@
           litres
           &nbsp; | &nbsp;
           AVCAT :
-          = AddFuel.where('unit_fuel_id IN (?) AND created_at >=? AND created_at <=? AND fuel_type_id=?', unit_fuel_ids, @sdate, @edate, FuelType.where(name: 'AVCAT').first.id).sum(:quantity)
+          = AddFuel.where(unit_fuel_id: unit_fuel_ids, fuel_type: FuelType.where(name: 'AVCAT')).sum(:quantity)
           &nbsp; | &nbsp;
           AVTUR :
-          = AddFuel.where('unit_fuel_id IN (?) AND created_at >=? AND created_at <=? AND fuel_type_id=?', unit_fuel_ids, @sdate, @edate, FuelType.where(name: 'AVTUR').first.id).sum(:quantity)
+          = AddFuel.where(unit_fuel_id: unit_fuel_ids,  fuel_type: FuelType.where(name: 'AVTUR')).sum(:quantity)
           &nbsp; | &nbsp;
-          Other Fuel Type :
-          = AddFuel.where('unit_fuel_id IN (?) AND created_at >=? AND created_at <=?', unit_fuel_ids, @sdate, @edate).where.not(fuel_type_id: FuelType.where(name: ['AVTUR', 'AVCAT']).pluck(:id)).sum(:quantity)
+          Lubricant :
+          = AddFuel.where(unit_fuel_id: unit_fuel_ids,  fuel_type: FuelType.where(name: 'PELINCIR')).sum(:quantity)
+          &nbsp; | &nbsp;
+          Grease :
+          = AddFuel.where(unit_fuel_id: unit_fuel_ids,  fuel_type: FuelType.where(name: 'GRIS')).sum(:quantity)
+          &nbsp; | &nbsp;
+          Others :
+          = AddFuel.where(unit_fuel_id: unit_fuel_ids).where.not(fuel_type: FuelType.where(name: ['AVTUR', 'AVCAT', 'PELINCIR', 'GRIS'])).sum(:quantity)
           &nbsp; | &nbsp;
           =t 'report.external_supplied_pd2'
-          = ExternalSupplied.where('unit_fuel_id IN (?) AND created_at >=? AND created_at <=?', unit_fuel_ids, @sdate, @edate).where(fuel_type_id: FuelType.where(name: 'PETROL').first.id).sum(:quantity)
+          = ExternalSupplied.where(unit_fuel_id: unit_fuel_ids, fuel_type: FuelType.where(name: 'PETROL')).sum(:quantity)
           \/
-          = ExternalSupplied.where('unit_fuel_id IN (?) AND created_at >=? AND created_at <=?', unit_fuel_ids, @sdate, @edate).where(fuel_type_id: FuelType.where(name: 'DIESEL').first.id).sum(:quantity)
+          = ExternalSupplied.where(unit_fuel_id: unit_fuel_ids, fuel_type: FuelType.where(name: 'DIESEL')).sum(:quantity)
           litres
           &nbsp; | &nbsp;
           =t 'report.external_issued_pd2'
-          = ExternalIssued.where('unit_fuel_id IN (?) AND created_at >=? AND created_at <=?', unit_fuel_ids, @sdate, @edate).where(fuel_type_id: FuelType.where(name: 'PETROL').first.id).sum(:quantity)
+          = ExternalIssued.where(unit_fuel_id: unit_fuel_ids, fuel_type: FuelType.where(name: 'PETROL')).sum(:quantity)
           \/
-          = ExternalIssued.where('unit_fuel_id IN (?) AND created_at >=? AND created_at <=?', unit_fuel_ids, @sdate, @edate).where(fuel_type_id: FuelType.where(name: 'DIESEL').first.id).sum(:quantity)
+          = ExternalIssued.where(unit_fuel_id: unit_fuel_ids, fuel_type: FuelType.where(name: 'DIESEL')).sum(:quantity)
           litres
           
       %tr
         %th= t 'unit_fuels.issue_date'
-        %th= t 'unit_fuels.petrol_usage'
-        %th= t 'unit_fuels.diesel_usage'
+        %th Petrol
+        %th Diesel
         %th AVCAT
         %th AVTUR
+        %th=t 'report.lubricant'
+        %th=t 'report.grease'
+        %th=t 'report.others'
         %th.center{colspan: "2"}=t 'report.external_supplied_pd'
         %th.center{colspan: "2"}=t 'report.external_issued_pd'
     - for unit_fuel, add_fuel in unit_fuels
@@ -75,11 +84,14 @@
           %td= check_kin {l(unit_fuel.issue_date)} 
           %td= UnitFuel.petrol_usage(unit_fuel)
           %td= UnitFuel.diesel_usage(unit_fuel)
-          %td= unit_fuel.add_fuels.where(fuel_type_id: FuelType.where(name: 'AVCAT').first.id).sum(:quantity)
-          %td= unit_fuel.add_fuels.where(fuel_type_id: FuelType.where(name: 'AVTUR').first.id).sum(:quantity)
+          %td= unit_fuel.add_fuels.where(fuel_type: FuelType.where(name: 'AVCAT')).sum(:quantity)
+          %td= unit_fuel.add_fuels.where(fuel_type: FuelType.where(name: 'AVTUR')).sum(:quantity)
+          %td= unit_fuel.add_fuels.where(fuel_type: FuelType.where(name: 'PELINCIR')).sum(:quantity)
+          %td= unit_fuel.add_fuels.where(fuel_type: FuelType.where(name: 'GRIS')).sum(:quantity)
+          %td= unit_fuel.add_fuels.where.not(fuel_type: FuelType.where(name: ['AVTUR', 'AVCAT', 'PELINCIR', 'GRIS'])).sum(:quantity)
           %td.center= unit_fuel.external_supplieds.where(fuel_type_id: FuelType.where(name: 'PETROL').first.id).sum(:quantity)
           %td.center= unit_fuel.external_supplieds.where(fuel_type_id: FuelType.where(name: 'DIESEL').first.id).sum(:quantity)
           %td.center= unit_fuel.external_issueds.where(fuel_type_id: FuelType.where(name: 'PETROL').first.id).sum(:quantity)
           %td.center= unit_fuel.external_issueds.where(fuel_type_id: FuelType.where(name: 'DIESEL').first.id).sum(:quantity)
     %tr
-      %td{colspan: "9"} &nbsp;
+      %td{colspan: "12"} &nbsp;

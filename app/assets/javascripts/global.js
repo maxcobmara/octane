@@ -27,16 +27,6 @@ $(document).ready(function(){
     autoclose: true
     //todayBtn: true
   });
-  
-  $('[data-behaviour=datepicker_year]').datepicker({
-      format: "yyyy-mm-dd",
-      endDate: "today",
-      autoclose: true
-//       startView: 1,
-//       minViewMode: 2,
-//        maxViewMode: 2,
-//       daysOfWeekDisabled: "6"
-  });
   //Date fields - end
   
   ///this must be activated if TURBOLINKS NOT in use
@@ -69,6 +59,25 @@ $(document).ready(function(){
   });
   ///Fuel Transaction - Use Fuel - end
   
+  ///Unit Fuel - Unit Vs Depot - start
+  $('#unit_fuel_unit_id').change(function() {
+    if($(this).val() == "") {
+      $('.bong').hide();
+      $('bong2').hide();
+    }else {
+      //alert("selected");
+      var yoyo = $(this).find('option:selected').attr('data');
+      if (yoyo=="depoh"){
+        $('.bong').show("appear");
+        $('.bong2').hide();
+      }
+      else{
+        $('.bong').hide();
+        $('.bong2').show("appear");
+      }
+    }
+  });
+  ///Unit Fuel - Unit Vs Depot - end 
 });
 
 ///searchit & selectpicker - if TURBOLINKS in use - ON PAGE CHANGE

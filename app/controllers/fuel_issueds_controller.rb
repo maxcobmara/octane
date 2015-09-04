@@ -72,6 +72,6 @@ class FuelIssuedsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def fuel_issued_params
-      params.require(:fuel_issued).permit(:depot_fuel_id, :fuel_type_id, :quantity,:unit_type_id)
+      params.require(:fuel_issued).permit(:depot_fuel_id, :fuel_type_id, :quantity,:unit_type_id, :unit_id)
     end
 end

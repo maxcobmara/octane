@@ -161,8 +161,6 @@ en:
 
 
   report:
-    #unit_fuel_graph: Unit Fuel Usage Graph
-    #unit_fuel_list: Unit Fuel Usage Report
     diesel_vessel_usage: Diesel Vessel Usage
     diesel_vehicle_usage: Diesel Vehicle Usage
     diesel_misctool_usage: Diesel Misctool Usage
@@ -178,14 +176,28 @@ en:
     avtur_usage_for: "AVTUR Usage For : "
     avcat_usage_current: AVCAT Usage Current Month
     avcat_usage_for: "AVCAT Usage For : "
+    lubricant_usage_current: Lubricant Usage Current Month
+    lubricant_usage_for: "Lubricant Usage For : "
+    grease_usage_current: Grease Usage Current Month
+    grease_usage_for: "Grease Usage For : "
     other_usage_current: Other Fuel Type Usage Current Month
     other_usage_for: "Other Fuel Type Usage For : "
     external_supply_current: External Supply Current Month
     external_supply_for: "External Supply For : "
     external_issue_current: External Issue Current Month
     external_issue_for: "External Issue For : "
+    graph_usage_for: "Usage Trend For : "
     petrol_usage: PETROL Usage
     diesel_usage: DIESEL Usage
+    avtur_usage: AVTUR Usage
+    avcat_usage: AVCAT Usage
+    grease_usage: GREASE Usage
+    lubricant_usage: LUBRICANT Usage
+    other_usage: Other Fuel Usage
+    external_supply_main: EXTERNAL Supplied
+    external_supply: External Supplied
+    external_issue_main: EXTERNAL Issued
+    external_issue: External Issued
     cars: Cars
     lorries: Lorries
     busses: Busses
@@ -197,10 +209,13 @@ en:
     avtur_others: "AVTUR : Other Usage"
     category_usage_for: "Usage For : "
     category_usage_current: Current Month Usage
-    external_supplied_pd: "External Supplied (Petrol / Diesel)"
-    external_issued_pd: "External Issued (Petrol / Diesel)"
-    external_supplied_pd2: "External Supplied (P/D) : "
-    external_issued_pd2: "External Issued (P/D) : "
+    external_supplied_pd: "External Supplied (P/D)"
+    external_issued_pd: "External Issued (P/D)"
+    external_supplied_pd2: "Ext Supplied (P/D) : "
+    external_issued_pd2: "Ext Issued (P/D) : "
+    lubricant: Lubricant
+    grease: Grease
+    others: Others
     
   home:
     welcome: Welcome to Octane
@@ -546,6 +561,7 @@ en:
     new: New Fuel Issued
     edit: Edit Fuel Issued
     new_issued: New Fuel Issued
+    unit_id: Receiving Unit
   fuel_supplieds:
     title: Fuel Supplied
     title2: Supplied
@@ -603,8 +619,7 @@ en:
     quantity: Quantity
     unit_type_id: Unit Type
     tab_applicable: "(TAB) only applicable for"
-    link_available: "link is available upon creation of 'Unit Fuel' for a "
-    in: "(In 'New / Edit Unit Fuel' page : For UNIT *, select a depot and click 'Submit'. Click 'Edit', select 'Issued To' and add details accordingly)"
+    link_available: "link is available upon selection of "
   add_fuels:
     title: Other Fuel - Unit
     title2: Other Fuel Usage - Unit
@@ -856,6 +871,7 @@ en:
         fuel_type_id: Fuel Type
         quantity: Quantity
         unit_type_id: Unit Type
+        unit_id: Receiving Unit
       fuel_supplied:
         depot_fuel_id: "Depot - Month Year"
         fuel_type_id: Fuel Type
@@ -956,7 +972,7 @@ en:
       select_depot_fuel: Select Depot | Month Year
       select_fuel_tank: Select Depot | Fuel Tank
       supplied: "* Total supplieds (receive) per month according to the fuel type"
-      issued: "* Total issueds (usage) per month according to the fuel type"
+      issued: "* Total issueds (usage) for each Receiving Unit in a month according to fuel type"
       balance: "* Current balance of fuel at the end of the month for each tank"
       summary: "* Stock balance of fuel at the end of the month for each fuel type"
       other_fuel: "* For fuel of type other than Diesel and Petrol"

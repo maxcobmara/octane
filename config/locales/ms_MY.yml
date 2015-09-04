@@ -125,8 +125,6 @@ ms_MY:
     authorisation: Perundangan Kebenaran
 
   report:
-    #unit_fuel_graph: Graf Penggunaan Minyak Unit
-    #unit_fuel_list: Laporan Penggunaan Minyak Unit
     diesel_vessel_usage: Penggunaan Diesel Kapal
     diesel_vehicle_usage: Penggunaan Diesel Kenderaan
     diesel_misctool_usage: Penggunaan Diesel Alat Pelbagai
@@ -142,14 +140,28 @@ ms_MY:
     avtur_usage_for: "Penggunaan AVTUR Bagi : "
     avcat_usage_current: Penggunaan AVCAT Bulan Ini
     avcat_usage_for: "Penggunaan AVCAT Bagi : "
+    lubricant_usage_current: Penggunaan Pelincir Bulan Ini
+    lubricant_usage_for: "Penggunaan Pelincir Bagi : "
+    grease_usage_current: Penggunaan Gris Bulan Ini
+    grease_usage_for: "Penggunaan Gris Bagi : "
     other_usage_current: Penggunaan Lain- lain Bahan PMP Bulan Ini
     other_usage_for: "Penggunaan Lain- lain Bahan PMP Bagi : "
     external_supply_current: Pengambilan Luar Bulan Ini
     external_supply_for: "Pengambilan Luar Bagi : "
     external_supply_current: Pembekalan Luar Bulan Ini
-    external_supply_for: "Pembekalan Luar  : "
+    external_supply_for: "Pembekalan Luar Bagi : "
+    graph_usage_for: "Trend Penggunaan Bagi : "
     petrol_usage: Penggunaan PETROL
     diesel_usage: Penggunaan DIESEL
+    avtur_usage: Penggunaan AVTUR
+    avcat_usage: Penggunaan AVCAT
+    grease_usage: Penggunaan GREASE
+    lubricant_usage: Penggunaan LUBRICANT
+    other_usage: Penggunaan Lain-Lain Bahan PMP
+    external_supply_main: "Pengeluaran / Pembekalan Bahan PMP (LUARAN)"
+    external_supply: "Pengeluaran / Pembekalan Bahan PMP"
+    external_issue_main: "Pengambilan Bahan PMP (LUARAN)"
+    external_issue: Pengambilan Bahan PMP
     cars: Kereta
     lorries: Lori
     busses: Bas
@@ -162,7 +174,12 @@ ms_MY:
     category_usage_for: "Penggunaan bagi : "
     category_usage_current: Penggunaan Bulan Semasa
     external_supplied_pd: "Pengambilan Luar (Petrol / Diesel)"
-    external_issued_pd: "Penerimaan Luar (Petrol / Diesel)"
+    external_issued_pd: "Pembekalan Luar (Petrol / Diesel)"
+    external_supplied_pd2: "Pengambilan Luar(P/D) : "
+    external_issued_pd2: "Pembekalan Luar(P/D) : "
+    lubricant: Pelincir
+    grease: Gris
+    others: "Lain - lain"
     
   home:
     welcome: Selamat Datang ke Octane
@@ -509,6 +526,7 @@ ms_MY:
     unit_type_id: Unit Ukuran
     quantity: Kuantiti
     new_issued: Pengeluaran Baru
+    unit_id: Unit Penerima
   fuel_supplieds:
     title: Penerimaan Bahan PMP
     title2: Penerimaan
@@ -566,8 +584,7 @@ ms_MY:
     quantity: Kuantiti
     unit_type_id: Unit Ukuran
     tab_applicable: "(TAB) hanya terpakai untuk"
-    link_available: "(pautan) hanya wujud setelah rekod 'Bahan PMP di Unit' dicipta untuk "
-    in: "(Dalam laman 'Bahan PMP Baru di Unit / Sunting Bahan PMP di Unit' : Untuk UNIT *, pilih depot and klik 'Hantar'. Klik 'Sunting', pilih 'Bekal Kepada' dan masukkan butiran berkaitan)"
+    link_available: "(pautan) hanya wujud jika unit dipilih merupakan sebuah "
     sum: Jumlah Penggunaan
     Total: Total
   add_fuels:
@@ -821,6 +838,7 @@ ms_MY:
         fuel_type_id: Jenis Bahan PMP
         quantity: Kuantiti
         unit_type_id: Unit Ukuran
+        unit_id: Unit Penerima
       fuel_supplied:
         depot_fuel_id: "Depot - Bulan Tahun"
         fuel_type_id: Jenis Bahan PMP
@@ -911,7 +929,7 @@ ms_MY:
       select_depot_fuel: Pilih Depot | Bulan Tahun
       select_fuel_tank: Pilih Depot | Tangki Penyimpanan
       supplied: "* Jumlah penerimaan sebulan mengikut jenis bahan PMP"
-      issued: "* Jumlah pengeluaran sebulan mengikut jenis bahan PMP"
+      issued: "* Jumlah pengeluaran sebulan mengikut jenis bahan PMP bagi setiap Unit Penerima"
       balance: "* Baki semasa bahan PMP pada akhir bulan untuk setiap tangki"
       summary: "* Baki stok bahan PMP pada akhir bulan untuk setiap jenis bahan PMP"
       other_fuel: "* Untuk bahan PMP selain daripada Diesel dan Petrol"

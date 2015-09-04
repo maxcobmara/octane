@@ -41,7 +41,6 @@ class DepotFuelsController < ApplicationController
   # PATCH/PUT /depot_fuels/1
   # PATCH/PUT /depot_fuels/1.json
   def update
-    raise params.inspect
     respond_to do |format|
       if @depot_fuel.update(depot_fuel_params)
         format.html { redirect_to @depot_fuel, notice:  (t 'depot_fuels.title')+(t 'actions.updated') }
@@ -123,6 +122,6 @@ class DepotFuelsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def depot_fuel_params
-      params.require(:depot_fuel).permit(:unit_id, :issue_date, fuel_issueds_attributes: [:id, :depot_fuel_id, :fuel_type_id, :quantity, :unit_type_id,:_destroy], fuel_supplieds_attributes: [:id, :depot_fuel_id, :fuel_type_id, :quantity, :unit_type_id,:_destroy], fuel_balances_attributes: [:id, :depot_fuel_id, :fuel_tank_id, :current, :unit_type_id,:_destroy])
+      params.require(:depot_fuel).permit(:unit_id, :issue_date, fuel_issueds_attributes: [:id, :depot_fuel_id, :fuel_type_id, :quantity, :unit_type_id, :unit_id, :_destroy], fuel_supplieds_attributes: [:id, :depot_fuel_id, :fuel_type_id, :quantity, :unit_type_id,:_destroy], fuel_balances_attributes: [:id, :depot_fuel_id, :fuel_tank_id, :current, :unit_type_id,:_destroy])
     end
 end

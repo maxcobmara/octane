@@ -51,17 +51,12 @@
               %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'menu.depot_listing'), units_path(:id=>1)
               %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'menu.vessel_listing'), vessels_path
               %li.divider
-              %li= link_to "Fuel Types", fuel_types_path
-              %li= link_to "Unit Types", unit_types_path
+              %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'fuel_types.title'), fuel_types_path
+              %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'unit_types.title'), unit_types_path
               %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'menu.vessel_type'), vessel_types_path
               %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'menu.vessel_category'), vessel_categories_path
               %li.divider
               %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'menu.fuel_tank_listing'), fuel_tanks_path
-              /%li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'depot_fuels.title'), depot_fuels_path
-              /%li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'fuel_supplieds.title3'), fuel_supplieds_path
-              /%li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'fuel_issueds.title3'), fuel_issueds_path
-
-
 
         %li.dropdown
           %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
@@ -73,7 +68,7 @@
             %li= link_to (t 'menu.fuel_balances'), fuel_balances_path
             %li.divider
             %li= link_to (t 'menu.fuel_usage_by_vehicle_vessel'), fuel_type_usage_category_unit_fuels_path
-            /%li= link_to (t 'menu.fuel_usage_by_vehicle_vessel'), vehicle_vessel_usage_fuel_transactions_path
+            /%li= link_to (t 'menu.fuel_usage_by_vehicle_vessel'), vehicle_vessel_usage_fuel_transactions_path - this report use FUEL Transactions as source
             /%li= link_to (t 'menu.fuel_type_per_quarter'),  daily_usage_unit_fuels_path - same as 'unit fuel list usage' (Unit Fuel Usage Report), except this 1 not complete & has no date search
             %li= link_to (t 'menu.fuel_usage_graph_report'),      unit_fuel_usage_unit_fuels_path
             %li= link_to (t 'menu.fuel_usage_list_report'),      unit_fuel_list_usage_unit_fuels_path
