@@ -28,6 +28,7 @@ Rails.application.routes.draw do
       post 'fuel_type_usage_category'
     end
   end
+  resources :inden_cards
   resources :fuel_tanks do
     collection do
       get 'tank_capacity_list'

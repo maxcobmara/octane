@@ -153,4 +153,16 @@ $(document).ready(function(){
 //      
 //     }
 
+///for use in INDEN CARD - start
+function switchvisibility(el) {
+  if (document.getElementById(el).checked) {
+    document.getElementById('bstaff').style.display = "table-row";
+    document.getElementById('bstudent').style.display = "none";
+  } else {
+    document.getElementById('bstaff').style.display = "none";
+    document.getElementById('bstudent').style.display = "table-row";
+  }
+}
+///for use in INDEN CARD - end 
+
   

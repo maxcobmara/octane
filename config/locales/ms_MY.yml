@@ -148,8 +148,10 @@ ms_MY:
     other_usage_for: "Penggunaan Lain- lain Bahan PMP Bagi : "
     external_supply_current: Pengambilan Luar Bulan Ini
     external_supply_for: "Pengambilan Luar Bagi : "
-    external_supply_current: Pembekalan Luar Bulan Ini
-    external_supply_for: "Pembekalan Luar Bagi : "
+    external_issue_current: Pembekalan Luar Bulan Ini
+    external_issue_for: "Pembekalan Luar Bagi : "
+    inden_usage_current: Penggunaan Kad Inden Bulan Ini
+    inden_usage_for: "Penggunaan Kad Inden Bagi : "
     graph_usage_for: "Trend Penggunaan Bagi : "
     petrol_usage: Penggunaan PETROL
     diesel_usage: Penggunaan DIESEL
@@ -162,6 +164,9 @@ ms_MY:
     external_supply: "Pengeluaran / Pembekalan Bahan PMP"
     external_issue_main: "Pengambilan Bahan PMP (LUARAN)"
     external_issue: Pengambilan Bahan PMP
+    inden_card_usage: Penggunaan KAD INDEN
+    inden_petrol_usage: "Penggunaan Kad Inden : Petrol"
+    inden_diesel_usage: "Penggunaan Kad Inden : Diesel"
     cars: Kereta
     lorries: Lori
     busses: Bas
@@ -175,8 +180,10 @@ ms_MY:
     category_usage_current: Penggunaan Bulan Semasa
     external_supplied_pd: "Pengambilan Luar (Petrol / Diesel)"
     external_issued_pd: "Pembekalan Luar (Petrol / Diesel)"
+    inden_card_pd: "Kad Inden (Petrol / Diesel)"
     external_supplied_pd2: "Pengambilan Luar(P/D) : "
     external_issued_pd2: "Pembekalan Luar(P/D) : "
+    inden_card_pd2: "Kad Inden (P/D) :"
     lubricant: Pelincir
     grease: Gris
     others: "Lain - lain"
@@ -568,6 +575,7 @@ ms_MY:
     external_issued: Bekal Kepada
     external_supplied: Ambil Daripada
     other_usage: Lain-Lain Bahan PMP
+    inden_usage: Penggunaan Kad Inden
     new: Bahan PMP Baru di Unit
     edit: Sunting Bahan PMP di Unit
     quantity_ltr: Kuantiti dalam Liter
@@ -937,7 +945,7 @@ ms_MY:
       select_source2: Pilih Pembekal
       caution_not_depot: Sila ambil perhatian bahagian ini hanya terpakai untuk Depot
       select_inden_card: Pilih Kad Inden
-      inden_card: Penggunaan Kad Inden Dalam Sebulan
+      inden_card: "* Penggunaan Kad Inden Dalam Sebulan"
       add_edit_inden_usage: "Untuk Menambah / Menyunting Rekod Penggunaan Bulanan Bagi Kad Inden, Sila ke Menu : Bahan PMP | Kad Inden"
       no_items: Tiada Butiran
       select_rank_category: Pilih Kategori Pangkat

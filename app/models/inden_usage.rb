@@ -1,5 +1,6 @@
 class IndenUsage < ActiveRecord::Base
   belongs_to :inden_card, foreign_key: "inden_card_id"
+  belongs_to :unit_fuel, foreign_key: "unit_fuel_id"
 end
 
 # == Schema Information

@@ -186,6 +186,8 @@ en:
     external_supply_for: "External Supply For : "
     external_issue_current: External Issue Current Month
     external_issue_for: "External Issue For : "
+    inden_usage_current: Inden Card Usage Current Month
+    inden_usage_for: "Inden Card Usage For : "
     graph_usage_for: "Usage Trend For : "
     petrol_usage: PETROL Usage
     diesel_usage: DIESEL Usage
@@ -198,6 +200,9 @@ en:
     external_supply: External Supplied
     external_issue_main: EXTERNAL Issued
     external_issue: External Issued
+    inden_card_usage: INDEN CARD Usage
+    inden_petrol_usage: "Inden Card Usage : Petrol"
+    inden_diesel_usage: "Inden Card Usage : Diesel"
     cars: Cars
     lorries: Lorries
     busses: Busses
@@ -209,10 +214,12 @@ en:
     avtur_others: "AVTUR : Other Usage"
     category_usage_for: "Usage For : "
     category_usage_current: Current Month Usage
-    external_supplied_pd: "External Supplied (P/D)"
-    external_issued_pd: "External Issued (P/D)"
+    external_supplied_pd: "Ext Supplied (P/D)"
+    external_issued_pd: "Ext Issued (P/D)"
+    inden_card_pd: "Inden Card (P/D)"
     external_supplied_pd2: "Ext Supplied (P/D) : "
     external_issued_pd2: "Ext Issued (P/D) : "
+    inden_card_pd2: "Inden Card (P/D) : "
     lubricant: Lubricant
     grease: Grease
     others: Others
@@ -603,6 +610,7 @@ en:
     other_usage: Other Fuel Type
     external_issued: Issued To
     external_supplied: Supplied By
+    inden_usage: Inden Usage
     new: New Unit Fuel
     edit: Edit Unit Fuel
     quantity_ltr: Quantity in Litre
@@ -980,7 +988,7 @@ en:
       select_source2: Select Supplier
       caution_not_depot: Please note this part only applicable to Depot
       select_inden_card: Select Inden Card
-      inden_card: Inden Card Usage in a Month
+      inden_card: "* Inden Card Usage in a Month"
       add_edit_inden_usage: "To Add / Edit Monthly Inden Card Usage Record, Please Proceed to Menu : Fuel | Inden Cards"
       no_items: No Items
       select_rank_category: Select Rank Category

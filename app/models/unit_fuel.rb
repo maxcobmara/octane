@@ -8,7 +8,9 @@ class UnitFuel < ActiveRecord::Base
   accepts_nested_attributes_for :external_issueds, allow_destroy: true, reject_if: proc { |external_issueds| external_issueds[:quantity].blank? }
   has_many :external_supplieds, dependent: :destroy
   accepts_nested_attributes_for :external_supplieds, allow_destroy: true, reject_if: proc { |external_supplieds| external_supplieds[:quantity].blank? }
-
+  has_many :inden_usages
+  accepts_nested_attributes_for :inden_usages, allow_destroy: true, reject_if: proc { |inden_usages| inden_usages[:petrol_ltr].blank? && inden_usages[:diesel_ltr].blank?}
+  
   validates_presence_of :unit_id, :issue_date
   validate :valid_unique_record
   
@@ -20,6 +22,12 @@ class UnitFuel < ActiveRecord::Base
     self.p_vehicle = 0 if p_vehicle.blank?
     self.p_misctool = 0 if p_misctool.blank?
     self.p_boat = 0 if p_boat.blank?
+    if inden_usages
+      inden_usages.each do |iu|
+        iu.petrol_ltr=0 if iu.petrol_ltr.blank? && !iu.diesel_ltr.blank?
+        iu.diesel_ltr=0 if iu.diesel_ltr.blank? && !iu.petrol_ltr.blank?
+      end
+    end
   end
   
   #remove external_issueds when depot's unit_fuel is changed to unit's unit_fuel

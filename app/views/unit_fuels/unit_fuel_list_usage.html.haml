@@ -453,3 +453,53 @@
         %td= external_issued.quantity.to_i
         %td= check_kin {external_issued.unit_type.description}
         %td= external_issued.resource.try(:name)
+        
+///
+/Inden Usages
+%br
+  %h4
+    - if params[:search].present? 
+      - if !params[:search][:start_date].present? && !params[:search][:end_date].present?
+        = t 'report.inden_usage_current'
+      - else
+        = t 'report.inden_usage_for'
+        - if params[:search][:start_date].present? 
+          = Date.parse(params[:search][:start_date]).strftime('%d-%m-%Y')
+        - else
+          = (Date.today.beginning_of_month).strftime('%d-%m-%Y')
+        \-
+        - if params[:search][:end_date].present?
+          = Date.parse(params[:search][:end_date]).strftime('%d-%m-%Y')
+        - else
+          = (Date.today.end_of_day).strftime('%d-%m-%Y')
+    - else
+      = t 'report.inden_usage_current'
+%table.table.table-bordered
+  %thead
+    %tr
+      %td &nbsp;
+      %td{colspan: "4", style: "font-size:0.8em; padding-top:25px;"}
+        Petrol :
+        = @inden_usages.sum(:petrol_ltr)
+        litres
+        &nbsp; | &nbsp;
+        Diesel :
+        = @inden_usages.sum(:diesel_ltr)
+        litres
+    %tr
+      %th No
+      %th{:align => "left"}= t 'inden_cards.card_holder'
+      %th{:align => "left"}= t 'inden_cards.serial_no'
+      %th= t 'inden_usages.petrol_ltr'
+      %th= t 'inden_usages.diesel_ltr'
+  %tbody
+    - count=0
+    - @inden_usages.group_by(&:inden_card).each do |inden_card, usages|
+      %tr
+        %td= count+=1
+        %td= inden_card.serial_no
+        %td
+          = inden_card.unit.name if inden_card.ru_staff==false
+          = inden_card.staff.name if inden_card.ru_staff==true
+        %td=usages.sum(&:petrol_ltr)
+        %td=usages.sum(&:diesel_ltr)
