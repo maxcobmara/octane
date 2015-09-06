@@ -77,6 +77,24 @@ $(document).ready(function(){
       }
     }
   });
+  
+  $('#unit_fuel_unit_id').each(function() {
+    if($(this).val() == "") {
+      $('.bong').hide();
+      $('bong2').hide();
+    }else {
+      //alert("selected");
+      var yoyo = $(this).find('option:selected').attr('data');
+      if (yoyo=="depoh"){
+        $('.bong').show("appear");
+        $('.bong2').hide();
+      }
+      else{
+        $('.bong').hide();
+        $('.bong2').show("appear");
+      }
+    }
+  });
   ///Unit Fuel - Unit Vs Depot - end 
 });
 

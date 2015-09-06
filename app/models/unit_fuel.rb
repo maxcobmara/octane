@@ -1,5 +1,5 @@
 class UnitFuel < ActiveRecord::Base
-  before_save :set_default_value
+  before_save :set_default_value, :set_issueds_nil_not_depot
 
   belongs_to :unit, :foreign_key => "unit_id"
   has_many :add_fuels, dependent: :destroy
@@ -20,6 +20,16 @@ class UnitFuel < ActiveRecord::Base
     self.p_vehicle = 0 if p_vehicle.blank?
     self.p_misctool = 0 if p_misctool.blank?
     self.p_boat = 0 if p_boat.blank?
+  end
+  
+  #remove external_issueds when depot's unit_fuel is changed to unit's unit_fuel
+  def set_issueds_nil_not_depot
+    unless Unit.is_depot.pluck(:id).include?(unit_id)
+      if external_issueds
+        issueds_ids=external_issueds.pluck(:id)
+        ExternalIssued.destroy_all(id: issueds_ids)
+      end
+    end
   end
 
   def month_unit
@@ -44,11 +54,14 @@ class UnitFuel < ActiveRecord::Base
   end
   end
 
-  def valid_unique_record
+  def valid_unique_record 
     if issue_date
       exist_unitfuel=UnitFuel.where('unit_id=? and issue_date >=? and issue_date <=?', unit_id, issue_date.beginning_of_month, issue_date.end_of_month)
-      if exist_unitfuel.count > 0
-        errors.add(:base, 'Record already exist. Only 1 record of Unit Fuel allowed for each Unit / Depot in a month.')
+      if exist_unitfuel && exist_unitfuel.count > 0
+        time_created=exist_unitfuel.first.created_at
+        if (time_created!=created_at ||  created_at==nil) #created_at only exist for saved records
+          errors.add(:base, 'Record already exist. Only 1 record of Unit Fuel allowed for each Unit / Depot in a month.')
+        end
       end
     end
   end
