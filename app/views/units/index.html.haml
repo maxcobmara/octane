@@ -10,8 +10,9 @@
 .row
   .col-md-2
     .btn-group-vertical{"aria-label" => "sideBar", :role => "group"}
-      - unless @depot == 1 || @depot == '1'
-        .btn.btn-default= link_to content_tag(:i, fa_icon("truck", text: (t 'actions.new'))), new_unit_path
+      - permitted_to? :create, :unit do
+        - unless @depot == 1 || @depot == '1'
+          .btn.btn-default= link_to content_tag(:i, fa_icon("truck", text: (t 'actions.new'))), new_unit_path
       .btn.btn-default= link_to content_tag(:i, fa_icon("search", text: (t 'actions.search'))), "#", class: "toga"
       .btn.btn-default= link_to content_tag(:i, fa_icon("print", text: (t 'actions.print'))), "#", class: 'bogus'
 

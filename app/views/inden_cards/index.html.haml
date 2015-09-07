@@ -11,7 +11,8 @@
         = f.text_field :serial_no_cont, class: "input-medium search-query"
     %br
 .btn-group{"aria-label" => "sidebar", :role => "group", style: "float:right;"}
-  .btn.btn-default= link_to content_tag(:i, fa_icon("asterisk", text: (t 'actions.new'))), new_inden_card_path
+  - permitted_to? :create, :inden_cards do
+    .btn.btn-default= link_to content_tag(:i, fa_icon("asterisk", text: (t 'actions.new'))), new_inden_card_path
   .btn.btn-default= link_to content_tag(:i, fa_icon("search", text: (t 'actions.search'))), "#", class: "toga"
   .btn.btn-default= link_to(fa_icon("print", text: (t 'actions.print')), "javascript:print()")
   

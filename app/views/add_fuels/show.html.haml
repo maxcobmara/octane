@@ -21,11 +21,11 @@
   
 .form-actions
   .btn.btn-default= link_to content_tag(:i, "", :class => "fa fa-arrow-left ") + " " + t('.back', :default => t("helpers.links.back")), add_fuels_path
-  .btn.btn-default= link_to content_tag(:i, "", :class => "fa fa-edit") + " " + t('.edit', :default => t("helpers.links.edit")), |
-    edit_add_fuel_path(@add_fuel)
-  = link_to content_tag(:i, "", :class => "fa fa-trash-o icon-white") + " " + t('.destroy', :default => t("helpers.links.destroy")), |
-    add_fuel_path(@add_fuel),                                                                                                    |
-    :method => 'delete',                                                                                                           |
-    :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },                   |
-    :class => 'btn btn-danger'                                                                                                     |
-
+  - permitted_to? :manage, :add_fuels do
+    .btn.btn-default= link_to content_tag(:i, "", :class => "fa fa-edit") + " " + t('.edit', :default => t("helpers.links.edit")), |
+      edit_add_fuel_path(@add_fuel)
+    = link_to content_tag(:i, "", :class => "fa fa-trash-o icon-white") + " " + t('.destroy', :default => t("helpers.links.destroy")), |
+      add_fuel_path(@add_fuel),                                                                                                    |
+      :method => 'delete',                                                                                                           |
+      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },                   |
+      :class => 'btn btn-danger'                                                                                                     |

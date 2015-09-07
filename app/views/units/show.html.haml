@@ -28,19 +28,20 @@
   - if Vessel.pluck(:unit_id).include?(@unit.id)
     .btn.btn-default= link_to content_tag(:i, "", class: "fa fa-arrow-left ") + " " + t('.back', :default => t("helpers.links.back_to_vessels")), vessels_path
   .btn.btn-default= link_to content_tag(:i, "", class: "fa fa-arrow-left ") + " " + t('.back', :default => t("helpers.links.back_to_units")), units_path
-  .btn.btn-default= link_to content_tag(:i, "", class: "fa fa-edit") + " " + t('.edit', :default => t("helpers.links.edit")), edit_unit_path(@unit)
-  = link_to content_tag(:i, " New Node", :class => "fa fa-leaf"), new_unit_path(:parent_id => @unit), :class => 'btn btn-info'
-  - if Unit.is_depot.pluck(:id).include?(@unit.id)
-    - if @unit.valid_for_removal==true
-      - sure_note='Are you sure? Deleting a Depot may result deletion of corresponding Storage Tanks. Should you require these Storage Tanks for use with other Depot, Edit Storage Tank records individually, before deleting this record.'
+  - permitted_to? :manage, :units do
+    .btn.btn-default= link_to content_tag(:i, "", class: "fa fa-edit") + " " + t('.edit', :default => t("helpers.links.edit")), edit_unit_path(@unit)
+    = link_to content_tag(:i, " New Node", :class => "fa fa-leaf"), new_unit_path(:parent_id => @unit), :class => 'btn btn-info'
+    - if Unit.is_depot.pluck(:id).include?(@unit.id)
+      - if @unit.valid_for_removal==true
+        - sure_note='Are you sure? Deleting a Depot may result deletion of corresponding Storage Tanks. Should you require these Storage Tanks for use with other Depot, Edit Storage Tank records individually, before deleting this record.'
+      - else
+        - sure_note='Depot record shall not be removed as Depot Fuel records are still exist! '
     - else
-      - sure_note='Depot record shall not be removed as Depot Fuel records are still exist! '
-  - else
-    - sure_note='Are you sure?' if @unit.valid_for_removal==true
-    - sure_note='Unit record shall not be removed as Unit Fuel / Fuel Limit / Fuel Budget / Vessel records are still exist!' if @unit.valid_for_removal==false
+      - sure_note='Are you sure?' if @unit.valid_for_removal==true
+      - sure_note='Unit record shall not be removed as Unit Fuel / Fuel Limit / Fuel Budget / Vessel records are still exist!' if @unit.valid_for_removal==false
   
-  = link_to content_tag(:i, "", :class => "fa fa-trash-o icon-white") + " " + t('.destroy', :default => t("helpers.links.destroy")), |
-    unit_path(@unit),                                                                                                    |
-    :method => 'delete',                                                                                                           |
-    :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => sure_note)) },                   |
-    :class => 'btn btn-danger'                                                                                                     |
+    = link_to content_tag(:i, "", :class => "fa fa-trash-o icon-white") + " " + t('.destroy', :default => t("helpers.links.destroy")), |
+      unit_path(@unit),                                                                                                    |
+      :method => 'delete',                                                                                                           |
+      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => sure_note)) },                   |
+      :class => 'btn btn-danger'                                                                                                     |

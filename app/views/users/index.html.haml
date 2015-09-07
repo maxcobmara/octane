@@ -17,7 +17,9 @@
       %thead
         %tr
           %th=t 'users.email'
+          %th Roles
       - @users.each do |user|
         %tbody
           %tr
             %td= link_to user.email, edit_user_path(user)
+            %td= user.role_strings.humanize.titleize
