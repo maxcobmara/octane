@@ -1,4 +1,5 @@
 class DepotFuelsController < ApplicationController
+  filter_access_to :all
   before_action :set_depot_fuel, only: [:show, :edit, :update, :destroy]
 
   # GET /depot_fuels

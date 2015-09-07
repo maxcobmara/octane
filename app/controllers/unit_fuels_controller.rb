@@ -1,4 +1,5 @@
 class UnitFuelsController < ApplicationController
+  filter_access_to :all
   before_action :set_unit_fuel, only: [:show, :edit, :update, :destroy]
 
   # GET /unit_fuels

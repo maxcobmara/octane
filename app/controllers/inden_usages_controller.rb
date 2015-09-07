@@ -33,7 +33,7 @@ class IndenUsagesController < ApplicationController
 
     respond_to do |format|
       if @inden_usage.save
-        format.html { redirect_to @inden_usage, notice: (t 'inden_usages.title')+(t 'actions.created') }
+        format.html { redirect_to @inden_usage, notice: (t 'inden_usages.title2')+(t 'actions.created') }
         format.json { render action: 'show', status: :created, location: @inden_usage }
       else
         format.html { render action: 'new' }
@@ -47,7 +47,7 @@ class IndenUsagesController < ApplicationController
   def update
     respond_to do |format|
       if @inden_usage.update(inden_usage_params)
-        format.html { redirect_to @inden_usage, notice: (t 'inden_usages.title')+(t 'actions.updated') }
+        format.html { redirect_to @inden_usage, notice: (t 'inden_usages.title2')+(t 'actions.updated') }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

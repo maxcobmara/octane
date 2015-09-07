@@ -21,15 +21,15 @@
       %th= sort_link @search, :inden_card_serial_no, t('inden_usages.inden_card_serial')
       %th= t 'inden_cards.card_holder'
       %th= t 'inden_cards.unit_id'
-      %th= t 'inden_usages.petrol_ltr'
-      %th= t 'inden_usages.petrol_price'
-      %th= t 'inden_usages.diesel_ltr'
-      %th= t 'inden_usages.diesel_price'
       %th= t 'inden_usages.issue_date2'
-      %th= t 'inden_usages.petronas_p_ltr'
-      %th= t 'inden_usages.petronal_p_price'
-      %th= t 'inden_usages.petronas_d_ltr'
-      %th= t 'inden_usages.petronas_d_price'
+      %th= t 'inden_usages.petrol_ltr'
+      /%th= t 'inden_usages.petrol_price'
+      %th= t 'inden_usages.diesel_ltr'
+      /%th= t 'inden_usages.diesel_price'
+      /%th= t 'inden_usages.petronas_p_ltr'
+      /%th= t 'inden_usages.petronal_p_price'
+      /%th= t 'inden_usages.petronas_d_ltr'
+      /%th= t 'inden_usages.petronas_d_price'
       %th
 
   %tbody
@@ -42,15 +42,15 @@
         - else
           %td= check_kin {inden_usage.inden_card.unit.name}
           %td= check_kin {inden_usage.inden_card.unit.parent.name}
-        %td= inden_usage.petrol_ltr
-        %td= inden_usage.petrol_price
-        %td= inden_usage.diesel_ltr
-        %td= inden_usage.diesel_price
         %td= inden_usage.unit_fuel_id.blank? ? check_kin {inden_usage.issue_date.strftime("%b %Y")+" *"} : inden_usage.unit_fuel.issue_date.strftime("%b %Y")
-        %td= inden_usage.petronas_p_ltr
-        %td= inden_usage.petronal_p_price
-        %td= inden_usage.petronas_d_ltr
-        %td= inden_usage.petronas_d_price
+        %td= inden_usage.petrol_ltr
+        /%td= inden_usage.petrol_price
+        %td= inden_usage.diesel_ltr
+        /%td= inden_usage.diesel_price
+        /%td= inden_usage.petronas_p_ltr
+        /%td= inden_usage.petronal_p_price
+        /%td= inden_usage.petronas_d_ltr
+        /%td= inden_usage.petronas_d_price
         %td
         = render :partial => 'action_menu', :locals => {:inden_usage => inden_usage}
 %br

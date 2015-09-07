@@ -9,9 +9,18 @@
 .row
   .col-md-2
     .btn-group-vertical{"aria-label" => "sideBar", :role => "group"}
-      .btn.btn-default= link_to content_tag(:i, fa_icon("asterisk", text: (t 'actions.new'))), new_user_path
+      /.btn.btn-default= link_to content_tag(:i, fa_icon("asterisk", text: (t 'actions.new'))), new_user_path
       .btn.btn-default= link_to content_tag(:i, fa_icon("search", text: (t 'actions.search'))), "#", class: "toga"
       .btn.btn-default= link_to(fa_icon("print", text: (t 'actions.print')), "javascript:print()")
+
+  .col-md-10.index_main
+    .row.searchit{style: "display:none;"}
+      = search_form_for @search, class: "form-inline" do |f|
+        .field
+          = f.label :email_cont, "Email Contains:"
+          = f.text_field :email_cont, class: "input-medium search-query"
+          = f.submit "Search", class: "btn btn-warning"
+
   .col-md-10.index_main
     %table.table.table-condensed.table-hover#unit_type_list{:style => "width:60%;"}
       %thead
@@ -23,3 +32,4 @@
           %tr
             %td= link_to user.email, edit_user_path(user)
             %td= user.role_strings.humanize.titleize
+
