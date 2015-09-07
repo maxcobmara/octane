@@ -29,6 +29,7 @@ en:
       vehicle_card: "Touch N Go & Smart Tag"
       vehicle_assignment_detail: Vehicle Details
       staff: Staff
+      fuel_tank: Fuel Tank
     attributes:
       vehicle:
         reg_no: Registration No
@@ -59,6 +60,8 @@ en:
         expertise_id: Expertise / Branch
         gender: Gender
         religion: Religion
+      fuel_tank:
+        locations: Tank
     errors:
       template:
         body: "There were problems with the following fields:"

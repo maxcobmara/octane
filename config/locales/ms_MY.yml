@@ -6,6 +6,7 @@ ms_MY:
       vehicle_card: "Touch N Go & Smart Tag"
       vehicle_assignment_detail: Butiran Kenderaan
       staff: Staf
+      fuel_tank: Tangki Penyimpanan
     attributes:
       vehicle:
         reg_no: "No. Pendaftaran"
@@ -36,6 +37,8 @@ ms_MY:
         expertise_id: Kepakaran / Cawangan
         gender: Jantina
         religion: Agama
+      fuel_tank:
+        locations: Tangki
     errors:
       template:
         body: "Berikut adalah beberapa masalah:"
