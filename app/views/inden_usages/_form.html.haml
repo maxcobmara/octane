@@ -1,0 +1,64 @@
+.container{:style => "padding-left: 60px;"}
+  = form_for @inden_usage, :html => { :class => 'form-horizontal' }  do |f|
+    = render 'shared/error_messages', object: f.object
+	
+    .control-group
+      = f.label :inden_card_serial, :class => 'control-label'		
+      .controls= f.collection_select :inden_card_id, IndenCard.all.order(:serial_no), :id, :details, :include_blank => t('helpers.prompt.select_inden_card'), :html_options => {:class => 'selectpicker'}
+      
+    .control-group
+      = f.label :unit_fuel_id, :class => 'control-label'
+      .controls
+        /= @inden_usage.unit_fuel.try(:issue_date).try(:strftime, "%b %Y")
+        = f.collection_select :unit_fuel_id, UnitFuel.all.order(issue_date: :desc), :id, :month_unit2, :include_blank => t('helpers.prompt.select_unit_fuel'), :html_options => {:class => 'selectpicker'}
+    
+    .control-group
+      = f.label :issue_date, :class => 'control-label'
+      .controls= f.text_field :issue_date, :class => 'text_field', :type => :text, 'data-behaviour' => 'datepicker_before'
+      
+    /%br
+    /= t 'inden_usages.usage'
+
+    .control-group
+      = f.label :petrol_ltr, :class => 'control-label'
+      .controls= f.text_field :petrol_ltr, :class => 'text_field input-medium', :type => :text
+
+    /.control-group
+    /  = f.label :petrol_price, :class => 'control-label'
+    /  .controls= f.text_field :petrol_price, :class => 'text_field input-medium', :type => :text
+
+    .control-group
+      = f.label :diesel_ltr, :class => 'control-label'
+      .controls= f.text_field :diesel_ltr, :class => 'text_field input-medium', :type => :text
+
+    /.control-group
+    /  = f.label :diesel_price, :class => 'control-label'
+    /  .controls= f.text_field :diesel_price, :class => 'text_field input-medium', :type => :text    
+
+    /%br
+    /= t 'inden_usages.petronas_qty'
+
+    /.control-group
+    /  = f.label :petronas_p_ltr, :class => 'control-label'
+    /  .controls= f.text_field :petronas_p_ltr, :class => 'text_field input-medium', :type => :text
+
+    /.control-group
+    /  = f.label :petronal_p_price, :class => 'control-label'
+    /  .controls= f.text_field :petronal_p_price, :class => 'text_field input-medium', :type => :text
+
+    /.control-group
+    /  = f.label :petronas_d_ltr, :class => 'control-label'
+    /  .controls= f.text_field :petronas_d_ltr, :class => 'text_field input-medium', :type => :text
+
+    /.control-group
+    /  = f.label :petronas_d_price, :class => 'control-label'
+    /  .controls= f.text_field :petronas_d_price, :class => 'text_field input-medium', :type => :text
+
+    /%br
+    /= t 'inden_usages.issued_monthly'
+    /%br
+
+    .form-actions
+      = f.submit (t 'helpers.links.submit'), :class => 'btn btn-primary'
+      .btn.btn-default= link_to t('.cancel', :default => t("helpers.links.cancel")), |
+        inden_usages_path  

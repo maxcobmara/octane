@@ -29,6 +29,11 @@ module ApplicationHelper
     "#{number} LTR"
   end
   
+  #Turns decimal into Ringgit
+  def ringgols(money)
+    number_to_currency(money, :unit => "RM ", :separator => ".", :delimiter => ",", :precision => 2)
+  end
+  
   #http://stackoverflow.com/questions/23777751/link-to-add-fields-unobtrusive-javascript-rails-4
   def link_to_add_fields(name, f, association, cssClass, title)
     new_object = f.object.class.reflect_on_association(association).klass.new

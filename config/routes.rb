@@ -29,6 +29,7 @@ Rails.application.routes.draw do
     end
   end
   resources :inden_cards
+  resources :inden_usages
   resources :fuel_tanks do
     collection do
       get 'tank_capacity_list'

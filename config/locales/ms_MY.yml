@@ -707,6 +707,7 @@ ms_MY:
     petronas_d_price: "Diesel (RM)"
     petronas_qty: Kuantiti Petronas
     usage: Penggunaan
+    unit_fuel_id: Bahan PMP Bulanan
   acquired_types:
     title: Jenis Diperolehi (Kenderaan)
     title2: Jenis Diperolehi

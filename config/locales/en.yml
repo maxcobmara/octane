@@ -742,6 +742,7 @@ en:
     petronas_d_price: "Diesel (RM)"
     petronas_qty: Petronas Quantity
     usage: Usage
+    unit_fuel_id: Unit Fuel
   acquired_types:
     title: Acquired Types (Vehicle)
     title2: Acquired Types
