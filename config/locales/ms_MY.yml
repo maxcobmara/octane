@@ -122,6 +122,9 @@ ms_MY:
     vessel_type: Jenis Kapal
     vessel_category: Kelas Kapal
     annual_budget: Belanjawan Tahunan Bahan PMP Mengikut Jenis
+    budget_usage_chart_report: Statistik Carta Belanjawan vs Penggunaan
+    depot_fuels: "Bahan PMP Bulanan (Depoh)"
+    unit_fuels: "Bahan PMP Bulanan (Unit)"
 
     admin: Sistem
     users: Pengurusan Pengguna

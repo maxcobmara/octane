@@ -111,6 +111,8 @@
             %li.divider
             - permitted_to? :annual_budget, :fuel_budgets do
               %li= link_to (t 'menu.annual_budget'), annual_budget_fuel_budgets_path
+            - permitted_to? :budget_vs_usage, :fuel_budgets do
+              %li= link_to (t 'menu.budget_usage_chart_report'),   budget_vs_usage_fuel_budgets_path
             
           - permitted_to? :read, :users do
             %li.dropdown
