@@ -155,7 +155,7 @@ en:
     vessel_type: Vessel Types
     vessel_category: Vessel Classes
     annual_budget: Annual Budget by Fuel Type
-    budget_usage_chart_report: Budget vs Usage Chart Report
+    budget_usage_chart_report: Annual Budget vs Usage Chart Report
     depot_fuels: "Monthly Fuel (Depot)"
     unit_fuels: "Monthly Fuel (Unit)"
     

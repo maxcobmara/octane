@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     collection do
       get 'annual_budget'
       get 'budget_vs_usage'
+      post 'budget_vs_usage'
     end
   end
   resources :external_issueds

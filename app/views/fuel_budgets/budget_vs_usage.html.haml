@@ -2,73 +2,113 @@
 .page-header
   %h1= t 'menu.budget_usage_chart_report', :default => model_class.model_name.human.pluralize
 
+.row-fluid
+  .block
+    .block-heading.tool_bar
+      .col-sm-6
+        = form_for :search, :url => budget_vs_usage_fuel_budgets_path, :role => "form", class: "form-inline" do |f|
+          .form-group
+            #datepicker.input-daterange.input-group
+              .input-group-addon Select a date in a Year
+              = f.text_field :issue_date, :name => "search[start_date]" , type: "text", class: "form-control", 'data-behaviour' => 'datepicker_std', placeholder: @start_from,  value: (@params_start_date  = params[:search].try(:[], :start_date))
+              %span.input-group-btn
+                %button.btn.btn-default{:type => "submit", :style => "height:34px;"}
+                  %i.glyphicon.glyphicon-search
+
+%BR
+%BR
 .row
   %h3 Diesel
   .col-md-7
-    /= bar_chart @diesel_budget.each.map{|x, y| [x.name, y]}
-    /= bar_chart @diesel_usage
-    /= bar_chart [{name: "Budget", data: @diesel_budget.each.map{|x, y| [x.name, y]}}, {name: "Usage", data: @diesel_usage}]    
     = bar_chart [{name: "Budget", data: @diesel_budget}, {name: "Usage", data: @diesel_usage}]
-   
 .row
   .col-md-5.col-md-offset-1
-    %h5 Diesel Budget Start Date
+    %h5 Diesel Budget
     %table.table.table-bordered.table-condensed
-      - FuelBudget.all.group_by(&:unit).each do |unit, fuel_budgets|
+      - budget_date_diesel=@budget.where(fuel_type: FuelType.where(name: 'DIESEL'))
+      - if budget_date_diesel && budget_date_diesel.count > 0
         %tr
-        - fuel_budgets.group_by(&:fuel_type).each do |fuel_type, fbudgets|
-          - if fuel_type.name=='DIESEL'
-            %td=unit.name
-            %td=fbudgets.last.try(:year_starts_on).try(:strftime, '%d %b %Y')     
+          %th No
+          %th Unit / Depot
+          %th Start Date
+        - budget_date_diesel.each_with_index do |budget, index|
+          %tr
+            %td=index+1
+            %td=budget.unit.name
+            %td=budget.year_starts_on.try(:strftime, '%d %b %Y')  
+      - else
+        &nbsp;&nbsp;for year
+        %b=@start_from.to_date.year
+        not exist
 
 .row
   %h3 Petrol
   .col-md-7
-    /= bar_chart [{name: "Budget", data: @petrol_budget.each.map{|x, y| [x.name, y]}}, {name: "Usage", data: @petrol_usage}]
     = bar_chart [{name: "Budget", data: @petrol_budget}, {name: "Usage", data: @petrol_usage}]
 .row
   .col-md-5.col-md-offset-1
     %h5 Petrol Budget Start Date
     %table.table.table-bordered.table-condensed
-      - FuelBudget.all.group_by(&:unit).each do |unit, fuel_budgets|
+      - budget_date_petrol=@budget.where(fuel_type: FuelType.where(name: 'PETROL'))
+      - if budget_date_petrol && budget_date_petrol.count > 0
         %tr
-        - fuel_budgets.group_by(&:fuel_type).each do |fuel_type, fbudgets|
-          - if fuel_type.name=='PETROL'
-            %td=unit.name
-            %td=fbudgets.last.try(:year_starts_on).try(:strftime, '%d %b %Y')     
+          %th No
+          %th Unit / Depot
+          %th Start Date
+        - budget_date_petrol.each_with_index do |budget, index|
+          %tr
+            %td=index+1
+            %td=budget.unit.name
+            %td=budget.year_starts_on.try(:strftime, '%d %b %Y')  
+      - else
+        &nbsp;&nbsp;for year
+        %b=@start_from.to_date.year
+        not exist
               
 .row
   %h3 AVTUR
   .col-md-7
-    /= bar_chart @avtur_budget.each.map{|x, y| [x.name, y]}
-    /= bar_chart @avtur_usage.each.map{|x, y| [x.name, y]}
-    /= bar_chart [{name: "Budget", data: @avtur_budget.each.map{|x, y| [x.name, y]}}, {name: "Usage", data: @avtur_usage.each.map{|x, y| [x.name, y]}}]
     = bar_chart [{name: "Budget", data: @avtur_budget}, {name: "Usage", data: @avtur_usage}]
-
 .row
   .col-md-5.col-md-offset-1
     %h5 AVTUR Budget Start Date
     %table.table.table-bordered.table-condensed
-      - FuelBudget.all.group_by(&:unit).each do |unit, fuel_budgets|
+      - budget_date_avtur=@budget.where(fuel_type: FuelType.where(name: 'AVTUR'))
+      - if budget_date_avtur && budget_date_avtur.count > 0
         %tr
-        - fuel_budgets.group_by(&:fuel_type).each do |fuel_type, fbudgets|
-          - if fuel_type.name=='AVTUR'
-            %td=unit.name
-            %td=fbudgets.last.try(:year_starts_on).try(:strftime, '%d %b %Y')     
+          %th No
+          %th Unit / Depot
+          %th Start Date
+        - budget_date_avtur.each_with_index do |budget, index|
+          %tr
+            %td=index+1
+            %td=budget.unit.name
+            %td=budget.year_starts_on.try(:strftime, '%d %b %Y')  
+      - else
+        &nbsp;&nbsp;for year
+        %b=@start_from.to_date.year
+        not exist 
               
 .row
   %h3 AVCAT
   .col-md-7
-    /= bar_chart [{name: "Budget", data: @avcat_budget.each.map{|x, y| [x.name, y]}}, {name: "Usage", data: @avcat_usage.each.map{|x, y| [x.name, y]}}]
-    = bar_chart [{name: "Budget", data: @avcat_budget}, {name: "Usage", data: @avcat_usage}]
-  
+    = bar_chart [{name: "Budget", data: @avcat_budget}, {name: "Usage", data: @avcat_usage}] 
 .row
   .col-md-5.col-md-offset-1
     %h5 AVCAT Budget Start Date
     %table.table.table-bordered.table-condensed
-      - FuelBudget.all.group_by(&:unit).each do |unit, fuel_budgets|
+      - budget_date_avcat=@budget.where(fuel_type: FuelType.where(name: 'AVCAT'))
+      - if budget_date_avcat && budget_date_avcat.count > 0
         %tr
-        - fuel_budgets.group_by(&:fuel_type).each do |fuel_type, fbudgets|
-          - if fuel_type.name=='AVCAT'
-            %td=unit.name
-            %td=fbudgets.last.try(:year_starts_on).try(:strftime, '%d %b %Y')     
+          %th No
+          %th Unit / Depot
+          %th Start Date
+        - budget_date_avcat.each_with_index do |budget, index|
+          %tr
+            %td=index+1
+            %td=budget.unit.name
+            %td=budget.year_starts_on.try(:strftime, '%d %b %Y')  
+      - else
+        &nbsp;&nbsp;for year
+        %b=@start_from.to_date.year
+        not exist
