@@ -50,7 +50,8 @@ Rails.application.routes.draw do
   
   resources :depot_fuels do
     collection do
-      get 'PMP_monthly_usage'
+      get :depot_monthly_usage   #txport - 'PMP_monthly_usage'
+      post :depot_monthly_usage
       post :import
     end
   end

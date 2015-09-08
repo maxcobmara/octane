@@ -94,6 +94,8 @@
               %li= link_to (t 'menu.tank_capacity_list_report'),   tank_capacity_list_fuel_tanks_path
             - permitted_to? :read, :fuel_balances do
               %li= link_to (t 'menu.fuel_balances'), fuel_balances_path
+            - permitted_to? :read, :depot_fuels do
+              %li= link_to (t 'report.depot_fuel_usage'), depot_monthly_usage_depot_fuels_path
             %li.divider
             - permitted_to? :fuel_type_usage_category, :unit_fuels do
               %li= link_to (t 'menu.fuel_usage_by_vehicle_vessel'), fuel_type_usage_category_unit_fuels_path

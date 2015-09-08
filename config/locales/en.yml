@@ -164,6 +164,7 @@ en:
 
 
   report:
+    depot_fuel_usage: Monthly Depot Fuel Usage
     diesel_vessel_usage: Diesel Vessel Usage
     diesel_vehicle_usage: Diesel Vehicle Usage
     diesel_misctool_usage: Diesel Misctool Usage
@@ -191,6 +192,8 @@ en:
     external_issue_for: "External Issue For : "
     inden_usage_current: Inden Card Usage Current Month
     inden_usage_for: "Inden Card Usage For : "
+    depot_usage_current: Depot Fuel Usage Current Month
+    depot_usage_for: "Depot Fuel Usage For : "
     graph_usage_for: "Usage Trend For : "
     petrol_usage: PETROL Usage
     diesel_usage: DIESEL Usage
@@ -559,6 +562,8 @@ en:
     ftcm: "Fuel Type COUNT did not matched."
     excel_format: Format Excel
     depot_not_exist: "Depot not exist."
+    total: Total
+    usage_average: Daily Usage Average
   fuel_issueds:
     title: Fuel Issued
     title2: Issued

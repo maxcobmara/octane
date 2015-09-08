@@ -128,6 +128,7 @@ ms_MY:
     authorisation: Perundangan Kebenaran
 
   report:
+    depot_fuel_usage: Penggunaan Bahan PMP Depoh Bulanan
     diesel_vessel_usage: Penggunaan Diesel Kapal
     diesel_vehicle_usage: Penggunaan Diesel Kenderaan
     diesel_misctool_usage: Penggunaan Diesel Alat Pelbagai
@@ -155,6 +156,8 @@ ms_MY:
     external_issue_for: "Pembekalan Luar Bagi : "
     inden_usage_current: Penggunaan Kad Inden Bulan Ini
     inden_usage_for: "Penggunaan Kad Inden Bagi : "
+    depot_usage_current: Penggunaan Bahan PMP Depoh Bulan Ini
+    depot_usage_for: "Penggunaan Bahan PMP Depoh Bagi : "
     graph_usage_for: "Trend Penggunaan Bagi : "
     petrol_usage: Penggunaan PETROL
     diesel_usage: Penggunaan DIESEL
@@ -524,6 +527,8 @@ ms_MY:
     ftcm: "Fuel Type COUNT did not matched."
     excel_format: Format Excel
     depot_not_exist: "Depoh tidak wujud."
+    total: Jumlah
+    usage_average: Purata Penggunaan Sehari
   fuel_issueds:
     title: Pengeluaran Bahan PMP
     title2: Pengeluaran
