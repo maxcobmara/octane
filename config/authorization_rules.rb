@@ -11,7 +11,7 @@ authorization do
    has_permission_on :depot_fuels, :to => [:manage, :import_excel, :import]
    has_permission_on :fuel_tanks, :to => [:manage, :tank_capacity_chart, :tank_capacity_list]
    has_permission_on :unit_fuels, :to => [:manage, :fuel_type_usage_category, :unit_fuel_usage, :unit_fuel_list_usage, :annual_usage_report]
-   has_permission_on :fuel_budgets, :to => [:manage, :annual_budget]
+   has_permission_on :fuel_budgets, :to => [:manage, :annual_budget, :budget_vs_usage, :budget_vs_usage_list]
  end
  
  role :guest do  
@@ -20,7 +20,7 @@ authorization do
    has_permission_on :depot_fuels, :to => :read
    has_permission_on :fuel_tanks, :to => [:read, :tank_capacity_chart, :tank_capacity_list]
    has_permission_on :unit_fuels, :to => [:read, :fuel_type_usage_category, :unit_fuel_usage, :unit_fuel_list_usage, :annual_usage_report]
-   has_permission_on :fuel_budgets, :to => [:read, :annual_budget]
+   has_permission_on :fuel_budgets, :to => [:read, :annual_budget, :budget_vs_usage, :budget_vs_usage_list]
  end
 
 end

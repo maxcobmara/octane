@@ -66,6 +66,18 @@ class FuelBudgetsController < ApplicationController
     @fuel_budgets=FuelBudget.all
   end
   
+  def budget_vs_usage_list
+    if params[:search].present? && params[:search][:start_date].present?
+      @start_from = Date.parse((params[:search][:start_date])).beginning_of_year.strftime('%Y-%m-%d')
+      @end_on = Date.parse((params[:search][:start_date])).end_of_year.strftime('%Y-%m-%d')
+    else
+      @start_from = (Date.today.beginning_of_year).strftime('%Y-%m-%d')
+      @end_on = (Date.today.end_of_year).strftime('%Y-%m-%d')
+    end
+    @unit_fuels=UnitFuel.all
+    @budget=FuelBudget.where('year_starts_on >=? and year_starts_on<=?', @start_from, @end_on)
+  end
+  
   def budget_vs_usage
     if params[:search].present? && params[:search][:start_date].present?
       @start_from = Date.parse((params[:search][:start_date])).beginning_of_year.strftime('%Y-%m-%d')
@@ -95,7 +107,7 @@ class FuelBudgetsController < ApplicationController
     end
     
     #USAGE section ---
-    @unit_fuels=UnitFuel.all
+    @unit_fuels=UnitFuel.all.sort_by{|x|x.unit.name}
     @diesel_usage=Hash.new
     @petrol_usage=Hash.new
     @avtur_usage=Hash.new

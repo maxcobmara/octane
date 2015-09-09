@@ -8,7 +8,7 @@ class DepotFuel < ActiveRecord::Base
   accepts_nested_attributes_for :fuel_balances, allow_destroy: true, reject_if: proc { |fuel_balances| fuel_balances[:fuel_tank_id].blank? }
   
   validates_presence_of :unit_id, :issue_date
-  validate :valid_unique_record
+  validate :valid_unique_record, :issue_date_not_later_today
   
   attr_accessor :tank, :current, :current2, :current3, :supplieds, :issueds #:capacity, :capacity2, :capacity3, #:prev_balance - not use
 
@@ -345,6 +345,12 @@ class DepotFuel < ActiveRecord::Base
           errors.add(:base, 'Record already exist. Only 1 record of Unit Fuel allowed for each Unit / Depot in a month.')
         end
       end
+    end
+  end
+  
+  def issue_date_not_later_today
+    if issue_date > Date.today 
+      errors.add(:base, 'Issue Date should not later than today.')
     end
   end
    

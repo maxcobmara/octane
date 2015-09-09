@@ -39,7 +39,7 @@
       - else
         &nbsp;&nbsp;for year
         %b=@start_from.to_date.year
-        not exist
+        does not exist
 
 .row
   %h3 Petrol
@@ -47,7 +47,7 @@
     = bar_chart [{name: "Budget", data: @petrol_budget}, {name: "Usage", data: @petrol_usage}]
 .row
   .col-md-5.col-md-offset-1
-    %h5 Petrol Budget Start Date
+    %h5 Petrol Budget
     %table.table.table-bordered.table-condensed
       - budget_date_petrol=@budget.where(fuel_type: FuelType.where(name: 'PETROL'))
       - if budget_date_petrol && budget_date_petrol.count > 0
@@ -63,7 +63,7 @@
       - else
         &nbsp;&nbsp;for year
         %b=@start_from.to_date.year
-        not exist
+        does not exist
               
 .row
   %h3 AVTUR
@@ -71,7 +71,7 @@
     = bar_chart [{name: "Budget", data: @avtur_budget}, {name: "Usage", data: @avtur_usage}]
 .row
   .col-md-5.col-md-offset-1
-    %h5 AVTUR Budget Start Date
+    %h5 AVTUR Budget
     %table.table.table-bordered.table-condensed
       - budget_date_avtur=@budget.where(fuel_type: FuelType.where(name: 'AVTUR'))
       - if budget_date_avtur && budget_date_avtur.count > 0
@@ -87,7 +87,7 @@
       - else
         &nbsp;&nbsp;for year
         %b=@start_from.to_date.year
-        not exist 
+        does not exist 
               
 .row
   %h3 AVCAT
@@ -95,7 +95,7 @@
     = bar_chart [{name: "Budget", data: @avcat_budget}, {name: "Usage", data: @avcat_usage}] 
 .row
   .col-md-5.col-md-offset-1
-    %h5 AVCAT Budget Start Date
+    %h5 AVCAT Budget
     %table.table.table-bordered.table-condensed
       - budget_date_avcat=@budget.where(fuel_type: FuelType.where(name: 'AVCAT'))
       - if budget_date_avcat && budget_date_avcat.count > 0
@@ -111,4 +111,5 @@
       - else
         &nbsp;&nbsp;for year
         %b=@start_from.to_date.year
-        not exist
+        does not exist
+ 

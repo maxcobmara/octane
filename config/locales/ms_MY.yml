@@ -118,11 +118,13 @@ ms_MY:
     transport_summary: Laporan Pengangkutan
     PMP_usage: Laporan Penyata Penggunaan Bahan PMP Bulanan
     fuel_balances: Baki Bahan PMP Bulanan
-    fuel_usage_by_vehicle_vessel: "Penggunaan Jenis Bahan PMP Mengikut Kategori"
+    fuel_usage_by_vehicle_vessel: "Laporan Penggunaan Jenis Bahan PMP Mengikut Kategori"
     vessel_type: Jenis Kapal
     vessel_category: Kelas Kapal
-    annual_budget: Belanjawan Tahunan Bahan PMP Mengikut Jenis
-    budget_usage_chart_report: Statistik Carta Belanjawan vs Penggunaan Tahunan
+    annual_budget: Laporan Belanjawan Tahunan Bahan PMP Mengikut Jenis
+    budget_usage_chart_report: Laporan Statistik Carta Belanjawan Vs Penggunaan Tahunan
+    budget_usage_chart_list: Laporan Belanjawan Vs Penggunaan Tahunan
+    budget_vs_usage: Belanjawan Vs Penggunaan
     depot_fuels: "Bahan PMP Bulanan (Depoh)"
     unit_fuels: "Bahan PMP Bulanan (Unit)"
 
@@ -131,7 +133,7 @@ ms_MY:
     authorisation: Perundangan Kebenaran
 
   report:
-    depot_fuel_usage: Penggunaan Bahan PMP Depoh Bulanan
+    depot_fuel_usage: Laporan Penggunaan Bahan PMP Depoh Bulanan
     diesel_vessel_usage: Penggunaan Diesel Kapal
     diesel_vehicle_usage: Penggunaan Diesel Kenderaan
     diesel_misctool_usage: Penggunaan Diesel Alat Pelbagai
@@ -196,6 +198,11 @@ ms_MY:
     lubricant: Pelincir
     grease: Gris
     others: "Lain - lain"
+    budget_start_date: Tarikh Mula Belanjawan
+    budget_amount: Amaun Belanjawan
+    budget_unit_type: Unit Ukuran Belanjawan
+    usage_amount: "Jumlah Penggunaan *"
+    usage_amount: Unit Ukuran Penggunaan
     
   home:
     welcome: Selamat Datang ke Octane

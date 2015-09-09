@@ -151,11 +151,13 @@ en:
     transport_summary: Transport Summary
     PMP_usage: Monthly Fuel Usage Report
     fuel_balances: Monthly Fuel Balances
-    fuel_usage_by_vehicle_vessel: "Fuel Type Usage by Category"
+    fuel_usage_by_vehicle_vessel: "Fuel Type Usage by Category Report"
     vessel_type: Vessel Types
     vessel_category: Vessel Classes
-    annual_budget: Annual Budget by Fuel Type
-    budget_usage_chart_report: Annual Budget vs Usage Chart Report
+    annual_budget: Annual Budget by Fuel Type Report
+    budget_usage_chart_report: Annual Budget Vs Usage Chart Report
+    budget_usage_chart_list: Annual Budget Vs Usage List Report
+    budget_vs_budget: Budget Vs Usage
     depot_fuels: "Monthly Fuel (Depot)"
     unit_fuels: "Monthly Fuel (Unit)"
     
@@ -165,7 +167,7 @@ en:
 
 
   report:
-    depot_fuel_usage: Monthly Depot Fuel Usage
+    depot_fuel_usage: Monthly Depot Fuel Usage Report
     diesel_vessel_usage: Diesel Vessel Usage
     diesel_vehicle_usage: Diesel Vehicle Usage
     diesel_misctool_usage: Diesel Misctool Usage
@@ -230,6 +232,11 @@ en:
     lubricant: Lubricant
     grease: Grease
     others: Others
+    budget_start_date: Budget Start Date
+    budget_amount: Budget Amount
+    budget_unit_type: Budget Unit Type
+    usage_amount: "Usage Amount *"
+    usage_amount: Usage Unit Type
     
   home:
     welcome: Welcome to Octane
