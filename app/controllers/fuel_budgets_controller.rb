@@ -76,6 +76,10 @@ class FuelBudgetsController < ApplicationController
     end
     @unit_fuels=UnitFuel.all
     @budget=FuelBudget.where('year_starts_on >=? and year_starts_on<=?', @start_from, @end_on)
+    @budget_diesel=@budget.where(fuel_type: (FuelType.where(name: 'DIESEL')))
+    @budget_petrol=@budget.where(fuel_type: (FuelType.where(name: 'PETROL')))
+    @budget_avtur=@budget.where(fuel_type: (FuelType.where(name: 'AVTUR')))
+    @budget_avcat=@budget.where(fuel_type: (FuelType.where(name: 'AVCAT')))
   end
   
   def budget_vs_usage

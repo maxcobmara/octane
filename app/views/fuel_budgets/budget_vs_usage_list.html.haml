@@ -33,8 +33,9 @@ DIESEL
   %tbody
     - no=0
     - total_usage=0
+    - @listed_budget=[]
     - @unit_fuels.sort_by{|x|x.unit.name}.group_by(&:unit).each do |unit, unitfuels|
-      - budget=@budget.where(fuel_type: (FuelType.where(name: 'DIESEL'))).where(unit_id: unit.id).last
+      - budget=@budget_diesel.where(unit_id: unit.id).last
       - budget_startdate=budget.try(:year_starts_on).try(:strftime, '%Y-%m-%d')
       - if budget_startdate
         - if budget_startdate.to_date.year < Date.today.year
@@ -53,12 +54,24 @@ DIESEL
         %td=usage=unitfuels2.sum(:d_vessel)+unitfuels2.sum(:d_vehicle)+unitfuels2.sum(:d_misctool)+unitfuels2.sum(:d_boat)
         %td LITRE
       - total_usage+=usage
+      - @listed_budget << budget.id if budget_startdate
+
+    /display budget without existing usage record
+    - @not_listed=@budget_diesel.pluck(:id)-@listed_budget
+    - @budget_diesel.where(id: @not_listed).each do |bd|
+      %tr
+        %td=no+=1
+        %td=bd.unit.name
+        %td=bd.year_starts_on.strftime('%d %b %Y')
+        %td=bd.amount
+        %td=bd.unit_type.description
+        %td No record
+        %td No record
     %tr
       %th{colspan: "5"} Total Usage
       %td=total_usage
       %td LITRE
 
-%BR  
 PETROL
 =t 'report.budget_vs_usage'
 %table.table.table-bordered
@@ -74,8 +87,9 @@ PETROL
   %tbody
     - no=0
     - total_usage=0
+    - @listed_budget=[]
     - @unit_fuels.sort_by{|x|x.unit.name}.group_by(&:unit).each do |unit, unitfuels|
-      - budget=@budget.where(fuel_type: (FuelType.where(name: 'PETROL'))).where(unit_id: unit.id).last
+      - budget=@budget_petrol.where(unit_id: unit.id).last
       - budget_startdate=budget.try(:year_starts_on).try(:strftime, '%Y-%m-%d')
       - if budget_startdate
         - if budget_startdate.to_date.year < Date.today.year
@@ -94,12 +108,24 @@ PETROL
         %td=usage=unitfuels2.sum(:p_vehicle)+unitfuels2.sum(:p_misctool)+unitfuels2.sum(:p_boat)
         %td LITRE
       - total_usage+=usage
+      - @listed_budget << budget.id if budget_startdate
+
+    /display budget without existing usage record
+    - @not_listed=@budget_petrol.pluck(:id)-@listed_budget
+    - @budget_petrol.where(id: @not_listed).each do |bd|
+      %tr
+        %td=no+=1
+        %td=bd.unit.name
+        %td=bd.year_starts_on.strftime('%d %b %Y')
+        %td=bd.amount
+        %td=bd.unit_type.description
+        %td No record
+        %td No record
     %tr
       %th{colspan: "5"} Total Usage
       %td=total_usage
       %td LITRE
 
-%BR  
 AVTUR
 =t 'report.budget_vs_usage'
 %table.table.table-bordered
@@ -115,8 +141,9 @@ AVTUR
   %tbody
     - no=0
     - total_usage=0
+    - @listed_budget=[]
     - @unit_fuels.sort_by{|x|x.unit.name}.group_by(&:unit).each do |unit, unitfuels|
-      - budget=@budget.where(fuel_type: (FuelType.where(name: 'AVTUR'))).where(unit_id: unit.id).last
+      - budget=@budget_avtur.where(unit_id: unit.id).last
       - budget_startdate=budget.try(:year_starts_on).try(:strftime, '%Y-%m-%d')
       - if budget_startdate
         - if budget_startdate.to_date.year < Date.today.year
@@ -135,12 +162,24 @@ AVTUR
         %td=usage
         %td LITRE
       - total_usage+=usage
+      - @listed_budget << budget.id if budget_startdate
+
+    /display budget without existing usage record
+    - @not_listed=@budget_avtur.pluck(:id)-@listed_budget
+    - @budget_avtur.where(id: @not_listed).each do |bd|
+      %tr
+        %td=no+=1
+        %td=bd.unit.name
+        %td=bd.year_starts_on.strftime('%d %b %Y')
+        %td=bd.amount
+        %td=bd.unit_type.description
+        %td No record
+        %td No record
     %tr
       %th{colspan: "5"} Total Usage
       %td=total_usage
       %td LITRE
 
-%BR  
 AVCAT
 =t 'report.budget_vs_usage'
 %table.table.table-bordered
@@ -156,8 +195,9 @@ AVCAT
   %tbody
     - no=0
     - total_usage=0
+    - @listed_budget=[]
     - @unit_fuels.sort_by{|x|x.unit.name}.group_by(&:unit).each do |unit, unitfuels|
-      - budget=@budget.where(fuel_type: (FuelType.where(name: 'AVCAT'))).where(unit_id: unit.id).last
+      - budget=@budget_avcat.where(unit_id: unit.id).last
       - budget_startdate=budget.try(:year_starts_on).try(:strftime, '%Y-%m-%d')
       - if budget_startdate
         - if budget_startdate.to_date.year < Date.today.year
@@ -176,6 +216,19 @@ AVCAT
         %td=usage
         %td LITRE
       - total_usage+=usage
+      - @listed_budget << budget.id if budget_startdate
+
+    /display budget without existing usage record
+    - @not_listed=@budget_avcat.pluck(:id)-@listed_budget
+    - @budget_avcat.where(id: @not_listed).each do |bd|
+      %tr
+        %td=no+=1
+        %td=bd.unit.name
+        %td=bd.year_starts_on.strftime('%d %b %Y')
+        %td=bd.amount
+        %td=bd.unit_type.description
+        %td No record
+        %td No record
     %tr
       %th{colspan: "5"} Total Usage
       %td=total_usage
