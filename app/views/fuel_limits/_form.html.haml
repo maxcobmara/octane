@@ -11,8 +11,8 @@
     .col-sm-5= f.text_field :code, class: 'form-control', placeholder: "Limit Code"
 
   .form-group
-    = f.label :unit_id, class: 'col-sm-2 control-label'
-    .col-sm-10= f.collection_select :unit_id, Unit.is_depot.order(:name), :id, :name, {:include_blank => t('helpers.prompt.select_unit')}, {class: 'selectpicker', 'data-width'=>"auto"}
+    = f.label :depot_id, class: 'col-sm-2 control-label'
+    .col-sm-10= f.collection_select :unit_id, Unit.is_depot.order(:name), :id, :name, {:include_blank => t('helpers.prompt.select_depot')}, {class: 'selectpicker', 'data-width'=>"auto"}
 
   .form-group
     = f.label :limit_amount, class: 'col-sm-2 control-label'

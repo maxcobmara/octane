@@ -338,11 +338,11 @@ class DepotFuel < ActiveRecord::Base
   
   def valid_unique_record
     if issue_date
-      exist_unitfuel=UnitFuel.where('unit_id=? and issue_date >=? and issue_date <=?', unit_id, issue_date.beginning_of_month, issue_date.end_of_month)
+      exist_unitfuel=DepotFuel.where('unit_id=? and issue_date >=? and issue_date <=?', unit_id, issue_date.beginning_of_month, issue_date.end_of_month)
       if exist_unitfuel && exist_unitfuel.count > 0
         time_created=exist_unitfuel.first.created_at
         if (time_created!=created_at || created_at==nil) #created_at only exist for saved records
-          errors.add(:base, 'Record already exist. Only 1 record of Unit Fuel allowed for each Unit / Depot in a month.')
+          errors.add(:base, 'Record already exist. Only 1 record of Depot Fuel allowed for each Depot in a month.')
         end
       end
     end
