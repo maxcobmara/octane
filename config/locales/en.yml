@@ -671,6 +671,7 @@ en:
   fuel_budgets:
     title: Fuel Budgets
     title2: Fuel Budget
+    new: New Fuel Budget
     unit_id: Depot
     code: Reference No
     year_starts_on: Year Starts on

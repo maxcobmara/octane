@@ -640,6 +640,7 @@ ms_MY:
   fuel_budgets:
     title: Belanjawan Bahan PMP
     title2: Belanjawan Bahan PMP
+    new: Belanjawan Bahan PMP Baru
     unit_id: Depot
     code: No Rujukan
     year_starts_on: Tahun Bermula
