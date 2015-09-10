@@ -10,7 +10,8 @@ class Staff < ActiveRecord::Base
   validates_presence_of :id_no, :name, :rank_id, :gender, :religion
   validates_presence_of :position_id , :if => :rank_officer?
   validates_presence_of :expertise_id, :if => :rank_staff?
-  
+  has_one :user
+
   def staff_details
     "#{id_no} " + "#{name}".gsub(/\w+/, &:capitalize)
   end

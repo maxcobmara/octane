@@ -353,7 +353,16 @@ class DepotFuel < ActiveRecord::Base
       errors.add(:base, 'Issue Date should not later than today.')
     end
   end
-   
+  
+  def self.search_by_role(is_admin, staffid)
+    if is_admin== "1"
+      DepotFuel.all 
+    else
+      curr_staff=Staff.find(staffid)
+      DepotFuel.where(unit_id: curr_staff.unit_id) if curr_staff && curr_staff.unit_id
+    end
+  end
+  
 end
 
 # == Schema Information

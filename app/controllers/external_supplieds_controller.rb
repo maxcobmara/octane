@@ -1,12 +1,26 @@
 class ExternalSuppliedsController < ApplicationController
+  filter_resource_access
   before_action :set_external_supplied, only: [:show, :edit, :update, :destroy]
 
   # GET /external_supplieds
   # GET /external_supplieds.json
   def index
-    @external_supplieds = ExternalSupplied.all
-    @search = ExternalSupplied.search(params[:q])
-    @external_supplieds = @search.result
+    is_admin=current_user.roles[:user_roles][:administration]
+    if is_admin=="1" || current_user.staff_id
+      @search = ExternalSupplied.search_by_role(is_admin, current_user.staff_id).search(params[:q])
+      @external_supplieds = @search.result
+    end
+    respond_to do |format|
+      if is_admin=="1" || current_user.staff_id
+        format.html
+        format.csv { send_data @external_supplieds.to_csv }
+        format.xls { send_data @external_supplieds.to_csv(col_sep: "\t") }
+      else
+        format.html {redirect_to root_path, notice: (t 'users.staff_required')}
+      end
+    end
+#     @search = ExternalSupplied.search(params[:q])
+#     @external_supplieds = @search.result
   end
 
   # GET /external_supplieds/1

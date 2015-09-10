@@ -49,4 +49,8 @@ module ApplicationHelper
 #     f.hidden_field(:_destroy)+link_to name, "#", :onclick => h("remove_fields(this)")
 #   end
   
+  def is_admin(current_user)
+    current_user.roles[:user_roles][:administration] 
+  end
+  
 end

@@ -82,8 +82,17 @@ class UnitFuel < ActiveRecord::Base
   end
   
   def issue_date_not_later_today
-    if issue_date > Date.today 
+    if issue_date && issue_date > Date.today 
       errors.add(:base, 'Issue Date should not later than today.')
+    end
+  end
+  
+  def self.search_by_role(is_admin, staffid)
+    if is_admin== "1"
+      UnitFuel.all 
+    else
+      curr_staff=Staff.find(staffid)
+      UnitFuel.where(unit_id: curr_staff.unit_id) if curr_staff && curr_staff.unit_id
     end
   end
 

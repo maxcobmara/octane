@@ -10,7 +10,8 @@
    - permitted_to? :create, :external_issueds do
     %li= link_to content_tag(:li, fa_icon("minus", text: t('external_issueds.new_externalissued'))), new_external_issued_path(:unit_fuel_id => unit_fuel)
    %li= link_to content_tag(:li, fa_icon("eye", text: (t 'actions.show'))), unit_fuel
-   - permitted_to? :manage, :unit_fuels do
+   - permitted_to? :update, :unit_fuels do
     %li= link_to content_tag(:li, fa_icon("pencil", text: (t 'actions.edit'))), edit_unit_fuel_path(unit_fuel)
+   - permitted_to? :delete, :unit_fuels do
     %li.danger= link_to content_tag(:li, fa_icon("trash-o", text: (t 'actions.delete'))), unit_fuel_path(unit_fuel), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }
       

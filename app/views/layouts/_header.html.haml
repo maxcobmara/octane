@@ -26,10 +26,12 @@
                 %span.caret
               %ul.dropdown-menu{:role => "menu"}
                 - permitted_to? :create, :fuel_transactions do
-                  %li= link_to "Add Fuel", new_fuel_transaction_path(transaction_type: 'Resupply')
-                  %li= link_to "Use Fuel", new_fuel_transaction_path(transaction_type: 'Usage')
-                  %li.divider
+                  /HACK - suppose require different account type
+                  - if Unit.is_depot.pluck(:id).include?(current_user.staff.unit_id)
+                    %li= link_to "Add Fuel", new_fuel_transaction_path(transaction_type: 'Resupply')
+                    %li= link_to "Use Fuel", new_fuel_transaction_path(transaction_type: 'Usage')
                 - permitted_to? :read, :fuel_transactions do
+                  %li.divider
                   %li= link_to "Fuel Transactions", fuel_transactions_path
                   %li.divider
                 - permitted_to? :import_excel, :depot_fuels do
@@ -88,33 +90,33 @@
             Reports
             %span.caret
           %ul.dropdown-menu{:role => "menu"}
-            - permitted_to? :tank_capacity_chart, :fuel_tanks do
-              %li= link_to (t 'menu.tank_capacity_chart_report'),   tank_capacity_chart_fuel_tanks_path
-            - permitted_to? :tank_capacity_list, :fuel_tanks do 
-              %li= link_to (t 'menu.tank_capacity_list_report'),   tank_capacity_list_fuel_tanks_path
-            - permitted_to? :read, :fuel_balances do
-              %li= link_to (t 'menu.fuel_balances'), fuel_balances_path
-            - permitted_to? :read, :depot_fuels do
-              %li= link_to (t 'report.depot_fuel_usage'), depot_monthly_usage_depot_fuels_path
+            /- permitted_to? :tank_capacity_chart, :fuel_tanks do
+            %li= link_to (t 'menu.tank_capacity_chart_report'),   tank_capacity_chart_fuel_tanks_path
+            /- permitted_to? :tank_capacity_list, :fuel_tanks do 
+            %li= link_to (t 'menu.tank_capacity_list_report'),   tank_capacity_list_fuel_tanks_path
+            /- permitted_to? :read, :fuel_balances do
+            %li= link_to (t 'menu.fuel_balances'), fuel_balances_path
+            /- permitted_to? :read, :depot_fuels do
+            %li= link_to (t 'report.depot_fuel_usage'), depot_monthly_usage_depot_fuels_path
             %li.divider
-            - permitted_to? :fuel_type_usage_category, :unit_fuels do
-              %li= link_to (t 'menu.fuel_usage_by_vehicle_vessel'), fuel_type_usage_category_unit_fuels_path
+            /- permitted_to? :fuel_type_usage_category, :unit_fuels do
+            %li= link_to (t 'menu.fuel_usage_by_vehicle_vessel'), fuel_type_usage_category_unit_fuels_path
             
-            /%li= link_to (t 'menu.fuel_usage_by_vehicle_vessel'), vehicle_vessel_usage_fuel_transactions_path - this report use FUEL Transactions as source
-            /%li= link_to (t 'menu.fuel_type_per_quarter'),  daily_usage_unit_fuels_path - same as 'unit fuel list usage' (Unit Fuel Usage Report), except this 1 not complete & has no date search
-            - permitted_to? :unit_fuel_usage, :unit_fuels do
-              %li= link_to (t 'menu.fuel_usage_graph_report'),      unit_fuel_usage_unit_fuels_path
-            - permitted_to? :unit_fuel_list_usage, :unit_fuels do
-              %li= link_to (t 'menu.fuel_usage_list_report'),      unit_fuel_list_usage_unit_fuels_path
-            - permitted_to? :annual_usage_report, :unit_fuels do
-              %li= link_to (t 'menu.annual_usage_report'),    annual_usage_report_unit_fuels_path
+            //%li= link_to (t 'menu.fuel_usage_by_vehicle_vessel'), vehicle_vessel_usage_fuel_transactions_path - this report use FUEL Transactions as source
+            //%li= link_to (t 'menu.fuel_type_per_quarter'),  daily_usage_unit_fuels_path - same as 'unit fuel list usage' (Unit Fuel Usage Report), except this 1 not complete & has no date search
+            /- permitted_to? :unit_fuel_usage, :unit_fuels do
+            %li= link_to (t 'menu.fuel_usage_graph_report'),      unit_fuel_usage_unit_fuels_path
+            /- permitted_to? :unit_fuel_list_usage, :unit_fuels do
+            %li= link_to (t 'menu.fuel_usage_list_report'),      unit_fuel_list_usage_unit_fuels_path
+            /- permitted_to? :annual_usage_report, :unit_fuels do
+            %li= link_to (t 'menu.annual_usage_report'),    annual_usage_report_unit_fuels_path
             %li.divider
-            - permitted_to? :annual_budget, :fuel_budgets do
-              %li= link_to (t 'menu.annual_budget'), annual_budget_fuel_budgets_path
-            - permitted_to? :budget_vs_usage, :fuel_budgets do
-              %li= link_to (t 'menu.budget_usage_chart_report'),   budget_vs_usage_fuel_budgets_path
-            - permitted_to? :budget_vs_usage_list, :fuel_budgets do
-              %li= link_to ( t 'menu.budget_usage_chart_list'),   budget_vs_usage_list_fuel_budgets_path
+            /- permitted_to? :annual_budget, :fuel_budgets do
+            %li= link_to (t 'menu.annual_budget'), annual_budget_fuel_budgets_path
+            /- permitted_to? :budget_vs_usage, :fuel_budgets do
+            %li= link_to (t 'menu.budget_usage_chart_report'),   budget_vs_usage_fuel_budgets_path
+            /- permitted_to? :budget_vs_usage_list, :fuel_budgets do
+            %li= link_to ( t 'menu.budget_usage_chart_list'),   budget_vs_usage_list_fuel_budgets_path
             
           - permitted_to? :read, :users do
             %li.dropdown

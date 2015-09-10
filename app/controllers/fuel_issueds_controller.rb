@@ -1,12 +1,25 @@
 class FuelIssuedsController < ApplicationController
+  filter_resource_access
   before_action :set_fuel_issued, only: [:show, :edit, :update, :destroy]
 
   # GET /fuel_issueds
   # GET /fuel_issueds.json
   def index
-    @fuel_issueds = FuelIssued.all.order(:depot_fuel_id)
-    @search = FuelIssued.search(params[:q])
-    @fuel_issueds = @search.result
+    is_admin=current_user.roles[:user_roles][:administration]
+    if is_admin=="1" || current_user.staff_id
+      @search = FuelIssued.search_by_role(is_admin, current_user.staff_id).search(params[:q])
+      @fuel_issueds = @search.result
+    end
+    respond_to do |format|
+      if is_admin=="1" || current_user.staff_id
+        format.html
+      else
+        format.html {redirect_to root_path, notice: (t 'users.staff_required')}
+      end
+    end
+#     @fuel_issueds = FuelIssued.all.order(:depot_fuel_id)
+#     @search = FuelIssued.search(params[:q])
+#     @fuel_issueds = @search.result
   end
 
   # GET /fuel_issueds/1

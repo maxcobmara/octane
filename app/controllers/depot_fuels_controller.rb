@@ -1,12 +1,24 @@
 class DepotFuelsController < ApplicationController
-  filter_access_to :all
+  filter_access_to :all, :except => :depot_monthly_usage
   before_action :set_depot_fuel, only: [:show, :edit, :update, :destroy]
 
   # GET /depot_fuels
   # GET /depot_fuels.json
   def index
-    @search = DepotFuel.search(params[:q])
-    @depot_fuels = @search.result
+    is_admin=current_user.roles[:user_roles][:administration]
+    if is_admin=="1" || current_user.staff_id
+      @search = DepotFuel.search_by_role(is_admin, current_user.staff_id).search(params[:q])
+      @depot_fuels = @search.result
+    end
+    respond_to do |format|
+      if is_admin=="1" || current_user.staff_id
+        format.html
+      else
+        format.html {redirect_to root_path, notice: (t 'users.staff_required')}
+      end
+    end
+    #@search = DepotFuel.search(params[:q])
+    #@depot_fuels = @search.result
   end
 
   # GET /depot_fuels/1
@@ -64,6 +76,7 @@ class DepotFuelsController < ApplicationController
   end
   
   def depot_monthly_usage 
+    @depot_fuels=DepotFuel.all
     if params[:search].present? && params[:search][:start_date].present?
       @start_from = Date.parse((params[:search][:start_date])).beginning_of_day.strftime('%Y-%m-%d')
     else
