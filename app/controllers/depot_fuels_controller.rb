@@ -1,4 +1,5 @@
 class DepotFuelsController < ApplicationController
+  filter_access_to :all
   before_action :set_depot_fuel, only: [:show, :edit, :update, :destroy]
 
   # GET /depot_fuels
@@ -62,11 +63,19 @@ class DepotFuelsController < ApplicationController
     end
   end
   
-  def PMP_monthly_usage 
-    c = Date.today
-    sdate = c.beginning_of_month
-    edate = c.end_of_month
-     @month_usage = DepotFuel.where( "issue_date >= ? AND issue_date <= ? ", sdate, edate ) 
+  def depot_monthly_usage 
+    if params[:search].present? && params[:search][:start_date].present?
+      @start_from = Date.parse((params[:search][:start_date])).beginning_of_day.strftime('%Y-%m-%d')
+    else
+      @start_from = (Date.today.beginning_of_month).strftime('%Y-%m-%d')
+    end
+    if params[:search].present? && params[:search][:end_date].present?
+      @end_on = Date.parse(params[:search][:end_date]).end_of_day.strftime('%Y-%m-%d')
+    else
+      @end_on = (Date.today.end_of_day).strftime('%Y-%m-%d')
+    end
+    @monthly_usage =DepotFuel.where('issue_date >=? and issue_date <=?', @start_from, @end_on)
+    @last_prev_depot_fuel = DepotFuel.where( "issue_date < ? ", @start_from).last
   end
   
   def import_excel

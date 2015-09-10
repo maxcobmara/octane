@@ -77,6 +77,24 @@ $(document).ready(function(){
       }
     }
   });
+  
+  $('#unit_fuel_unit_id').each(function() {
+    if($(this).val() == "") {
+      $('.bong').hide();
+      $('bong2').hide();
+    }else {
+      //alert("selected");
+      var yoyo = $(this).find('option:selected').attr('data');
+      if (yoyo=="depoh"){
+        $('.bong').show("appear");
+        $('.bong2').hide();
+      }
+      else{
+        $('.bong').hide();
+        $('.bong2').show("appear");
+      }
+    }
+  });
   ///Unit Fuel - Unit Vs Depot - end 
 });
 
@@ -134,5 +152,17 @@ $(document).ready(function(){
 //      $(link).hide();
 //      
 //     }
+
+///for use in INDEN CARD - start
+function switchvisibility(el) {
+  if (document.getElementById(el).checked) {
+    document.getElementById('bstaff').style.display = "table-row";
+    document.getElementById('bstudent').style.display = "none";
+  } else {
+    document.getElementById('bstaff').style.display = "none";
+    document.getElementById('bstudent').style.display = "table-row";
+  }
+}
+///for use in INDEN CARD - end 
 
   

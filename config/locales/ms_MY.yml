@@ -6,6 +6,7 @@ ms_MY:
       vehicle_card: "Touch N Go & Smart Tag"
       vehicle_assignment_detail: Butiran Kenderaan
       staff: Staf
+      fuel_tank: Tangki Penyimpanan
     attributes:
       vehicle:
         reg_no: "No. Pendaftaran"
@@ -36,6 +37,8 @@ ms_MY:
         expertise_id: Kepakaran / Cawangan
         gender: Jantina
         religion: Agama
+      fuel_tank:
+        locations: Tangki
     errors:
       template:
         body: "Berikut adalah beberapa masalah:"
@@ -115,16 +118,22 @@ ms_MY:
     transport_summary: Laporan Pengangkutan
     PMP_usage: Laporan Penyata Penggunaan Bahan PMP Bulanan
     fuel_balances: Baki Bahan PMP Bulanan
-    fuel_usage_by_vehicle_vessel: "Penggunaan Jenis Bahan PMP Mengikut Kategori"
+    fuel_usage_by_vehicle_vessel: "Laporan Penggunaan Jenis Bahan PMP Mengikut Kategori"
     vessel_type: Jenis Kapal
     vessel_category: Kelas Kapal
-    annual_budget: Belanjawan Tahunan Bahan PMP Mengikut Jenis
+    annual_budget: Laporan Belanjawan Tahunan Bahan PMP Mengikut Jenis
+    budget_usage_chart_report: Laporan Statistik Carta Belanjawan Vs Penggunaan Tahunan
+    budget_usage_chart_list: Laporan Belanjawan Vs Penggunaan Tahunan
+    budget_vs_usage: Belanjawan Vs Penggunaan
+    depot_fuels: "Bahan PMP Bulanan (Depoh)"
+    unit_fuels: "Bahan PMP Bulanan (Unit)"
 
     admin: Sistem
     users: Pengurusan Pengguna
     authorisation: Perundangan Kebenaran
 
   report:
+    depot_fuel_usage: Laporan Penggunaan Bahan PMP Depoh Bulanan
     diesel_vessel_usage: Penggunaan Diesel Kapal
     diesel_vehicle_usage: Penggunaan Diesel Kenderaan
     diesel_misctool_usage: Penggunaan Diesel Alat Pelbagai
@@ -148,8 +157,12 @@ ms_MY:
     other_usage_for: "Penggunaan Lain- lain Bahan PMP Bagi : "
     external_supply_current: Pengambilan Luar Bulan Ini
     external_supply_for: "Pengambilan Luar Bagi : "
-    external_supply_current: Pembekalan Luar Bulan Ini
-    external_supply_for: "Pembekalan Luar Bagi : "
+    external_issue_current: Pembekalan Luar Bulan Ini
+    external_issue_for: "Pembekalan Luar Bagi : "
+    inden_usage_current: Penggunaan Kad Inden Bulan Ini
+    inden_usage_for: "Penggunaan Kad Inden Bagi : "
+    depot_usage_current: Penggunaan Bahan PMP Depoh Bulan Ini
+    depot_usage_for: "Penggunaan Bahan PMP Depoh Bagi : "
     graph_usage_for: "Trend Penggunaan Bagi : "
     petrol_usage: Penggunaan PETROL
     diesel_usage: Penggunaan DIESEL
@@ -162,6 +175,9 @@ ms_MY:
     external_supply: "Pengeluaran / Pembekalan Bahan PMP"
     external_issue_main: "Pengambilan Bahan PMP (LUARAN)"
     external_issue: Pengambilan Bahan PMP
+    inden_card_usage: Penggunaan KAD INDEN
+    inden_petrol_usage: "Penggunaan Kad Inden : Petrol"
+    inden_diesel_usage: "Penggunaan Kad Inden : Diesel"
     cars: Kereta
     lorries: Lori
     busses: Bas
@@ -175,11 +191,18 @@ ms_MY:
     category_usage_current: Penggunaan Bulan Semasa
     external_supplied_pd: "Pengambilan Luar (Petrol / Diesel)"
     external_issued_pd: "Pembekalan Luar (Petrol / Diesel)"
+    inden_card_pd: "Kad Inden (Petrol / Diesel)"
     external_supplied_pd2: "Pengambilan Luar(P/D) : "
     external_issued_pd2: "Pembekalan Luar(P/D) : "
+    inden_card_pd2: "Kad Inden (P/D) :"
     lubricant: Pelincir
     grease: Gris
     others: "Lain - lain"
+    budget_start_date: Tarikh Mula Belanjawan
+    budget_amount: Amaun Belanjawan
+    budget_unit_type: Unit Ukuran Belanjawan
+    usage_amount: "Jumlah Penggunaan *"
+    usage_amount: Unit Ukuran Penggunaan
     
   home:
     welcome: Selamat Datang ke Octane
@@ -514,6 +537,8 @@ ms_MY:
     ftcm: "Fuel Type COUNT did not matched."
     excel_format: Format Excel
     depot_not_exist: "Depoh tidak wujud."
+    total: Jumlah
+    usage_average: Purata Penggunaan Sehari
   fuel_issueds:
     title: Pengeluaran Bahan PMP
     title2: Pengeluaran
@@ -568,6 +593,7 @@ ms_MY:
     external_issued: Bekal Kepada
     external_supplied: Ambil Daripada
     other_usage: Lain-Lain Bahan PMP
+    inden_usage: Penggunaan Kad Inden
     new: Bahan PMP Baru di Unit
     edit: Sunting Bahan PMP di Unit
     quantity_ltr: Kuantiti dalam Liter
@@ -614,6 +640,7 @@ ms_MY:
   fuel_budgets:
     title: Belanjawan Bahan PMP
     title2: Belanjawan Bahan PMP
+    new: Belanjawan Bahan PMP Baru
     unit_id: Depot
     code: No Rujukan
     year_starts_on: Tahun Bermula
@@ -699,6 +726,7 @@ ms_MY:
     petronas_d_price: "Diesel (RM)"
     petronas_qty: Kuantiti Petronas
     usage: Penggunaan
+    unit_fuel_id: Bahan PMP Bulanan
   acquired_types:
     title: Jenis Diperolehi (Kenderaan)
     title2: Jenis Diperolehi
@@ -937,7 +965,7 @@ ms_MY:
       select_source2: Pilih Pembekal
       caution_not_depot: Sila ambil perhatian bahagian ini hanya terpakai untuk Depot
       select_inden_card: Pilih Kad Inden
-      inden_card: Penggunaan Kad Inden Dalam Sebulan
+      inden_card: "* Penggunaan Kad Inden Dalam Sebulan"
       add_edit_inden_usage: "Untuk Menambah / Menyunting Rekod Penggunaan Bulanan Bagi Kad Inden, Sila ke Menu : Bahan PMP | Kad Inden"
       no_items: Tiada Butiran
       select_rank_category: Pilih Kategori Pangkat

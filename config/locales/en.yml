@@ -29,6 +29,7 @@ en:
       vehicle_card: "Touch N Go & Smart Tag"
       vehicle_assignment_detail: Vehicle Details
       staff: Staff
+      fuel_tank: Fuel Tank
     attributes:
       vehicle:
         reg_no: Registration No
@@ -59,6 +60,8 @@ en:
         expertise_id: Expertise / Branch
         gender: Gender
         religion: Religion
+      fuel_tank:
+        locations: Tank
     errors:
       template:
         body: "There were problems with the following fields:"
@@ -148,10 +151,13 @@ en:
     transport_summary: Transport Summary
     PMP_usage: Monthly Fuel Usage Report
     fuel_balances: Monthly Fuel Balances
-    fuel_usage_by_vehicle_vessel: "Fuel Type Usage by Category"
+    fuel_usage_by_vehicle_vessel: "Fuel Type Usage by Category Report"
     vessel_type: Vessel Types
     vessel_category: Vessel Classes
-    annual_budget: Annual Budget by Fuel Type
+    annual_budget: Annual Budget by Fuel Type Report
+    budget_usage_chart_report: Annual Budget Vs Usage Chart Report
+    budget_usage_chart_list: Annual Budget Vs Usage List Report
+    budget_vs_budget: Budget Vs Usage
     depot_fuels: "Monthly Fuel (Depot)"
     unit_fuels: "Monthly Fuel (Unit)"
     
@@ -161,6 +167,7 @@ en:
 
 
   report:
+    depot_fuel_usage: Monthly Depot Fuel Usage Report
     diesel_vessel_usage: Diesel Vessel Usage
     diesel_vehicle_usage: Diesel Vehicle Usage
     diesel_misctool_usage: Diesel Misctool Usage
@@ -186,6 +193,10 @@ en:
     external_supply_for: "External Supply For : "
     external_issue_current: External Issue Current Month
     external_issue_for: "External Issue For : "
+    inden_usage_current: Inden Card Usage Current Month
+    inden_usage_for: "Inden Card Usage For : "
+    depot_usage_current: Depot Fuel Usage Current Month
+    depot_usage_for: "Depot Fuel Usage For : "
     graph_usage_for: "Usage Trend For : "
     petrol_usage: PETROL Usage
     diesel_usage: DIESEL Usage
@@ -198,6 +209,9 @@ en:
     external_supply: External Supplied
     external_issue_main: EXTERNAL Issued
     external_issue: External Issued
+    inden_card_usage: INDEN CARD Usage
+    inden_petrol_usage: "Inden Card Usage : Petrol"
+    inden_diesel_usage: "Inden Card Usage : Diesel"
     cars: Cars
     lorries: Lorries
     busses: Busses
@@ -209,13 +223,20 @@ en:
     avtur_others: "AVTUR : Other Usage"
     category_usage_for: "Usage For : "
     category_usage_current: Current Month Usage
-    external_supplied_pd: "External Supplied (P/D)"
-    external_issued_pd: "External Issued (P/D)"
+    external_supplied_pd: "Ext Supplied (P/D)"
+    external_issued_pd: "Ext Issued (P/D)"
+    inden_card_pd: "Inden Card (P/D)"
     external_supplied_pd2: "Ext Supplied (P/D) : "
     external_issued_pd2: "Ext Issued (P/D) : "
+    inden_card_pd2: "Inden Card (P/D) : "
     lubricant: Lubricant
     grease: Grease
     others: Others
+    budget_start_date: Budget Start Date
+    budget_amount: Budget Amount
+    budget_unit_type: Budget Unit Type
+    usage_amount: "Usage Amount *"
+    usage_amount: Usage Unit Type
     
   home:
     welcome: Welcome to Octane
@@ -549,6 +570,8 @@ en:
     ftcm: "Fuel Type COUNT did not matched."
     excel_format: Format Excel
     depot_not_exist: "Depot not exist."
+    total: Total
+    usage_average: Daily Usage Average
   fuel_issueds:
     title: Fuel Issued
     title2: Issued
@@ -603,6 +626,7 @@ en:
     other_usage: Other Fuel Type
     external_issued: Issued To
     external_supplied: Supplied By
+    inden_usage: Inden Usage
     new: New Unit Fuel
     edit: Edit Unit Fuel
     quantity_ltr: Quantity in Litre
@@ -647,6 +671,7 @@ en:
   fuel_budgets:
     title: Fuel Budgets
     title2: Fuel Budget
+    new: New Fuel Budget
     unit_id: Depot
     code: Reference No
     year_starts_on: Year Starts on
@@ -734,6 +759,7 @@ en:
     petronas_d_price: "Diesel (RM)"
     petronas_qty: Petronas Quantity
     usage: Usage
+    unit_fuel_id: Unit Fuel
   acquired_types:
     title: Acquired Types (Vehicle)
     title2: Acquired Types
@@ -980,7 +1006,7 @@ en:
       select_source2: Select Supplier
       caution_not_depot: Please note this part only applicable to Depot
       select_inden_card: Select Inden Card
-      inden_card: Inden Card Usage in a Month
+      inden_card: "* Inden Card Usage in a Month"
       add_edit_inden_usage: "To Add / Edit Monthly Inden Card Usage Record, Please Proceed to Menu : Fuel | Inden Cards"
       no_items: No Items
       select_rank_category: Select Rank Category

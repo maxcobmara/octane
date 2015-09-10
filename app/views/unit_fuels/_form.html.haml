@@ -38,7 +38,8 @@
       %li= link_to t('unit_fuels.other_usage'),  '#tab3', data: {toggle: 'tab'}
       %li= link_to t('unit_fuels.external_supplied'),  '#tab4', data: {toggle: 'tab'}      
       %li= link_to t('unit_fuels.external_issued'),  '#tab5', data: {toggle: 'tab'}
-	   
+      %li= link_to t('unit_fuels.inden_usage'), '#tab6', data: {toggle: 'tab'}
+
     #myTabContent.tab-content	
       #tab1.tab-pane.active
         %br
@@ -117,6 +118,18 @@
               &nbsp;&nbsp;&nbsp;
               %font{:color => "red"}=t 'helpers.prompt.caution_not_depot'
 
+      #tab6.tab-pane
+        .row
+          .span8
+            %font{:size => "-1"}
+              =t 'helpers.prompt.inden_card'
+        .form-group
+          .col-lg-offset-2.col-lg-10
+            = f.fields_for :inden_usages do |builder|
+              = render 'inden_usage_fields', f: builder
+            .row
+              = link_to_add_fields t('actions.addmore'), f, :inden_usages, "",  t('actions.addmore') 
+          
     .form-actions
       = f.submit (t 'helpers.links.submit'), :class => 'btn btn-primary'
       = link_to t('.cancel', :default => t("helpers.links.cancel")), |

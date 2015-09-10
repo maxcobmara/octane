@@ -7,7 +7,8 @@
 .row
   .col-md-1
     .btn-group-vertical{"aria-label" => "sidebar", :role => "group"}
-      .btn.btn-default= link_to content_tag(:i, fa_icon("asterisk", text: (t 'actions.new'))), new_fuel_type_path, id: "add_new_type", remote: true
+      - permitted_to? :create, :fuel_types do
+        .btn.btn-default= link_to content_tag(:i, fa_icon("asterisk", text: (t 'actions.new'))), new_fuel_type_path, id: "add_new_type", remote: true
 
   .col-md-10.index_main
     %table.table.table-condensed.table-hover#fuel_type_list{:style => "width:60%;"}
@@ -24,11 +25,12 @@
             %td= fuel_type.shortname
             %td= fuel_type.name
             %td
-              - if fuel_type.valid_for_removal==true
-                = link_to (fa_icon "trash-o"), fuel_type, method: :delete, data: { confirm: 'Are you sure?' }, remote: true
-              - else
-                *
-          
-    * Removal of record if prohibited as fuel type are still in use (Tank, Fuel Limit, Fuel Budget, Fuel Transaction
-    \- In / Out, Other Fuel
-    \- Unit, External Supplieds, External Issueds, Fuel Issued or Fuel Supplied)
+              - permitted_to? :manage, :fuel_types do
+                - if fuel_type.valid_for_removal==true
+                  = link_to (fa_icon "trash-o"), fuel_type, method: :delete, data: { confirm: 'Are you sure?' }, remote: true
+                - else
+                  *
+    - permitted_to? :manage, :fuel_types do      
+      * Removal of record if prohibited as fuel type are still in use (Tank, Fuel Limit, Fuel Budget, Fuel Transaction
+      \- In / Out, Other Fuel
+      \- Unit, External Supplieds, External Issueds, Fuel Issued or Fuel Supplied)

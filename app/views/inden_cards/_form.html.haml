@@ -1,0 +1,57 @@
+.container{:style => "padding-left: 60px;"}
+  = form_for @inden_card, :html => { :class => 'form-horizontal' }  do |f|
+    = render 'shared/error_messages', object: f.object
+    
+    .control-group
+      = f.label :ru_staff, :class => 'control-label'		
+      .controls= f.check_box :ru_staff, :id => 'staff', :onchange => "switchvisibility('staff')" 
+
+    - if (!@inden_card.nil? || !@inden_card.blank?) && @inden_card.ru_staff == true
+      #bstaff{:style => "display: table-row;"}
+        .control-group
+          = f.label :card_holder, :class => 'control-label'
+          .controls= f.collection_select :staff_id, Staff.all, :id, :staff_details, :include_blank => t('helpers.prompt.select_staff'), :html_options => {:class => 'selectpicker'}
+    
+      #bstudent{:style => "display: none;"}   
+        .control-group
+          = f.label :card_holder, :class => 'control-label'
+          .controls= f.collection_select :unit_id, Unit.all.order(:name), :id, :name, :include_blank => t('helpers.prompt.select_unit'), :html_options => {:class => 'selectpicker'}  
+    - else
+      #bstaff{:style => "display: none;"}
+        .control-group
+          = f.label :card_holder, :class => 'control-label'
+          .controls= f.collection_select :staff_id, Staff.all, :id, :staff_details, :include_blank => t('helpers.prompt.select_staff'), :html_options => {:class => 'selectpicker'}
+    
+      #bstudent{:style => "display: table-row;"}   
+        .control-group
+          = f.label :card_holder, :class => 'control-label'
+          .controls= f.collection_select :unit_id, Unit.all.order(:name), :id, :name, :include_blank => t('helpers.prompt.select_unit'), :html_options => {:class => 'selectpicker'}    
+    .control-group
+      = f.label :serial_no, :class => 'control-label'
+      .controls= f.text_field :serial_no, :class => 'text_field input-medium', :type => :text
+  
+    .control-group
+      = f.label :daily_limit, :class => 'control-label'
+      .controls= f.text_field :daily_limit, :class => 'text_field input-medium', :type => :text
+
+    .control-group
+      = f.label :monthly_limit, :class => 'control-label'
+      .controls= f.text_field :monthly_limit, :class => 'text_field input-medium', :type => :text
+
+    .control-group
+      = f.label :issue_date, :class => 'control-label'
+      .controls= f.text_field :issue_date, :class => 'text_field', :type => :text, 'data-behaviour' => 'datepicker_before'
+
+    .control-group
+      = f.label :start_date, :class => 'control-label'
+      .controls= f.text_field :start_date, :class => 'text_field', :type => :text, 'data-behaviour' => 'datepicker_before'
+
+    .control-group
+      = f.label :end_date, :class => 'control-label'
+      .controls= f.text_field :end_date, :class => 'text_field', :type => :text, 'data-behaviour' => 'datepicker_after'
+
+    .form-actions
+      = f.submit (t 'helpers.links.submit'), :class => 'btn btn-primary'
+      = link_to t('.cancel', :default => t("helpers.links.cancel")), |
+        inden_cards_path, :class => 'btn btn-default'     
+

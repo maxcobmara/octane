@@ -178,7 +178,7 @@
         %font{:size => "-1"}
           =t 'helpers.prompt.inden_card'
     .div{:style => "padding: 15px 50px 10px 50px; "}
-    - if @unit_fuel.add_fuels == []
+    - if @unit_fuel.inden_usages == []
       = t 'helpers.prompt.no_items'
     - else
       %table{:width => "75%"}
@@ -186,42 +186,52 @@
           %tr
             %th{:align => "left"}= t 'inden_cards.card_holder'
             %th{:align => "left"}= t 'inden_cards.serial_no'
-            %th= t 'inden_usages.diesel_ltr'
             %th= t 'inden_usages.petrol_ltr'
+            %th= t 'inden_usages.diesel_ltr'
             %th
         %tbody 
-          - @begin = @unit_fuel.issue_date.at_beginning_of_month
-          - @end = @unit_fuel.issue_date.end_of_month
-		  
-          / for inden cards - own by unit
-          - for inden_card in @unit_fuel.unit.inden_cards
+          - @unit_fuel.inden_usages.group_by(&:inden_card).each do |inden_card, usages|
             %tr
-              %td= inden_card.unit.name
-              %td= inden_card.serial_no 
-              - inden_card_usage = inden_card.inden_usages.where('issue_date >= ? AND issue_date <=?', @begin, @end) 
-              %td{:align => "center"}= inden_card_usage.sum(:diesel_ltr) 
-              %td{:align => "center"}= inden_card_usage.sum(:petrol_ltr) 
+              %td= inden_card.serial_no
               %td
+                = inden_card.unit.name if inden_card.ru_staff==false
+                = inden_card.staff.name if inden_card.ru_staff==true
+              %td=usages.sum(&:petrol_ltr)
+              %td=usages.sum(&:diesel_ltr)
+              
+          /- @begin = @unit_fuel.issue_date.at_beginning_of_month
+          /- @end = @unit_fuel.issue_date.end_of_month
+  
+          / for inden cards - own by unit
+          /- for inden_card in @unit_fuel.unit.inden_cards
+          /  %tr
+          /    %td= inden_card.unit.name
+          /    %td= inden_card.serial_no 
+          /    - inden_card_usage = inden_card.inden_usages.where('issue_date >= ? AND issue_date <=?', @begin, @end) 
+          /    %td{:align => "center"}= inden_card_usage.sum(:diesel_ltr) 
+          /    %td{:align => "center"}= inden_card_usage.sum(:petrol_ltr) 
+          /    %td
           / for cards - own by individual (senior officer - from current unit)
-          - for staff in @unit_fuel.unit.staffs
-            /- if staff.inden_cards.nil? == false
-            - if staff.inden_cards.count>0
-              %tr
-                %td= staff.staff_details
-                %td= staff.inden_cards[0].serial_no
-                - inden_card_usage = staff.inden_cards[0].inden_usages.where('issue_date >= ? AND issue_date <=?', @begin, @end) 
-                %td{:align => "center"}= inden_card_usage.sum(:diesel_ltr) 
-                %td{:align => "center"}= inden_card_usage.sum(:petrol_ltr) 
+          /- for staff in @unit_fuel.unit.staffs
+          /  /- if staff.inden_cards.nil? == false
+          /  - if staff.inden_cards.count>0
+          /    %tr
+          /      %td= staff.staff_details
+          /      %td= staff.inden_cards[0].serial_no
+          /      - inden_card_usage = staff.inden_cards[0].inden_usages.where('issue_date >= ? AND issue_date <=?', @begin, @end) 
+          /      %td{:align => "center"}= inden_card_usage.sum(:diesel_ltr) 
+          /      %td{:align => "center"}= inden_card_usage.sum(:petrol_ltr) 
 
-    %br
-    = t 'helpers.prompt.add_edit_inden_usage'
+    /%br
+    /= t 'helpers.prompt.add_edit_inden_usage'
 	
 .form-actions
   .btn.btn-default= link_to content_tag(:i, "", :class => "fa fa-arrow-left ") + " " + t('.back', :default => t("helpers.links.back")), unit_fuels_path
-  .btn.btn-default= link_to content_tag(:i, "", :class => "fa fa-edit") + " " + t('.edit', :default => t("helpers.links.edit")), |
-    edit_unit_fuel_path(@unit_fuel)
-  = link_to content_tag(:i, "", :class => "fa fa-trash-o icon-white") + " " + t('.destroy', :default => t("helpers.links.destroy")), |
-    unit_fuel_path(@unit_fuel),                                                                                                    |
-    :method => 'delete',                                                                                                           |
-    :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },                   |
-    :class => 'btn btn-danger'                                                                                                     |
+  - permitted_to? :manage, :unit_fuels do
+    .btn.btn-default= link_to content_tag(:i, "", :class => "fa fa-edit") + " " + t('.edit', :default => t("helpers.links.edit")), |
+      edit_unit_fuel_path(@unit_fuel)
+    = link_to content_tag(:i, "", :class => "fa fa-trash-o icon-white") + " " + t('.destroy', :default => t("helpers.links.destroy")), |
+      unit_fuel_path(@unit_fuel),                                                                                                    |
+      :method => 'delete',                                                                                                           |
+      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },                   |
+      :class => 'btn btn-danger'                                                                                                     |

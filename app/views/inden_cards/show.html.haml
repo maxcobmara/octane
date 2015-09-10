@@ -1,0 +1,43 @@
+- provide(:title, 'Inden Card')
+- model_class = IndenCard
+.page-header
+  %h1= t 'inden_cards.title2', :default => model_class.model_name.human
+%p#notice= notice
+%dl.dl-horizontal
+  %dt=  t 'inden_cards.card_holder', :default => model_class.human_attribute_name(:card_holder) + ":"  
+  - if @inden_card.ru_staff == true
+    %dd= @inden_card.staff.staff_details
+  - else
+    %dd= @inden_card.unit.name
+%dl.dl-horizontal
+  %dt= t 'inden_cards.serial_no', :default =>  model_class.human_attribute_name(:serial_no) + ":"
+  %dd= @inden_card.serial_no
+%dl.dl-horizontal
+  %dt= t 'inden_cards.daily_limit', :default =>  model_class.human_attribute_name(:daily_limit) + ":"
+  %dd= @inden_card.daily_limit
+%dl.dl-horizontal
+  %dt= t 'inden_cards.monthly_limit', :default =>  model_class.human_attribute_name(:monthly_limit) + ":"
+  %dd= @inden_card.monthly_limit
+%dl.dl-horizontal
+  %dt= t 'inden_cards.issue_date', :default =>  model_class.human_attribute_name(:issue_date) + ":"
+  %dd= check_kin {l(@inden_card.issue_date)}
+%dl.dl-horizontal
+  %dt= t 'inden_cards.start_date', :default =>  model_class.human_attribute_name(:start_date) + ":"
+  %dd= check_kin {l(@inden_card.start_date)}
+%dl.dl-horizontal
+  %dt= t 'inden_cards.end_date', :default =>  model_class.human_attribute_name(:end_date) + ":"
+  %dd= check_kin {l(@inden_card.end_date)}
+  
+%dl.dl-horizontal
+  %dt &nbsp;
+  %dd
+    .form-actions
+      = link_to content_tag(:i, "", :class => "fa fa-arrow-left ") + " " + t('.back', :default => t("helpers.links.back")), inden_cards_path, :class => 'btn btn-default'
+      - permitted_to? :manage, :inden_cards do
+        = link_to content_tag(:i, "", :class => "fa fa-edit") + " " + t('.edit', :default => t("helpers.links.edit")), |
+          edit_inden_card_path(@inden_card), :class => 'btn btn-default'
+        = link_to content_tag(:i, "", :class => "fa fa-trash-o icon-white") + " " + t('.destroy', :default => t("helpers.links.destroy")), |
+          inden_card_path(@inden_card),                                                                                                    |
+          :method => 'delete',                                                                                                           |
+          :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },                   |
+          :class => 'btn btn-danger'                                                                                                     |

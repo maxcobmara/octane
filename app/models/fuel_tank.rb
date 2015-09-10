@@ -6,6 +6,8 @@ class FuelTank < ActiveRecord::Base
   has_many :fuel_balances, dependent: :destroy
   has_many :fuel_transactions
   
+  validates_presence_of :unit_id, :locations, :capacity, :unit_type,:fuel_type_id
+  
   def set_default_maximum
     self.maximum=capacity*0.95
   end

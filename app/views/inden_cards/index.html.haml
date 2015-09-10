@@ -1,0 +1,46 @@
+- provide(:title, 'Inden Card Info')
+- model_class = IndenCard
+.page-header
+  %h1= t 'inden_cards.title', :default => model_class.model_name.human.pluralize
+
+.btn-group{"aria-label" => "sidebar", :role => "group", style: "float:right;"}
+  - permitted_to? :create, :inden_cards do
+    .btn.btn-default= link_to content_tag(:i, fa_icon("asterisk", text: (t 'actions.new'))), new_inden_card_path
+  .btn.btn-default= link_to content_tag(:i, fa_icon("search", text: (t 'actions.search'))), "#", class: "toga"
+  .btn.btn-default= link_to(fa_icon("print", text: (t 'actions.print')), "javascript:print()")
+
+.row.searchit{style: "display:none;"}
+  .span9offset1
+    = search_form_for @search, class: "form-inline" do |f|
+      .field
+        = f.text_field :serial_no_cont, class: "input-medium search-query", placeholder: "Serial No Contains"
+        = f.submit "Search", class: "btn btn-warning"
+
+%table.table.table-condensed.table-hover
+  %thead
+    %tr
+      %th=sort_link @search, :serial_no, t('inden_cards.serial_no')
+      %th= t 'inden_cards.card_holder'
+      %th= t 'inden_cards.parent_unit'
+      %th= t 'inden_cards.daily_limit'
+      %th= t 'inden_cards.monthly_limit'
+      %th= t 'inden_cards.issue_date'
+      %th= t 'inden_cards.start_date'
+      %th= t 'inden_cards.end_date'
+
+  %tbody
+    - @inden_cards.each do |inden_card|
+      %tr
+        %td= inden_card.serial_no
+        - if inden_card.ru_staff == true
+          %td= check_kin {inden_card.staff.staff_details}
+          %td= check_kin {inden_card.staff.unit.name}
+        - else
+          %td= check_kin {inden_card.unit.name}
+          %td= check_kin {inden_card.unit.parent.name}
+        %td= inden_card.daily_limit
+        %td= inden_card.monthly_limit
+        %td= check_kin {l(inden_card.issue_date)}
+        %td= check_kin {l(inden_card.start_date)}
+        %td= check_kin {l(inden_card.end_date)}
+        = render :partial => 'action_menu', :locals => {:inden_card => inden_card}

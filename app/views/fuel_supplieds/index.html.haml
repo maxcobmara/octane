@@ -23,7 +23,7 @@
       %th= sort_link @search, :fuel_type_id, t('fuel_supplieds.fuel_type_id')
       %th= sort_link @search, :quantity, t('fuel_supplieds.quantity')
       %th= t 'fuel_supplieds.unit_type_id'
-      %th
+      %th &nbsp;
   %tbody
     - @fuel_supplieds.each do |fuel_supplied|
       %tr
@@ -39,6 +39,5 @@
         %td
         %th Total Fuel Supplied
         %th=@fuel_supplieds.sum(:quantity)
-        %td
         %td
         %td

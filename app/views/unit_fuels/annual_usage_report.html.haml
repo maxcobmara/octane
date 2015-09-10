@@ -27,18 +27,18 @@
     - unit_fuel_ids=unit_fuels.map(&:id)
     %thead
       %tr
-        %th{colspan: "12"}
+        %th{colspan: "14"}
           = (t 'fuel_tanks.unit_id').upcase+ " : "
           = Unit.find(unit_id).name
       %tr
-        %td{colspan: "12", style: "font-size:0.8em; padding-top:25px; text-align: left;"}
+        %td{colspan: "14", style: "font-size:0.8em; padding-top:25px; text-align: left;"}
           Petrol :
           = UnitFuel.where('unit_id =?', unit_id ).sum(:p_vehicle) + UnitFuel.where('unit_id =?', unit_id ).sum(:p_boat) + UnitFuel.where('unit_id =?', unit_id ).sum(:p_misctool)
-          litres
+          ltr
           &nbsp; | &nbsp;
           Diesel :
           = UnitFuel.where('unit_id =?', unit_id ).sum(:d_vessel) + UnitFuel.where('unit_id =?', unit_id ).sum(:d_vehicle) + UnitFuel.where('unit_id =?', unit_id ).sum(:d_misctool) + UnitFuel.where('unit_id =?', unit_id ).sum(:d_boat)
-          litres
+          ltr
           &nbsp; | &nbsp;
           AVCAT :
           = AddFuel.where(unit_fuel_id: unit_fuel_ids, fuel_type: FuelType.where(name: 'AVCAT')).sum(:quantity)
@@ -59,14 +59,19 @@
           = ExternalSupplied.where(unit_fuel_id: unit_fuel_ids, fuel_type: FuelType.where(name: 'PETROL')).sum(:quantity)
           \/
           = ExternalSupplied.where(unit_fuel_id: unit_fuel_ids, fuel_type: FuelType.where(name: 'DIESEL')).sum(:quantity)
-          litres
+          ltr
           &nbsp; | &nbsp;
           =t 'report.external_issued_pd2'
           = ExternalIssued.where(unit_fuel_id: unit_fuel_ids, fuel_type: FuelType.where(name: 'PETROL')).sum(:quantity)
           \/
           = ExternalIssued.where(unit_fuel_id: unit_fuel_ids, fuel_type: FuelType.where(name: 'DIESEL')).sum(:quantity)
-          litres
-          
+          ltr
+          &nbsp; | &nbsp;
+          =t 'report.inden_card_pd2'
+          = IndenUsage.where(unit_fuel_id: unit_fuel_ids).sum(:petrol_ltr)
+          \/
+          = IndenUsage.where(unit_fuel_id: unit_fuel_ids).sum(:diesel_ltr)
+          ltr
       %tr
         %th= t 'unit_fuels.issue_date'
         %th Petrol
@@ -78,6 +83,7 @@
         %th=t 'report.others'
         %th.center{colspan: "2"}=t 'report.external_supplied_pd'
         %th.center{colspan: "2"}=t 'report.external_issued_pd'
+        %th.center{colspan: "2"}=t 'report.inden_card_pd'
     - for unit_fuel, add_fuel in unit_fuels
       %tbody
         %tr
@@ -93,5 +99,7 @@
           %td.center= unit_fuel.external_supplieds.where(fuel_type_id: FuelType.where(name: 'DIESEL').first.id).sum(:quantity)
           %td.center= unit_fuel.external_issueds.where(fuel_type_id: FuelType.where(name: 'PETROL').first.id).sum(:quantity)
           %td.center= unit_fuel.external_issueds.where(fuel_type_id: FuelType.where(name: 'DIESEL').first.id).sum(:quantity)
+          %td.center= unit_fuel.inden_usages.sum(:petrol_ltr)
+          %td.center= unit_fuel.inden_usages.sum(:diesel_ltr)
     %tr
-      %td{colspan: "12"} &nbsp;
+      %td{colspan: "14"} &nbsp;

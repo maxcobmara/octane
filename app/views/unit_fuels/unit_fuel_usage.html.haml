@@ -92,6 +92,12 @@
   = line_chart @month_external_issue_darat.group_by_month("unit_fuels.issue_date").sum(:quantity)
   =t 'report.external_issue'+" : "+Unit.where(shortname: 'TUDM').first.name
   = line_chart @month_external_issue_udara.group_by_month("unit_fuels.issue_date").sum(:quantity)
+  %BR
+  %h4= t 'report.inden_card_usage'
+  = t 'report.inden_petrol_usage'
+  = line_chart @inden_usages.group_by_month("unit_fuels.issue_date").sum(:petrol_ltr)
+  = t 'report.inden_diesel_usage'
+  = line_chart @inden_usages.group_by_month("unit_fuels.issue_date").sum(:diesel_ltr)
   
   
   

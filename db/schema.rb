@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150904071024) do
+ActiveRecord::Schema.define(version: 20150906125757) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -222,6 +222,7 @@ ActiveRecord::Schema.define(version: 20150904071024) do
     t.decimal  "petronal_p_price"
     t.decimal  "petronas_d_ltr"
     t.decimal  "petronas_d_price"
+    t.integer  "unit_fuel_id"
   end
 
   create_table "kit_staffs", force: :cascade do |t|

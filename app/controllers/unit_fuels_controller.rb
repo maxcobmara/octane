@@ -1,4 +1,5 @@
 class UnitFuelsController < ApplicationController
+  filter_access_to :all
   before_action :set_unit_fuel, only: [:show, :edit, :update, :destroy]
 
   # GET /unit_fuels
@@ -92,6 +93,7 @@ class UnitFuelsController < ApplicationController
     @month_external_issue=ExternalIssued.joins(:unit_fuel).where( "unit_fuels.issue_date >= ? AND unit_fuels.issue_date <= ? ", @start_from, @end_on ) 
     @month_external_issue_darat=@month_external_issue.where(resource: Unit.where(shortname: 'TD'))
     @month_external_issue_udara=@month_external_issue.where(resource: Unit.where(shortname: 'TUDM'))
+    @inden_usages=IndenUsage.joins(:unit_fuel).where( "unit_fuels.issue_date >= ? AND unit_fuels.issue_date <= ? ", @start_from, @end_on)
   end
   
   def unit_fuel_list_usage  
@@ -114,6 +116,7 @@ class UnitFuelsController < ApplicationController
     @other_fuels= @main_other_fuels.where.not(id: @avtur.pluck(:id)+@avcat.pluck(:id)+@lubricant.pluck(:id)+@grease.pluck(:id))
     @external_supply=ExternalSupplied.joins(:unit_fuel).where( "unit_fuels.issue_date >= ? AND unit_fuels.issue_date <= ? ", @start_from, @end_on)
     @external_issue=ExternalIssued.joins(:unit_fuel).where( "unit_fuels.issue_date >= ? AND unit_fuels.issue_date <= ? ", @start_from, @end_on)
+    @inden_usages=IndenUsage.joins(:unit_fuel).where( "unit_fuels.issue_date >= ? AND unit_fuels.issue_date <= ? ", @start_from, @end_on)
   end
   
   def fuel_type_usage_category
@@ -195,6 +198,6 @@ class UnitFuelsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def unit_fuel_params
-      params.require(:unit_fuel).permit(:issue_date, :unit_id, :d_vessel, :d_vehicle, :d_misctool, :d_boat, :p_vehicle, :p_misctool, :p_boat, add_fuels_attributes: [:id, :fuel_type_id, :description, :quantity, :unit_type_id], external_issueds_attributes: [:id, :fuel_type_id, :quantity, :unit_type_id, :source], external_supplieds_attributes: [:id, :fuel_type_id, :quantity, :unit_type_id, :source])
+      params.require(:unit_fuel).permit(:issue_date, :unit_id, :d_vessel, :d_vehicle, :d_misctool, :d_boat, :p_vehicle, :p_misctool, :p_boat, add_fuels_attributes: [:id, :fuel_type_id, :description, :quantity, :unit_type_id], external_issueds_attributes: [:id, :fuel_type_id, :quantity, :unit_type_id, :source], external_supplieds_attributes: [:id, :fuel_type_id, :quantity, :unit_type_id, :source], inden_usages_attributes: [:id, :petrol_ltr, :diesel_ltr, :inden_card_id])
     end
 end

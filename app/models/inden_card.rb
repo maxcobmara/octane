@@ -11,6 +11,15 @@ class IndenCard < ActiveRecord::Base
   def must_assign_unit?
     ru_staff == false
   end
+  
+  def details
+    if ru_staff==true
+      serial_no+" | "+staff.name
+    else 
+      serial_no+" | "+unit.name
+    end
+  end
+  
 end
 
 # == Schema Information

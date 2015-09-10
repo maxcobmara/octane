@@ -4,6 +4,24 @@ authorization do
    has_omnipotence
    has_permission_on :authorization_rules, :to => :read
  end
+ 
+ role :data_entry do
+   has_permission_on [:units, :vessels, :inden_cards, :fuel_types, :unit_types, :vessel_types, :vessel_categories], :to => :manage
+   has_permission_on [:fuel_transactions, :depot_fuels, :fuel_supplieds, :fuel_issueds, :fuel_balances, :add_fuels, :external_issueds, :external_supplieds, :inden_usages, :fuel_limits], :to => :manage
+   has_permission_on :depot_fuels, :to => [:manage, :import_excel, :import]
+   has_permission_on :fuel_tanks, :to => [:manage, :tank_capacity_chart, :tank_capacity_list]
+   has_permission_on :unit_fuels, :to => [:manage, :fuel_type_usage_category, :unit_fuel_usage, :unit_fuel_list_usage, :annual_usage_report]
+   has_permission_on :fuel_budgets, :to => [:manage, :annual_budget, :budget_vs_usage, :budget_vs_usage_list]
+ end
+ 
+ role :guest do  
+   has_permission_on [:units, :vessels, :inden_cards, :fuel_types, :unit_types, :vessel_types, :vessel_categories], :to => :read
+   has_permission_on [:fuel_transactions, :depot_fuels, :fuel_supplieds, :fuel_issueds, :fuel_balances, :add_fuels, :external_issueds, :external_supplieds, :inden_usages, :fuel_limits], :to => :read
+   has_permission_on :depot_fuels, :to => :read
+   has_permission_on :fuel_tanks, :to => [:read, :tank_capacity_chart, :tank_capacity_list]
+   has_permission_on :unit_fuels, :to => [:read, :fuel_type_usage_category, :unit_fuel_usage, :unit_fuel_list_usage, :annual_usage_report]
+   has_permission_on :fuel_budgets, :to => [:read, :annual_budget, :budget_vs_usage, :budget_vs_usage_list]
+ end
 
 end
 

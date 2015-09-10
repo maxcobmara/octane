@@ -21,6 +21,10 @@ class User < ActiveRecord::Base
   def role_symbols
     user_roles.find_all{|key, value| value == '1'}.map(&:first).map(&:to_sym) rescue []
   end
+  
+  def role_strings
+    user_roles.find_all{|key, value| value == '1'}.map(&:first).join(", ") rescue ""
+  end
 
 end
 

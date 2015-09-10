@@ -10,6 +10,10 @@ Rails.application.routes.draw do
   resources :fuel_budgets do
     collection do
       get 'annual_budget'
+      get 'budget_vs_usage'
+      post 'budget_vs_usage'
+      get 'budget_vs_usage_list'
+      post 'budget_vs_usage_list'
     end
   end
   resources :external_issueds
@@ -28,6 +32,8 @@ Rails.application.routes.draw do
       post 'fuel_type_usage_category'
     end
   end
+  resources :inden_cards
+  resources :inden_usages
   resources :fuel_tanks do
     collection do
       get 'tank_capacity_list'
@@ -48,7 +54,8 @@ Rails.application.routes.draw do
   
   resources :depot_fuels do
     collection do
-      get 'PMP_monthly_usage'
+      get :depot_monthly_usage   #txport - 'PMP_monthly_usage'
+      post :depot_monthly_usage
       post :import
     end
   end
