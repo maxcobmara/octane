@@ -349,7 +349,7 @@ class DepotFuel < ActiveRecord::Base
   end
   
   def issue_date_not_later_today
-    if issue_date > Date.today 
+    if issue_date && issue_date > Date.today 
       errors.add(:base, 'Issue Date should not later than today.')
     end
   end

@@ -13,7 +13,7 @@ authorization do
    has_permission_on :unit_fuels, :to => [:read, :update, :delete] do 
      if_attribute :unit_id => is {user.staff.unit_id}
    end
-   has_permission_on [:add_fuels, :external_issueds, :external_supplieds, :inden_usages], :to => :manage do
+   has_permission_on [:add_fuels, :external_issueds, :external_supplieds, :inden_usages], :to => [:read, :update, :delete] do
      if_attribute :unit_fuel_id => is_in {UnitFuel.where(unit_id: user.staff.unit_id).pluck(:id)}
    end
    
@@ -21,7 +21,7 @@ authorization do
    has_permission_on :depot_fuels, :to => [:read, :update, :delete, :import_excel, :import] do 
      if_attribute :unit_id => is {user.staff.unit_id}
    end
-   has_permission_on [ :fuel_supplieds, :fuel_issueds, :fuel_balances], :to => :manage do
+   has_permission_on [:fuel_supplieds, :fuel_issueds, :fuel_balances], :to => [:read, :update, :delete] do
      if_attribute :depot_fuel_id =>  is_in {DepotFuel.where(unit_id: user.staff.unit_id).pluck(:id)}
    end
    has_permission_on :fuel_transactions, :to => [:read, :update, :delete] do
@@ -49,6 +49,8 @@ authorization do
    has_permission_on :unit_fuels, :to => [:create, :fuel_type_usage_category, :unit_fuel_usage, :unit_fuel_list_usage, :annual_usage_report]
    has_permission_on :depot_fuels, :to =>[:create, :depot_monthly_usage] #restrict new record in INDEX if data entry staff not from depot
    
+   has_permission_on [:fuel_supplieds, :fuel_issueds, :fuel_balances], :to => :create #restricted in Depot Fuel-action_menu
+   has_permission_on [:add_fuels, :external_issueds, :external_supplieds, :inden_usages], :to => :create
  end
 
 end

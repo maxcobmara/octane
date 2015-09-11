@@ -38,7 +38,7 @@
         - sure_note='Depot record shall not be removed as Depot Fuel records are still exist! '
     - else
       - sure_note='Are you sure?' if @unit.valid_for_removal==true
-      - sure_note='Unit record shall not be removed as Unit Fuel / Fuel Limit / Fuel Budget / Vessel records are still exist!' if @unit.valid_for_removal==false
+      - sure_note='Unit record shall not be removed as corresponding Unit Fuel / Fuel Limit / Fuel Budget / Vessel / Fuel Issueds records are still exist!' if @unit.valid_for_removal==false
   
     = link_to content_tag(:i, "", :class => "fa fa-trash-o icon-white") + " " + t('.destroy', :default => t("helpers.links.destroy")), |
       unit_path(@unit),                                                                                                    |

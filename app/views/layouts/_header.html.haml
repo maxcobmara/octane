@@ -58,7 +58,9 @@
                 - permitted_to? :read, :fuel_budgets do
                   %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'menu.fuel_budgets'), fuel_budgets_path
                 - permitted_to? :read, :fuel_limits do
-                  %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'menu.fuel_limits'), fuel_limits_path
+                  /HACK - suppose require different account type - accessible to 'Depot Data Entry' & Admin only
+                  - if (current_user.roles && current_user.roles[:user_roles][:administration]=="1") || Unit.is_depot.pluck(:id).include?(current_user.staff.unit_id)
+                    %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'menu.fuel_limits'), fuel_limits_path
           - permitted_to? :read, :units do
             %li.dropdown
               %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}

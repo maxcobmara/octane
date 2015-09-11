@@ -17,13 +17,16 @@
   %dd= check_kin {@fuel_balance.unit_type.description}
 
 %dl.dl-horizontal
-  %dt= link_to content_tag(:i, "", class: "fa fa-arrow-left ") + " " + t('.back', :default =>( t("helpers.links.back")+" Monthly Fuel")), depot_fuels_path, :class => 'btn btn-default'
+  - permitted_to? :read, :depot_fuels do
+    %dt= link_to content_tag(:i, "", class: "fa fa-arrow-left ") + " " + t('.back', :default =>( t("helpers.links.back")+" Monthly Fuel")), depot_fuels_path, :class => 'btn btn-default'
   %dd
     .form-actions
       = link_to content_tag(:i, "", :class => "fa fa-arrow-left ") + " " + t('.back', :default => t("helpers.links.back")), fuel_balances_path, :class => 'btn btn-default'
-      = link_to content_tag(:i, "", :class => "fa fa-edit") + " " + t('.edit', :default => t("helpers.links.edit")), edit_fuel_balance_path(@fuel_balance), :class => 'btn btn-default'
-      = link_to content_tag(:i, "", :class => "fa fa-trash-o icon-white") + " " + t('.destroy', :default => t("helpers.links.destroy")), |
-        fuel_balance_path(@fuel_balance),                                                                                                    |
-        :method => 'delete',                                                                                                           |
-        :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },                   |
-        :class => 'btn btn-danger'                                                                                                     |
+      - permitted_to? :update, :fuel_balances do
+        = link_to content_tag(:i, "", :class => "fa fa-edit") + " " + t('.edit', :default => t("helpers.links.edit")), edit_fuel_balance_path(@fuel_balance), :class => 'btn btn-default'
+      - permitted_to? :delete, :fuel_balances do
+        = link_to content_tag(:i, "", :class => "fa fa-trash-o icon-white") + " " + t('.destroy', :default => t("helpers.links.destroy")), |
+          fuel_balance_path(@fuel_balance),                                                                                                    |
+          :method => 'delete',                                                                                                           |
+          :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },                   |
+          :class => 'btn btn-danger'                                                                                                     |

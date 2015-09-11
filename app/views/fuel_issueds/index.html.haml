@@ -4,7 +4,6 @@
   %h1= t 'fuel_issueds.title', :default => model_class.model_name.human.pluralize
 
 .btn-group{"aria-label" => "sidebar", :role => "group", style: "float:right;"}
-  //.btn.btn-default= link_to content_tag(:i, fa_icon("asterisk", text: (t 'actions.new'))), new_fuel_issued_path
   .btn.btn-default= link_to content_tag(:i, fa_icon("search", text: (t 'actions.search'))), "#", class: "toga"
   .btn.btn-default= link_to(fa_icon("print", text: (t 'actions.print')), "javascript:print()")
 

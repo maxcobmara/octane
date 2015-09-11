@@ -9,6 +9,8 @@
     %li= link_to content_tag(:li, fa_icon("plus", text: t('external_supplieds.new_externalsupplied'))), new_external_supplied_path(:unit_fuel_id => unit_fuel)
    - permitted_to? :create, :external_issueds do
     %li= link_to content_tag(:li, fa_icon("minus", text: t('external_issueds.new_externalissued'))), new_external_issued_path(:unit_fuel_id => unit_fuel)
+   - permitted_to? :create, :inden_usages do
+    %li= link_to content_tag(:li, fa_icon("minus", text: t('inden_usages.new'))), new_inden_usage_path(:unit_fuel_id => unit_fuel)
    %li= link_to content_tag(:li, fa_icon("eye", text: (t 'actions.show'))), unit_fuel
    - permitted_to? :update, :unit_fuels do
     %li= link_to content_tag(:li, fa_icon("pencil", text: (t 'actions.edit'))), edit_unit_fuel_path(unit_fuel)
