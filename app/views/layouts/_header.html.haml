@@ -26,8 +26,8 @@
                 %span.caret
               %ul.dropdown-menu{:role => "menu"}
                 - permitted_to? :create, :fuel_transactions do
-                  /HACK - suppose require different account type
-                  - if Unit.is_depot.pluck(:id).include?(current_user.staff.unit_id)
+                  /HACK - suppose require different account type - accessible to 'Depot Data Entry' & Admin only
+                  - if (current_user.roles && current_user.roles[:user_roles][:administration]=="1") || Unit.is_depot.pluck(:id).include?(current_user.staff.unit_id)
                     %li= link_to "Add Fuel", new_fuel_transaction_path(transaction_type: 'Resupply')
                     %li= link_to "Use Fuel", new_fuel_transaction_path(transaction_type: 'Usage')
                 - permitted_to? :read, :fuel_transactions do

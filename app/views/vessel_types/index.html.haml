@@ -24,4 +24,9 @@
             %td= vessel_type.description
             %td
               - permitted_to? :manage, :vessel_types do
-                = link_to (fa_icon "trash-o"), vessel_type, method: :delete, data: { confirm: 'Are you sure?' }, remote: true
+                - if vessel_type.valid_for_removal==true
+                  = link_to (fa_icon "trash-o"), vessel_type, method: :delete, data: { confirm: 'Are you sure?' }, remote: true
+                - else
+                  *
+    - permitted_to? :manage, :vessel_types do
+      * Removal of record is prohibited as vessel type are still in use (Vessel Class)

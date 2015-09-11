@@ -6,4 +6,5 @@
    %li= link_to content_tag(:li, fa_icon("eye", text: (t 'actions.show'))), vessel_category
    - permitted_to? :manage, :vessel_categories do
     %li= link_to content_tag(:li, fa_icon("pencil", text: (t 'actions.edit'))), edit_vessel_category_path(vessel_category)
-    %li.danger= link_to content_tag(:li, fa_icon("trash-o", text: (t 'actions.delete'))), vessel_category_path(vessel_category), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }
+    - if vessel_category.valid_for_removal==true
+     %li.danger= link_to content_tag(:li, fa_icon("trash-o", text: (t 'actions.delete'))), vessel_category_path(vessel_category), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }
