@@ -1,5 +1,24 @@
 class DepotFuelsController < ApplicationController
-  filter_access_to :all, :except => :depot_monthly_usage
+  #TODO - filter access to all actions - except 'depot_monthly_usage', [role-Admin & data entry(from Depot) can access everything in this module, while the rest (incl data entry(from Unit/dept-not depot tak boleh access apa2 pun EXCEPT repot page : 'depot_monthly_usage') 
+  
+  # 1) when use 'filter_resource_access' works well - tapi report 'depot_monthly_usage' keluar error :
+  #-------
+# ActiveRecord::RecordNotFound in DepotFuelsController#depot_monthly_usage
+# Couldnt find DepotFuel with 'id'=
+# Extracted source (around line #155):
+# 
+# record = s.execute([id], self, connection).first
+# unless record
+# raise RecordNotFound, "Couldn't find #{name} with '#{primary_key}'=#{id}"
+# end
+# record
+# rescue RangeError
+  #------
+
+  # 2) When use 'filter_resource_access :additional_collection => { :depot_monthly_usage => :read } ' - OK BUT, semua action ok, tapi report 'depot monthly usage' pun filter sekali - 'Sorry, you are not allowed to access that page.', seems like additional_collection not functioning. found this --> https://github.com/stffn/declarative_authorization/issues/204 (title: "additional_collection" attribute does't work with Rails 4 by default) but have no idea how to make it works..
+  
+  #filter_access_to :all, :except => :depot_monthly_usage
+  filter_resource_access :additional_collection => { :depot_monthly_usage => :read } 
   before_action :set_depot_fuel, only: [:show, :edit, :update, :destroy]
 
   # GET /depot_fuels
