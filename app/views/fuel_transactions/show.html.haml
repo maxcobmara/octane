@@ -30,10 +30,14 @@
 .form-actions
   .btn.btn-default= link_to content_tag(:i, "", class: "fa fa-arrow-left ") + " " + t('.back', :default => t("helpers.links.back")), fuel_transactions_path
   - permitted_to? :update, :fuel_transactions do
-    .btn.btn-default= link_to content_tag(:i, "", class: "fa fa-edit") + " " + t('.edit', :default => t("helpers.links.edit")), edit_fuel_transaction_path(@fuel_transaction)
+    /HACK 
+    - if (current_user.roles && current_user.roles[:user_roles][:administration]=="1") || Unit.is_depot.pluck(:id).include?(current_user.staff.unit_id)
+      .btn.btn-default= link_to content_tag(:i, "", class: "fa fa-edit") + " " + t('.edit', :default => t("helpers.links.edit")), edit_fuel_transaction_path(@fuel_transaction)
   - permitted_to? :delete, :fuel_transactions do
-    = link_to content_tag(:i, "", :class => "fa fa-trash-o icon-white") + " " + t('.destroy', :default => t("helpers.links.destroy")), |
-      fuel_transaction_path(@fuel_transaction),                                                                                                    |
-      :method => 'delete',                                                                                                           |
-      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },                   |
-      :class => 'btn btn-danger'                                                                                                     |
+    /HACK 
+    - if (current_user.roles && current_user.roles[:user_roles][:administration]=="1") || Unit.is_depot.pluck(:id).include?(current_user.staff.unit_id)
+      = link_to content_tag(:i, "", :class => "fa fa-trash-o icon-white") + " " + t('.destroy', :default => t("helpers.links.destroy")), |
+        fuel_transaction_path(@fuel_transaction),                                                                                                    |
+        :method => 'delete',                                                                                                           |
+        :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },                   |
+        :class => 'btn btn-danger'                                                                                                     |

@@ -42,7 +42,16 @@ class FuelTransaction < ActiveRecord::Base
       FuelTransaction.all 
     else
       curr_staff=Staff.find(staffid) 
-      FuelTransaction.where(fuel_tank_id:  FuelTank.where(unit_id: curr_staff.unit_id).pluck(:id)) if curr_staff && curr_staff.unit_id
+      if curr_staff && curr_staff.unit_id
+        if Unit.is_depot.pluck(:id).include?(curr_staff.unit_id)
+          FuelTransaction.where(fuel_tank_id:  FuelTank.where(unit_id: curr_staff.unit_id).pluck(:id)) 
+        elsif Vessel.pluck(:unit_id).include?(curr_staff.unit_id)
+          FuelTransaction.where(vessel_id: Vessel.where(unit_id: curr_staff.unit_id).first.id)
+        else
+          vehicle_ids=VehicleAssignmentDetail.where(vehicle_assignment_id: VehicleAssignment.where(unit_id: curr_staff.unit_id).pluck(:id)).pluck(:vehicle_id)
+          FuelTransaction.where(vehicle_id: vehicle_ids)
+        end
+      end
     end
   end
   
