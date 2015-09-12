@@ -45,10 +45,11 @@
 
 .form-actions
   .btn.btn-default= link_to content_tag(:i, "", :class => "fa fa-arrow-left ") + " " + t('.back', :default => t("helpers.links.back")), inden_usages_path
-  - permitted_to? :manage, :inden_usages do
+  - permitted_to? :edit, :inden_usages do
     .btn.btn-default= link_to content_tag(:i, "", :class => "fa fa-edit") + " " + t('.edit', :default => t("helpers.links.edit")), |
       edit_inden_usage_path(@inden_usage)
     /= link_to content_tag(:i, " New Node", :class => "fa fa-leaf"), new_inden_usage_path, :class => 'btn btn-info'
+  - permitted_to? :delete, :inden_usages do
     = link_to content_tag(:i, "", :class => "fa fa-trash-o icon-white") + " " + t('.destroy', :default => t("helpers.links.destroy")), |
       inden_usage_path(@inden_usage),                                                                                                    |
       :method => 'delete',                                                                                                           |

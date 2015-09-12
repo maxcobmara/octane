@@ -1,12 +1,43 @@
 class DepotFuelsController < ApplicationController
-  filter_access_to :all
+  #TODO - filter access to all actions - except 'depot_monthly_usage', [role-Admin & data entry(from Depot) can access everything in this module, while the rest (incl data entry(from Unit/dept-not depot tak boleh access apa2 pun EXCEPT repot page : 'depot_monthly_usage') 
+  
+  # 1) when use 'filter_resource_access' works well - tapi report 'depot_monthly_usage' keluar error :
+  #-------
+# ActiveRecord::RecordNotFound in DepotFuelsController#depot_monthly_usage
+# Couldnt find DepotFuel with 'id'=
+# Extracted source (around line #155):
+# 
+# record = s.execute([id], self, connection).first
+# unless record
+# raise RecordNotFound, "Couldn't find #{name} with '#{primary_key}'=#{id}"
+# end
+# record
+# rescue RangeError
+  #------
+
+  # 2) When use 'filter_resource_access :additional_collection => { :depot_monthly_usage => :read } ' - OK BUT, semua action ok, tapi report 'depot monthly usage' pun filter sekali - 'Sorry, you are not allowed to access that page.', seems like additional_collection not functioning. found this --> https://github.com/stffn/declarative_authorization/issues/204 (title: "additional_collection" attribute does't work with Rails 4 by default) but have no idea how to make it works..
+  
+  #filter_access_to :all, :except => :depot_monthly_usage
+  filter_resource_access :additional_collection => { :depot_monthly_usage => :read } 
   before_action :set_depot_fuel, only: [:show, :edit, :update, :destroy]
 
   # GET /depot_fuels
   # GET /depot_fuels.json
   def index
-    @search = DepotFuel.search(params[:q])
-    @depot_fuels = @search.result
+    is_admin=current_user.roles[:user_roles][:administration]
+    if is_admin=="1" || current_user.staff_id
+      @search = DepotFuel.search_by_role(is_admin, current_user.staff_id).search(params[:q])
+      @depot_fuels = @search.result
+    end
+    respond_to do |format|
+      if is_admin=="1" || current_user.staff_id
+        format.html
+      else
+        format.html {redirect_to root_path, notice: (t 'users.staff_required')}
+      end
+    end
+    #@search = DepotFuel.search(params[:q])
+    #@depot_fuels = @search.result
   end
 
   # GET /depot_fuels/1
@@ -64,6 +95,7 @@ class DepotFuelsController < ApplicationController
   end
   
   def depot_monthly_usage 
+    @depot_fuels=DepotFuel.all
     if params[:search].present? && params[:search][:start_date].present?
       @start_from = Date.parse((params[:search][:start_date])).beginning_of_day.strftime('%Y-%m-%d')
     else

@@ -227,9 +227,10 @@
 	
 .form-actions
   .btn.btn-default= link_to content_tag(:i, "", :class => "fa fa-arrow-left ") + " " + t('.back', :default => t("helpers.links.back")), unit_fuels_path
-  - permitted_to? :manage, :unit_fuels do
+  - permitted_to? :update, :unit_fuels do
     .btn.btn-default= link_to content_tag(:i, "", :class => "fa fa-edit") + " " + t('.edit', :default => t("helpers.links.edit")), |
       edit_unit_fuel_path(@unit_fuel)
+  - permitted_to? :delete, :unit_fuels do
     = link_to content_tag(:i, "", :class => "fa fa-trash-o icon-white") + " " + t('.destroy', :default => t("helpers.links.destroy")), |
       unit_fuel_path(@unit_fuel),                                                                                                    |
       :method => 'delete',                                                                                                           |

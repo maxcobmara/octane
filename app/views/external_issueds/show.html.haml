@@ -21,9 +21,10 @@
   
 .form-actions
   .btn.btn-default= link_to content_tag(:i, "", :class => "fa fa-arrow-left ") + " " + t('.back', :default => t("helpers.links.back")), external_issueds_path
-  - permitted_to? :manage, :external_issueds do
+  - permitted_to? :update, :external_issueds do
     .btn.btn-default= link_to content_tag(:i, "", :class => "fa fa-edit") + " " + t('.edit', :default => t("helpers.links.edit")), |
       edit_external_issued_path(@external_issued)
+  - permitted_to? :delete, :external_issueds do
     = link_to content_tag(:i, "", :class => "fa fa-trash-o icon-white") + " " + t('.destroy', :default => t("helpers.links.destroy")), |
       external_issued_path(@external_issued),                                                                                                    |
       :method => 'delete',                                                                                                           |

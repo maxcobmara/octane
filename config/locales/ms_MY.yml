@@ -132,6 +132,12 @@ ms_MY:
     users: Pengurusan Pengguna
     authorisation: Perundangan Kebenaran
 
+  users:
+    email: Emel
+    staff_id: Staf
+    unit_id: Unit
+    staff_required: "Untuk mengakses modul ini, akaun Pengguna perlulah dipadankan dengan Staf."
+    
   report:
     depot_fuel_usage: Laporan Penggunaan Bahan PMP Depoh Bulanan
     diesel_vessel_usage: Penggunaan Diesel Kapal

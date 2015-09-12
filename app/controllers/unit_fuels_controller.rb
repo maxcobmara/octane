@@ -1,17 +1,24 @@
 class UnitFuelsController < ApplicationController
-  filter_access_to :all
+  filter_access_to :all, :except => [:fuel_type_usage_category, :unit_fuel_usage, :unit_fuel_list_usage, :annual_usage_report]
+  #filter_resource_access
   before_action :set_unit_fuel, only: [:show, :edit, :update, :destroy]
 
   # GET /unit_fuels
   # GET /unit_fuels.json
   def index
-    @unit_fuels = UnitFuel.all
-    @search = UnitFuel.search(params[:q])
-    @unit_fuels = @search.result
+    is_admin=current_user.roles[:user_roles][:administration]
+    if is_admin=="1" || current_user.staff_id
+      @search = UnitFuel.search_by_role(is_admin, current_user.staff_id).search(params[:q])
+      @unit_fuels = @search.result
+    end
     respond_to do |format|
-      format.html
-      format.csv { send_data @unit_fuels.to_csv }
-      format.xls { send_data @unit_fuels.to_csv(col_sep: "\t") }
+      if is_admin=="1" || current_user.staff_id
+        format.html
+        format.csv { send_data @unit_fuels.to_csv }
+        format.xls { send_data @unit_fuels.to_csv(col_sep: "\t") }
+      else
+        format.html {redirect_to root_path, notice: (t 'users.staff_required')}
+      end
     end
   end
 

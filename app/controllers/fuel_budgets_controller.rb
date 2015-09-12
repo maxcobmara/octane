@@ -1,11 +1,25 @@
 class FuelBudgetsController < ApplicationController
+  filter_access_to :all, :except => [:annual_budget, :budget_vs_usage, :budget_vs_usage_list]
+  #filter_resource_access
   before_action :set_fuel_budget, only: [:show, :edit, :update, :destroy]
 
   # GET /fuel_budgets
   # GET /fuel_budgets.json
   def index
-    @search = FuelBudget.search(params[:q])
-    @fuel_budgets  = @search.result
+    is_admin=current_user.roles[:user_roles][:administration]
+    if is_admin=="1" || current_user.staff_id
+      @search = FuelBudget.search_by_role(is_admin, current_user.staff_id).search(params[:q])
+      @fuel_budgets= @search.result
+    end
+    respond_to do |format|
+      if is_admin=="1" || current_user.staff_id
+        format.html
+      else
+        format.html {redirect_to root_path, notice: (t 'users.staff_required')}
+      end
+    end
+    #@search = FuelBudget.search(params[:q])
+    #@fuel_budgets  = @search.result
   end
 
   # GET /fuel_budgets/1

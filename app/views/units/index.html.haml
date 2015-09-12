@@ -1,11 +1,10 @@
 - provide(:title, 'Unit')
 - model_class = Unit
 .page-header
-
-- if @depot == 1 || @depot == '1'
-  %h1= t 'units.list2', :default => model_class.model_name.human.pluralize
-- else
-  %h1= t 'units.list3', :default => model_class.model_name.human.pluralize
+  - if @depot == 1 || @depot == '1'
+    %h1= t 'units.list2', :default => model_class.model_name.human.pluralize
+  - else
+    %h1= t 'units.list3', :default => model_class.model_name.human.pluralize
 
 .row
   .col-md-2

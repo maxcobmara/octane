@@ -1,20 +1,28 @@
 .container{:style => "padding-left: 60px;"}
   = form_for @inden_usage, :html => { :class => 'form-horizontal' }  do |f|
     = render 'shared/error_messages', object: f.object
-	
+    = f.hidden_field :unit_fuel_id
+
+    %dl.dl-horizontal
+      %dt
+        %strong= t 'inden_usages.unit_fuel_id'
+      %dd
+        = h @inden_usage.unit_fuel.month_unit
+    %br
+    
     .control-group
       = f.label :inden_card_serial, :class => 'control-label'		
       .controls= f.collection_select :inden_card_id, IndenCard.all.order(:serial_no), :id, :details, :include_blank => t('helpers.prompt.select_inden_card'), :html_options => {:class => 'selectpicker'}
       
-    .control-group
-      = f.label :unit_fuel_id, :class => 'control-label'
-      .controls
-        /= @inden_usage.unit_fuel.try(:issue_date).try(:strftime, "%b %Y")
-        = f.collection_select :unit_fuel_id, UnitFuel.all.order(issue_date: :desc), :id, :month_unit2, :include_blank => t('helpers.prompt.select_unit_fuel'), :html_options => {:class => 'selectpicker'}
+    /.control-group
+    /  = f.label :unit_fuel_id, :class => 'control-label'
+    /  .controls
+    /    /= @inden_usage.unit_fuel.try(:issue_date).try(:strftime, "%b %Y")
+    /    = f.collection_select :unit_fuel_id, UnitFuel.all.order(issue_date: :desc), :id, :month_unit2, :include_blank => t('helpers.prompt.select_unit_fuel'), :html_options => {:class => 'selectpicker'}
     
-    .control-group
-      = f.label :issue_date, :class => 'control-label'
-      .controls= f.text_field :issue_date, :class => 'text_field', :type => :text, 'data-behaviour' => 'datepicker_before'
+    /.control-group
+    /  = f.label :issue_date, :class => 'control-label'
+    /  .controls= f.text_field :issue_date, :class => 'text_field', :type => :text, 'data-behaviour' => 'datepicker_before'
       
     /%br
     /= t 'inden_usages.usage'

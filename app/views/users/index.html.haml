@@ -17,19 +17,25 @@
     .row.searchit{style: "display:none;"}
       = search_form_for @search, class: "form-inline" do |f|
         .field
-          = f.label :email_cont, "Email Contains:"
-          = f.text_field :email_cont, class: "input-medium search-query"
+          = f.text_field :email_cont, class: "input-medium search-query", placeholder: "Email Contains"
+          = f.text_field :staff_name_cont, class: "input-medium search-query", placeholder: "Staff Name Contains"
+          = f.text_field :staff_unit_name_cont, class: "input-medium search-query", placeholder: "Unit Contains"
           = f.submit "Search", class: "btn btn-warning"
 
   .col-md-10.index_main
-    %table.table.table-condensed.table-hover#unit_type_list{:style => "width:60%;"}
+    %table.table.table-condensed.table-hover#unit_type_list{:style => "width:90%;"}
       %thead
         %tr
-          %th=t 'users.email'
+          %th= t 'users.email'
+          %th=sort_link @search, :staff_id, t('users.staff_id')
+          %th=sort_link @search, :staff_unit_id, t('users.unit_id')
           %th Roles
       - @users.each do |user|
         %tbody
           %tr
             %td= link_to user.email, edit_user_path(user)
+            %td= user.staff.try(:staff_details)
+            %td= user.staff.try(:unit).try(:name)
             %td= user.role_strings.humanize.titleize
+
 

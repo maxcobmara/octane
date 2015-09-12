@@ -1,5 +1,8 @@
 class FuelTanksController < ApplicationController
-  before_action :set_fuel_tank, only: [:show, :edit, :update, :destroy]
+  before_filter :set_fuel_tank, only: [:show, :edit, :update, :destroy]
+  filter_access_to :all, :except_for => [:tank_capacity_chart, :tank_capacity_list]
+  #filter_access_to [:index, :show, :create, :update, :destroy, :tank_capacity_chart, :tank_capacity_list], attribute_check: false
+  #before_action :set_fuel_tank, only: [:show, :edit, :update, :destroy]
 
   # GET /fuel_tanks
   # GET /fuel_tanks.json

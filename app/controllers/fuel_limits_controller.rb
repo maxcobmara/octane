@@ -1,12 +1,25 @@
 class FuelLimitsController < ApplicationController
+  filter_resource_access
   before_action :set_fuel_limit, only: [:show, :edit, :update, :destroy]
 
   # GET /fuel_limits
   # GET /fuel_limits.json
   def index
-    @fuel_limits = FuelLimit.all
-    @search = FuelLimit.search(params[:q])
-    @fuel_limits = @search.result
+    is_admin=current_user.roles[:user_roles][:administration]
+    if is_admin=="1" || current_user.staff_id
+      @search = FuelLimit.search_by_role(is_admin, current_user.staff_id).search(params[:q])
+      @fuel_limits = @search.result
+    end
+    respond_to do |format|
+      if is_admin=="1" || current_user.staff_id
+        format.html
+      else
+        format.html {redirect_to root_path, notice: (t 'users.staff_required')}
+      end
+    end
+#     @fuel_limits = FuelLimit.all
+#     @search = FuelLimit.search(params[:q])
+#     @fuel_limits = @search.result
   end
 
   # GET /fuel_limits/1

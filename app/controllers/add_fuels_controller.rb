@@ -1,12 +1,26 @@
 class AddFuelsController < ApplicationController
+  filter_resource_access
   before_action :set_add_fuel, only: [:show, :edit, :update, :destroy]
 
   # GET /add_fuels
   # GET /add_fuels.json
   def index
-    @add_fuels = AddFuel.all
-    @search = AddFuel.search(params[:q])
-    @add_fuels = @search.result
+    is_admin=current_user.roles[:user_roles][:administration]
+    if is_admin=="1" || current_user.staff_id
+      @search = AddFuel.search_by_role(is_admin, current_user.staff_id).search(params[:q])
+      @add_fuels = @search.result
+    end
+    respond_to do |format|
+      if is_admin=="1" || current_user.staff_id
+        format.html
+        format.csv { send_data @add_fuels.to_csv }
+        format.xls { send_data @add_fuels.to_csv(col_sep: "\t") }
+      else
+        format.html {redirect_to root_path, notice: (t 'users.staff_required')}
+      end
+    end
+#     @search = AddFuel.search(params[:q])
+#     @add_fuels = @search.result
   end
 
   # GET /add_fuels/1

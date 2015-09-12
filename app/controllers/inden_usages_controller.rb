@@ -1,12 +1,26 @@
 class IndenUsagesController < ApplicationController
+  filter_resource_access
   before_action :set_inden_usage, only: [:show, :edit, :update, :destroy]
 
   # GET /inden_usages
   # GET /inden_usages.json
   def index
-    @inden_usages = IndenUsage.all.order(:inden_card_id)
-    @search = IndenUsage.search(params[:q])
-    @inden_usages = @search.result
+    is_admin=current_user.roles[:user_roles][:administration]
+    if is_admin=="1" || current_user.staff_id
+      @search = IndenUsage.search_by_role(is_admin, current_user.staff_id).search(params[:q])
+      @inden_usages = @search.result
+    end
+    respond_to do |format|
+      if is_admin=="1" || current_user.staff_id
+        format.html
+        format.csv { send_data @inden_usages.to_csv }
+        format.xls { send_data @inden_usages.to_csv(col_sep: "\t") }
+      else
+        format.html {redirect_to root_path, notice: (t 'users.staff_required')}
+      end
+    end
+#     @search = IndenUsage.search(params[:q])
+#     @inden_usages = @search.result
   end
 
   # GET /inden_usages/1
@@ -16,10 +30,13 @@ class IndenUsagesController < ApplicationController
 
   # GET /inden_usages/new
   def new
-    #@inden_usage = IndenUsage.new
-    @inden_card = IndenCard.find(params[:inden_card_id])
-    @inden_usage= @inden_card.inden_usages.new(params[:inden_usage])
-    @inden_usage.save
+    ##@inden_usage = IndenUsage.new
+    #@inden_card = IndenCard.find(params[:inden_card_id])
+    #@inden_usage= @inden_card.inden_usages.new(params[:inden_usage])
+    #@inden_usage.save
+    
+    @unit_fuel = UnitFuel.find(params[:unit_fuel_id])
+    @inden_usage = @unit_fuel.inden_usages.new(params[:inden_usage])
   end
 
   # GET /inden_usages/1/edit

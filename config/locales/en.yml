@@ -165,7 +165,12 @@ en:
     users: User Management
     authorisation: Authorisation Rules
 
-
+  users:
+    email: Email
+    staff_id: Staff
+    unit_id: Unit
+    staff_required: "This module require User account to be matched with Staff. Please contact your administrator."
+    
   report:
     depot_fuel_usage: Monthly Depot Fuel Usage Report
     diesel_vessel_usage: Diesel Vessel Usage

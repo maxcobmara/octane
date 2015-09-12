@@ -37,4 +37,22 @@ class FuelTransaction < ActiveRecord::Base
   scope :resupply, -> { where(transaction_type: "Resupply")} #for use in Tank Capacity List - current balance
   scope :usage, -> {where(transaction_type: "Usage")}
   
+  def self.search_by_role(is_admin, staffid)
+    if is_admin== "1"
+      FuelTransaction.all 
+    else
+      curr_staff=Staff.find(staffid) 
+      if curr_staff && curr_staff.unit_id
+        if Unit.is_depot.pluck(:id).include?(curr_staff.unit_id)
+          FuelTransaction.where(fuel_tank_id:  FuelTank.where(unit_id: curr_staff.unit_id).pluck(:id)) 
+        elsif Vessel.pluck(:unit_id).include?(curr_staff.unit_id)
+          FuelTransaction.where(vessel_id: Vessel.where(unit_id: curr_staff.unit_id).first.id)
+        else
+          vehicle_ids=VehicleAssignmentDetail.where(vehicle_assignment_id: VehicleAssignment.where(unit_id: curr_staff.unit_id).pluck(:id)).pluck(:vehicle_id)
+          FuelTransaction.where(vehicle_id: vehicle_ids)
+        end
+      end
+    end
+  end
+  
 end
