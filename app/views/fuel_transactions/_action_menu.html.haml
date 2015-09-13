@@ -3,7 +3,8 @@
   %button.btn.dropdown-toggle{"data-toggle" => "dropdown"}
    .span.caret
   %ul.dropdown-menu.pull-right.action_menu
-   %li= link_to content_tag(:li, fa_icon("eye", text: (t 'actions.show'))), fuel_transaction
+   - permitted_to? :read, :fuel_transactions do
+    %li= link_to content_tag(:li, fa_icon("eye", text: (t 'actions.show'))), fuel_transaction
    - permitted_to? :update, :fuel_transactions do
     /HACK
     - if (current_user.roles && current_user.roles[:user_roles][:administration]=="1") || Unit.is_depot.pluck(:id).include?(current_user.staff.unit_id)

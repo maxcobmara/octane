@@ -5,25 +5,35 @@
 = notice
 - if notice
   %BR 
-= form_tag import_depot_fuels_path, multipart: true do
-  = file_field_tag :file
-  = submit_tag "Import", :class => 'btn btn-primary' 
 
-= link_to (t 'depot_fuels.excel_format'), '/public/excel_format/DepotFuel_Excel.xls', :action => 'download_excel_format'
-%br
-%H5= t 'vehicles.pre_conditions'
-%ol
-  %li= t 'depot_fuels.condition_month_year'
-  %li= t 'depot_fuels.condition_depot_name'
-  %li= t 'depot_fuels.condition_fuel_tank_qty_match'
-  %li= t 'depot_fuels.condition_naming_rules'
-  %li= t 'depot_fuels.condition_naming_rules2'
-  /%li= t 'depot_fuels.condition_capacity'
-  %li= t 'depot_fuels.condition_ftcm'
-  %li= t 'depot_fuels.condition_tank_group'
+/HACK - suppose require different account type - accessible to 'Depot Data Entry' & Admin only
+- if (current_user.roles && current_user.roles[:user_roles][:administration]=="1") || Unit.is_depot.pluck(:id).include?(current_user.staff.unit_id)
+  = form_tag import_depot_fuels_path, multipart: true do
+    = file_field_tag :file
+    = submit_tag "Import", :class => 'btn btn-primary' 
+    
+  = link_to (t 'depot_fuels.excel_format'), '/public/excel_format/DepotFuel_Excel.xls', :action => 'download_excel_format'
+  
+  %br
+  %H5= t 'vehicles.pre_conditions'
+  %ol
+    %li= t 'depot_fuels.condition_month_year'
+    %li= t 'depot_fuels.condition_depot_name'
+    %li= t 'depot_fuels.condition_fuel_tank_qty_match'
+    %li= t 'depot_fuels.condition_naming_rules'
+    %li= t 'depot_fuels.condition_naming_rules2'
+    /%li= t 'depot_fuels.condition_capacity'
+    %li= t 'depot_fuels.condition_ftcm'
+    %li= t 'depot_fuels.condition_tank_group'
  
-%font{:color => "red"} 
-  =(t 'depot_fuels.failure')
+  %font{:color => "red"} 
+    =(t 'depot_fuels.failure')
+
+- else
+  %h4 This function only allowed for Depot user
+
+
+
      
         
    
