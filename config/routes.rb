@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :fuel_budgets do
     collection do
       get 'annual_budget'
+      post 'annual_budget'
       get 'budget_vs_usage'
       post 'budget_vs_usage'
       get 'budget_vs_usage_list'

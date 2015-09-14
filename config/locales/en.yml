@@ -241,7 +241,7 @@ en:
     budget_amount: Budget Amount
     budget_unit_type: Budget Unit Type
     usage_amount: "Usage Amount *"
-    usage_amount: Usage Unit Type
+    usage_unit_type: Usage Unit Type
     
   home:
     welcome: Welcome to Octane

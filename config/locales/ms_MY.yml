@@ -208,7 +208,7 @@ ms_MY:
     budget_amount: Amaun Belanjawan
     budget_unit_type: Unit Ukuran Belanjawan
     usage_amount: "Jumlah Penggunaan *"
-    usage_amount: Unit Ukuran Penggunaan
+    usage_unit_type: Unit Ukuran Penggunaan
     
   home:
     welcome: Selamat Datang ke Octane

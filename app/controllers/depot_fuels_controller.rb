@@ -33,8 +33,8 @@ class DepotFuelsController < ApplicationController
   
   ###index je check
   before_filter :set_depot_fuel, :only => [:show, :edit, :update, :destroy]
-  filter_access_to :index, :import_excel, :attribute_check => false
-  filter_access_to :show, :edit, :create, :update, :destroy, :attribute_check => true
+  filter_access_to :index, :create, :import_excel, :attribute_check => false
+  filter_access_to :show, :edit, :update, :destroy, :attribute_check => true
   
   # GET /depot_fuels
   # GET /depot_fuels.json
