@@ -17,10 +17,25 @@ class DepotFuelsController < ApplicationController
 
   # 2) When use 'filter_resource_access :additional_collection => { :depot_monthly_usage => :read } ' - OK BUT, semua action ok, tapi report 'depot monthly usage' pun filter sekali - 'Sorry, you are not allowed to access that page.', seems like additional_collection not functioning. found this --> https://github.com/stffn/declarative_authorization/issues/204 (title: "additional_collection" attribute does't work with Rails 4 by default) but have no idea how to make it works..
   
-  #filter_access_to :all, :except => :depot_monthly_usage
-  filter_resource_access :additional_collection => { :depot_monthly_usage => :read } 
-  before_action :set_depot_fuel, only: [:show, :edit, :update, :destroy]
+  ##filter_access_to :all, :except => :depot_monthly_usage
+  #filter_resource_access :additional_collection => { :depot_monthly_usage => :read } 
+  #before_action :set_depot_fuel, only: [:show, :edit, :update, :destroy]
 
+  ### 13 September 2015
+  
+  #filter_access_to :all, :except => [:depot_monthly_usage]
+  #filter_resource_access :except => :depot_monthly_usage
+  #filter_access_to :index, :show, :edit, :update, :destroy, :import_excel
+  #filter_resource_access
+  #filter_resource_access :additional_member => { :import_excel => :create }
+#   filter_resource_access :additional_member => {:depot_monthly_usage => :read}
+#   before_action :set_depot_fuel, only: [:show, :edit, :update, :destroy]
+  
+  ###index je check
+  before_filter :set_depot_fuel, :only => [:show, :edit, :update, :destroy]
+  filter_access_to :index, :import_excel, :attribute_check => false
+  filter_access_to :show, :edit, :create, :update, :destroy, :attribute_check => true
+  
   # GET /depot_fuels
   # GET /depot_fuels.json
   def index
