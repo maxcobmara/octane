@@ -17,9 +17,112 @@
 
 %BR
 %BR
+%H3 Diesel
+%H4 Depot Budget Vs Total Usage
+%table.table.table-bordered
+  %thead
+    %tr
+      %th No
+      %th Depot
+      %th=t 'report.budget_start_date'
+      %th=t 'report.budget_amount'
+      %th=t 'report.budget_unit_type'
+      %th=t 'report.usage_amount'
+      %th=t 'report.usage_unit_type'
+  %tbody
+    - no=0
+    - total_usage=0
+    - total_budget=0
+    - @depot_listed_budget=[]
+    - @depot_fuels.sort_by{|x|x.depot.name}.group_by(&:depot).each do |unit, depotfuels|  
+      - budget=@depot_budget_diesel.where(unit_id: unit.id).last
+      - budget_startdate=budget.try(:year_starts_on).try(:strftime, '%Y-%m-%d')
+      - if budget_startdate
+        - if budget_startdate.to_date.year < Date.today.year
+          - budget_enddate=budget_startdate.to_date+364.days
+        - else
+          - budget_enddate=Date.today
+        - fuel_issueds=FuelIssued.joins(:depot_fuel).where('depot_fuels.unit_id=? and depot_fuels.issue_date >=? and depot_fuels.issue_date <=?', unit.id, budget_startdate, budget_enddate).where(fuel_type: FuelType.where(name: 'DIESEL'))
+      - else
+        - fuel_issueds=FuelIssued.joins(:depot_fuel).where('depot_fuels.unit_id=? and depot_fuels.issue_date >=? and depot_fuels.issue_date <=?', unit.id, @start_from, @end_on).where(fuel_type: FuelType.where(name: 'DIESEL'))
+      %tr
+        %td=no+=1
+        %td=unit.name
+        %td=budget_startdate.to_date.strftime('%d %b %Y') if budget_startdate
+        %td=budget.amount if budget_startdate
+        %td=budget.unit_type.description if budget_startdate
+        %td=usage=fuel_issueds.sum(:quantity)
+        %td LITRE
+      - total_usage+=usage
+      - total_budget+=budget.amount if budget_startdate
+      - @depot_listed_budget << budget.id if budget_startdate
 
-DIESEL 
-=t 'report.budget_vs_usage'
+    /display budget without existing usage record
+    - @not_listed=@depot_budget_diesel.pluck(:id)-@depot_listed_budget
+    - @depot_budget_diesel.where(id: @not_listed).each do |bd|
+      %tr
+        %td=no+=1
+        %td=bd.unit.name
+        %td=bd.year_starts_on.strftime('%d %b %Y')
+        %td=bd.amount
+        %td=bd.unit_type.description
+        %td No record
+        %td No record
+    %tr
+      %th{colspan: "3"}Total
+      %th=total_budget
+      %th LITRE
+      %th=total_usage
+      %th LITRE
+    
+%H4 Usage Breakdown per Unit
+.small (Source : Depot Fuel)
+%table.table.table-bordered
+  %thead
+    %tr
+      %th No
+      %th Unit
+      %th=t 'report.usage_amount'
+      %th=t 'report.usage_unit_type'
+  %tbody
+    - no=0
+    - total_usage=0
+    - @diesel_issueds.group_by(&:receiver).each do |unit, diesel_issueds|
+      %tr
+        %td=no+=1
+        %td=unit.name
+        %td=diesel_issueds.sum(&:quantity)
+        %td LITRE
+    %tr
+      %th{colspan:"2"} Total
+      %th=@diesel_issueds.sum(:quantity)
+      %th LITRE
+      
+%H4 Usage Breakdown by Depot
+%table.table.table-bordered
+  - total_usage=0
+  - @depot_fuels2.group_by(&:depot).each do |depot, depot_fuels|
+    %tr
+      %th{colspan:"4"}
+        Depot : 
+        =depot.name
+    %tr
+      %th No
+      %th Unit
+      %th=t 'report.usage_amount'
+      %th=t 'report.usage_unit_type'
+    - diesel_issueds=FuelIssued.where(depot_fuel_id: depot_fuels.map(&:id)).where(fuel_type: FuelType.where(name: 'DIESEL'))
+    - no=0
+    - diesel_issueds.group_by(&:receiver).each do |unit, di|
+      %tr
+        %td=no+=1
+        %td=unit.name
+        %td=di.sum(&:quantity)
+        %td LITRE
+
+%H4
+  Unit
+  =t 'report.budget_vs_usage'
 %table.table.table-bordered
   %thead
     %tr
@@ -67,13 +170,130 @@ DIESEL
         %td=bd.unit_type.description
         %td No record
         %td No record
+
+    - @d_unit_fuels.sort_by{|x|x.unit.name}.group_by(&:unit).each do |depot, dus|
+      %tr
+        %td=no+=1
+        %td=depot.name
+        %td{colspan: 3, align: 'center'} 
+          .small 
+            \- Unit is a Depot 
+            \-
+        %td=usage=dus.sum(&:d_vessel)+dus.sum(&:d_vehicle)+dus.sum(&:d_misctool)+dus.sum(&:d_boat)
+        %td LITRE
+      - total_usage+=usage
+      
     %tr
       %th{colspan: "5"} Total Usage
-      %td=total_usage
-      %td LITRE
+      %th=total_usage
+      %th LITRE
 
-PETROL
-=t 'report.budget_vs_usage'
+%H3 Petrol
+%H4 Depot Budget Vs Total Usage
+%table.table.table-bordered
+  %thead
+    %tr
+      %th No
+      %th Depot
+      %th=t 'report.budget_start_date'
+      %th=t 'report.budget_amount'
+      %th=t 'report.budget_unit_type'
+      %th=t 'report.usage_amount'
+      %th=t 'report.usage_unit_type'
+  %tbody
+    - no=0
+    - total_usage=0
+    - total_budget=0
+    - @depot_listed_budget=[]
+    - @depot_fuels.sort_by{|x|x.depot.name}.group_by(&:depot).each do |unit, depotfuels|  
+      - budget=@depot_budget_petrol.where(unit_id: unit.id).last
+      - budget_startdate=budget.try(:year_starts_on).try(:strftime, '%Y-%m-%d')
+      - if budget_startdate
+        - if budget_startdate.to_date.year < Date.today.year
+          - budget_enddate=budget_startdate.to_date+364.days
+        - else
+          - budget_enddate=Date.today
+        - fuel_issueds=FuelIssued.joins(:depot_fuel).where('depot_fuels.unit_id=? and depot_fuels.issue_date >=? and depot_fuels.issue_date <=?', unit.id, budget_startdate, budget_enddate).where(fuel_type: FuelType.where(name: 'PETROL'))
+      - else
+        - fuel_issueds=FuelIssued.joins(:depot_fuel).where('depot_fuels.unit_id=? and depot_fuels.issue_date >=? and depot_fuels.issue_date <=?', unit.id, @start_from, @end_on).where(fuel_type: FuelType.where(name: 'PETROL'))
+      %tr
+        %td=no+=1
+        %td=unit.name
+        %td=budget_startdate.to_date.strftime('%d %b %Y') if budget_startdate
+        %td=budget.amount if budget_startdate
+        %td=budget.unit_type.description if budget_startdate
+        %td=usage=fuel_issueds.sum(:quantity)
+        %td LITRE
+      - total_usage+=usage
+      - total_budget+=budget.amount if budget_startdate
+      - @depot_listed_budget << budget.id if budget_startdate
+
+    /display budget without existing usage record
+    - @not_listed=@depot_budget_petrol.pluck(:id)-@depot_listed_budget
+    - @depot_budget_petrol.where(id: @not_listed).each do |bd|
+      %tr
+        %td=no+=1
+        %td=bd.unit.name
+        %td=bd.year_starts_on.strftime('%d %b %Y')
+        %td=bd.amount
+        %td=bd.unit_type.description
+        %td No record
+        %td No record
+    %tr
+      %th{colspan: "3"}Total
+      %th=total_budget
+      %th LITRE
+      %th=total_usage
+      %th LITRE
+    
+%H4 Usage Breakdown per Unit
+.small (Source : Depot Fuel)
+%table.table.table-bordered
+  %thead
+    %tr
+      %th No
+      %th Unit
+      %th=t 'report.usage_amount'
+      %th=t 'report.usage_unit_type'
+  %tbody
+    - no=0
+    - total_usage=0
+    - @petrol_issueds.group_by(&:receiver).each do |unit, petrol_issueds|
+      %tr
+        %td=no+=1
+        %td=unit.name
+        %td=petrol_issueds.sum(&:quantity)
+        %td LITRE
+    %tr
+      %th{colspan:"2"} Total
+      %th=@petrol_issueds.sum(:quantity)
+      %th LITRE
+      
+%H4 Usage Breakdown by Depot
+%table.table.table-bordered
+  - total_usage=0
+  - @depot_fuels2.group_by(&:depot).each do |depot, depot_fuels|
+    %tr
+      %th{colspan:"4"}
+        Depot : 
+        =depot.name
+    %tr
+      %th No
+      %th Unit
+      %th=t 'report.usage_amount'
+      %th=t 'report.usage_unit_type'
+    - diesel_issueds=FuelIssued.where(depot_fuel_id: depot_fuels.map(&:id)).where(fuel_type: FuelType.where(name: 'PETROL'))
+    - no=0
+    - diesel_issueds.group_by(&:receiver).each do |unit, di|
+      %tr
+        %td=no+=1
+        %td=unit.name
+        %td=di.sum(&:quantity)
+        %td LITRE
+
+%H4
+  Unit
+  =t 'report.budget_vs_usage'
 %table.table.table-bordered
   %thead
     %tr
@@ -123,11 +343,115 @@ PETROL
         %td No record
     %tr
       %th{colspan: "5"} Total Usage
-      %td=total_usage
-      %td LITRE
+      %th=total_usage
+      %th LITRE
 
-AVTUR
-=t 'report.budget_vs_usage'
+%H3 AVTUR
+%H4 Depot Budget Vs Total Usage
+%table.table.table-bordered
+  %thead
+    %tr
+      %th No
+      %th Depot
+      %th=t 'report.budget_start_date'
+      %th=t 'report.budget_amount'
+      %th=t 'report.budget_unit_type'
+      %th=t 'report.usage_amount'
+      %th=t 'report.usage_unit_type'
+  %tbody
+    - no=0
+    - total_usage=0
+    - total_budget=0
+    - @depot_listed_budget=[]
+    - @depot_fuels.sort_by{|x|x.depot.name}.group_by(&:depot).each do |unit, depotfuels|  
+      - budget=@depot_budget_avtur.where(unit_id: unit.id).last
+      - budget_startdate=budget.try(:year_starts_on).try(:strftime, '%Y-%m-%d')
+      - if budget_startdate
+        - if budget_startdate.to_date.year < Date.today.year
+          - budget_enddate=budget_startdate.to_date+364.days
+        - else
+          - budget_enddate=Date.today
+        - fuel_issueds=FuelIssued.joins(:depot_fuel).where('depot_fuels.unit_id=? and depot_fuels.issue_date >=? and depot_fuels.issue_date <=?', unit.id, budget_startdate, budget_enddate).where(fuel_type: FuelType.where(name: 'AVTUR'))
+      - else
+        - fuel_issueds=FuelIssued.joins(:depot_fuel).where('depot_fuels.unit_id=? and depot_fuels.issue_date >=? and depot_fuels.issue_date <=?', unit.id, @start_from, @end_on).where(fuel_type: FuelType.where(name: 'AVTUR'))
+      %tr
+        %td=no+=1
+        %td=unit.name
+        %td=budget_startdate.to_date.strftime('%d %b %Y') if budget_startdate
+        %td=budget.amount if budget_startdate
+        %td=budget.unit_type.description if budget_startdate
+        %td=usage=fuel_issueds.sum(:quantity)
+        %td LITRE
+      - total_usage+=usage
+      - total_budget+=budget.amount if budget_startdate
+      - @depot_listed_budget << budget.id if budget_startdate
+
+    /display budget without existing usage record
+    - @not_listed=@depot_budget_avtur.pluck(:id)-@depot_listed_budget
+    - @depot_budget_avtur.where(id: @not_listed).each do |bd|
+      %tr
+        %td=no+=1
+        %td=bd.unit.name
+        %td=bd.year_starts_on.strftime('%d %b %Y')
+        %td=bd.amount
+        %td=bd.unit_type.description
+        %td No record
+        %td No record
+    %tr
+      %th{colspan: "3"}Total
+      %th=total_budget
+      %th LITRE
+      %th=total_usage
+      %th LITRE
+    
+%H4 Usage Breakdown per Unit
+.small (Source : Depot Fuel)
+%table.table.table-bordered
+  %thead
+    %tr
+      %th No
+      %th Unit
+      %th=t 'report.usage_amount'
+      %th=t 'report.usage_unit_type'
+  %tbody
+    - no=0
+    - total_usage=0
+    - @avtur_issueds.group_by(&:receiver).each do |unit, avtur_issueds|
+      %tr
+        %td=no+=1
+        %td=unit.name
+        %td=avtur_issueds.sum(&:quantity)
+        %td LITRE
+    %tr
+      %th{colspan:"2"} Total
+      %th=@avtur_issueds.sum(:quantity)
+      %th LITRE
+      
+%H4 Usage Breakdown by Depot
+%table.table.table-bordered
+  - total_usage=0
+  - @depot_fuels2.group_by(&:depot).each do |depot, depot_fuels|
+    %tr
+      %th{colspan:"4"}
+        Depot : 
+        =depot.name
+    %tr
+      %th No
+      %th Unit
+      %th=t 'report.usage_amount'
+      %th=t 'report.usage_unit_type'
+    - avtur_issueds=FuelIssued.where(depot_fuel_id: depot_fuels.map(&:id)).where(fuel_type: FuelType.where(name: 'AVTUR'))
+    - no=0
+    - avtur_issueds.group_by(&:receiver).each do |unit, di|
+      %tr
+        %td=no+=1
+        %td=unit.name
+        %td=di.sum(&:quantity)
+        %td LITRE
+
+%H4
+  Unit
+  =t 'report.budget_vs_usage'
 %table.table.table-bordered
   %thead
     %tr
@@ -177,11 +501,115 @@ AVTUR
         %td No record
     %tr
       %th{colspan: "5"} Total Usage
-      %td=total_usage
-      %td LITRE
+      %th=total_usage
+      %thg LITRE
 
-AVCAT
-=t 'report.budget_vs_usage'
+%H3 AVCAT
+%H4 Depot Budget Vs Total Usage
+%table.table.table-bordered
+  %thead
+    %tr
+      %th No
+      %th Depot
+      %th=t 'report.budget_start_date'
+      %th=t 'report.budget_amount'
+      %th=t 'report.budget_unit_type'
+      %th=t 'report.usage_amount'
+      %th=t 'report.usage_unit_type'
+  %tbody
+    - no=0
+    - total_usage=0
+    - total_budget=0
+    - @depot_listed_budget=[]
+    - @depot_fuels.sort_by{|x|x.depot.name}.group_by(&:depot).each do |unit, depotfuels|  
+      - budget=@depot_budget_avcat.where(unit_id: unit.id).last
+      - budget_startdate=budget.try(:year_starts_on).try(:strftime, '%Y-%m-%d')
+      - if budget_startdate
+        - if budget_startdate.to_date.year < Date.today.year
+          - budget_enddate=budget_startdate.to_date+364.days
+        - else
+          - budget_enddate=Date.today
+        - fuel_issueds=FuelIssued.joins(:depot_fuel).where('depot_fuels.unit_id=? and depot_fuels.issue_date >=? and depot_fuels.issue_date <=?', unit.id, budget_startdate, budget_enddate).where(fuel_type: FuelType.where(name: 'AVCAT'))
+      - else
+        - fuel_issueds=FuelIssued.joins(:depot_fuel).where('depot_fuels.unit_id=? and depot_fuels.issue_date >=? and depot_fuels.issue_date <=?', unit.id, @start_from, @end_on).where(fuel_type: FuelType.where(name: 'AVCAT'))
+      %tr
+        %td=no+=1
+        %td=unit.name
+        %td=budget_startdate.to_date.strftime('%d %b %Y') if budget_startdate
+        %td=budget.amount if budget_startdate
+        %td=budget.unit_type.description if budget_startdate
+        %td=usage=fuel_issueds.sum(:quantity)
+        %td LITRE
+      - total_usage+=usage
+      - total_budget+=budget.amount if budget_startdate
+      - @depot_listed_budget << budget.id if budget_startdate
+
+    /display budget without existing usage record
+    - @not_listed=@depot_budget_avcat.pluck(:id)-@depot_listed_budget
+    - @depot_budget_avcat.where(id: @not_listed).each do |bd|
+      %tr
+        %td=no+=1
+        %td=bd.unit.name
+        %td=bd.year_starts_on.strftime('%d %b %Y')
+        %td=bd.amount
+        %td=bd.unit_type.description
+        %td No record
+        %td No record
+    %tr
+      %th{colspan: "3"}Total
+      %th=total_budget
+      %th LITRE
+      %th=total_usage
+      %th LITRE
+    
+%H4 Usage Breakdown per Unit
+.small (Source : Depot Fuel)
+%table.table.table-bordered
+  %thead
+    %tr
+      %th No
+      %th Unit
+      %th=t 'report.usage_amount'
+      %th=t 'report.usage_unit_type'
+  %tbody
+    - no=0
+    - total_usage=0
+    - @avcat_issueds.group_by(&:receiver).each do |unit, diesel_issueds|
+      %tr
+        %td=no+=1
+        %td=unit.name
+        %td=diesel_issueds.sum(&:quantity)
+        %td LITRE
+    %tr
+      %th{colspan:"2"} Total
+      %th=@avcat_issueds.sum(:quantity)
+      %th LITRE
+      
+%H4 Usage Breakdown by Depot
+%table.table.table-bordered
+  - total_usage=0
+  - @depot_fuels2.group_by(&:depot).each do |depot, depot_fuels|
+    %tr
+      %th{colspan:"4"}
+        Depot : 
+        =depot.name
+    %tr
+      %th No
+      %th Unit
+      %th=t 'report.usage_amount'
+      %th=t 'report.usage_unit_type'
+    - diesel_issueds=FuelIssued.where(depot_fuel_id: depot_fuels.map(&:id)).where(fuel_type: FuelType.where(name: 'AVCAT'))
+    - no=0
+    - diesel_issueds.group_by(&:receiver).each do |unit, di|
+      %tr
+        %td=no+=1
+        %td=unit.name
+        %td=di.sum(&:quantity)
+        %td LITRE
+
+%H4
+  Unit
+  =t 'report.budget_vs_usage'
 %table.table.table-bordered
   %thead
     %tr
@@ -231,8 +659,8 @@ AVCAT
         %td No record
     %tr
       %th{colspan: "5"} Total Usage
-      %td=total_usage
-      %td LITRE
+      %th=total_usage
+      %th LITRE
 
 .small
   * Last updated :

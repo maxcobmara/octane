@@ -6,7 +6,21 @@
 .page-header
   %h1= t 'menu.annual_budget', :default => model_class.model_name.human.pluralize
 
+.row-fluid
+  .block
+    .block-heading.tool_bar
+      .col-sm-6
+        = form_for :search, :url => annual_budget_fuel_budgets_path, :role => "form", class: "form-inline" do |f|
+          .form-group
+            #datepicker.input-daterange.input-group
+              .input-group-addon Select a date in a Year
+              = f.text_field :issue_date, :name => "search[start_date]" , type: "text", class: "form-control", 'data-behaviour' => 'datepicker_std', placeholder: @start_from,  value: (@params_start_date  = params[:search].try(:[], :start_date))
+              %span.input-group-btn
+                %button.btn.btn-default{:type => "submit", :style => "height:34px;"}
+                  %i.glyphicon.glyphicon-search
 
+%BR
+%BR
 - @fuel_budgets.group_by(&:unit).each do |depot, fuel_budgets|
  
   %table.table.table-bordered

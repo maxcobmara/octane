@@ -17,99 +17,242 @@
 
 %BR
 %BR
+/1st Section - Depot Budget & Total Usage (Depot Fuel)
+//DEPOT FUELS - DIESEL
 .row
   %h3 Diesel
+  %h4 Depot Budget Vs Total Usage
   .col-md-7
-    = bar_chart [{name: "Budget", data: @diesel_budget}, {name: "Usage", data: @diesel_usage}]
-.row
-  .col-md-5.col-md-offset-1
-    %h5 Diesel Budget
-    %table.table.table-bordered.table-condensed
-      - budget_date_diesel=@budget.where(fuel_type: FuelType.where(name: 'DIESEL'))
-      - if budget_date_diesel && budget_date_diesel.count > 0
-        %tr
-          %th No
-          %th Unit / Depot
-          %th=t 'report.budget_start_date'
-        - budget_date_diesel.each_with_index do |budget, index|
-          %tr
-            %td=index+1
-            %td=budget.unit.name
-            %td=budget.year_starts_on.try(:strftime, '%d %b %Y')  
-      - else
-        &nbsp;&nbsp;for year
-        %b=@start_from.to_date.year
-        does not exist
+    = bar_chart [{name: "Usage", data: @main_diesel_usage}, {name: "Budget", data: @main_diesel_budget.each.map{|x, y| [x.name, y]}}]   
 
 .row
-  %h3 Petrol
+  %h4 Usage Breakdown per Unit 
+  %h5 (Source: Depot Fuel)
   .col-md-7
-    = bar_chart [{name: "Budget", data: @petrol_budget}, {name: "Usage", data: @petrol_usage}]
+    = bar_chart @sub_diesel_usage2.each.map{|x, y| [x.name, y]}
+
 .row
-  .col-md-5.col-md-offset-1
-    %h5 Petrol Budget
-    %table.table.table-bordered.table-condensed
-      - budget_date_petrol=@budget.where(fuel_type: FuelType.where(name: 'PETROL'))
-      - if budget_date_petrol && budget_date_petrol.count > 0
-        %tr
-          %th No
-          %th Unit / Depot
-          %th=t 'report.budget_start_date'
-        - budget_date_petrol.each_with_index do |budget, index|
+  %h4 Usage Breakdown by Depot
+- @sub_diesel_usage.each_with_index do |sub_diesel_usage, ind|
+  .row
+    %h5= "("+(ind+1).to_s+") "+Unit.where(id: @depot_ids[ind]).first.name
+    .col-md-7
+      = bar_chart sub_diesel_usage.each.map{|x,y|[x.name, y]}
+
+/2nd Section - Unit Budget & Usage (Unit Fuel)
+//UNIT FUELS - Diesel
+.row
+  - if @diesel_budget && @diesel_usage
+    %h4 Unit Budget Vs Usage
+  - else
+    - if @diesel_usage && !@diesel_budget
+      %h4 Unit Usage
+  %h5 (Source : Unit Fuel)
+  .col-md-7
+    - if @diesel_budget && @diesel_usage
+      = bar_chart [{name: "Usage", data: @diesel_usage},{name: "Budget", data: @diesel_budget}]
+      %h4 Unit (Depot) Usage
+      = bar_chart @diesel_usage2
+    - else
+      - if @diesel_usage && !@diesel_budget
+        = bar_chart (@diesel_usage+@diesel_usage2)
+- if @diesel_budget
+  .row
+    .col-md-5.col-md-offset-1
+      %h5 Unit Diesel Budget
+      %table.table.table-bordered.table-condensed
+        - budget_date_diesel=@budget.where(fuel_type: FuelType.where(name: 'DIESEL')).where.not(unit_id: FuelTank.pluck(:unit_id))
+        - if budget_date_diesel && budget_date_diesel.count > 0
           %tr
-            %td=index+1
-            %td=budget.unit.name
-            %td=budget.year_starts_on.try(:strftime, '%d %b %Y')  
-      - else
-        &nbsp;&nbsp;for year
-        %b=@start_from.to_date.year
-        does not exist
-              
+            %th No
+            %th Unit / Depot
+            %th=t 'report.budget_start_date'
+          - budget_date_diesel.each_with_index do |budget, index|
+            %tr
+              %td=index+1
+              %td=budget.unit.name
+              %td=budget.year_starts_on.try(:strftime, '%d %b %Y')  
+        - else
+          &nbsp;&nbsp;for year
+          %b=@start_from.to_date.year
+          does not exist
+
+/1st Section - Depot Budget & Total Usage (Depot Fuel)
+//DEPOT FUELS - PETROL      
+.row
+  %h3 Petrol
+  %h4 Depot Budget Vs Total Usage
+  .col-md-7
+    = bar_chart [{name: "Usage", data: @main_petrol_usage}, {name: "Budget", data: @main_petrol_budget.each.map{|x, y| [x.name, y]}}]   
+
+.row
+  %h4 Usage Breakdown per Unit 
+  %h5 (Source: Depot Fuel)
+  .col-md-7
+    = bar_chart @sub_petrol_usage2.each.map{|x, y| [x.name, y]}
+
+.row
+  %h4 Usage Breakdown by Depot
+- @sub_petrol_usage.each_with_index do |sub_diesel_usage, ind|
+  .row
+    %h5= "("+(ind+1).to_s+") "+Unit.where(id: @depot_ids[ind]).first.name
+    .col-md-7
+      = bar_chart sub_diesel_usage.each.map{|x,y|[x.name, y]}
+
+/2nd Section - Unit Budget & Usage (Unit Fuel)
+//UNIT FUELS - Petrol
+.row
+  - if @petrol_budget && @petrol_usage
+    %h4 Unit Budget Vs Usage
+  - else
+    - if @petrol_usage && !@petrol_budget
+      %h4 Unit Usage
+  %h5 (Source : Unit Fuel)
+  .col-md-7
+    - if @petrol_budget && @petrol_usage
+      = bar_chart [{name: "Usage", data: @petrol_usage},{name: "Budget", data: @petrol_budget}]
+      %h4 Unit (Depot) Usage
+      = bar_chart @petrol_usage2
+    - else
+      - if @petrol_usage && !@petrol_budget
+        = bar_chart (@petrol_usage+@petrol_usage2)
+- if @petrol_budget
+  .row
+    .col-md-5.col-md-offset-1
+      %h5 Unit Petrol Budget
+      %table.table.table-bordered.table-condensed
+        - budget_date_petrol=@budget.where(fuel_type: FuelType.where(name: 'PETROL')).where.not(unit_id: FuelTank.pluck(:unit_id))
+        - if budget_date_petrol && budget_date_petrol.count > 0
+          %tr
+            %th No
+            %th Unit / Depot
+            %th=t 'report.budget_start_date'
+          - budget_date_petrol.each_with_index do |budget, index|
+            %tr
+              %td=index+1
+              %td=budget.unit.name
+              %td=budget.year_starts_on.try(:strftime, '%d %b %Y')  
+        - else
+          &nbsp;&nbsp;for year
+          %b=@start_from.to_date.year
+          does not exist
+
+/1st Section - Depot Budget & Total Usage (Depot Fuel)
+//DEPOT FUELS - AVTUR
 .row
   %h3 AVTUR
+  %h4 Depot Budget Vs Total Usage
   .col-md-7
-    = bar_chart [{name: "Budget", data: @avtur_budget}, {name: "Usage", data: @avtur_usage}]
+    = bar_chart [{name: "Usage", data: @main_avtur_usage}, {name: "Budget", data: @main_avtur_budget.each.map{|x, y| [x.name, y]}}]   
+
 .row
-  .col-md-5.col-md-offset-1
-    %h5 AVTUR Budget
-    %table.table.table-bordered.table-condensed
-      - budget_date_avtur=@budget.where(fuel_type: FuelType.where(name: 'AVTUR'))
-      - if budget_date_avtur && budget_date_avtur.count > 0
-        %tr
-          %th No
-          %th Unit / Depot
-          %th=t 'report.budget_start_date'
-        - budget_date_avtur.each_with_index do |budget, index|
+  %h4 Usage Breakdown per Unit 
+  %h5 (Source: Depot Fuel)
+  .col-md-7
+    = bar_chart @sub_avtur_usage2.each.map{|x, y| [x.name, y]}
+
+.row
+  %h4 Usage Breakdown by Depot
+- @sub_avtur_usage.each_with_index do |sub_diesel_usage, ind|
+  .row
+    %h5= "("+(ind+1).to_s+") "+Unit.where(id: @depot_ids[ind]).first.name
+    .col-md-7
+      = bar_chart sub_diesel_usage.each.map{|x,y|[x.name, y]}
+
+/2nd Section - Unit Budget & Usage (Unit Fuel)
+//UNIT FUELS - AVTUR
+.row
+  - if @avtur_budget && @avtur_usage
+    %h4 Unit Budget Vs Usage
+  - else
+    - if @avtur_usage && !@avtur_budget
+      %h4 Unit Usage
+  %h5 (Source : Unit Fuel)
+  .col-md-7
+    - if @avtur_budget && @avtur_usage
+      = bar_chart [{name: "Usage", data: @avtur_usage},{name: "Budget", data: @avtur_budget}]
+      %h4 Unit (Depot) Usage
+      = bar_chart @avtur_usage2
+    - else
+      - if @avtur_usage && !@avtur_budget
+        = bar_chart (@avtur_usage+@avtur_usage2)
+- if @avtur_budget
+  .row
+    .col-md-5.col-md-offset-1
+      %h5 AVTUR Budget
+      %table.table.table-bordered.table-condensed
+        - budget_date_avtur=@budget.where(fuel_type: FuelType.where(name: 'AVTUR')).where.not(unit_id: FuelTank.pluck(:unit_id))
+        - if budget_date_avtur && budget_date_avtur.count > 0
           %tr
-            %td=index+1
-            %td=budget.unit.name
-            %td=budget.year_starts_on.try(:strftime, '%d %b %Y')  
-      - else
-        &nbsp;&nbsp;for year
-        %b=@start_from.to_date.year
-        does not exist 
-              
+            %th No
+            %th Unit / Depot
+            %th=t 'report.budget_start_date'
+          - budget_date_avtur.each_with_index do |budget, index|
+            %tr
+              %td=index+1
+              %td=budget.unit.name
+              %td=budget.year_starts_on.try(:strftime, '%d %b %Y')  
+        - else
+          &nbsp;&nbsp;for year
+          %b=@start_from.to_date.year
+          does not exist 
+
+/1st Section - Depot Budget & Total Usage (Depot Fuel)
+//DEPOT FUELS - AVCAT   
 .row
   %h3 AVCAT
+  %h4 Depot Budget Vs Total Usage
   .col-md-7
-    = bar_chart [{name: "Budget", data: @avcat_budget}, {name: "Usage", data: @avcat_usage}] 
+    = bar_chart [{name: "Usage", data: @main_avcat_usage}, {name: "Budget", data: @main_avcat_budget.each.map{|x, y| [x.name, y]}}]   
+
 .row
-  .col-md-5.col-md-offset-1
-    %h5 AVCAT Budget
-    %table.table.table-bordered.table-condensed
-      - budget_date_avcat=@budget.where(fuel_type: FuelType.where(name: 'AVCAT'))
-      - if budget_date_avcat && budget_date_avcat.count > 0
-        %tr
-          %th No
-          %th Unit / Depot
-          %th=t 'report.budget_start_date'
-        - budget_date_avcat.each_with_index do |budget, index|
+  %h4 Usage Breakdown per Unit 
+  %h5 (Source: Depot Fuel)
+  .col-md-7
+    = bar_chart @sub_avcat_usage2.each.map{|x, y| [x.name, y]}
+
+.row
+  %h4 Usage Breakdown by Depot
+- @sub_avcat_usage.each_with_index do |sub_diesel_usage, ind|
+  .row
+    %h5= "("+(ind+1).to_s+") "+Unit.where(id: @depot_ids[ind]).first.name
+    .col-md-7
+      = bar_chart sub_diesel_usage.each.map{|x,y|[x.name, y]}
+
+/2nd Section - Unit Budget & Usage (Unit Fuel)
+//UNIT FUELS - AVCAT
+.row
+  - if @avcat_budget && @avcat_usage
+    %h4 Unit Budget Vs Usage
+  - else
+    - if @avcat_usage && !@avcat_budget
+      %h4 Unit Usage
+  %h5 (Source : Unit Fuel)
+  .col-md-7
+    - if @avcat_budget && @avcat_usage
+      = bar_chart [{name: "Usage", data: @avcat_usage},{name: "Budget", data: @avcat_budget}] 
+      %h4 Unit (Depot) Usage
+      = bar_chart @avcat_usage2
+    - else
+      - if @avcat_usage && !@avcat_budget
+        = bar_chart (@avcat_usage+@avcat_usage2)
+- if @avcat_budget
+  .row
+    .col-md-5.col-md-offset-1
+      %h5 AVCAT Budget
+      %table.table.table-bordered.table-condensed
+        - budget_date_avcat=@budget.where(fuel_type: FuelType.where(name: 'AVCAT')).where.not(unit_id: FuelTank.pluck(:unit_id))
+        - if budget_date_avcat && budget_date_avcat.count > 0
           %tr
-            %td=index+1
-            %td=budget.unit.name
-            %td=budget.year_starts_on.try(:strftime, '%d %b %Y')  
-      - else
-        &nbsp;&nbsp;for year
-        %b=@start_from.to_date.year
-        does not exist
- 
+            %th No
+            %th Unit / Depot
+            %th=t 'report.budget_start_date'
+          - budget_date_avcat.each_with_index do |budget, index|
+            %tr
+              %td=index+1
+              %td=budget.unit.name
+              %td=budget.year_starts_on.try(:strftime, '%d %b %Y')  
+        - else
+          &nbsp;&nbsp;for year
+          %b=@start_from.to_date.year
+          does not exist
