@@ -34,7 +34,7 @@
     - total_usage=0
     - total_budget=0
     - @depot_listed_budget=[]
-    - @depot_fuels.sort_by{|x|x.depot.name}.group_by(&:depot).each do |unit, depotfuels|  
+    - @depot_fuels2.sort_by{|x|x.depot.name}.group_by(&:depot).each do |unit, depotfuels|  
       - budget=@depot_budget_diesel.where(unit_id: unit.id).last
       - budget_startdate=budget.try(:year_starts_on).try(:strftime, '%Y-%m-%d')
       - if budget_startdate
@@ -205,7 +205,7 @@
     - total_usage=0
     - total_budget=0
     - @depot_listed_budget=[]
-    - @depot_fuels.sort_by{|x|x.depot.name}.group_by(&:depot).each do |unit, depotfuels|  
+    - @depot_fuels2.sort_by{|x|x.depot.name}.group_by(&:depot).each do |unit, depotfuels|  
       - budget=@depot_budget_petrol.where(unit_id: unit.id).last
       - budget_startdate=budget.try(:year_starts_on).try(:strftime, '%Y-%m-%d')
       - if budget_startdate
@@ -363,7 +363,7 @@
     - total_usage=0
     - total_budget=0
     - @depot_listed_budget=[]
-    - @depot_fuels.sort_by{|x|x.depot.name}.group_by(&:depot).each do |unit, depotfuels|  
+    - @depot_fuels2.sort_by{|x|x.depot.name}.group_by(&:depot).each do |unit, depotfuels|  
       - budget=@depot_budget_avtur.where(unit_id: unit.id).last
       - budget_startdate=budget.try(:year_starts_on).try(:strftime, '%Y-%m-%d')
       - if budget_startdate
@@ -521,7 +521,7 @@
     - total_usage=0
     - total_budget=0
     - @depot_listed_budget=[]
-    - @depot_fuels.sort_by{|x|x.depot.name}.group_by(&:depot).each do |unit, depotfuels|  
+    - @depot_fuels2.sort_by{|x|x.depot.name}.group_by(&:depot).each do |unit, depotfuels|  
       - budget=@depot_budget_avcat.where(unit_id: unit.id).last
       - budget_startdate=budget.try(:year_starts_on).try(:strftime, '%Y-%m-%d')
       - if budget_startdate
