@@ -1,4 +1,5 @@
 class IndenCard < ActiveRecord::Base
+  before_destroy :valid_for_removal
   belongs_to :staff, foreign_key: "staff_id"
   belongs_to :unit, foreign_key: "unit_id"
   has_many :inden_usages, dependent: :destroy
@@ -17,6 +18,14 @@ class IndenCard < ActiveRecord::Base
       serial_no+" | "+staff.name
     else 
       serial_no+" | "+unit.name
+    end
+  end
+  
+  def valid_for_removal
+    if inden_usages.count > 0
+      return false
+    else
+      return true
     end
   end
   
