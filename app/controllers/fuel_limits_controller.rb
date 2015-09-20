@@ -57,6 +57,10 @@ class FuelLimitsController < ApplicationController
   def update
     respond_to do |format|
       if @fuel_limit.update(fuel_limit_params)
+
+        #for checking
+        NotificationMailer.notify_email2(@fuel_limit).deliver_now
+
         format.html { redirect_to @fuel_limit, notice: 'Fuel limit was successfully updated.' }
         format.json { render :show, status: :ok, location: @fuel_limit }
       else

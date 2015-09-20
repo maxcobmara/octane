@@ -90,6 +90,20 @@ class DepotFuelsController < ApplicationController
   def update
     respond_to do |format|
       if @depot_fuel.update(depot_fuel_params)
+        limit_diesel=FuelLimit.where(unit_id: @depot_fuel.unit_id).where(fuel_type_id: FuelType.where(name: 'DIESEL').first.id).first
+        limit_petrol=FuelLimit.where(unit_id: @depot_fuel.unit_id).where(fuel_type_id: FuelType.where(name: 'PETROL').first.id).first
+        if limit_diesel && limit_petrol
+          if @depot_fuel.surplus_diesel_amount > 0 && @depot_fuel.surplus_petrol_amount > 0 
+            NotificationMailer.notify_email_combine(limit_diesel, limit_petrol, @depot_fuel).deliver_now && limit_diesel.emails==limit_petrol.emails
+          else
+            if @depot_fuel.surplus_diesel_amount > 0 #&& @depot_fuel.surplus_petrol_amount <= 0
+              NotificationMailer.notify_email(limit_diesel, @depot_fuel).deliver_now
+            end
+            if @depot_fuel.surplus_petrol_amount > 0 #&& @depot_fuel.surplus_diesel_amount <= 0
+              NotificationMailer.notify_email(limit_petrol, @depot_fuel).deliver_now
+            end
+          end
+        end
         format.html { redirect_to @depot_fuel, notice:  (t 'depot_fuels.title')+(t 'actions.updated') }
         format.json { head :no_content }
       else

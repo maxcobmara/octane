@@ -37,3 +37,40 @@
       :method => 'delete',                                                                                                           |
       :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },                   |
       :class => 'btn btn-danger'                                                                                                     |
+
+/ - budget=FuelBudget.where(unit_id: @fuel_limit.unit_id)
+/ - budget_start_date=budget.order(year_starts_on: :desc).last.year_starts_on
+/ = budget_start_date.strftime('%d-%m-%Y') if budget.count > 0
+/ %br
+/ Total days difference
+/ = days_diff = (Date.today-budget_start_date.to_date).to_i
+/ %br
+/ Days num (of limit)
+/ = days_no = days_diff %@fuel_limit.duration
+/ = limit_set = days_diff/@fuel_limit.duration
+/ 
+/ - if days_no == 0 && days_diff > 0
+/   %br
+/   limit start
+/   - if limit_set==0
+/     = limitstart=Date.today-days_diff
+/   - else
+/     = limitstart=Date.today-(days_diff*limit_set)
+/   
+/   - fuel_issued_within_limit=FuelIssued.joins(:depot_fuel).where('depot_fuels.unit_id=?', @fuel_limit.unit_id).where('depot_fuels.issue_date >=? and depot_fuels. issue_date <=?', limitstart, Date.today)
+/   %br
+/   - if @fuel_limit.fuel_type.name=='DIESEL'
+/     %b Diesel 
+/   - elsif @fuel_limit.fuel_type.name=='PETROL'
+/     %b Petrol 
+/   %br
+/   Usage :
+/   - fuel_issueds=fuel_issued_within_limit.where(fuel_type: @fuel_limit.fuel_type)
+/   = usage= fuel_issueds.sum(:quantity)
+/   = unittype= fuel_issueds.first.try(:unit_type).try(:description)
+/   - if fuel_issueds.first.unit_type==@fuel_limit.limit_unit_type 
+/     - if usage > @fuel_limit.limit_amount
+/       %br
+/       Surplus :
+/       = usage - @fuel_limit.limit_amount
+/       = @fuel_limit.limit_unit_type.description

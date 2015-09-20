@@ -5,6 +5,7 @@ class FuelLimit < ActiveRecord::Base
   belongs_to :fuel_unit_type, :class_name => "UnitType", :foreign_key => "fuel_unit_type_id"
   
   validates_presence_of :unit_id, :limit_amount, :limit_unit_type_id, :duration, :fuel_type_id, :fuel_unit_type_id
+  validates_uniqueness_of :unit_id, :scope => :fuel_type_id, :message => " : already have Fuel Limit for selected Fuel type"
   
   def self.search_by_role(is_admin, staffid)
     if is_admin== "1"
