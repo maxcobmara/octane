@@ -30,7 +30,7 @@ en:
       vehicle_assignment_detail: Vehicle Details
       staff: Staff
       fuel_tank: Fuel Tank
-      fuel_limit: Depot Fuel
+      fuel_limit: Fuel Limits
     attributes:
       vehicle:
         reg_no: Registration No

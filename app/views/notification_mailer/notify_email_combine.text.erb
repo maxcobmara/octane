@@ -2,13 +2,32 @@ Notification on Surplus of Fuel Usage
 
 Date : <%= Date.today.strftime("%d %b %Y")%>
 Depot : <%=@depot_fuel.depot.name %>
+<%count=0%>
 
-1) Fuel Type : <%=@diesel_limit.fuel_type.name%>
+<% if @diesel_limit !=0 %>
+<%=count+=1%>) Fuel Type : <%=@diesel_limit.fuel_type.name%>
     Limit Amount : <%=@diesel_limit.limit_amount%> <%=@diesel_limit.limit_unit_type.description%>
     Usage Amount : <%=@depot_fuel.usage_diesel_amount%> <%=@diesel_limit.limit_unit_type.description%>
     Surplus Amount : <%=@depot_fuel.surplus_diesel_amount%> <%=@diesel_limit.limit_unit_type.description%>
+<% end %>
 
-2) Fuel Type : <%=@petrol_limit.fuel_type.name%>
+<% if @petrol_limit !=0 %>
+<%=count+=1%>) Fuel Type : <%=@petrol_limit.fuel_type.name%>
     Limit Amount : <%=@petrol_limit.limit_amount%> <%=@petrol_limit.limit_unit_type.description%>
     Usage Amount : <%=@depot_fuel.usage_petrol_amount%> <%=@petrol_limit.limit_unit_type.description%>
     Surplus Amount : <%=@depot_fuel.surplus_petrol_amount%> <%=@petrol_limit.limit_unit_type.description%>
+<% end %>
+
+<% if @avtur_limit != 0 %>
+<%=count+=1%>) Fuel Type : <%=@avtur_limit.fuel_type.name%>
+    Limit Amount : <%=@avtur_limit.limit_amount%> <%=@avtur_limit.limit_unit_type.description%>
+    Usage Amount : <%=@depot_fuel.usage_avtur_amount%> <%=@avtur_limit.limit_unit_type.description%>
+    Surplus Amount : <%=@depot_fuel.surplus_avtur_amount%> <%=@avtur_limit.limit_unit_type.description%>
+<% end %>
+
+<% if @avcat_limit != 0 %>
+<%=count+=1%>) Fuel Type : <%=@avcat_limit.fuel_type.name%>
+    Limit Amount : <%=@avcat_limit.limit_amount%> <%=@avcat_limit.limit_unit_type.description%>
+    Usage Amount : <%=@depot_fuel.usage_avcat_amount%> <%=@avcat_limit.limit_unit_type.description%>
+    Surplus Amount : <%=@depot_fuel.surplus_avcat_amount%> <%=@avcat_limit.limit_unit_type.description%>
+<% end %>

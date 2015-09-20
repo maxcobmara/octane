@@ -7,9 +7,11 @@ class NotificationMailer < ActionMailer::Base
     mail(to: @fuel_limit.emails, subject: 'Notification Email')
   end
   
-  def notify_email_combine(limit_diesel, limit_petrol, depot_fuel)
+  def notify_email_combine(limit_diesel, limit_petrol, limit_avtur, limit_avcat, depot_fuel)
     @diesel_limit=limit_diesel
     @petrol_limit=limit_petrol
+    @avtur_limit=limit_avtur
+    @avcat_limit=limit_avcat
     @depot_fuel=depot_fuel
     mail(to: @diesel_limit.emails, subject: 'Notification Email')
   end
