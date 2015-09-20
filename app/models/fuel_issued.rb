@@ -1,8 +1,15 @@
 class FuelIssued < ActiveRecord::Base
+  before_save :default_unit_type_if_nil
   belongs_to :depot_fuel, :foreign_key => "depot_fuel_id"
   belongs_to :fuel_type, :foreign_key => "fuel_type_id"
   belongs_to :unit_type, :foreign_key => "unit_type_id"
   belongs_to :receiver, :class_name => "Unit", :foreign_key => "unit_id"
+  
+  def default_unit_type_if_nil
+    if unit_type_id.blank?
+      self.unit_type_id=UnitType.where(description: 'LITRE').first.id
+    end
+  end
   
   def self.search_by_role(is_admin, staffid)
     if is_admin== "1"

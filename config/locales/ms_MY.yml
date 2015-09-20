@@ -7,6 +7,7 @@ ms_MY:
       vehicle_assignment_detail: Butiran Kenderaan
       staff: Staf
       fuel_tank: Tangki Penyimpanan
+      fuel_limit: Had Bahan PMP
     attributes:
       vehicle:
         reg_no: "No. Pendaftaran"
@@ -39,6 +40,8 @@ ms_MY:
         religion: Agama
       fuel_tank:
         locations: Tangki
+      fuel_limit:
+        unit_id: Depot
     errors:
       template:
         body: "Berikut adalah beberapa masalah:"

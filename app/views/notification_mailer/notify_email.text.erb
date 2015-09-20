@@ -1,0 +1,9 @@
+Notification on Surplus of Fuel Usage
+
+Date : <%= Date.today.strftime("%d %b %Y")%>
+Depot : <%=@depot_fuel.depot.name %>
+Fuel Type : <%=@fuel_limit.fuel_type.name%>
+Limit Amount : <%=@fuel_limit.limit_amount%> <%=@fuel_limit.limit_unit_type.description%>
+Usage Amount : <%=@depot_fuel.usage_diesel_amount%> <%=@fuel_limit.limit_unit_type.description%>
+Surplus Amount : <%=@depot_fuel.surplus_diesel_amount%> <%=@fuel_limit.limit_unit_type.description%>
+

@@ -90,6 +90,76 @@ class DepotFuelsController < ApplicationController
   def update
     respond_to do |format|
       if @depot_fuel.update(depot_fuel_params)
+        limit_diesel=FuelLimit.where(unit_id: @depot_fuel.unit_id).where(fuel_type_id: FuelType.where(name: 'DIESEL').first.id).first
+        limit_petrol=FuelLimit.where(unit_id: @depot_fuel.unit_id).where(fuel_type_id: FuelType.where(name: 'PETROL').first.id).first
+        limit_avtur=FuelLimit.where(unit_id: @depot_fuel.unit_id).where(fuel_type_id: FuelType.where(name: 'AVTUR').first.id).first
+        limit_avcat=FuelLimit.where(unit_id: @depot_fuel.unit_id).where(fuel_type_id: FuelType.where(name: 'AVCAT').first.id).first
+        budget_diesel=FuelBudget.where(unit_id: @depot_fuel.unit_id).where(fuel_type_id: FuelType.where(name: 'DIESEL').first.id).first
+        budget_petrol=FuelBudget.where(unit_id: @depot_fuel.unit_id).where(fuel_type_id: FuelType.where(name: 'PETROL').first.id).first
+        budget_avtur=FuelBudget.where(unit_id: @depot_fuel.unit_id).where(fuel_type_id: FuelType.where(name: 'AVTUR').first.id).first
+        budget_avcat=FuelBudget.where(unit_id: @depot_fuel.unit_id).where(fuel_type_id: FuelType.where(name: 'AVCAT').first.id).first
+        surplus_diesel=@depot_fuel.surplus_diesel_amount
+        surplus_petrol=@depot_fuel.surplus_petrol_amount
+        surplus_avtur=@depot_fuel.surplus_avtur_amount
+        surplus_avcat=@depot_fuel.surplus_avcat_amount
+        if (limit_diesel && budget_diesel)&& (limit_petrol && budget_petrol) && (limit_avtur && budget_avtur) && (limit_avcat && budget_avcat)
+          if  surplus_diesel > 0 &&  surplus_petrol > 0 && limit_diesel.emails==limit_petrol.emails &&  surplus_avtur > 0 && limit_diesel.emails==limit_avtur.emails &&  surplus_avcat > 0 && limit_petrol.emails && limit_avcat.emails
+            NotificationMailer.notify_email_combine(limit_diesel, limit_petrol, limit_avtur, limit_avcat, @depot_fuel).deliver_now 
+          end
+        elsif (limit_avcat && budget_avcat) && (limit_petrol && budget_petrol) && (limit_avtur && budget_avtur)
+          if  surplus_avcat > 0 &&  surplus_petrol > 0 && limit_avcat.emails==limit_petrol.emails &&  surplus_avtur > 0 && limit_avcat.emails==limit_avtur.emails
+            NotificationMailer.notify_email_combine(0, limit_petrol, limit_avtur, limit_avcat, @depot_fuel).deliver_now 
+          end
+        elsif (limit_diesel && budget_diesel)&& (limit_avcat && budget_avcat) && (limit_avtur && budget_avtur)
+          if  surplus_diesel > 0 &&  surplus_avcat > 0 && limit_diesel.emails==limit_avcat.emails &&  surplus_avtur > 0 && limit_diesel.emails==limit_avtur.emails
+            NotificationMailer.notify_email_combine(limit_diesel, 0, limit_avtur, @depot_fuel).deliver_now 
+          end
+        elsif (limit_diesel && budget_diesel)&& (limit_petrol && budget_petrol) && (limit_avcat && budget_avcat)
+          if  surplus_diesel > 0 &&  surplus_petrol > 0 && limit_diesel.emails==limit_petrol.emails &&  surplus_avcat > 0 && limit_diesel.emails==limit_avcat.emails
+            NotificationMailer.notify_email_combine(limit_diesel, limit_petrol, 0, limit_avcat, @depot_fuel).deliver_now 
+          end
+        elsif (limit_diesel && budget_diesel)&& (limit_petrol && budget_petrol) && (limit_avtur && budget_avtur)
+          if  surplus_diesel > 0 &&  surplus_petrol > 0 && limit_diesel.emails==limit_petrol.emails &&  surplus_avtur > 0 && limit_diesel.emails==limit_avtur.emails
+            NotificationMailer.notify_email_combine(limit_diesel, limit_petrol, limit_avtur, 0, @depot_fuel).deliver_now 
+          end
+        elsif (limit_diesel && budget_diesel)&& (limit_petrol && budget_petrol)
+          if  surplus_diesel > 0 &&  surplus_petrol > 0 && limit_diesel.emails==limit_petrol.emails
+            NotificationMailer.notify_email_combine(limit_diesel, limit_petrol, 0, 0, @depot_fuel).deliver_now 
+          end
+        elsif (limit_diesel && budget_diesel)&& (limit_avtur && budget_avtur)
+          if  surplus_diesel > 0 &&  surplus_avtur > 0 && limit_diesel.emails==limit_avtur.emails
+            NotificationMailer.notify_email_combine(limit_diesel, 0, limit_avtur, 0, @depot_fuel).deliver_now 
+          end
+        elsif (limit_avtur && budget_avtur) && (limit_petrol && budget_petrol)
+          if  surplus_avtur > 0 &&  surplus_petrol > 0 && limit_diesel.emails==limit_petrol.emails
+            NotificationMailer.notify_email_combine(0, limit_petrol, limit_avtur, 0, @depot_fuel).deliver_now 
+          end
+	elsif (limit_avcat && budget_avcat)&& (limit_avtur && budget_avtur)
+          if  surplus_avcat > 0 &&  surplus_avtur > 0 && limit_diesel.emails==limit_petrol.emails
+            NotificationMailer.notify_email_combine(0, limit_petrol, limit_avtur, 0, @depot_fuel).deliver_now 
+          end  
+	elsif (limit_avcat && budget_avcat) && (limit_petrol && budget_petrol)
+          if  surplus_avcat > 0 &&  surplus_petrol > 0 && limit_diesel.emails==limit_petrol.emails
+            NotificationMailer.notify_email_combine(0, limit_petrol, limit_avtur, 0, @depot_fuel).deliver_now 
+          end
+	elsif (limit_avcat && budget_avcat)&& limit_diesel
+          if  surplus_avcat > 0 &&  surplus_diesel > 0 && limit_diesel.emails==limit_petrol.emails
+            NotificationMailer.notify_email_combine(0, limit_petrol, limit_avtur, 0, @depot_fuel).deliver_now 
+          end
+        else
+          if (limit_diesel && budget_diesel)&&  surplus_diesel > 0 
+            NotificationMailer.notify_email(limit_diesel, @depot_fuel).deliver_now
+          end
+          if (limit_petrol && budget_petrol) &&  surplus_petrol > 0 
+            NotificationMailer.notify_email(limit_petrol, @depot_fuel).deliver_now
+          end
+	  if (limit_avtur && budget_avtur) &&  surplus_avtur > 0 
+            NotificationMailer.notify_email(limit_avtur, @depot_fuel).deliver_now
+          end
+          if (limit_avcat && budget_avcat) &&  surplus_avcat > 0 
+            NotificationMailer.notify_email(limit_avcat, @depot_fuel).deliver_now
+          end
+        end
         format.html { redirect_to @depot_fuel, notice:  (t 'depot_fuels.title')+(t 'actions.updated') }
         format.json { head :no_content }
       else
