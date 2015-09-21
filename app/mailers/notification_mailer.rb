@@ -16,6 +16,21 @@ class NotificationMailer < ActionMailer::Base
     mail(to: @diesel_limit.emails, subject: 'Notification Email')
   end
   
+  def notify_email_transaction(fuel_limit, fuel_transaction)
+    @fuel_limit=fuel_limit
+    @fuel_transaction=fuel_transaction
+    mail(to: @fuel_limit.emails, subject: 'Notification Email')
+  end
+  
+  def notify_email_combine_transaction(limit_diesel, limit_petrol, limit_avtur, limit_avcat, fuel_transaction)
+    @diesel_limit=limit_diesel
+    @petrol_limit=limit_petrol
+    @avtur_limit=limit_avtur
+    @avcat_limit=limit_avcat
+    @fuel_transaction=fuel_transaction
+    mail(to: @diesel_limit.emails, subject: 'Notification Email')
+  end
+  
   #for checking - fuel limit
   def notify_email2(fuel_limit)
     @fuel_limit=fuel_limit

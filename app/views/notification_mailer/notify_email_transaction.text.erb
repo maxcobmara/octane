@@ -1,0 +1,18 @@
+Notification on Surplus of Fuel Usage (Via Fuel Transaction)
+
+Date : <%= Date.today.strftime("%d %b %Y")%>
+Depot : <%=@fuel_transaction.fuel_tank.unit.name%>
+Fuel Type : <%=@fuel_limit.fuel_type.name%>
+Limit Amount : <%=@fuel_limit.limit_amount%> <%=@fuel_limit.limit_unit_type.description%>
+<% if @fuel_limit.fuel_type.name=='DIESEL'%>
+  <%budget=@fuel_transaction.diesel_budgets%>
+<% elsif @fuel_limit.fuel_type.name=='PETROL'%>
+  <%budget=@fuel_transaction.petrol_budgets%>
+<% elsif @fuel_limit.fuel_type.name=='AVTUR'%>
+  <%budget=@fuel_transaction.avtur_budgets%>
+<% elsif @fuel_limit.fuel_type.name=='AVCAT'%>
+  <%budget=@fuel_transaction.avcat_budgets%>
+<% end%>
+Usage Amount : <%=@fuel_transaction.usage_amount(@fuel_limit, budget)%> <%=@fuel_limit.limit_unit_type.description%>
+Surplus Amount : <%=@fuel_transaction.surplus_amount(@fuel_limit, budget)%> <%=@fuel_limit.limit_unit_type.description%>
+
