@@ -116,6 +116,8 @@ class FuelTransaction < ActiveRecord::Base
       if usages(limit, budgets).first.fuel_unit_type==limit.limit_unit_type 
         if usage_amount(limit, budgets) > limit.limit_amount
           surplus= usage_amount(limit, budgets) - limit.limit_amount
+        else
+          surplus=0
         end
       else
         surplus=0
