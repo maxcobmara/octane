@@ -22,7 +22,7 @@ Depot : <%=@depot_fuel.depot.name %>
 <%=count+=1%>) Fuel Type : <%=@avtur_limit.fuel_type.name%>
     Limit Amount : <%=@avtur_limit.limit_amount%> <%=@avtur_limit.limit_unit_type.description%>
     Usage Amount : <%=@fuel_transaction.usage_amount(@fuel_transaction.avtur_limit, @fuel_transaction.avtur_budgets)%> <%=@avtur_limit.limit_unit_type.description%>
-    Surplus Amount : <<%=@fuel_transaction.usage_amount(@fuel_transaction.avtur_limit)%><%=@avtur_limit.limit_unit_type.description%>
+    Surplus Amount : <%=@fuel_transaction.usage_amount(@fuel_transaction.avtur_limit)%><%=@avtur_limit.limit_unit_type.description%>
 <% end %>
 
 <% if @avcat_limit != 0 %>
