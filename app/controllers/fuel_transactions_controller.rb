@@ -48,6 +48,53 @@ class FuelTransactionsController < ApplicationController
 
     respond_to do |format|
       if @fuel_transaction.save
+        #TODO - refractor this - start
+        limit_diesel=@fuel_transaction.diesel_limit 
+        limit_petrol=@fuel_transaction.petrol_limit
+        limit_avtur=@fuel_transaction.avtur_limit
+        limit_avcat=@fuel_transaction.avcat_limit
+        surplus_diesel=@fuel_transaction.surplus_amount(limit_diesel, @fuel_transaction.diesel_budgets)
+        surplus_petrol=@fuel_transaction.surplus_amount(limit_petrol, @fuel_transaction.petrol_budgets)
+        surplus_avtur=@fuel_transaction.surplus_amount(limit_avtur, @fuel_transaction.avtur_budgets)
+        surplus_avcat=@fuel_transaction.surplus_amount(limit_avcat, @fuel_transaction.avcat_budgets)
+        
+        if surplus_diesel > 0 &&  surplus_petrol > 0 && limit_diesel.emails==limit_petrol.emails &&  surplus_avtur > 0 && limit_diesel.emails==limit_avtur.emails &&  surplus_avcat > 0 && limit_petrol.emails && limit_avcat.emails
+            NotificationMailer.notify_email_combine_transaction(limit_diesel, limit_petrol, limit_avtur, limit_avcat, @fuel_transaction).deliver_now 
+        elsif  surplus_avcat > 0 &&  surplus_petrol > 0 && limit_avcat.emails==limit_petrol.emails &&  surplus_avtur > 0 && limit_avcat.emails==limit_avtur.emails
+            NotificationMailer.notify_email_combine_transaction(0, limit_petrol, limit_avtur, limit_avcat, @fuel_transaction).deliver_now 
+        elsif  surplus_diesel > 0 &&  surplus_avcat > 0 && limit_diesel.emails==limit_avcat.emails &&  surplus_avtur > 0 && limit_diesel.emails==limit_avtur.emails
+            NotificationMailer.notify_email_combine_transaction(limit_diesel, 0, limit_avtur, @fuel_transaction).deliver_now 
+        elsif  surplus_diesel > 0 &&  surplus_petrol > 0 && limit_diesel.emails==limit_petrol.emails &&  surplus_avcat > 0 && limit_diesel.emails==limit_avcat.emails
+            NotificationMailer.notify_email_combine_transaction(limit_diesel, limit_petrol, 0, limit_avcat, @fuel_transaction).deliver_now 
+        elsif  surplus_diesel > 0 &&  surplus_petrol > 0 && limit_diesel.emails==limit_petrol.emails &&  surplus_avtur > 0 && limit_diesel.emails==limit_avtur.emails
+            NotificationMailer.notify_email_combine_transaction(limit_diesel, limit_petrol, limit_avtur, 0, @fuel_transaction).deliver_now 
+        elsif  surplus_diesel > 0 &&  surplus_petrol > 0 && limit_diesel.emails==limit_petrol.emails
+            NotificationMailer.notify_email_combine_transaction(limit_diesel, limit_petrol, 0, 0, @fuel_transaction).deliver_now 
+        elsif  surplus_diesel > 0 &&  surplus_avtur > 0 && limit_diesel.emails==limit_avtur.emails
+            NotificationMailer.notify_email_combine_transaction(limit_diesel, 0, limit_avtur, 0, @fuel_transaction).deliver_now 
+        elsif  surplus_avtur > 0 &&  surplus_petrol > 0 && limit_avtur.emails==limit_petrol.emails
+            NotificationMailer.notify_email_combine_transaction(0, limit_petrol, limit_avtur, 0, @fuel_transaction).deliver_now 
+        elsif  surplus_avcat > 0 &&  surplus_avtur > 0 && limit_diesel.emails==limit_petrol.emails
+            NotificationMailer.notify_email_combine_transaction(0, limit_petrol, limit_avtur, 0, @fuel_transaction).deliver_now 
+        elsif  surplus_avcat > 0 &&  surplus_petrol > 0 && limit_diesel.emails==limit_petrol.emails
+            NotificationMailer.notify_email_combine_transaction(0, limit_petrol, 0, limit_avcat, @fuel_transaction).deliver_now 
+        elsif  surplus_avcat > 0 &&  surplus_diesel > 0 && limit_diesel.emails==limit_petrol.emails
+            NotificationMailer.notify_email_combine_transaction(limit_diesel, 0, 0, limit_avcat, @fuel_transaction).deliver_now 
+        else
+          if surplus_diesel > 0
+            NotificationMailer.notify_email_transaction(limit_diesel, @fuel_transaction).deliver_now
+          end
+          if surplus_petrol > 0 
+            NotificationMailer.notify_email_transaction(limit_petrol, @fuel_transaction).deliver_now
+          end
+          if surplus_avtur > 0 
+            NotificationMailer.notify_email_transaction(limit_avtur, @fuel_transaction).deliver_now
+          end
+          if surplus_avcat > 0 
+            NotificationMailer.notify_email_transaction(limit_avcat, @fuel_transaction).deliver_now
+          end
+        end
+        #TODO - refractor this - end
         format.html { redirect_to @fuel_transaction, notice: 'Fuel transaction was successfully created.' }
         format.json { render :show, status: :created, location: @fuel_transaction }
       else
@@ -62,6 +109,53 @@ class FuelTransactionsController < ApplicationController
   def update
     respond_to do |format|
       if @fuel_transaction.update(fuel_transaction_params)
+        #TODO - refractor this - start
+        limit_diesel=@fuel_transaction.diesel_limit 
+        limit_petrol=@fuel_transaction.petrol_limit
+        limit_avtur=@fuel_transaction.avtur_limit
+        limit_avcat=@fuel_transaction.avcat_limit
+        surplus_diesel=@fuel_transaction.surplus_amount(limit_diesel, @fuel_transaction.diesel_budgets)
+        surplus_petrol=@fuel_transaction.surplus_amount(limit_petrol, @fuel_transaction.petrol_budgets)
+        surplus_avtur=@fuel_transaction.surplus_amount(limit_avtur, @fuel_transaction.avtur_budgets)
+        surplus_avcat=@fuel_transaction.surplus_amount(limit_avcat, @fuel_transaction.avcat_budgets)
+        
+        if surplus_diesel > 0 &&  surplus_petrol > 0 && limit_diesel.emails==limit_petrol.emails &&  surplus_avtur > 0 && limit_diesel.emails==limit_avtur.emails &&  surplus_avcat > 0 && limit_petrol.emails && limit_avcat.emails
+            NotificationMailer.notify_email_combine_transaction(limit_diesel, limit_petrol, limit_avtur, limit_avcat, @fuel_transaction).deliver_now 
+        elsif  surplus_avcat > 0 &&  surplus_petrol > 0 && limit_avcat.emails==limit_petrol.emails &&  surplus_avtur > 0 && limit_avcat.emails==limit_avtur.emails
+            NotificationMailer.notify_email_combine_transaction(0, limit_petrol, limit_avtur, limit_avcat, @fuel_transaction).deliver_now 
+        elsif  surplus_diesel > 0 &&  surplus_avcat > 0 && limit_diesel.emails==limit_avcat.emails &&  surplus_avtur > 0 && limit_diesel.emails==limit_avtur.emails
+            NotificationMailer.notify_email_combine_transaction(limit_diesel, 0, limit_avtur, @fuel_transaction).deliver_now 
+        elsif  surplus_diesel > 0 &&  surplus_petrol > 0 && limit_diesel.emails==limit_petrol.emails &&  surplus_avcat > 0 && limit_diesel.emails==limit_avcat.emails
+            NotificationMailer.notify_email_combine_transaction(limit_diesel, limit_petrol, 0, limit_avcat, @fuel_transaction).deliver_now 
+        elsif  surplus_diesel > 0 &&  surplus_petrol > 0 && limit_diesel.emails==limit_petrol.emails &&  surplus_avtur > 0 && limit_diesel.emails==limit_avtur.emails
+            NotificationMailer.notify_email_combine_transaction(limit_diesel, limit_petrol, limit_avtur, 0, @fuel_transaction).deliver_now 
+        elsif  surplus_diesel > 0 &&  surplus_petrol > 0 && limit_diesel.emails==limit_petrol.emails
+            NotificationMailer.notify_email_combine_transaction(limit_diesel, limit_petrol, 0, 0, @fuel_transaction).deliver_now 
+        elsif  surplus_diesel > 0 &&  surplus_avtur > 0 && limit_diesel.emails==limit_avtur.emails
+            NotificationMailer.notify_email_combine_transaction(limit_diesel, 0, limit_avtur, 0, @fuel_transaction).deliver_now 
+        elsif  surplus_avtur > 0 &&  surplus_petrol > 0 && limit_avtur.emails==limit_petrol.emails
+            NotificationMailer.notify_email_combine_transaction(0, limit_petrol, limit_avtur, 0, @fuel_transaction).deliver_now 
+        elsif  surplus_avcat > 0 &&  surplus_avtur > 0 && limit_diesel.emails==limit_petrol.emails
+            NotificationMailer.notify_email_combine_transaction(0, limit_petrol, limit_avtur, 0, @fuel_transaction).deliver_now 
+        elsif  surplus_avcat > 0 &&  surplus_petrol > 0 && limit_diesel.emails==limit_petrol.emails
+            NotificationMailer.notify_email_combine_transaction(0, limit_petrol, 0, limit_avcat, @fuel_transaction).deliver_now 
+        elsif  surplus_avcat > 0 &&  surplus_diesel > 0 && limit_diesel.emails==limit_petrol.emails
+            NotificationMailer.notify_email_combine_transaction(limit_diesel, 0, 0, limit_avcat, @fuel_transaction).deliver_now 
+        else
+          if surplus_diesel > 0
+            NotificationMailer.notify_email_transaction(limit_diesel, @fuel_transaction).deliver_now
+          end
+          if surplus_petrol > 0 
+            NotificationMailer.notify_email_transaction(limit_petrol, @fuel_transaction).deliver_now
+          end
+          if surplus_avtur > 0 
+            NotificationMailer.notify_email_transaction(limit_avtur, @fuel_transaction).deliver_now
+          end
+          if surplus_avcat > 0 
+            NotificationMailer.notify_email_transaction(limit_avcat, @fuel_transaction).deliver_now
+          end
+        end
+        #TODO - refractor this - end
         format.html { redirect_to @fuel_transaction, notice: 'Fuel transaction was successfully updated.' }
         format.json { render :show, status: :ok, location: @fuel_transaction }
       else

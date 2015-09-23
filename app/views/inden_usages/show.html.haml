@@ -17,31 +17,31 @@
 %dl.dl-horizontal
   %dt= t 'inden_usages.petrol_ltr', :default =>  model_class.human_attribute_name(:petrol_ltr) + ":"
   %dd= @inden_usage.petrol_ltr
-/%dl.dl-horizontal
-/  %dt= t 'inden_usages.petrol_price', :default =>  model_class.human_attribute_name(:petrol_price) + ":"
-/  %dd= ringgols(@inden_usage.petrol_price)
+%dl.dl-horizontal
+  %dt= t 'inden_usages.petrol_price', :default =>  model_class.human_attribute_name(:petrol_price) + ":"
+  %dd= ringgols(@inden_usage.petrol_price)
 %dl.dl-horizontal
   %dt= t 'inden_usages.diesel_ltr', :default =>  model_class.human_attribute_name(:diesel_ltr) + ":"
   %dd= @inden_usage.diesel_ltr
-/ %dl.dl-horizontal
-/   %dt= t 'inden_usages.diesel_price', :default =>  model_class.human_attribute_name(:diesel_price) + ":"
-/   %dd= ringgols(@inden_usage.diesel_price)
-/ %hr
-/ %dl.dl-horizontal
-/   %dt= t 'inden_usages.petronas_qty'
-/   %dd
-/ %dl.dl-horizontal
-/   %dt= t 'inden_usages.petronas_p_ltr', :default =>  model_class.human_attribute_name(:petronas_p_ltr) + ":"
-/   %dd= @inden_usage.petronas_p_ltr
-/ %dl.dl-horizontal
-/   %dt= t 'inden_usages.petronal_p_price', :default =>  model_class.human_attribute_name(:petronal_p_price) + ":"
-/   %dd= ringgols(@inden_usage.petronal_p_price)
-/ %dl.dl-horizontal
-/   %dt= t 'inden_usages.petronas_d_ltr', :default =>  model_class.human_attribute_name(:petronas_d_ltr) + ":"
-/   %dd= @inden_usage.petronas_d_ltr
-/ %dl.dl-horizontal
-/   %dt= t 'inden_usages.petronas_d_price', :default =>  model_class.human_attribute_name(:petronas_d_price) + ":"
-/   %dd= ringgols(@inden_usage.petronas_d_price)
+%dl.dl-horizontal
+  %dt= t 'inden_usages.diesel_price', :default =>  model_class.human_attribute_name(:diesel_price) + ":"
+  %dd= ringgols(@inden_usage.diesel_price)
+%hr
+%dl.dl-horizontal
+  %dt= t 'inden_usages.petronas_qty'
+  %dd
+%dl.dl-horizontal
+  %dt= t 'inden_usages.petronas_p_ltr', :default =>  model_class.human_attribute_name(:petronas_p_ltr) + ":"
+  %dd= @inden_usage.petronas_p_ltr
+%dl.dl-horizontal
+  %dt= t 'inden_usages.petronal_p_price', :default =>  model_class.human_attribute_name(:petronal_p_price) + ":"
+  %dd= ringgols(@inden_usage.petronal_p_price)
+%dl.dl-horizontal
+  %dt= t 'inden_usages.petronas_d_ltr', :default =>  model_class.human_attribute_name(:petronas_d_ltr) + ":"
+  %dd= @inden_usage.petronas_d_ltr
+%dl.dl-horizontal
+  %dt= t 'inden_usages.petronas_d_price', :default =>  model_class.human_attribute_name(:petronas_d_price) + ":"
+  %dd= ringgols(@inden_usage.petronas_d_price)
 
 .form-actions
   .btn.btn-default= link_to content_tag(:i, "", :class => "fa fa-arrow-left ") + " " + t('.back', :default => t("helpers.links.back")), inden_usages_path

@@ -362,92 +362,42 @@ class DepotFuel < ActiveRecord::Base
       DepotFuel.where(unit_id: curr_staff.unit_id) if curr_staff && curr_staff.unit_id
     end
   end
-  
-  def usage_diesel_amount
-    budgets=FuelBudget.where(unit_id: unit_id).where(fuel_type_id: FuelType.where(name: 'DIESEL').first.id)
-    if budgets.count > 0
-      budget_start_date=budgets.order(year_starts_on: :desc).last.year_starts_on
-      limit=FuelLimit.where(unit_id: unit_id).where(fuel_type_id: FuelType.where(name: 'DIESEL').first.id).first
-      if limit
-        days_diff = (Date.today-budget_start_date.to_date).to_i
-        days_no = days_diff  % limit.duration
-        limit_set = days_diff / limit.duration
-        if days_no == 0 && days_diff > 0
-          if limit_set==0
-            limitstart=Date.today-days_diff
-          else
-            limitstart=Date.today-(days_diff*limit_set)
-          end
-          fuel_issued_within_limit=FuelIssued.joins(:depot_fuel).where('depot_fuels.unit_id=?', limit.unit_id).where('depot_fuels.issue_date >=? and depot_fuels. issue_date <=?', limitstart, Date.today)
-          fuel_issued_rec=fuel_issued_within_limit.where(fuel_type: limit.fuel_type)
-          usage= fuel_issued_rec.sum(:quantity)
-        end
-      end
-    end
-    usage
-  end
-  
-  def surplus_diesel_amount
-    limit=FuelLimit.where(unit_id: unit_id).where(fuel_type_id: FuelType.where(name: 'DIESEL').first.id).first
-    if limit && fuel_issueds.first
-      if fuel_issueds.first.unit_type==limit.limit_unit_type && usage_diesel_amount #check based on current depot fuel record
-        if usage_diesel_amount > limit.limit_amount
-          surplus= usage_diesel_amount - limit.limit_amount
-        end
-      else
-	surplus=0
-      end
-    else
-      surplus=0
-    end
-    surplus
-  end
-  
-  def usage_petrol_amount
-    budgets=FuelBudget.where(unit_id: unit_id).where(fuel_type_id: FuelType.where(name: 'PETROL').first.id)
-    if budgets.count > 0
-      budget_start_date=budgets.order(year_starts_on: :desc).last.year_starts_on
-      limit=FuelLimit.where(unit_id: unit_id).where(fuel_type_id: FuelType.where(name: 'PETROL').first.id).first
-      if limit
-        days_diff = (Date.today-budget_start_date.to_date).to_i
-        days_no = days_diff  % limit.duration
-        limit_set = days_diff / limit.duration
-        if days_no == 0 && days_diff > 0
-          if limit_set==0
-            limitstart=Date.today-days_diff
-          else
-            limitstart=Date.today-(days_diff*limit_set)
-          end
-          fuel_issued_within_limit=FuelIssued.joins(:depot_fuel).where('depot_fuels.unit_id=?', limit.unit_id).where('depot_fuels.issue_date >=? and depot_fuels. issue_date <=?', limitstart, Date.today)
-	  fuel_issued_rec=fuel_issued_within_limit.where(fuel_type: limit.fuel_type)
-          usage= fuel_issued_rec.sum(:quantity)
-        end
-      end
-    end
-    usage
-  end
-  
-  def surplus_petrol_amount
-    limit=FuelLimit.where(unit_id: unit_id).where(fuel_type_id: FuelType.where(name: 'PETROL').first.id).first
-    if limit && fuel_issueds.first
-      if fuel_issueds.first.unit_type==limit.limit_unit_type && usage_diesel_amount  #check based on current depot fuel record
-        if usage_diesel_amount > limit.limit_amount
-          surplus= usage_petrol_amount - limit.limit_amount
-        end
-      else
-	surplus=0
-      end
-    else
-      surplus=0
-    end
-    surplus
-  end
 
-  def usage_avtur_amount
-    budgets=FuelBudget.where(unit_id: unit_id).where(fuel_type_id: FuelType.where(name: 'AVTUR').first.id)
+  def diesel_budgets
+    FuelBudget.where(unit_id: unit_id).where(fuel_type_id: FuelType.where(name: 'DIESEL').first.id)
+  end
+  
+  def petrol_budgets
+    FuelBudget.where(unit_id: unit_id).where(fuel_type_id: FuelType.where(name: 'PETROL').first.id)
+  end
+  
+  def avtur_budgets
+    FuelBudget.where(unit_id: unit_id).where(fuel_type_id: FuelType.where(name: 'AVTUR').first.id)
+  end
+  
+  def avcat_budgets
+    FuelBudget.where(unit_id: unit_id).where(fuel_type_id: FuelType.where(name: 'AVCAT').first.id)
+  end
+  
+  def diesel_limit
+    FuelLimit.where(unit_id: unit_id).where(fuel_type_id: FuelType.where(name: 'DIESEL').first.id).first
+  end
+  
+  def petrol_limit
+    FuelLimit.where(unit_id: unit_id).where(fuel_type_id: FuelType.where(name: 'PETROL').first.id).first
+  end
+  
+  def avtur_limit
+    FuelLimit.where(unit_id: unit_id).where(fuel_type_id: FuelType.where(name: 'AVTUR').first.id).first
+  end
+  
+  def avcat_limit
+    FuelLimit.where(unit_id: unit_id).where(fuel_type_id: FuelType.where(name: 'AVCAT').first.id).first
+  end
+  
+  def usages(limit, budgets)
     if budgets.count > 0
       budget_start_date=budgets.order(year_starts_on: :desc).last.year_starts_on
-      limit=FuelLimit.where(unit_id: unit_id).where(fuel_type_id: FuelType.where(name: 'AVTUR').first.id).first
       if limit
         days_diff = (Date.today-budget_start_date.to_date).to_i
         days_no = days_diff  % limit.duration
@@ -458,61 +408,24 @@ class DepotFuel < ActiveRecord::Base
           else
             limitstart=Date.today-(days_diff*limit_set)
           end
-          fuel_issued_within_limit=FuelIssued.joins(:depot_fuel).where('depot_fuels.unit_id=?', limit.unit_id).where('depot_fuels.issue_date >=? and depot_fuels. issue_date <=?', limitstart, Date.today)
-	  fuel_issued_rec=fuel_issued_within_limit.where(fuel_type: limit.fuel_type)
-          usage= fuel_issued_rec.sum(:quantity)
+          usages_rec=FuelIssued.joins(:depot_fuel).where('depot_fuels.unit_id=?', limit.unit_id).where('depot_fuels.issue_date >=? and depot_fuels. issue_date <=?', limitstart, Date.today).where(fuel_type: limit.fuel_type)
         end
       end
     end
-    usage
+    usages_rec
   end
   
-  def surplus_avtur_amount
-    limit=FuelLimit.where(unit_id: unit_id).where(fuel_type_id: FuelType.where(name: 'AVTUR').first.id).first
-    if limit && fuel_issueds.first
-      if fuel_issueds.first.unit_type==limit.limit_unit_type && usage_avtur_amount #check based on current depot fuel record
-        if usage_avtur_amount > limit.limit_amount
-          surplus= usage_avtur_amount - limit.limit_amount
-        end
-      else
-        surplus=0
-      end
-    else
-      surplus=0
-    end
-    surplus
+  def usage_amount(limit, budgets)
+    usages(limit, budgets).sum(:quantity)
   end
   
-  def usage_avcat_amount
-    budgets=FuelBudget.where(unit_id: unit_id).where(fuel_type_id: FuelType.where(name: 'AVCAT').first.id)
-    if budgets.count > 0
-      budget_start_date=budgets.order(year_starts_on: :desc).last.year_starts_on
-      limit=FuelLimit.where(unit_id: unit_id).where(fuel_type_id: FuelType.where(name: 'AVCAT').first.id).first
-      if limit
-        days_diff = (Date.today-budget_start_date.to_date).to_i
-        days_no = days_diff  % limit.duration
-        limit_set = days_diff / limit.duration
-        if days_no == 0 && days_diff > 0
-          if limit_set==0
-            limitstart=Date.today-days_diff
-          else
-            limitstart=Date.today-(days_diff*limit_set)
-          end
-          fuel_issued_within_limit=FuelIssued.joins(:depot_fuel).where('depot_fuels.unit_id=?', limit.unit_id).where('depot_fuels.issue_date >=? and depot_fuels. issue_date <=?', limitstart, Date.today)
-          fuel_issued_rec=fuel_issued_within_limit.where(fuel_type: limit.fuel_type)
-          usage= fuel_issued_rec.sum(:quantity)
-        end
-      end
-    end
-    usage
-  end
-  
-  def surplus_avcat_amount
-    limit=FuelLimit.where(unit_id: unit_id).where(fuel_type_id: FuelType.where(name: 'AVCAT').first.id).first
-    if limit && fuel_issueds.first
-      if fuel_issueds.first.unit_type==limit.limit_unit_type  && usage_avcat_amount #check based on current depot fuel record
-        if usage_avcat_amount > limit.limit_amount
-          surplus= usage_avcat_amount - limit.limit_amount
+  def surplus_amount(limit, budgets)
+    if limit && usages(limit, budgets)
+      if usages(limit, budgets).first.unit_type==limit.limit_unit_type 
+        if usage_amount(limit, budgets) > limit.limit_amount
+          surplus= usage_amount(limit, budgets) - limit.limit_amount
+        else
+          surplus=0
         end
       else
         surplus=0

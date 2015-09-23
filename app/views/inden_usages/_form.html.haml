@@ -7,7 +7,7 @@
       %dt
         %strong= t 'inden_usages.unit_fuel_id'
       %dd
-        = h @inden_usage.unit_fuel.month_unit
+        = h @inden_usage.unit_fuel.try(:month_unit)
     %br
     
     .control-group
@@ -31,40 +31,40 @@
       = f.label :petrol_ltr, :class => 'control-label'
       .controls= f.text_field :petrol_ltr, :class => 'text_field input-medium', :type => :text
 
-    /.control-group
-    /  = f.label :petrol_price, :class => 'control-label'
-    /  .controls= f.text_field :petrol_price, :class => 'text_field input-medium', :type => :text
+    .control-group
+      = f.label :petrol_price, :class => 'control-label'
+      .controls= f.text_field :petrol_price, :class => 'text_field input-medium', :type => :text
 
     .control-group
       = f.label :diesel_ltr, :class => 'control-label'
       .controls= f.text_field :diesel_ltr, :class => 'text_field input-medium', :type => :text
 
-    /.control-group
-    /  = f.label :diesel_price, :class => 'control-label'
-    /  .controls= f.text_field :diesel_price, :class => 'text_field input-medium', :type => :text    
+    .control-group
+      = f.label :diesel_price, :class => 'control-label'
+      .controls= f.text_field :diesel_price, :class => 'text_field input-medium', :type => :text    
 
-    /%br
-    /= t 'inden_usages.petronas_qty'
+    %br
+    = t 'inden_usages.petronas_qty'
 
-    /.control-group
-    /  = f.label :petronas_p_ltr, :class => 'control-label'
-    /  .controls= f.text_field :petronas_p_ltr, :class => 'text_field input-medium', :type => :text
+    .control-group
+      = f.label :petronas_p_ltr, :class => 'control-label'
+      .controls= f.text_field :petronas_p_ltr, :class => 'text_field input-medium', :type => :text
 
-    /.control-group
-    /  = f.label :petronal_p_price, :class => 'control-label'
-    /  .controls= f.text_field :petronal_p_price, :class => 'text_field input-medium', :type => :text
+    .control-group
+      = f.label :petronal_p_price, :class => 'control-label'
+      .controls= f.text_field :petronal_p_price, :class => 'text_field input-medium', :type => :text
 
-    /.control-group
-    /  = f.label :petronas_d_ltr, :class => 'control-label'
-    /  .controls= f.text_field :petronas_d_ltr, :class => 'text_field input-medium', :type => :text
+    .control-group
+      = f.label :petronas_d_ltr, :class => 'control-label'
+      .controls= f.text_field :petronas_d_ltr, :class => 'text_field input-medium', :type => :text
 
-    /.control-group
-    /  = f.label :petronas_d_price, :class => 'control-label'
-    /  .controls= f.text_field :petronas_d_price, :class => 'text_field input-medium', :type => :text
+    .control-group
+      = f.label :petronas_d_price, :class => 'control-label'
+      .controls= f.text_field :petronas_d_price, :class => 'text_field input-medium', :type => :text
 
-    /%br
-    /= t 'inden_usages.issued_monthly'
-    /%br
+    %br
+    = t 'inden_usages.issued_monthly'
+    %br
 
     .form-actions
       = f.submit (t 'helpers.links.submit'), :class => 'btn btn-primary'

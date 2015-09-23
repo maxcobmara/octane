@@ -16,4 +16,8 @@ class FuelLimit < ActiveRecord::Base
     end
   end
   
+  def details
+    limit_amount.to_s+" "+limit_unit_type.short_name
+  end
+  
 end
