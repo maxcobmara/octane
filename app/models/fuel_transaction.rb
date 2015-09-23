@@ -55,6 +55,7 @@ class FuelTransaction < ActiveRecord::Base
     end
   end
   
+  #Below - used for REAL TIME notification, whereas those in Fuel Limit used for DISPLAY purpose for all notification throughout the budget year
   def diesel_budgets
     FuelBudget.where(unit_id: fuel_tank.unit_id).where(fuel_type_id: FuelType.where(name: 'DIESEL').first.id)
   end
@@ -92,15 +93,16 @@ class FuelTransaction < ActiveRecord::Base
       budget_start_date=budgets.order(year_starts_on: :desc).last.year_starts_on
       if limit
         days_diff = (Date.today-budget_start_date.to_date).to_i
-        days_no = days_diff  % limit.duration
-        limit_set = days_diff / limit.duration
+        days_no = days_diff  % (limit.duration-1)  #days_diff  % limit.duration
+#         limit_set = days_diff / limit.duration
         if days_no == 0 && days_diff > 0
-          if limit_set==0
-            limitstart=Date.today-days_diff
-          else
-            limitstart=Date.today-(days_diff*limit_set)
-          end
-          usages_rec=FuelTransaction.where(transaction_type: 'Usage').where('created_at >=? and created_at <=?', limitstart, Date.today).where(fuel_type: limit.fuel_type)
+#           if limit_set==0
+#             limitstart=Date.today-days_diff
+#           else
+#             limitstart=Date.today-(days_diff*limit_set)
+#           end
+          limitstart=Date.today-limit.duration
+          usages_rec=FuelTransaction.where(transaction_type: 'Usage').where('created_at >=? and created_at <=?', limitstart, Date.today).where(fuel_tank_id: FuelTank.where(unit_id: limit.unit_id).where(fuel_type: FuelType.where(name:'PETROL')).pluck(:id))
         end
       end
     end

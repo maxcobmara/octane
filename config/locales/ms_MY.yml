@@ -210,8 +210,11 @@ ms_MY:
     budget_start_date: Tarikh Mula Belanjawan
     budget_amount: Amaun Belanjawan
     budget_unit_type: Unit Ukuran Belanjawan
-    usage_amount: "Jumlah Penggunaan *"
+    usage_amount: "Jumlah Penggunaan **"
     usage_unit_type: Unit Ukuran Penggunaan
+    limitation: Had Penggunaan
+    usage_surplus: "Lebihan Penggunaan *"
+    includes_surplus: "* (Termasuk Lebihan Penggunaan)"
     
   home:
     welcome: Selamat Datang ke Octane

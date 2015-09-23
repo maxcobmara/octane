@@ -1,7 +1,11 @@
+.navbar
+  %ul.nav
+    %li= link_to(fa_icon("print", text: (t 'actions.print')), "javascript:print()")
+
 - model_class = FuelBudget
 .page-header
   %h1= t 'menu.budget_usage_chart_list', :default => model_class.model_name.human.pluralize
-
+  .small=t 'report.includes_surplus'
 .row-fluid
   .block
     .block-heading.tool_bar
@@ -27,17 +31,18 @@
       %th=t 'report.budget_start_date'
       %th=t 'report.budget_amount'
       %th=t 'report.budget_unit_type'
-      %th=t 'report.usage_amount'
+      %th{colspan: 2}=t 'report.usage_amount'
       %th=t 'report.usage_unit_type'
-      %th Limitation
-      %th Usage Surplus
+      %th=t 'report.limitation'
+      %th=t 'report.usage_surplus'
   %tbody
     - no=0
     - total_usage=0
+    - total_usage2=0
     - total_budget=0
     - @depot_listed_budget=[]
     - @depot_fuels2.sort_by{|x|x.depot.name}.group_by(&:depot).each do |unit, depotfuels|  
-      - budget=@depot_budget_diesel.where(unit_id: unit.id).last
+      - budget=@depot_budget_diesel.where(unit_id: unit.id).where('year_starts_on >=? and year_starts_on<=?', @start_from, @end_on).first
       - budget_startdate=budget.try(:year_starts_on).try(:strftime, '%Y-%m-%d')
       - if budget_startdate
         - if budget_startdate.to_date.year < Date.today.year
@@ -45,8 +50,10 @@
         - else
           - budget_enddate=Date.today
         - fuel_issueds=FuelIssued.joins(:depot_fuel).where('depot_fuels.unit_id=? and depot_fuels.issue_date >=? and depot_fuels.issue_date <=?', unit.id, budget_startdate, budget_enddate).where(fuel_type: FuelType.where(name: 'DIESEL'))
+        - fuel_used=FuelTransaction.where(transaction_type: 'Usage').where('created_at >=? and created_at <=?', budget_startdate, budget_enddate).where(fuel_tank_id: FuelTank.where(unit_id: unit.id).where(fuel_type: FuelType.where(name:'DIESEL')).pluck(:id))
       - else
         - fuel_issueds=FuelIssued.joins(:depot_fuel).where('depot_fuels.unit_id=? and depot_fuels.issue_date >=? and depot_fuels.issue_date <=?', unit.id, @start_from, @end_on).where(fuel_type: FuelType.where(name: 'DIESEL'))
+        - fuel_used=FuelTransaction.where(transaction_type: 'Usage').where('created_at >=? and created_at <=?', @start_from, @end_on).where(fuel_tank_id: FuelTank.where(unit_id: unit.id).where(fuel_type: FuelType.where(name:'DIESEL')).pluck(:id))
       %tr
         %td=no+=1
         %td=unit.name
@@ -54,6 +61,7 @@
         %td=budget.amount if budget_startdate
         %td=budget.unit_type.description if budget_startdate
         %td=usage=fuel_issueds.sum(:quantity)
+        %td=usage2=fuel_used.sum(:amount)
         %td LITRE
         - limit=FuelLimit.where(unit_id: unit.id).where(fuel_type: FuelType.where(name: 'DIESEL')).first
         %td
@@ -63,21 +71,12 @@
             ="/ "+limit.duration.to_s+" days"
         %td
           - if budget_startdate && limit
-            - limit_set=(Date.today-budget_startdate.to_date).to_i / limit.duration
-            - 1.upto(limit_set).each do |cnt|
-              - check_date=budget_startdate.to_date+limit.duration*cnt
-              - if check_date <= Date.today
-                - before_date=check_date-limit.duration
-                - usages=FuelIssued.joins(:depot_fuel).where('depot_fuels.unit_id=?', unit.id).where('depot_fuels.issue_date >=? and depot_fuels. issue_date <=?', before_date, check_date).where(fuel_type: FuelType.where(name: 'DIESEL'))
-                - if usages
-                  - surplus = usages.sum(:quantity)-limit.limit_amount
-                  - if surplus > 0 && usages.first.unit_type==limit.limit_unit_type 
-                    =check_date.strftime('%d %b')+": "
-                    %font{color: "red"}=surplus.to_s+" "+limit.limit_unit_type.short_name
-                    /.small=usages.sum(:quantity)
-                    %br
-            
+            - @surpluses=limit.surpluses(budget_startdate, unit, 'DIESEL')
+            - for surplus in @surpluses
+              %font{color: "red"}=surplus
+              %br
       - total_usage+=usage
+      - total_usage2+=usage2
       - total_budget+=budget.amount if budget_startdate
       - @depot_listed_budget << budget.id if budget_startdate
 
@@ -92,6 +91,7 @@
         %td=bd.unit_type.description
         %td No record
         %td No record
+        %td No record
         - limit=FuelLimit.where(unit_id: bd.unit_id).where(fuel_type: FuelType.where(name: 'DIESEL')).first
         %td
           - if limit
@@ -104,6 +104,7 @@
       %th=total_budget
       %th LITRE
       %th=total_usage
+      %th=total_usage2
       %th LITRE
     
 %H4 Usage Breakdown per Unit
@@ -219,6 +220,7 @@
       %th=total_usage
       %th LITRE
 
+%br
 %H3 Petrol
 %H4 Depot Budget Vs Total Usage
 %table.table.table-bordered
@@ -229,15 +231,18 @@
       %th=t 'report.budget_start_date'
       %th=t 'report.budget_amount'
       %th=t 'report.budget_unit_type'
-      %th=t 'report.usage_amount'
+      %th{colspan: 2}=t 'report.usage_amount'
       %th=t 'report.usage_unit_type'
+      %th=t 'report.limitation'
+      %th=t 'report.usage_surplus'
   %tbody
     - no=0
     - total_usage=0
+    - total_usage2=0
     - total_budget=0
     - @depot_listed_budget=[]
     - @depot_fuels2.sort_by{|x|x.depot.name}.group_by(&:depot).each do |unit, depotfuels|  
-      - budget=@depot_budget_petrol.where(unit_id: unit.id).last
+      - budget=@depot_budget_petrol.where(unit_id: unit.id).where('year_starts_on >=? and year_starts_on<=?', @start_from, @end_on).first
       - budget_startdate=budget.try(:year_starts_on).try(:strftime, '%Y-%m-%d')
       - if budget_startdate
         - if budget_startdate.to_date.year < Date.today.year
@@ -245,8 +250,10 @@
         - else
           - budget_enddate=Date.today
         - fuel_issueds=FuelIssued.joins(:depot_fuel).where('depot_fuels.unit_id=? and depot_fuels.issue_date >=? and depot_fuels.issue_date <=?', unit.id, budget_startdate, budget_enddate).where(fuel_type: FuelType.where(name: 'PETROL'))
+        - fuel_used=FuelTransaction.where(transaction_type: 'Usage').where('created_at >=? and created_at <=?', budget_startdate, budget_enddate).where(fuel_tank_id: FuelTank.where(unit_id: unit.id).where(fuel_type: FuelType.where(name:'PETROL')).pluck(:id))
       - else
         - fuel_issueds=FuelIssued.joins(:depot_fuel).where('depot_fuels.unit_id=? and depot_fuels.issue_date >=? and depot_fuels.issue_date <=?', unit.id, @start_from, @end_on).where(fuel_type: FuelType.where(name: 'PETROL'))
+        - fuel_used=FuelTransaction.where(transaction_type: 'Usage').where('created_at >=? and created_at <=?', @start_from, @end_on).where(fuel_tank_id: FuelTank.where(unit_id: unit.id).where(fuel_type: FuelType.where(name:'PETROL')).pluck(:id))
       %tr
         %td=no+=1
         %td=unit.name
@@ -254,8 +261,22 @@
         %td=budget.amount if budget_startdate
         %td=budget.unit_type.description if budget_startdate
         %td=usage=fuel_issueds.sum(:quantity)
+        %td=usage2=fuel_used.sum(:amount)
         %td LITRE
+        - limit=FuelLimit.where(unit_id: unit.id).where(fuel_type: FuelType.where(name: 'PETROL')).first
+        %td
+          - if limit
+            =limit.details
+            %br
+            ="/ "+limit.duration.to_s+" days"
+        %td
+          - if budget_startdate && limit
+            - @surpluses=limit.surpluses(budget_startdate, unit, 'PETROL')
+            - for surplus in @surpluses
+              %font{color: "red"}=surplus
+              %br
       - total_usage+=usage
+      - total_usage2+=usage2
       - total_budget+=budget.amount if budget_startdate
       - @depot_listed_budget << budget.id if budget_startdate
 
@@ -270,11 +291,20 @@
         %td=bd.unit_type.description
         %td No record
         %td No record
+        %td No record
+        - limit=FuelLimit.where(unit_id: bd.unit_id).where(fuel_type: FuelType.where(name: 'PETROL')).first
+        %td
+          - if limit
+            =limit.details
+            %br
+            ="/ "+limit.duration.to_s+" days"
+        %td &nbsp;
     %tr
       %th{colspan: "3"}Total
       %th=total_budget
       %th LITRE
       %th=total_usage
+      %th=total_usage2
       %th LITRE
     
 %H4 Usage Breakdown per Unit
@@ -376,7 +406,7 @@
       %th{colspan: "5"} Total Usage
       %th=total_usage
       %th LITRE
-
+%br
 %H3 AVTUR
 %H4 Depot Budget Vs Total Usage
 %table.table.table-bordered
@@ -387,15 +417,18 @@
       %th=t 'report.budget_start_date'
       %th=t 'report.budget_amount'
       %th=t 'report.budget_unit_type'
-      %th=t 'report.usage_amount'
+      %th{colspan: 2}=t 'report.usage_amount'
       %th=t 'report.usage_unit_type'
+      %th=t 'report.limitation'
+      %th=t 'report.usage_surplus'
   %tbody
     - no=0
     - total_usage=0
+    - total_usage2=0
     - total_budget=0
     - @depot_listed_budget=[]
     - @depot_fuels2.sort_by{|x|x.depot.name}.group_by(&:depot).each do |unit, depotfuels|  
-      - budget=@depot_budget_avtur.where(unit_id: unit.id).last
+      - budget=@depot_budget_avtur.where(unit_id: unit.id).where('year_starts_on >=? and year_starts_on<=?', @start_from, @end_on).first
       - budget_startdate=budget.try(:year_starts_on).try(:strftime, '%Y-%m-%d')
       - if budget_startdate
         - if budget_startdate.to_date.year < Date.today.year
@@ -403,8 +436,10 @@
         - else
           - budget_enddate=Date.today
         - fuel_issueds=FuelIssued.joins(:depot_fuel).where('depot_fuels.unit_id=? and depot_fuels.issue_date >=? and depot_fuels.issue_date <=?', unit.id, budget_startdate, budget_enddate).where(fuel_type: FuelType.where(name: 'AVTUR'))
+        - fuel_used=FuelTransaction.where(transaction_type: 'Usage').where('created_at >=? and created_at <=?', budget_startdate, budget_enddate).where(fuel_tank_id: FuelTank.where(unit_id: unit.id).where(fuel_type: FuelType.where(name:'AVTUR')).pluck(:id))
       - else
         - fuel_issueds=FuelIssued.joins(:depot_fuel).where('depot_fuels.unit_id=? and depot_fuels.issue_date >=? and depot_fuels.issue_date <=?', unit.id, @start_from, @end_on).where(fuel_type: FuelType.where(name: 'AVTUR'))
+        - fuel_used=FuelTransaction.where(transaction_type: 'Usage').where('created_at >=? and created_at <=?', @start_from, @end_on).where(fuel_tank_id: FuelTank.where(unit_id: unit.id).where(fuel_type: FuelType.where(name:'AVTUR')).pluck(:id))
       %tr
         %td=no+=1
         %td=unit.name
@@ -412,8 +447,22 @@
         %td=budget.amount if budget_startdate
         %td=budget.unit_type.description if budget_startdate
         %td=usage=fuel_issueds.sum(:quantity)
+        %td=usage2=fuel_used.sum(:amount)
         %td LITRE
+        - limit=FuelLimit.where(unit_id: unit.id).where(fuel_type: FuelType.where(name: 'AVTUR')).first
+        %td
+          - if limit
+            =limit.details
+            %br
+            ="/ "+limit.duration.to_s+" days"
+        %td
+          - if budget_startdate && limit
+            - @surpluses=limit.surpluses(budget_startdate, unit, 'AVTUR')
+            - for surplus in @surpluses
+              %font{color: "red"}=surplus
+              %br
       - total_usage+=usage
+      - total_usage2+=usage2
       - total_budget+=budget.amount if budget_startdate
       - @depot_listed_budget << budget.id if budget_startdate
 
@@ -428,11 +477,20 @@
         %td=bd.unit_type.description
         %td No record
         %td No record
+        %td No record
+        - limit=FuelLimit.where(unit_id: bd.unit_id).where(fuel_type: FuelType.where(name: 'AVTUR')).first
+        %td
+          - if limit
+            =limit.details
+            %br
+            ="/ "+limit.duration.to_s+" days"
+        %td &nbsp;
     %tr
       %th{colspan: "3"}Total
       %th=total_budget
       %th LITRE
       %th=total_usage
+      %th=total_usage2
       %th LITRE
     
 %H4 Usage Breakdown per Unit
@@ -534,7 +592,7 @@
       %th{colspan: "5"} Total Usage
       %th=total_usage
       %thg LITRE
-
+%br
 %H3 AVCAT
 %H4 Depot Budget Vs Total Usage
 %table.table.table-bordered
@@ -545,15 +603,18 @@
       %th=t 'report.budget_start_date'
       %th=t 'report.budget_amount'
       %th=t 'report.budget_unit_type'
-      %th=t 'report.usage_amount'
+      %th{colspan: 2}=t 'report.usage_amount'
       %th=t 'report.usage_unit_type'
+      %th=t 'report.limitation'
+      %th=t 'report.usage_surplus'
   %tbody
     - no=0
     - total_usage=0
+    - total_usage2=0
     - total_budget=0
     - @depot_listed_budget=[]
     - @depot_fuels2.sort_by{|x|x.depot.name}.group_by(&:depot).each do |unit, depotfuels|  
-      - budget=@depot_budget_avcat.where(unit_id: unit.id).last
+      - budget=@depot_budget_avcat.where(unit_id: unit.id).where('year_starts_on >=? and year_starts_on<=?', @start_from, @end_on).first
       - budget_startdate=budget.try(:year_starts_on).try(:strftime, '%Y-%m-%d')
       - if budget_startdate
         - if budget_startdate.to_date.year < Date.today.year
@@ -561,8 +622,10 @@
         - else
           - budget_enddate=Date.today
         - fuel_issueds=FuelIssued.joins(:depot_fuel).where('depot_fuels.unit_id=? and depot_fuels.issue_date >=? and depot_fuels.issue_date <=?', unit.id, budget_startdate, budget_enddate).where(fuel_type: FuelType.where(name: 'AVCAT'))
+        - fuel_used=FuelTransaction.where(transaction_type: 'Usage').where('created_at >=? and created_at <=?', budget_startdate, budget_enddate).where(fuel_tank_id: FuelTank.where(unit_id: unit.id).where(fuel_type: FuelType.where(name:'AVCAT')).pluck(:id))
       - else
         - fuel_issueds=FuelIssued.joins(:depot_fuel).where('depot_fuels.unit_id=? and depot_fuels.issue_date >=? and depot_fuels.issue_date <=?', unit.id, @start_from, @end_on).where(fuel_type: FuelType.where(name: 'AVCAT'))
+        - fuel_used=FuelTransaction.where(transaction_type: 'Usage').where('created_at >=? and created_at <=?', @start_from, @end_on).where(fuel_tank_id: FuelTank.where(unit_id: unit.id).where(fuel_type: FuelType.where(name:'AVCAT')).pluck(:id))
       %tr
         %td=no+=1
         %td=unit.name
@@ -570,8 +633,22 @@
         %td=budget.amount if budget_startdate
         %td=budget.unit_type.description if budget_startdate
         %td=usage=fuel_issueds.sum(:quantity)
+        %td=usage2=fuel_used.sum(:amount)
         %td LITRE
+        - limit=FuelLimit.where(unit_id: unit.id).where(fuel_type: FuelType.where(name: 'AVCAT')).first
+        %td
+          - if limit
+            =limit.details
+            %br
+            ="/ "+limit.duration.to_s+" days"
+        %td
+          - if budget_startdate && limit
+            - @surpluses=limit.surpluses(budget_startdate, unit, 'AVCAT')
+            - for surplus in @surpluses
+              %font{color: "red"}=surplus
+              %br
       - total_usage+=usage
+      - total_usage2+=usage2
       - total_budget+=budget.amount if budget_startdate
       - @depot_listed_budget << budget.id if budget_startdate
 
@@ -586,11 +663,20 @@
         %td=bd.unit_type.description
         %td No record
         %td No record
+        %td No record
+        - limit=FuelLimit.where(unit_id: bd.unit_id).where(fuel_type: FuelType.where(name: 'AVCAT')).first
+        %td
+          - if limit
+            =limit.details
+            %br
+            ="/ "+limit.duration.to_s+" days"
+        %td &nbsp;
     %tr
       %th{colspan: "3"}Total
       %th=total_budget
       %th LITRE
       %th=total_usage
+      %th=total_usage2
       %th LITRE
     
 %H4 Usage Breakdown per Unit
@@ -694,5 +780,9 @@
       %th LITRE
 
 .small
-  * Last updated :
+  ** Last updated :
   =Date.today.strftime('%d %b %Y') 
+  %br
+  ** (Source : Monthly Fuel (Depot) / Fuel Transaction)
+  %br
+  * (Source : Monthly Fuel (Depot) / Fuel Transaction)

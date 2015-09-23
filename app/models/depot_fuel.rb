@@ -363,6 +363,7 @@ class DepotFuel < ActiveRecord::Base
     end
   end
 
+  #Below - used for REAL TIME notification, whereas those in Fuel Limit used for DISPLAY purpose for all notification throughout the budget year
   def diesel_budgets
     FuelBudget.where(unit_id: unit_id).where(fuel_type_id: FuelType.where(name: 'DIESEL').first.id)
   end
@@ -400,16 +401,17 @@ class DepotFuel < ActiveRecord::Base
       budget_start_date=budgets.order(year_starts_on: :desc).last.year_starts_on
       if limit
         days_diff = (Date.today-budget_start_date.to_date).to_i
-        days_no = days_diff  % limit.duration
-        limit_set = days_diff / limit.duration
+        days_no = days_diff  % (limit.duration-1)  #days_diff  % limit.duration
+#         limit_set = days_diff / limit.duration
         if days_no == 0 && days_diff > 0
-          if limit_set==0
-            limitstart=Date.today-days_diff
-          else
-            limitstart=Date.today-(days_diff*limit_set)
-          end
+#           if limit_set==0
+#             limitstart=Date.today-days_diff
+#           else
+#             limitstart=Date.today-(days_diff*limit_set)
+#           end
+          limitstart=Date.today-limit.duration
           usages_rec=FuelIssued.joins(:depot_fuel).where('depot_fuels.unit_id=?', limit.unit_id).where('depot_fuels.issue_date >=? and depot_fuels. issue_date <=?', limitstart, Date.today).where(fuel_type: limit.fuel_type)
-        end
+         end
       end
     end
     usages_rec

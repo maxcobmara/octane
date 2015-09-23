@@ -243,9 +243,12 @@ en:
     budget_start_date: Budget Start Date
     budget_amount: Budget Amount
     budget_unit_type: Budget Unit Type
-    usage_amount: "Usage Amount *"
+    usage_amount: "Usage Amount **"
     usage_unit_type: Usage Unit Type
-    
+    limitation: Limitation
+    usage_surplus: "Usage Surplus *"
+    includes_surplus: "* Includes Usage Surplus"
+
   home:
     welcome: Welcome to Octane
     octane: Fuel Management System
