@@ -20,4 +20,38 @@ class FuelLimit < ActiveRecord::Base
     limit_amount.to_s+" "+limit_unit_type.short_name
   end
   
+  def surpluses(budget_startdate, depot, fueltype)
+    surplus_details=[]
+    if budget_startdate.to_date.year==Date.today.year
+      budget_end=Date.today 
+    else
+      budget_end=budget_startdate.to_date+364.days
+    end
+    limit_set=(budget_end-budget_startdate.to_date).to_i / (duration-1)
+    1.upto(limit_set).each do |cnt|
+      s1details=""
+      s2details=""
+      check_date=budget_startdate.to_date+(duration-1)*cnt
+      if check_date <= budget_end
+        before_date=check_date-(duration-1)
+        usages=FuelIssued.joins(:depot_fuel).where('depot_fuels.unit_id=?', depot.id).where('depot_fuels.issue_date >=? and depot_fuels. issue_date <=?', before_date, check_date).where(fuel_type: FuelType.where(name: fueltype))
+        usages2=FuelTransaction.where(transaction_type: 'Usage').where('created_at >=? and created_at <=?', before_date, check_date).where(fuel_tank_id: FuelTank.where(unit_id: depot.id).where(fuel_type: FuelType.where(name: fueltype)).pluck(:id))
+        if usages
+          surplus = usages.sum(:quantity)-limit_amount
+          if surplus > 0 && usages.first.unit_type==limit_unit_type 
+            s1details = check_date.strftime('%d %b')+": "+surplus.to_s+" "#+limit_unit_type.short_name#+"("+usages.sum(:quantity).to_s+")"
+          end
+        end
+        if usages2
+          surplus2 = usages2.sum(:amount)-limit_amount
+          if surplus2 > 0 && usages.first.unit_type==limit_unit_type 
+            s2details =" / "+surplus2.to_s 
+          end
+        end
+        surplus_details << s1details+s2details
+      end
+    end
+    surplus_details #just 4 checking<< budget_startdate# << "limit set #{limit_set}"
+  end
+  
 end
