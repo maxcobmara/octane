@@ -144,18 +144,29 @@ class FuelBudgetsController < ApplicationController
     @depot_ids=[]
     depot_fuels.group_by(&:unit_id).each do |depot_id, depot_fuels2|
       fuel_issueds=FuelIssued.where(depot_fuel_id: depot_fuels2.map(&:id))
-      diesel_issueds=fuel_issueds.where(fuel_type: (FuelType.where(name: 'DIESEL')))
-      petrol_issueds=fuel_issueds.where(fuel_type: (FuelType.where(name: 'PETROL')))
-      avtur_issueds=fuel_issueds.where(fuel_type: (FuelType.where(name: 'AVTUR')))
-      avcat_issueds=fuel_issueds.where(fuel_type: (FuelType.where(name: 'AVCAT')))
-      @main_diesel_usage[Unit.where(id: depot_id).first.name]=diesel_issueds.sum(:quantity)
-      @main_petrol_usage[Unit.where(id: depot_id).first.name]=petrol_issueds.sum(:quantity)
-      @main_avtur_usage[Unit.where(id: depot_id).first.name]=avtur_issueds.sum(:quantity)
-      @main_avcat_usage[Unit.where(id: depot_id).first.name]=avcat_issueds.sum(:quantity)
-      @sub_diesel_usage << diesel_issueds.group(:receiver).sum(:quantity)
-      @sub_petrol_usage << petrol_issueds.group(:receiver).sum(:quantity)
-      @sub_avtur_usage << avtur_issueds.group(:receiver).sum(:quantity)
-      @sub_avcat_usage << avcat_issueds.group(:receiver).sum(:quantity)
+      if fuel_issueds.count > 0
+        diesel_issueds=fuel_issueds.where(fuel_type: (FuelType.where(name: 'DIESEL')))
+        petrol_issueds=fuel_issueds.where(fuel_type: (FuelType.where(name: 'PETROL')))
+        avtur_issueds=fuel_issueds.where(fuel_type: (FuelType.where(name: 'AVTUR')))
+        avcat_issueds=fuel_issueds.where(fuel_type: (FuelType.where(name: 'AVCAT')))
+        @main_diesel_usage[Unit.where(id: depot_id).first.name]=diesel_issueds.sum(:quantity)
+        @main_petrol_usage[Unit.where(id: depot_id).first.name]=petrol_issueds.sum(:quantity)
+        @main_avtur_usage[Unit.where(id: depot_id).first.name]=avtur_issueds.sum(:quantity)
+        @main_avcat_usage[Unit.where(id: depot_id).first.name]=avcat_issueds.sum(:quantity)
+        @sub_diesel_usage << diesel_issueds.group(:receiver).sum(:quantity)
+        @sub_petrol_usage << petrol_issueds.group(:receiver).sum(:quantity)
+        @sub_avtur_usage << avtur_issueds.group(:receiver).sum(:quantity)
+        @sub_avcat_usage << avcat_issueds.group(:receiver).sum(:quantity)
+      else
+        diesel_usages=FuelTransaction.where(transaction_type: 'Usage').where(fuel_tank_id: FuelTank.where(unit_id: depot_id, fuel_type: (FuelType.where(name: 'DIESEL'))).pluck(:id))
+        petrol_usages=FuelTransaction.where(transaction_type: 'Usage').where(fuel_tank_id: FuelTank.where(unit_id: depot_id, fuel_type: (FuelType.where(name: 'PETROL'))).pluck(:id))
+        avtur_usages=FuelTransaction.where(transaction_type: 'Usage').where(fuel_tank_id: FuelTank.where(unit_id: depot_id, fuel_type: (FuelType.where(name: 'AVTUR'))).pluck(:id))
+        avcat_usages=FuelTransaction.where(transaction_type: 'Usage').where(fuel_tank_id: FuelTank.where(unit_id: depot_id, fuel_type: (FuelType.where(name: 'AVCAT'))).pluck(:id))
+        @main_diesel_usage[Unit.where(id: depot_id).first.name]=diesel_usages.sum(:amount)
+        @main_petrol_usage[Unit.where(id: depot_id).first.name]=petrol_usages.sum(:amount)
+        @main_avtur_usage[Unit.where(id: depot_id).first.name]=avtur_usages.sum(:amount)
+        @main_avcat_usage[Unit.where(id: depot_id).first.name]=avcat_usages.sum(:amount)
+      end
       @depot_ids << depot_id
     end
     @sub_diesel_usage2=FuelIssued.where(depot_fuel_id: depot_fuels.map(&:id)).where(fuel_type: (FuelType.where(name: 'DIESEL'))).group(:receiver).sum(:quantity)
