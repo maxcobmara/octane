@@ -41,8 +41,9 @@ class FuelLimit < ActiveRecord::Base
           if surplus > 0 && usages.first.unit_type==limit_unit_type 
             s1details = check_date.strftime('%d %b')+": "+surplus.to_s+" "#+limit_unit_type.short_name#+"("+usages.sum(:quantity).to_s+")"
           end
-        end
-        if usages2
+        #end
+        #if usages2
+        else
           surplus2 = usages2.sum(:amount)-limit_amount
           if surplus2 > 0 && usages.first.unit_type==limit_unit_type 
             s2details =" / "+surplus2.to_s 

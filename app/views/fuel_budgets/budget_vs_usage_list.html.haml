@@ -31,7 +31,8 @@
       %th=t 'report.budget_start_date'
       %th=t 'report.budget_amount'
       %th=t 'report.budget_unit_type'
-      %th{colspan: 2}=t 'report.usage_amount'
+      /%th{colspan: 2}=t 'report.usage_amount'
+      %th=t 'report.usage_amount'
       %th=t 'report.usage_unit_type'
       %th=t 'report.limitation'
       %th=t 'report.usage_surplus'
@@ -60,8 +61,15 @@
         %td=budget_startdate.to_date.strftime('%d %b %Y') if budget_startdate
         %td=budget.amount if budget_startdate
         %td=budget.unit_type.description if budget_startdate
-        %td=usage=fuel_issueds.sum(:quantity)
-        %td=usage2=fuel_used.sum(:amount)
+        /%td=usage=fuel_issueds.sum(:quantity) if fuel_issueds
+        /%td=usage2=fuel_used.sum(:amount)
+        %td
+          - if fuel_issueds.count > 0
+            =usage=fuel_issueds.sum(:quantity)
+            %font{color: "red"}* 
+          - else
+            =usage2=fuel_used.sum(:amount)
+            %font{color: "blue"}* 
         %td LITRE
         - limit=FuelLimit.where(unit_id: unit.id).where(fuel_type: FuelType.where(name: 'DIESEL')).first
         %td
@@ -75,8 +83,12 @@
             - for surplus in @surpluses
               %font{color: "red"}=surplus
               %br
-      - total_usage+=usage
-      - total_usage2+=usage2
+      /- total_usage+=usage
+      /- total_usage2+=usage2 
+      - if fuel_issueds.count > 0
+        - total_usage+=usage
+      - else
+        - total_usage2+=usage2 
       - total_budget+=budget.amount if budget_startdate
       - @depot_listed_budget << budget.id if budget_startdate
 
@@ -89,7 +101,7 @@
         %td=bd.year_starts_on.strftime('%d %b %Y')
         %td=bd.amount
         %td=bd.unit_type.description
-        %td No record
+        /%td No record
         %td No record
         %td No record
         - limit=FuelLimit.where(unit_id: bd.unit_id).where(fuel_type: FuelType.where(name: 'DIESEL')).first
@@ -103,10 +115,28 @@
       %th{colspan: "3"}Total
       %th=total_budget
       %th LITRE
-      %th=total_usage
-      %th=total_usage2
+      /%th=total_usage
+      /%th=total_usage2
+      %th
+        - if total_usage > 0
+          =total_usage
+          %font{color: "red"}* 
+        - if total_usage2 > 0
+          =total_usage2 
+          %font{color: "blue"}* 
       %th LITRE
-    
+      %td{colspan: "2"} &nbsp;
+
+.small
+  %b Remark :
+  %br
+  %font{color: "blue"}* 
+  Based on Fuel Transactions records
+  %br
+  %font{color: "red"}* 
+  Based on Monthly Fuel (Depot) records    
+  %BR
+      
 %H4 Usage Breakdown per Unit
 .small (Source : Depot Fuel)
 %table.table.table-bordered
@@ -231,7 +261,8 @@
       %th=t 'report.budget_start_date'
       %th=t 'report.budget_amount'
       %th=t 'report.budget_unit_type'
-      %th{colspan: 2}=t 'report.usage_amount'
+      /%th{colspan: 2}=t 'report.usage_amount'
+      %th=t 'report.usage_amount'
       %th=t 'report.usage_unit_type'
       %th=t 'report.limitation'
       %th=t 'report.usage_surplus'
@@ -260,8 +291,15 @@
         %td=budget_startdate.to_date.strftime('%d %b %Y') if budget_startdate
         %td=budget.amount if budget_startdate
         %td=budget.unit_type.description if budget_startdate
-        %td=usage=fuel_issueds.sum(:quantity)
-        %td=usage2=fuel_used.sum(:amount)
+        /%td=usage=fuel_issueds.sum(:quantity)
+        /%td=usage2=fuel_used.sum(:amount)
+        %td
+          - if fuel_issueds.count > 0
+            =usage=fuel_issueds.sum(:quantity)
+            %font{color: "red"}* 
+          - else
+            =usage2=fuel_used.sum(:amount)
+            %font{color: "blue"}* 
         %td LITRE
         - limit=FuelLimit.where(unit_id: unit.id).where(fuel_type: FuelType.where(name: 'PETROL')).first
         %td
@@ -275,8 +313,12 @@
             - for surplus in @surpluses
               %font{color: "red"}=surplus
               %br
-      - total_usage+=usage
-      - total_usage2+=usage2
+      /- total_usage+=usage
+      /- total_usage2+=usage2
+      - if fuel_issueds.count > 0
+        - total_usage+=usage
+      - else
+        - total_usage2+=usage2 
       - total_budget+=budget.amount if budget_startdate
       - @depot_listed_budget << budget.id if budget_startdate
 
@@ -289,7 +331,7 @@
         %td=bd.year_starts_on.strftime('%d %b %Y')
         %td=bd.amount
         %td=bd.unit_type.description
-        %td No record
+        /%td No record
         %td No record
         %td No record
         - limit=FuelLimit.where(unit_id: bd.unit_id).where(fuel_type: FuelType.where(name: 'PETROL')).first
@@ -303,9 +345,27 @@
       %th{colspan: "3"}Total
       %th=total_budget
       %th LITRE
-      %th=total_usage
-      %th=total_usage2
+      /%th=total_usage
+      /%th=total_usage2
+      %th
+        - if total_usage > 0
+          =total_usage
+          %font{color: "red"}* 
+        - if total_usage2 > 0
+          =total_usage2 
+          %font{color: "blue"}* 
       %th LITRE
+      %td{colspan: "2"} &nbsp;
+
+.small
+  %b Remark :
+  %br
+  %font{color: "blue"}* 
+  Based on Fuel Transactions records
+  %br
+  %font{color: "red"}* 
+  Based on Monthly Fuel (Depot) records    
+  %BR
     
 %H4 Usage Breakdown per Unit
 .small (Source : Depot Fuel)
@@ -417,7 +477,8 @@
       %th=t 'report.budget_start_date'
       %th=t 'report.budget_amount'
       %th=t 'report.budget_unit_type'
-      %th{colspan: 2}=t 'report.usage_amount'
+      /%th{colspan: 2}=t 'report.usage_amount'
+      %th=t 'report.usage_amount'
       %th=t 'report.usage_unit_type'
       %th=t 'report.limitation'
       %th=t 'report.usage_surplus'
@@ -446,8 +507,15 @@
         %td=budget_startdate.to_date.strftime('%d %b %Y') if budget_startdate
         %td=budget.amount if budget_startdate
         %td=budget.unit_type.description if budget_startdate
-        %td=usage=fuel_issueds.sum(:quantity)
-        %td=usage2=fuel_used.sum(:amount)
+        /%td=usage=fuel_issueds.sum(:quantity)
+        /%td=usage2=fuel_used.sum(:amount)
+        %td
+          - if fuel_issueds.count > 0
+            =usage=fuel_issueds.sum(:quantity)
+            %font{color: "red"}* 
+          - else
+            =usage2=fuel_used.sum(:amount)
+            %font{color: "blue"}* 
         %td LITRE
         - limit=FuelLimit.where(unit_id: unit.id).where(fuel_type: FuelType.where(name: 'AVTUR')).first
         %td
@@ -461,8 +529,12 @@
             - for surplus in @surpluses
               %font{color: "red"}=surplus
               %br
-      - total_usage+=usage
-      - total_usage2+=usage2
+      /- total_usage+=usage
+      /- total_usage2+=usage2
+      - if fuel_issueds.count > 0
+        - total_usage+=usage
+      - else
+        - total_usage2+=usage2 
       - total_budget+=budget.amount if budget_startdate
       - @depot_listed_budget << budget.id if budget_startdate
 
@@ -475,7 +547,7 @@
         %td=bd.year_starts_on.strftime('%d %b %Y')
         %td=bd.amount
         %td=bd.unit_type.description
-        %td No record
+        /%td No record
         %td No record
         %td No record
         - limit=FuelLimit.where(unit_id: bd.unit_id).where(fuel_type: FuelType.where(name: 'AVTUR')).first
@@ -489,9 +561,27 @@
       %th{colspan: "3"}Total
       %th=total_budget
       %th LITRE
-      %th=total_usage
-      %th=total_usage2
+      /%th=total_usage
+      /%th=total_usage2
+      %th
+        - if total_usage > 0
+          =total_usage
+          %font{color: "red"}* 
+        - if total_usage2 > 0
+          =total_usage2 
+          %font{color: "blue"}* 
       %th LITRE
+      %td{colspan: "2"} &nbsp;
+
+.small
+  %b Remark :
+  %br
+  %font{color: "blue"}* 
+  Based on Fuel Transactions records
+  %br
+  %font{color: "red"}* 
+  Based on Monthly Fuel (Depot) records    
+  %BR
     
 %H4 Usage Breakdown per Unit
 .small (Source : Depot Fuel)
@@ -603,7 +693,8 @@
       %th=t 'report.budget_start_date'
       %th=t 'report.budget_amount'
       %th=t 'report.budget_unit_type'
-      %th{colspan: 2}=t 'report.usage_amount'
+      /%th{colspan: 2}=t 'report.usage_amount'
+      %th=t 'report.usage_amount'
       %th=t 'report.usage_unit_type'
       %th=t 'report.limitation'
       %th=t 'report.usage_surplus'
@@ -632,8 +723,15 @@
         %td=budget_startdate.to_date.strftime('%d %b %Y') if budget_startdate
         %td=budget.amount if budget_startdate
         %td=budget.unit_type.description if budget_startdate
-        %td=usage=fuel_issueds.sum(:quantity)
-        %td=usage2=fuel_used.sum(:amount)
+        /%td=usage=fuel_issueds.sum(:quantity)
+        /%td=usage2=fuel_used.sum(:amount)
+        %td
+          - if fuel_issueds.count > 0
+            =usage=fuel_issueds.sum(:quantity)
+            %font{color: "red"}* 
+          - else
+            =usage2=fuel_used.sum(:amount)
+            %font{color: "blue"}* 
         %td LITRE
         - limit=FuelLimit.where(unit_id: unit.id).where(fuel_type: FuelType.where(name: 'AVCAT')).first
         %td
@@ -647,8 +745,12 @@
             - for surplus in @surpluses
               %font{color: "red"}=surplus
               %br
-      - total_usage+=usage
-      - total_usage2+=usage2
+      /- total_usage+=usage
+      /- total_usage2+=usage2
+      - if fuel_issueds.count > 0
+        - total_usage+=usage
+      - else
+        - total_usage2+=usage2 
       - total_budget+=budget.amount if budget_startdate
       - @depot_listed_budget << budget.id if budget_startdate
 
@@ -661,7 +763,7 @@
         %td=bd.year_starts_on.strftime('%d %b %Y')
         %td=bd.amount
         %td=bd.unit_type.description
-        %td No record
+        /%td No record
         %td No record
         %td No record
         - limit=FuelLimit.where(unit_id: bd.unit_id).where(fuel_type: FuelType.where(name: 'AVCAT')).first
@@ -675,9 +777,27 @@
       %th{colspan: "3"}Total
       %th=total_budget
       %th LITRE
-      %th=total_usage
-      %th=total_usage2
+      /%th=total_usage
+      /%th=total_usage2
+      %th
+        - if total_usage > 0
+          =total_usage
+          %font{color: "red"}* 
+        - if total_usage2 > 0
+          =total_usage2 
+          %font{color: "blue"}* 
       %th LITRE
+      %td{colspan: "2"} &nbsp;
+
+.small
+  %b Remark :
+  %br
+  %font{color: "blue"}* 
+  Based on Fuel Transactions records
+  %br
+  %font{color: "red"}* 
+  Based on Monthly Fuel (Depot) records    
+  %BR
     
 %H4 Usage Breakdown per Unit
 .small (Source : Depot Fuel)
@@ -781,8 +901,7 @@
 
 .small
   ** Last updated :
-  =Date.today.strftime('%d %b %Y') 
-  %br
-  ** (Source : Monthly Fuel (Depot) / Fuel Transaction)
-  %br
-  * (Source : Monthly Fuel (Depot) / Fuel Transaction)
+  - if FuelIssued.count > 0
+    =FuelIssued.last.updated_at.strftime('%d %b %Y') 
+  - else
+    =FuelTransaction.last.updated_at.strftime('%d %b %Y')
