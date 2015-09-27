@@ -110,8 +110,8 @@ class FuelBudgetsController < ApplicationController
     @budget_avcat=unit_budget.where(fuel_type: (FuelType.where(name: 'AVCAT')))
     @fuel_issueds=FuelIssued.joins(:depot_fuel).where('depot_fuels.issue_date >=? and depot_fuels.issue_date <=?', @start_from, @end_on)
     
-    #if @fuel_issueds.count > 0    
-    unless @fuel_issueds.count > 0
+    if @fuel_issueds.count > 0    
+    #unless @fuel_issueds.count > 0
       @unit_fuels=UnitFuel.where.not(unit_id: FuelTank.pluck(:unit_id))
       @d_unit_fuels=UnitFuel.where(unit_id: FuelTank.pluck(:unit_id)).where('issue_date >=? and issue_date <=?', @start_from, @end_on)   
       @diesel_issueds=@fuel_issueds.where(fuel_type: FuelType.where(name: 'DIESEL'))
@@ -258,8 +258,8 @@ class FuelBudgetsController < ApplicationController
     @depot_ids=[]
   
     #************************
-    #if @fuel_issueds.count > 0    
-    unless @fuel_issueds.count > 0
+    if @fuel_issueds.count > 0    
+    #unless @fuel_issueds.count > 0
       depot_fuels.group_by(&:unit_id).each do |depot_id, depot_fuels2|
           fuel_issueds=FuelIssued.where(depot_fuel_id: depot_fuels2.map(&:id))
           diesel_issueds=fuel_issueds.where(fuel_type: (FuelType.where(name: 'DIESEL')))

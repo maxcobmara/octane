@@ -137,8 +137,8 @@
   Based on Monthly Fuel (Depot) records    
   %BR
       
-/- if @fuel_issueds.count > 0    
-- unless @fuel_issueds.count > 0
+- if @fuel_issueds.count > 0    
+  /- unless @fuel_issueds.count > 0
   %H4 Usage Breakdown per Unit
   .small (Source : Depot Fuel)
   %table.table.table-bordered
@@ -163,8 +163,8 @@
         %th LITRE
 
 %H4 Usage Breakdown by Depot
-/- if @fuel_issueds.count > 0    
-- unless @fuel_issueds.count > 0
+- if @fuel_issueds.count > 0    
+  /- unless @fuel_issueds.count > 0
   %table.table.table-bordered
     - total_usage=0
     - @depot_fuels2.group_by(&:depot).each do |depot, depot_fuels|
@@ -219,8 +219,8 @@
 %H4
   Unit
   =t 'report.budget_vs_usage'
-/- if @fuel_issueds.count > 0    
-- unless @fuel_issueds.count > 0
+- if @fuel_issueds.count > 0    
+  /- unless @fuel_issueds.count > 0
   %table.table.table-bordered
     %thead
       %tr
@@ -446,8 +446,8 @@
   Based on Monthly Fuel (Depot) records    
   %BR
 
-/- if @fuel_issueds.count > 0    
-- unless @fuel_issueds.count > 0
+- if @fuel_issueds.count > 0    
+  /- unless @fuel_issueds.count > 0
   %H4 Usage Breakdown per Unit
   .small (Source : Depot Fuel)
   %table.table.table-bordered
@@ -472,8 +472,8 @@
         %th LITRE
       
 %H4 Usage Breakdown by Depot
-/- if @fuel_issueds.count > 0    
-- unless @fuel_issueds.count > 0
+- if @fuel_issueds.count > 0    
+  /- unless @fuel_issueds.count > 0
   %table.table.table-bordered
     - total_usage=0
     - @depot_fuels2.group_by(&:depot).each do |depot, depot_fuels|
@@ -527,8 +527,8 @@
 %H4
   Unit
   =t 'report.budget_vs_usage'
-/- if @fuel_issueds.count > 0
-- unless @fuel_issueds.count > 0
+- if @fuel_issueds.count > 0
+  /- unless @fuel_issueds.count > 0
   %table.table.table-bordered
     %thead
       %tr
@@ -576,6 +576,19 @@
           %td=bd.unit_type.description
           %td No record
           %td No record
+
+      - @d_unit_fuels.sort_by{|x|x.unit.name}.group_by(&:unit).each do |depot, dus|
+        %tr
+          %td=no+=1
+          %td=depot.name
+          %td{colspan: 3, align: 'center'} 
+            .small 
+              \- Unit is a Depot 
+              \-
+          %td=usage=dus.sum(&:p_vehicle)+dus.sum(&:p_misctool)+dus.sum(&:p_boat)
+          %td LITRE
+        - total_usage+=usage          
+          
       %tr
         %th{colspan: "5"} Total Usage
         %th=total_usage
@@ -741,8 +754,8 @@
   Based on Monthly Fuel (Depot) records    
   %BR
     
-/- if @fuel_issueds.count > 0    
-- unless @fuel_issueds.count > 0
+- if @fuel_issueds.count > 0    
+  /- unless @fuel_issueds.count > 0
   %H4 Usage Breakdown per Unit
   .small (Source : Depot Fuel)
   %table.table.table-bordered
@@ -767,8 +780,8 @@
         %th LITRE
       
 %H4 Usage Breakdown by Depot
-/- if @fuel_issueds.count > 0    
-- unless @fuel_issueds.count > 0
+- if @fuel_issueds.count > 0    
+  /- unless @fuel_issueds.count > 0
   %table.table.table-bordered
     - total_usage=0
     - @depot_fuels2.group_by(&:depot).each do |depot, depot_fuels|
@@ -822,8 +835,8 @@
 %H4
   Unit
   =t 'report.budget_vs_usage'
-/- if @fuel_issueds.count > 0
-- unless @fuel_issueds.count > 0
+- if @fuel_issueds.count > 0
+  /- unless @fuel_issueds.count > 0
   %table.table.table-bordered
     %thead
       %tr
@@ -871,6 +884,19 @@
           %td=bd.unit_type.description
           %td No record
           %td No record
+
+      - @d_unit_fuels.sort_by{|x|x.unit.name}.group_by(&:unit).each do |depot, dus|
+        %tr
+          %td=no+=1
+          %td=depot.name
+          %td{colspan: 3, align: 'center'} 
+            .small 
+              \- Unit is a Depot 
+              \-
+          %td=usage=AddFuel.where(unit_fuel_id: dus.map(&:id)).where(fuel_type: FuelType.where(name: 'AVTUR')).sum(:quantity)
+          %td LITRE
+        - total_usage+=usage
+
       %tr
         %th{colspan: "5"} Total Usage
         %th=total_usage
@@ -1036,8 +1062,8 @@
   Based on Monthly Fuel (Depot) records    
   %BR
  
-/- if @fuel_issueds.count > 0    
-- unless @fuel_issueds.count > 0
+- if @fuel_issueds.count > 0    
+  /- unless @fuel_issueds.count > 0
   %H4 Usage Breakdown per Unit
   .small (Source : Depot Fuel)
   %table.table.table-bordered
@@ -1062,8 +1088,8 @@
         %th LITRE
       
 %H4 Usage Breakdown by Depot
-/- if @fuel_issueds.count > 0    
-- unless @fuel_issueds.count > 0
+- if @fuel_issueds.count > 0    
+  /- unless @fuel_issueds.count > 0
   %table.table.table-bordered
     - total_usage=0
     - @depot_fuels2.group_by(&:depot).each do |depot, depot_fuels|
@@ -1117,8 +1143,8 @@
 %H4
   Unit
   =t 'report.budget_vs_usage'
-/- if @fuel_issueds.count > 0
-- unless @fuel_issueds.count > 0
+- if @fuel_issueds.count > 0
+  /- unless @fuel_issueds.count > 0
   %table.table.table-bordered
     %thead
       %tr
@@ -1166,6 +1192,19 @@
           %td=bd.unit_type.description
           %td No record
           %td No record
+
+      - @d_unit_fuels.sort_by{|x|x.unit.name}.group_by(&:unit).each do |depot, dus|
+        %tr
+          %td=no+=1
+          %td=depot.name
+          %td{colspan: 3, align: 'center'} 
+            .small 
+              \- Unit is a Depot 
+              \-
+          %td=usage=AddFuel.where(unit_fuel_id: dus.map(&:id)).where(fuel_type: FuelType.where(name: 'AVCAT')).sum(:quantity)
+          %td LITRE
+        - total_usage+=usage
+
       %tr
         %th{colspan: "5"} Total Usage
         %th=total_usage
