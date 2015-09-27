@@ -29,11 +29,13 @@
   .col-md-7
     = bar_chart [{name: "Usage", data: @main_diesel_usage}, {name: "Budget", data: @main_diesel_budget.each.map{|x, y| [x.name, y]}}]   
 
-.row
-  %h4 Usage Breakdown per Unit 
-  %h5 (Source: Depot Fuel)
-  .col-md-7
-    = bar_chart @sub_diesel_usage2.each.map{|x, y| [x.name, y]}
+/- unless FuelIssued.all.count > 0
+- if FuelIssued.all.count > 0
+  .row
+    %h4 Usage Breakdown per Unit 
+    %h5 (Source: Depot Fuel)
+    .col-md-7
+      = bar_chart @sub_diesel_usage2.each.map{|x, y| [x.name, y]}
 
 .row
   %h4 Usage Breakdown by Depot
@@ -45,21 +47,39 @@
 
 /2nd Section - Unit Budget & Usage (Unit Fuel)
 //UNIT FUELS - Diesel
-.row
-  - if @diesel_budget && @diesel_usage
-    %h4 Unit Budget Vs Usage
-  - else
-    - if @diesel_usage && !@diesel_budget
-      %h4 Unit Usage
-  %h5 (Source : Unit Fuel)
-  .col-md-7
-    - if @diesel_budget && @diesel_usage
-      = bar_chart [{name: "Usage", data: @diesel_usage},{name: "Budget", data: @diesel_budget}]
-      %h4 Unit (Depot) Usage
-      = bar_chart @diesel_usage2
+/- unless FuelIssued.all.count > 0
+- if FuelIssued.all.count > 0
+  .row
+    - if @diesel_budget && @diesel_usage 
+      %h4 Unit Budget Vs Usage
     - else
       - if @diesel_usage && !@diesel_budget
-        = bar_chart (@diesel_usage+@diesel_usage2)
+        %h4 Unit Usage
+    %h5 (Source : Unit Fuel)
+    .col-md-7
+      - if @diesel_budget && @diesel_usage
+        = bar_chart [{name: "Usage", data: @diesel_usage},{name: "Budget", data: @diesel_budget}]
+        %h4 Unit (Depot) Usage
+        = bar_chart @diesel_usage2
+      - else
+        - if @diesel_usage && !@diesel_budget
+          = bar_chart (@diesel_usage+@diesel_usage2)
+- else
+  /source - Fuel Transaction
+  .row
+    - if @diesel_budget && @sub_diesel_usage2
+      %h4 Unit Budget Vs Usage
+    - else
+      - if @sub_diesel_usage2 && !@diesel_budget
+        %h4 Unit Usage
+    .col-md-7
+      - if @diesel_budget && @sub_diesel_usage2
+        = bar_chart [{name: "Usage", data:  @sub_diesel_usage2.each.map{|x, y| [x.name, y]}},{name: "Budget", data: @diesel_budget}]
+      - else
+        - if @sub_diesel_usage2 && !@diesel_budget
+          = bar_chart @sub_diesel_usage2.each.map{|x, y| [x.name, y]}
+    
+  
 - if @diesel_budget
   .row
     .col-md-5.col-md-offset-1
@@ -89,11 +109,13 @@
   .col-md-7
     = bar_chart [{name: "Usage", data: @main_petrol_usage}, {name: "Budget", data: @main_petrol_budget.each.map{|x, y| [x.name, y]}}]   
 
-.row
-  %h4 Usage Breakdown per Unit 
-  %h5 (Source: Depot Fuel)
-  .col-md-7
-    = bar_chart @sub_petrol_usage2.each.map{|x, y| [x.name, y]}
+/- unless FuelIssued.all.count > 0
+- if FuelIssued.all.count > 0
+  .row
+    %h4 Usage Breakdown per Unit 
+    %h5 (Source: Depot Fuel)
+    .col-md-7
+      = bar_chart @sub_petrol_usage2.each.map{|x, y| [x.name, y]}
 
 .row
   %h4 Usage Breakdown by Depot
@@ -105,21 +127,38 @@
 
 /2nd Section - Unit Budget & Usage (Unit Fuel)
 //UNIT FUELS - Petrol
-.row
-  - if @petrol_budget && @petrol_usage
-    %h4 Unit Budget Vs Usage
-  - else
-    - if @petrol_usage && !@petrol_budget
-      %h4 Unit Usage
-  %h5 (Source : Unit Fuel)
-  .col-md-7
+/- unless FuelIssued.all.count > 0
+- if FuelIssued.all.count > 0
+  .row
     - if @petrol_budget && @petrol_usage
-      = bar_chart [{name: "Usage", data: @petrol_usage},{name: "Budget", data: @petrol_budget}]
-      %h4 Unit (Depot) Usage
-      = bar_chart @petrol_usage2
+      %h4 Unit Budget Vs Usage
     - else
       - if @petrol_usage && !@petrol_budget
-        = bar_chart (@petrol_usage+@petrol_usage2)
+        %h4 Unit Usage
+    %h5 (Source : Unit Fuel)
+    .col-md-7
+      - if @petrol_budget && @petrol_usage
+        = bar_chart [{name: "Usage", data: @petrol_usage},{name: "Budget", data: @petrol_budget}]
+        %h4 Unit (Depot) Usage
+        = bar_chart @petrol_usage2
+      - else
+        - if @petrol_usage && !@petrol_budget
+          = bar_chart (@petrol_usage+@petrol_usage2)
+- else
+  /source - Fuel Transaction
+  .row
+    - if @petrol_budget && @sub_petrol_usage2
+      %h4 Unit Budget Vs Usage
+    - else
+      - if @sub_petrol_usage2 && !@petrol_budget
+        %h4 Unit Usage
+    .col-md-7
+      - if @petrol_budget && @sub_petrol_usage2
+        = bar_chart [{name: "Usage", data:  @sub_petrol_usage2.each.map{|x, y| [x.name, y]}},{name: "Budget", data: @petrol_budget}]
+      - else
+        - if @sub_petrol_usage2 && !@petrol_budget
+          = bar_chart @sub_petrol_usage2.each.map{|x, y| [x.name, y]}
+          
 - if @petrol_budget
   .row
     .col-md-5.col-md-offset-1
@@ -149,11 +188,13 @@
   .col-md-7
     = bar_chart [{name: "Usage", data: @main_avtur_usage}, {name: "Budget", data: @main_avtur_budget.each.map{|x, y| [x.name, y]}}]   
 
-.row
-  %h4 Usage Breakdown per Unit 
-  %h5 (Source: Depot Fuel)
-  .col-md-7
-    = bar_chart @sub_avtur_usage2.each.map{|x, y| [x.name, y]}
+/- unless FuelIssued.all.count > 0
+- if FuelIssued.all.count > 0
+  .row
+    %h4 Usage Breakdown per Unit 
+    %h5 (Source: Depot Fuel)
+    .col-md-7
+      = bar_chart @sub_avtur_usage2.each.map{|x, y| [x.name, y]}
 
 .row
   %h4 Usage Breakdown by Depot
@@ -165,21 +206,38 @@
 
 /2nd Section - Unit Budget & Usage (Unit Fuel)
 //UNIT FUELS - AVTUR
-.row
-  - if @avtur_budget && @avtur_usage
-    %h4 Unit Budget Vs Usage
-  - else
-    - if @avtur_usage && !@avtur_budget
-      %h4 Unit Usage
-  %h5 (Source : Unit Fuel)
-  .col-md-7
+/- unless FuelIssued.all.count > 0
+- if FuelIssued.all.count > 0
+  .row
     - if @avtur_budget && @avtur_usage
-      = bar_chart [{name: "Usage", data: @avtur_usage},{name: "Budget", data: @avtur_budget}]
-      %h4 Unit (Depot) Usage
-      = bar_chart @avtur_usage2
+      %h4 Unit Budget Vs Usage
     - else
       - if @avtur_usage && !@avtur_budget
-        = bar_chart (@avtur_usage+@avtur_usage2)
+        %h4 Unit Usage
+    %h5 (Source : Unit Fuel)
+    .col-md-7
+      - if @avtur_budget && @avtur_usage
+        = bar_chart [{name: "Usage", data: @avtur_usage},{name: "Budget", data: @avtur_budget}]
+        %h4 Unit (Depot) Usage
+        = bar_chart @avtur_usage2
+      - else
+        - if @avtur_usage && !@avtur_budget
+          = bar_chart (@avtur_usage+@avtur_usage2)
+- else
+  /source - Fuel Transaction
+  .row
+    - if @avtur_budget && @sub_avtur_usage2
+      %h4 Unit Budget Vs Usage
+    - else
+      - if @sub_avtur_usage2 && !@avtur_budget
+        %h4 Unit Usage
+    .col-md-7
+      - if @avtur_budget && @sub_avtur_usage2
+        = bar_chart [{name: "Usage", data:  @sub_avtur_usage2.each.map{|x, y| [x.name, y]}},{name: "Budget", data: @avtur_budget}]
+      - else
+        - if @sub_avtur_usage2 && !@avtur_budget
+          = bar_chart @sub_avtur_usage2.each.map{|x, y| [x.name, y]}
+          
 - if @avtur_budget
   .row
     .col-md-5.col-md-offset-1
@@ -209,11 +267,13 @@
   .col-md-7
     = bar_chart [{name: "Usage", data: @main_avcat_usage}, {name: "Budget", data: @main_avcat_budget.each.map{|x, y| [x.name, y]}}]   
 
-.row
-  %h4 Usage Breakdown per Unit 
-  %h5 (Source: Depot Fuel)
-  .col-md-7
-    = bar_chart @sub_avcat_usage2.each.map{|x, y| [x.name, y]}
+/- unless FuelIssued.all.count > 0
+- if FuelIssued.all.count > 0
+  .row
+    %h4 Usage Breakdown per Unit 
+    %h5 (Source: Depot Fuel)
+    .col-md-7
+      = bar_chart @sub_avcat_usage2.each.map{|x, y| [x.name, y]}
 
 .row
   %h4 Usage Breakdown by Depot
@@ -225,21 +285,37 @@
 
 /2nd Section - Unit Budget & Usage (Unit Fuel)
 //UNIT FUELS - AVCAT
-.row
-  - if @avcat_budget && @avcat_usage
-    %h4 Unit Budget Vs Usage
-  - else
-    - if @avcat_usage && !@avcat_budget
-      %h4 Unit Usage
-  %h5 (Source : Unit Fuel)
-  .col-md-7
+/- unless FuelIssued.all.count > 0
+- if FuelIssued.all.count > 0
+  .row
     - if @avcat_budget && @avcat_usage
-      = bar_chart [{name: "Usage", data: @avcat_usage},{name: "Budget", data: @avcat_budget}] 
-      %h4 Unit (Depot) Usage
-      = bar_chart @avcat_usage2
+      %h4 Unit Budget Vs Usage
     - else
       - if @avcat_usage && !@avcat_budget
-        = bar_chart (@avcat_usage+@avcat_usage2)
+        %h4 Unit Usage
+    %h5 (Source : Unit Fuel)
+    .col-md-7
+      - if @avcat_budget && @avcat_usage
+        = bar_chart [{name: "Usage", data: @avcat_usage},{name: "Budget", data: @avcat_budget}] 
+        %h4 Unit (Depot) Usage
+        = bar_chart @avcat_usage2
+      - else
+        - if @avcat_usage && !@avcat_budget
+          = bar_chart (@avcat_usage+@avcat_usage2)
+- else
+  /source - Fuel Transaction
+  .row
+    - if @avcat_budget && @sub_avcat_usage2
+      %h4 Unit Budget Vs Usage
+    - else
+      - if @sub_avcat_usage2 && !@avcat_budget
+        %h4 Unit Usage
+    .col-md-7
+      - if @avcat_budget && @sub_avcat_usage2
+        = bar_chart [{name: "Usage", data:  @sub_avcat_usage2.each.map{|x, y| [x.name, y]}},{name: "Budget", data: @avcat_budget}]
+      - else
+        - if @sub_avcat_usage2 && !@avcat_budget
+          = bar_chart @sub_avcat_usage2.each.map{|x, y| [x.name, y]}
 - if @avcat_budget
   .row
     .col-md-5.col-md-offset-1
