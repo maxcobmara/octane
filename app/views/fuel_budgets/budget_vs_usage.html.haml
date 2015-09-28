@@ -75,10 +75,12 @@
     .col-md-7
       - if @diesel_budget && @sub_diesel_usage2
         = bar_chart [{name: "Usage", data:  @sub_diesel_usage2.each.map{|x, y| [x.name, y]}},{name: "Budget", data: @diesel_budget}]
+        %h4 Unit (Depot) Usage
+        = bar_chart @diesel_usage2
       - else
         - if @sub_diesel_usage2 && !@diesel_budget
-          = bar_chart @sub_diesel_usage2.each.map{|x, y| [x.name, y]}
-      /TODO - @diesel_usage2
+          = bar_chart (@sub_diesel_usage2+@diesel_usage2).each.map{|x, y| [x.name, y]}
+
   
 - if @diesel_budget
   .row
@@ -155,10 +157,11 @@
     .col-md-7
       - if @petrol_budget && @sub_petrol_usage2
         = bar_chart [{name: "Usage", data:  @sub_petrol_usage2.each.map{|x, y| [x.name, y]}},{name: "Budget", data: @petrol_budget}]
+        %h4 Unit (Depot) Usage
+        = bar_chart @petrol_usage2
       - else
         - if @sub_petrol_usage2 && !@petrol_budget
-          = bar_chart @sub_petrol_usage2.each.map{|x, y| [x.name, y]}
-      /TODO - @petrol_usage2    
+          = bar_chart (@sub_petrol_usage2+@petrol_usage2).each.map{|x, y| [x.name, y]}
 
 - if @petrol_budget
   .row
@@ -235,10 +238,11 @@
     .col-md-7
       - if @avtur_budget && @sub_avtur_usage2
         = bar_chart [{name: "Usage", data:  @sub_avtur_usage2.each.map{|x, y| [x.name, y]}},{name: "Budget", data: @avtur_budget}]
+        %h4 Unit (Depot) Usage
+        = bar_chart @avtur_usage2
       - else
         - if @sub_avtur_usage2 && !@avtur_budget
-          = bar_chart @sub_avtur_usage2.each.map{|x, y| [x.name, y]}
-      /TODO - @avtur_usage2   
+          = bar_chart (@sub_avtur_usage2+@avtur_usage2).each.map{|x, y| [x.name, y]}
 
 - if @avtur_budget
   .row
@@ -315,10 +319,11 @@
     .col-md-7
       - if @avcat_budget && @sub_avcat_usage2
         = bar_chart [{name: "Usage", data:  @sub_avcat_usage2.each.map{|x, y| [x.name, y]}},{name: "Budget", data: @avcat_budget}]
+        %h4 Unit (Depot) Usage
+        = bar_chart @avcat_usage2
       - else
         - if @sub_avcat_usage2 && !@avcat_budget
-          = bar_chart @sub_avcat_usage2.each.map{|x, y| [x.name, y]}
-      /TODO - @avcat_usage2
+          = bar_chart (@sub_avcat_usage2+@avcat_usage2).each.map{|x, y| [x.name, y]}
 
 - if @avcat_budget
   .row

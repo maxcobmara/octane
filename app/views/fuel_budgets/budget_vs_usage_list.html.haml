@@ -327,8 +327,24 @@
           %td No record
           %td No record
           
-      /TODO display depot(also a unit) with usage record?
-          
+      /display depot(also a unit) with usage record
+      - @diesel_usage2.each do |depot, dus|
+        %tr
+          %td=no+=1
+          %td=depot
+          %td{colspan: 3, align: 'center'} 
+            .small 
+              \- Unit is a Depot 
+              \-
+          %td=usage=dus
+          %td LITRE
+        - total_usage+=usage
+      
+      %tr
+        %th{colspan: "5"} Total Usage
+        %th=total_usage
+        %th LITRE
+        
 %br
 %H3 Petrol
 %H4 Depot Budget Vs Total Usage
@@ -635,7 +651,23 @@
           %td No record
           %td No record
           
-      /TODO display depot(also a unit) with usage record?
+      /display depot(also a unit) with usage record
+      - @petrol_usage2.each do |depot, dus|
+        %tr
+          %td=no+=1
+          %td=depot
+          %td{colspan: 3, align: 'center'} 
+            .small 
+              \- Unit is a Depot 
+              \-
+          %td=usage=dus
+          %td LITRE
+        - total_usage+=usage
+      
+      %tr
+        %th{colspan: "5"} Total Usage
+        %th=total_usage
+        %th LITRE
         
 %br
 %H3 AVTUR
@@ -942,9 +974,25 @@
           %td=bd.unit_type.description
           %td No record
           %td No record
-          
-      /TODO display depot(also a unit) with usage record?
- 
+
+      /display depot(also a unit) with usage record
+      - @avtur_usage2.each do |depot, dus|
+        %tr
+          %td=no+=1
+          %td=depot
+          %td{colspan: 3, align: 'center'} 
+            .small 
+              \- Unit is a Depot 
+              \-
+          %td=usage=dus
+          %td LITRE
+        - total_usage+=usage
+      
+      %tr
+        %th{colspan: "5"} Total Usage
+        %th=total_usage
+        %th LITRE
+
 %br
 %H3 AVCAT
 %H4 Depot Budget Vs Total Usage
@@ -1250,8 +1298,24 @@
           %td=bd.unit_type.description
           %td No record
           %td No record
-          
-      /TODO display depot(also a unit) with usage record?
+
+      /display depot(also a unit) with usage record
+      - @avcat_usage2.each do |depot, dus|
+        %tr
+          %td=no+=1
+          %td=depot
+          %td{colspan: 3, align: 'center'} 
+            .small 
+              \- Unit is a Depot 
+              \-
+          %td=usage=dus
+          %td LITRE
+        - total_usage+=usage
+      
+      %tr
+        %th{colspan: "5"} Total Usage
+        %th=total_usage
+        %th LITRE
 
 .small
   ** Last updated :
