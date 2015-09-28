@@ -595,10 +595,10 @@ ms_MY:
     unit_id: Unit
     issue_date: Tarikh
     petrol_usage: Penggunaan Petrol
-    petrol_usage_depot: Penggunaan Petrol Mengikut Depoh
+    petrol_usage_unit: Penggunaan Petrol Mengikut Unit
     petrol_usage_type: Penggunaan Petrol Mengikut Jenis Penggunaan
     diesel_usage: Penggunaan Diesel
-    diesel_usage_depot: Penggunaan Diesel Mengikut Depoh
+    diesel_usage_unit: Penggunaan Diesel Mengikut Unit
     diesel_usage_type: Jumlah Penggunaan Diesel Mengikut Jenis Penggunaan
     avtur_usage: Penggunaan AVTUR
     avcat_usage: Penggunaan AVCAT
