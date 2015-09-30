@@ -627,10 +627,10 @@ en:
     unit_id: Unit
     issue_date: Issue Date
     petrol_usage: Petrol Usage
-    petrol_usage_depot: Petrol Usage per Depot
+    petrol_usage_unit: Petrol Usage per Unit
     petrol_usage_type: Petrol Usage by Type
     diesel_usage: Diesel Usage
-    diesel_usage_depot: Diesel Usage per Depot
+    diesel_usage_unit: Diesel Usage per Unit
     diesel_usage_type: Diesel Usage by Type
     avtur_usage: AVTUR Usage
     avcat_usage: AVCAT Usage

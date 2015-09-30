@@ -53,7 +53,7 @@
       %th= t 'unit_fuels.d_vehicle'
       %th= t 'unit_fuels.d_misctool'
       %th= t 'unit_fuels.d_boat'
-      %th=( t 'unit_fuels.diesel_usage_depot')
+      %th=( t 'unit_fuels.diesel_usage_unit')
 
   %tbody
     - @summary.sort_by{|x|[x.unit.name, x.issue_date]}.each_with_index do |unit_fuel, index|
@@ -104,7 +104,7 @@
       %th= t 'unit_fuels.d_vehicle'
       %th= t 'unit_fuels.d_misctool'
       %th= t 'unit_fuels.d_boat'
-      %th= t 'unit_fuels.petrol_usage_depot'
+      %th= t 'unit_fuels.petrol_usage_unit'
 
   %tbody
     - @summary.sort_by{|x|[x.unit.name, x.issue_date]}.each_with_index do |unit_fuel, index|
