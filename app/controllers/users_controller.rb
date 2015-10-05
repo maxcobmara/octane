@@ -1,9 +1,6 @@
-class UsersController < ApplicationController
-  #TODO turn on when user roles are set: filter_resource_access
-  
+class UsersController < ApplicationController  
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   filter_resource_access
-
 
   def index
     @users = User.all

@@ -19,8 +19,6 @@ class ExternalIssuedsController < ApplicationController
         format.html {redirect_to root_path, notice: (t 'users.staff_required')}
       end
     end
-#     @search = ExternalIssued.search(params[:q])
-#     @external_issueds = @search.result
   end
 
   # GET /external_issueds/1

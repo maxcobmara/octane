@@ -19,8 +19,6 @@ class IndenUsagesController < ApplicationController
         format.html {redirect_to root_path, notice: (t 'users.staff_required')}
       end
     end
-#     @search = IndenUsage.search(params[:q])
-#     @inden_usages = @search.result
   end
 
   # GET /inden_usages/1
@@ -30,11 +28,6 @@ class IndenUsagesController < ApplicationController
 
   # GET /inden_usages/new
   def new
-    ##@inden_usage = IndenUsage.new
-    #@inden_card = IndenCard.find(params[:inden_card_id])
-    #@inden_usage= @inden_card.inden_usages.new(params[:inden_usage])
-    #@inden_usage.save
-    
     @unit_fuel = UnitFuel.find(params[:unit_fuel_id])
     @inden_usage = @unit_fuel.inden_usages.new(params[:inden_usage])
   end

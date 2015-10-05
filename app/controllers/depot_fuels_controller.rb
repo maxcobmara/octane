@@ -18,8 +18,6 @@ class DepotFuelsController < ApplicationController
         format.html {redirect_to root_path, notice: (t 'users.staff_required')}
       end
     end
-    #@search = DepotFuel.search(params[:q])
-    #@depot_fuels = @search.result
   end
 
   # GET /depot_fuels/1
