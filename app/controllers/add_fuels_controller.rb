@@ -19,8 +19,6 @@ class AddFuelsController < ApplicationController
         format.html {redirect_to root_path, notice: (t 'users.staff_required')}
       end
     end
-#     @search = AddFuel.search(params[:q])
-#     @add_fuels = @search.result
   end
 
   # GET /add_fuels/1
@@ -42,8 +40,6 @@ class AddFuelsController < ApplicationController
   # POST /add_fuels.json
   def create
     @add_fuel = AddFuel.new(add_fuel_params)
-    
-
     respond_to do |format|
       if @add_fuel.save
         format.html { redirect_to @add_fuel, notice: (t 'add_fuels.title')+(t 'actions.created') }

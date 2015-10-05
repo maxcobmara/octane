@@ -17,9 +17,6 @@ class FuelIssuedsController < ApplicationController
         format.html {redirect_to root_path, notice: (t 'users.staff_required')}
       end
     end
-#     @fuel_issueds = FuelIssued.all.order(:depot_fuel_id)
-#     @search = FuelIssued.search(params[:q])
-#     @fuel_issueds = @search.result
   end
 
   # GET /fuel_issueds/1

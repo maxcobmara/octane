@@ -17,8 +17,6 @@ class FuelTransactionsController < ApplicationController
         format.html {redirect_to root_path, notice: (t 'users.staff_required')}
       end
     end
-#     @search = FuelTransaction.search(params[:q])
-#     @fuel_transactions = @search.result
   end
 
   # GET /fuel_transactions/1

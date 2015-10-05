@@ -6,8 +6,6 @@ class VesselCategoriesController < ApplicationController
   def index
     @search = VesselCategory.search(params[:q])
     @vessel_categories = @search.result
-#     @vessel_categories = VesselType.all
-#     @vessel_category = VesselType.new
   end
 
   # GET /vessel_categories/1
