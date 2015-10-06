@@ -1,4 +1,5 @@
 class FuelTransaction < ActiveRecord::Base
+  include FuelTransactionsHelper
   before_save :set_vehicle_nil_if_vessel
   belongs_to :fuel_unit_type, :class_name => "UnitType" , :foreign_key => "fuel_unit_type_id"
   belongs_to :fuel_type
@@ -54,80 +55,5 @@ class FuelTransaction < ActiveRecord::Base
       end
     end
   end
-  
-  #Below - used for REAL TIME notification, whereas those in Fuel Limit used for DISPLAY purpose for all notification throughout the budget year
-  def diesel_budgets
-    FuelBudget.where(unit_id: fuel_tank.unit_id).where(fuel_type_id: FuelType.where(name: 'DIESEL').first.id)
-  end
-  
-  def petrol_budgets
-    FuelBudget.where(unit_id: fuel_tank.unit_id).where(fuel_type_id: FuelType.where(name: 'PETROL').first.id)
-  end
-  
-  def avtur_budgets
-    FuelBudget.where(unit_id: fuel_tank.unit_id).where(fuel_type_id: FuelType.where(name: 'AVTUR').first.id)
-  end
-  
-  def avcat_budgets
-    FuelBudget.where(unit_id: fuel_tank.unit_id).where(fuel_type_id: FuelType.where(name: 'AVCAT').first.id)
-  end
-  
-  def diesel_limit
-    FuelLimit.where(unit_id: fuel_tank.unit_id).where(fuel_type_id: FuelType.where(name: 'DIESEL').first.id).first
-  end
-  
-  def petrol_limit
-    FuelLimit.where(unit_id: fuel_tank.unit_id).where(fuel_type_id: FuelType.where(name: 'PETROL').first.id).first
-  end
-  
-  def avtur_limit
-    FuelLimit.where(unit_id: fuel_tank.unit_id).where(fuel_type_id: FuelType.where(name: 'AVTUR').first.id).first
-  end
-  
-  def avcat_limit
-    FuelLimit.where(unit_id: fuel_tank.unit_id).where(fuel_type_id: FuelType.where(name: 'AVCAT').first.id).first
-  end
-  
-  def usages(limit, budgets)
-    if budgets.count > 0
-      budget_start_date=budgets.order(year_starts_on: :desc).last.year_starts_on
-      if limit
-        days_diff = (Date.today-budget_start_date.to_date).to_i
-        days_no = days_diff  % (limit.duration-1)  #days_diff  % limit.duration
-#         limit_set = days_diff / limit.duration
-        if days_no == 0 && days_diff > 0
-#           if limit_set==0
-#             limitstart=Date.today-days_diff
-#           else
-#             limitstart=Date.today-(days_diff*limit_set)
-#           end
-          limitstart=Date.today-limit.duration
-          usages_rec=FuelTransaction.where(transaction_type: 'Usage').where('created_at >=? and created_at <=?', limitstart, Date.today).where(fuel_tank_id: FuelTank.where(unit_id: limit.unit_id).where(fuel_type: FuelType.where(name:'PETROL')).pluck(:id))
-        end
-      end
-    end
-    usages_rec
-  end
-  
-  def usage_amount(limit, budgets)
-    usages(limit, budgets).sum(:amount)
-  end
-  
-  def surplus_amount(limit, budgets)
-    if limit && usages(limit, budgets)
-      if usages(limit, budgets).first.fuel_unit_type==limit.limit_unit_type 
-        if usage_amount(limit, budgets) > limit.limit_amount
-          surplus= usage_amount(limit, budgets) - limit.limit_amount
-        else
-          surplus=0
-        end
-      else
-        surplus=0
-      end
-    else
-      surplus=0
-    end
-    surplus
-  end
-  
+
 end

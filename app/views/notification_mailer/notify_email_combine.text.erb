@@ -7,27 +7,27 @@ Depot : <%=@depot_fuel.depot.name %>
 <% if @diesel_limit !=0 %>
 <%=count+=1%>) Fuel Type : <%=@diesel_limit.fuel_type.name%>
     Limit Amount : <%=@diesel_limit.limit_amount%> <%=@diesel_limit.limit_unit_type.description%>
-    Usage Amount : <%=@depot_fuel.usage_amount(@diesel_limit, @depot_fuel.diesel_budgets)%> <%=@diesel_limit.limit_unit_type.description%>
-    Surplus Amount : <%=@depot_fuel.surplus_amount(@diesel_limit, @depot_fuel.diesel_budgets)%> <%=@diesel_limit.limit_unit_type.description%>
+    Usage Amount : <%=@depot_fuel.usage_amount(@diesel_limit, @diesel_budget)%> <%=@diesel_limit.limit_unit_type.description%>
+    Surplus Amount : <%=@depot_fuel.surplus_amount(@diesel_limit, @diesel_budget)%> <%=@diesel_limit.limit_unit_type.description%>
 <% end %>
 
 <% if @petrol_limit !=0 %>
 <%=count+=1%>) Fuel Type : <%=@petrol_limit.fuel_type.name%>
     Limit Amount : <%=@petrol_limit.limit_amount%> <%=@petrol_limit.limit_unit_type.description%>
-    Usage Amount : <%=@depot_fuel.usage_amount(@petrol_limit, @depot_fuel.petrol_budgets)%> <%=@petrol_limit.limit_unit_type.description%>
-    Surplus Amount : <%=@depot_fuel.surplus_amount(@petrol_limit, @depot_fuel.petrol_budgets)%> <%=@petrol_limit.limit_unit_type.description%>
+    Usage Amount : <%=@depot_fuel.usage_amount(@petrol_limit, @petrol_budget)%> <%=@petrol_limit.limit_unit_type.description%>
+    Surplus Amount : <%=@depot_fuel.surplus_amount(@petrol_limit, @petrol_budget)%> <%=@petrol_limit.limit_unit_type.description%>
 <% end %>
 
 <% if @avtur_limit != 0 %>
 <%=count+=1%>) Fuel Type : <%=@avtur_limit.fuel_type.name%>
     Limit Amount : <%=@avtur_limit.limit_amount%> <%=@avtur_limit.limit_unit_type.description%>
-    Usage Amount : <%=@depot_fuel.usage_amount(@avtur_limit, @depot_fuel.avtur_budgets)%> <%=@avtur_limit.limit_unit_type.description%>
-    Surplus Amount : <%=@depot_fuel.surplus_amount(@avtur_limit, @depot_fuel.avtur_budgets)%> <%=@avtur_limit.limit_unit_type.description%>
+    Usage Amount : <%=@depot_fuel.usage_amount(@avtur_limit, @avtur_budget)%> <%=@avtur_limit.limit_unit_type.description%>
+    Surplus Amount : <%=@depot_fuel.surplus_amount(@avtur_limit, @avtur_budget)%> <%=@avtur_limit.limit_unit_type.description%>
 <% end %>
 
 <% if @avcat_limit != 0 %>
 <%=count+=1%>) Fuel Type : <%=@avcat_limit.fuel_type.name%>
     Limit Amount : <%=@avcat_limit.limit_amount%> <%=@avcat_limit.limit_unit_type.description%>
-    Usage Amount : <%=@depot_fuel.usage_amount(@avcat_limit, @depot_fuel.avcat_budgets)%> <%=@avcat_limit.limit_unit_type.description%>
-    Surplus Amount : <%=@depot_fuel.surplus_amount(@avcat_limit, @depot_fuel.avcat_budgets)%> <%=@avcat_limit.limit_unit_type.description%>
+    Usage Amount : <%=@depot_fuel.usage_amount(@avcat_limit, @avcat_budget)%> <%=@avcat_limit.limit_unit_type.description%>
+    Surplus Amount : <%=@depot_fuel.surplus_amount(@avcat_limit, @avcat_budget)%> <%=@avcat_limit.limit_unit_type.description%>
 <% end %>
