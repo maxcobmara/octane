@@ -2,6 +2,7 @@ module DepotFuelsHelper
   include FuelLimitsHelper
   include FuelBudgetsHelper
    
+  #Surplus Notification via email - start
   def usages(limit, budgets)
     if budgets.count > 0
       budget_start_date=budgets.order(year_starts_on: :desc).last.year_starts_on
@@ -95,5 +96,5 @@ module DepotFuelsHelper
       end
     end
   end
-  
+  #Surplus Notification via email - end
 end
