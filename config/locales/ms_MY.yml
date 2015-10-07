@@ -141,7 +141,7 @@ ms_MY:
     staff_id: Staf
     unit_id: Unit
     staff_required: "Untuk mengakses modul ini, akaun Pengguna perlulah dipadankan dengan rekod Staf dari sesebuah Unit (Jabatan)."
-    
+    depot_staff_required: "Untuk mengakses modul ini, akaun Pengguna perlulah dipadankan dengan rekod Staf dari sesebuah Depoh."
   report:
     depot_fuel_usage: Laporan Penggunaan Bahan PMP Depoh Bulanan
     diesel_vessel_usage: Penggunaan Diesel Kapal

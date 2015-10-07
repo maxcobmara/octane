@@ -6,16 +6,17 @@ class DepotFuelsController < ApplicationController
   # GET /depot_fuels
   # GET /depot_fuels.json
   def index
+    # HACK - refer header - avoid Unit user, using direct url
     is_admin=current_user.roles[:user_roles][:administration]
-    if is_admin=="1" || current_user.staff_id
+    if is_admin=="1" || (current_user.staff.unit_id && Unit.is_depot.pluck(:id).include?(current_user.staff.unit_id))
       @search = DepotFuel.search_by_role(is_admin, current_user.staff_id).search(params[:q])
       @depot_fuels = @search.result
     end
     respond_to do |format|
-      if is_admin=="1" || current_user.staff_id
+      if is_admin=="1" || (current_user.staff.unit_id && Unit.is_depot.pluck(:id).include?(current_user.staff.unit_id))
         format.html
       else
-        format.html {redirect_to root_path, notice: (t 'users.staff_required')}
+        format.html {redirect_to root_path, notice: (t 'menu.depot_fuels')+(t 'users.depot_staff_required')}
       end
     end
   end
@@ -27,7 +28,18 @@ class DepotFuelsController < ApplicationController
 
   # GET /depot_fuels/new
   def new
-    @depot_fuel = DepotFuel.new
+    # HACK - refer header - avoid Unit user, using direct url
+    is_admin=current_user.roles[:user_roles][:administration]
+    if is_admin=="1" || (current_user.staff.unit_id && Unit.is_depot.pluck(:id).include?(current_user.staff.unit_id))
+      @depot_fuel = DepotFuel.new
+    end
+    respond_to do |format|
+      if is_admin=="1" || (current_user.staff.unit_id && Unit.is_depot.pluck(:id).include?(current_user.staff.unit_id))
+        format.html
+      else
+        format.html {redirect_to root_path, notice: (t 'menu.depot_fuels')+(t 'users.depot_staff_required')}
+      end
+    end
   end
 
   # GET /depot_fuels/1/edit

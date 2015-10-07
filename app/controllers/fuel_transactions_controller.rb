@@ -26,9 +26,20 @@ class FuelTransactionsController < ApplicationController
 
   # GET /fuel_transactions/new
   def new
-    @fuel_transaction = FuelTransaction.new(transaction_type: params[:transaction_type])
-    #@fuel_transaction.transaction_type = "Usage"
-    #@fuel_transaction.transaction_type = "Resupply"
+    # HACK - refer header - avoid Unit user, using direct url
+    is_admin=current_user.roles[:user_roles][:administration]
+    if is_admin=="1" || (current_user.staff.unit_id && Unit.is_depot.pluck(:id).include?(current_user.staff.unit_id))
+       @fuel_transaction = FuelTransaction.new(transaction_type: params[:transaction_type])
+       #@fuel_transaction.transaction_type = "Usage"
+       #@fuel_transaction.transaction_type = "Resupply"
+    end
+    respond_to do |format|
+      if is_admin=="1" || (current_user.staff.unit_id && Unit.is_depot.pluck(:id).include?(current_user.staff.unit_id))
+        format.html
+      else
+        format.html {redirect_to root_path, notice: "Fuel Transactions "+(t 'users.depot_staff_required')}
+      end
+    end
   end
 
   # GET /fuel_transactions/1/edit

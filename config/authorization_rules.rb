@@ -33,7 +33,7 @@ authorization do
    has_permission_on :fuel_transactions, :to => :read, :join_by => :or do
      if_attribute :vehicle_id => is_in {VehicleAssignmentDetail.where(vehicle_assignment_id: VehicleAssignment.where(unit_id: user.staff.unit_id).pluck(:id)).pluck(:vehicle_id)}
      if_attribute :fuel_tank_id =>  is_in {FuelTank.where(unit_id: user.staff.unit_id).pluck(:id)}
-     if_attribute :vessel_id => is {Vessel.where(unit_id: user.staff.unit_id).first.id}  
+     if_attribute :vessel_id => is_in {Vessel.where(unit_id: user.staff.unit_id).pluck(:id)}  
    end
    has_permission_on :fuel_transactions, :to => [:update, :delete] do
      if_attribute :fuel_tank_id =>  is_in {FuelTank.where(unit_id: user.staff.unit_id).pluck(:id)}
@@ -75,7 +75,7 @@ authorization do
    has_permission_on :fuel_transactions, :to => :read, :join_by => :or do
      if_attribute :vehicle_id =>  is_in {VehicleAssignmentDetail.where(vehicle_assignment_id: VehicleAssignment.where(unit_id: user.staff.unit_id).pluck(:id)).pluck(:vehicle_id)}
      if_attribute :fuel_tank_id =>  is_in {FuelTank.where(unit_id: user.staff.unit_id).pluck(:id)}
-     if_attribute :vessel_id => is {Vessel.where(unit_id: user.staff.unit_id).first.id}
+     if_attribute :vessel_id =>  is_in {Vessel.where(unit_id: user.staff.unit_id).pluck(:id)}  
    end
    
    has_permission_on :fuel_budgets, :to => [:read, :annual_budget, :budget_vs_usage, :budget_vs_usage_list]
