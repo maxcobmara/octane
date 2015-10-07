@@ -163,6 +163,7 @@ en:
     budget_vs_budget: Budget Vs Usage
     depot_fuels: "Monthly Fuel (Depot)"
     unit_fuels: "Monthly Fuel (Unit)"
+    fuel_budgets: Fuel Budgets
     
     admin: Administration
     users: User Management
@@ -172,7 +173,8 @@ en:
     email: Email
     staff_id: Staff
     unit_id: Unit
-    staff_required: "This module require User account to be matched with Staff. Please contact your administrator."
+    staff_required: " module require User account to be matched with Staff record completed with Unit (Department) data. Please contact your administrator."
+    depot_staff_required: " module require User account to be matched with Staff record from a Depot. Please contact your administrator."
     
   report:
     depot_fuel_usage: Monthly Depot Fuel Usage Report

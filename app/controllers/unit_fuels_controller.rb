@@ -6,17 +6,17 @@ class UnitFuelsController < ApplicationController
   # GET /unit_fuels.json
   def index
     is_admin=current_user.roles[:user_roles][:administration]
-    if is_admin=="1" || current_user.staff_id
+    if is_admin=="1" || current_user.staff.unit_id
       @search = UnitFuel.search_by_role(is_admin, current_user.staff_id).search(params[:q])
       @unit_fuels = @search.result
     end
     respond_to do |format|
-      if is_admin=="1" || current_user.staff_id
+      if is_admin=="1" || current_user.staff.unit_id
         format.html
         format.csv { send_data @unit_fuels.to_csv }
         format.xls { send_data @unit_fuels.to_csv(col_sep: "\t") }
       else
-        format.html {redirect_to root_path, notice: (t 'users.staff_required')}
+        format.html {redirect_to root_path, notice: (t 'menu.unit_fuels')+(t 'users.staff_required')}
       end
     end
   end
@@ -123,6 +123,8 @@ class UnitFuelsController < ApplicationController
     @external_supply=ExternalSupplied.joins(:unit_fuel).where( "unit_fuels.issue_date >= ? AND unit_fuels.issue_date <= ? ", @start_from, @end_on)
     @external_issue=ExternalIssued.joins(:unit_fuel).where( "unit_fuels.issue_date >= ? AND unit_fuels.issue_date <= ? ", @start_from, @end_on)
     @inden_usages=IndenUsage.joins(:unit_fuel).where( "unit_fuels.issue_date >= ? AND unit_fuels.issue_date <= ? ", @start_from, @end_on)
+    @other_fuels_type=AddFuel.where.not(fuel_type: FuelType.where('name LIKE (?) or name ILIKE (?) or name ILIKE (?)or name ILIKE (?)', 'AVTUR', 'AVCAT', 'PELINCIR', 'GRIS')).pluck(:fuel_type_id).compact.uniq
+    @sources=ExternalSupplied.all.sort_by{|x|x.resource.name}.reverse.map(&:source).compact.uniq
   end
   
   def fuel_type_usage_category

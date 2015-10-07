@@ -130,6 +130,7 @@ ms_MY:
     budget_vs_usage: Belanjawan Vs Penggunaan
     depot_fuels: "Bahan PMP Bulanan (Depoh)"
     unit_fuels: "Bahan PMP Bulanan (Unit)"
+    fuel_budgets: Belanjawan Bahan PMP
 
     admin: Sistem
     users: Pengurusan Pengguna
@@ -139,8 +140,8 @@ ms_MY:
     email: Emel
     staff_id: Staf
     unit_id: Unit
-    staff_required: "Untuk mengakses modul ini, akaun Pengguna perlulah dipadankan dengan Staf."
-    
+    staff_required: "Untuk mengakses modul ini, akaun Pengguna perlulah dipadankan dengan rekod Staf dari sesebuah Unit (Jabatan)."
+    depot_staff_required: "Untuk mengakses modul ini, akaun Pengguna perlulah dipadankan dengan rekod Staf dari sesebuah Depoh."
   report:
     depot_fuel_usage: Laporan Penggunaan Bahan PMP Depoh Bulanan
     diesel_vessel_usage: Penggunaan Diesel Kapal

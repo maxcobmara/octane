@@ -1,37 +1,8 @@
 module DepotFuelsHelper
-  #Below - used for REAL TIME notification, whereas those in Fuel Limit used for DISPLAY purpose for all notification throughout the budget year
-  def diesel_budgets
-    FuelBudget.where(unit_id: unit_id).where(fuel_type_id: FuelType.where(name: 'DIESEL').first.id)
-  end
-  
-  def petrol_budgets
-    FuelBudget.where(unit_id: unit_id).where(fuel_type_id: FuelType.where(name: 'PETROL').first.id)
-  end
-  
-  def avtur_budgets
-    FuelBudget.where(unit_id: unit_id).where(fuel_type_id: FuelType.where(name: 'AVTUR').first.id)
-  end
-  
-  def avcat_budgets
-    FuelBudget.where(unit_id: unit_id).where(fuel_type_id: FuelType.where(name: 'AVCAT').first.id)
-  end
-  
-  def diesel_limit
-    FuelLimit.where(unit_id: unit_id).where(fuel_type_id: FuelType.where(name: 'DIESEL').first.id).first
-  end
-  
-  def petrol_limit
-    FuelLimit.where(unit_id: unit_id).where(fuel_type_id: FuelType.where(name: 'PETROL').first.id).first
-  end
-  
-  def avtur_limit
-    FuelLimit.where(unit_id: unit_id).where(fuel_type_id: FuelType.where(name: 'AVTUR').first.id).first
-  end
-  
-  def avcat_limit
-    FuelLimit.where(unit_id: unit_id).where(fuel_type_id: FuelType.where(name: 'AVCAT').first.id).first
-  end
+  include FuelLimitsHelper
+  include FuelBudgetsHelper
    
+  #Surplus Notification via email - start
   def usages(limit, budgets)
     if budgets.count > 0
       budget_start_date=budgets.order(year_starts_on: :desc).last.year_starts_on
@@ -75,51 +46,55 @@ module DepotFuelsHelper
   end
   
   def surplus_notification
-    limit_diesel=diesel_limit 
-    limit_petrol=petrol_limit
-    limit_avtur=avtur_limit
-    limit_avcat=avcat_limit
-    surplus_diesel=surplus_amount(limit_diesel, diesel_budgets)
-    surplus_petrol=surplus_amount(limit_petrol, petrol_budgets)
-    surplus_avtur=surplus_amount(limit_avtur, avtur_budgets)
-    surplus_avcat=surplus_amount(limit_avcat, avcat_budgets)
+    l_diesel=diesel_limit(unit_id)
+    l_petrol=petrol_limit(unit_id)
+    l_avtur=avtur_limit(unit_id)
+    l_avcat=avcat_limit(unit_id)
+    b_diesel=diesel_budgets(unit_id)
+    b_petrol=petrol_budgets(unit_id)
+    b_avtur=avtur_budgets(unit_id)
+    b_avcat=avcat_budgets(unit_id)
+    surplus_diesel=surplus_amount(l_diesel, b_diesel)
+    surplus_petrol=surplus_amount(l_petrol, b_petrol)
+    surplus_avtur=surplus_amount(l_avtur, b_avtur)
+    surplus_avcat=surplus_amount(l_avcat, b_avcat)
         
-    if surplus_diesel > 0 &&  surplus_petrol > 0 && limit_diesel.emails==limit_petrol.emails &&  surplus_avtur > 0 && limit_diesel.emails==limit_avtur.emails &&  surplus_avcat > 0 && limit_petrol.emails && limit_avcat.emails
-      NotificationMailer.notify_email_combine(limit_diesel, limit_petrol, limit_avtur, limit_avcat, id).deliver_now 
-    elsif  surplus_avcat > 0 &&  surplus_petrol > 0 && limit_avcat.emails==limit_petrol.emails &&  surplus_avtur > 0 && limit_avcat.emails==limit_avtur.emails
-      NotificationMailer.notify_email_combine(0, limit_petrol, limit_avtur, limit_avcat, id).deliver_now 
-    elsif  surplus_diesel > 0 &&  surplus_avcat > 0 && limit_diesel.emails==limit_avcat.emails &&  surplus_avtur > 0 && limit_diesel.emails==limit_avtur.emails
-      NotificationMailer.notify_email_combine(limit_diesel, 0, limit_avtur, id).deliver_now 
-    elsif  surplus_diesel > 0 &&  surplus_petrol > 0 && limit_diesel.emails==limit_petrol.emails &&  surplus_avcat > 0 && limit_diesel.emails==limit_avcat.emails
-      NotificationMailer.notify_email_combine(limit_diesel, limit_petrol, 0, limit_avcat, id).deliver_now 
-    elsif  surplus_diesel > 0 &&  surplus_petrol > 0 && limit_diesel.emails==limit_petrol.emails &&  surplus_avtur > 0 && limit_diesel.emails==limit_avtur.emails
-      NotificationMailer.notify_email_combine(limit_diesel, limit_petrol, limit_avtur, 0, id).deliver_now 
-    elsif  surplus_diesel > 0 &&  surplus_petrol > 0 && limit_diesel.emails==limit_petrol.emails
-      NotificationMailer.notify_email_combine(limit_diesel, limit_petrol, 0, 0, id).deliver_now 
-    elsif  surplus_diesel > 0 &&  surplus_avtur > 0 && limit_diesel.emails==limit_avtur.emails
-      NotificationMailer.notify_email_combine(limit_diesel, 0, limit_avtur, 0, id).deliver_now 
-    elsif  surplus_avtur > 0 &&  surplus_petrol > 0 && limit_avtur.emails==limit_petrol.emails
-      NotificationMailer.notify_email_combine(0, limit_petrol, limit_avtur, 0, id).deliver_now 
-    elsif  surplus_avcat > 0 &&  surplus_avtur > 0 && limit_diesel.emails==limit_petrol.emails
-      NotificationMailer.notify_email_combine(0, limit_petrol, limit_avtur, 0, id).deliver_now 
-    elsif  surplus_avcat > 0 &&  surplus_petrol > 0 && limit_diesel.emails==limit_petrol.emails
-      NotificationMailer.notify_email_combine(0, limit_petrol, 0, limit_avcat, id).deliver_now 
-    elsif  surplus_avcat > 0 &&  surplus_diesel > 0 && limit_diesel.emails==limit_petrol.emails
-      NotificationMailer.notify_email_combine(limit_diesel, 0, 0, limit_avcat, id).deliver_now 
+    if surplus_diesel > 0 &&  surplus_petrol > 0 && l_diesel.emails==l_petrol.emails &&  surplus_avtur > 0 && l_diesel.emails==l_avtur.emails &&  surplus_avcat > 0 && l_petrol.emails && l_avcat.emails
+      NotificationMailer.notify_email_combine(l_diesel, l_petrol, l_avtur, l_avcat, id, b_diesel, b_petrol, b_avtur, b_avcat).deliver_now 
+    elsif  surplus_avcat > 0 &&  surplus_petrol > 0 && l_avcat.emails==l_petrol.emails &&  surplus_avtur > 0 && l_avcat.emails==l_avtur.emails
+      NotificationMailer.notify_email_combine(0, l_petrol, l_avtur, l_avcat, id, b_diesel, b_petrol, b_avtur, b_avcat).deliver_now 
+    elsif  surplus_diesel > 0 &&  surplus_avcat > 0 && l_diesel.emails==l_avcat.emails &&  surplus_avtur > 0 && l_diesel.emails==l_avtur.emails
+      NotificationMailer.notify_email_combine(l_diesel, 0, l_avtur, id, b_diesel, b_petrol, b_avtur, b_avcat).deliver_now 
+    elsif  surplus_diesel > 0 &&  surplus_petrol > 0 && l_diesel.emails==l_petrol.emails &&  surplus_avcat > 0 && l_diesel.emails==l_avcat.emails
+      NotificationMailer.notify_email_combine(l_diesel, l_petrol, 0, l_avcat, id, b_diesel, b_petrol, b_avtur, b_avcat).deliver_now 
+    elsif  surplus_diesel > 0 &&  surplus_petrol > 0 && l_diesel.emails==l_petrol.emails &&  surplus_avtur > 0 && l_diesel.emails==l_avtur.emails
+      NotificationMailer.notify_email_combine(l_diesel, l_petrol, l_avtur, 0, id, b_diesel, b_petrol, b_avtur, b_avcat).deliver_now 
+    elsif  surplus_diesel > 0 &&  surplus_petrol > 0 && l_diesel.emails==l_petrol.emails
+      NotificationMailer.notify_email_combine(l_diesel, l_petrol, 0, 0, id, b_diesel, b_petrol, b_avtur, b_avcat).deliver_now 
+    elsif  surplus_diesel > 0 &&  surplus_avtur > 0 && l_diesel.emails==l_avtur.emails
+      NotificationMailer.notify_email_combine(l_diesel, 0, l_avtur, 0, id, b_diesel, b_petrol, b_avtur, b_avcat).deliver_now 
+    elsif  surplus_avtur > 0 &&  surplus_petrol > 0 && l_avtur.emails==l_petrol.emails
+      NotificationMailer.notify_email_combine(0, l_petrol, l_avtur, 0, id, b_diesel, b_petrol, b_avtur, b_avcat).deliver_now 
+    elsif  surplus_avcat > 0 &&  surplus_avtur > 0 && l_diesel.emails==l_petrol.emails
+      NotificationMailer.notify_email_combine(0, l_petrol, l_avtur, 0, id, b_diesel, b_petrol, b_avtur, b_avcat).deliver_now 
+    elsif  surplus_avcat > 0 &&  surplus_petrol > 0 && l_avcat.emails==l_petrol.emails
+      NotificationMailer.notify_email_combine(0, l_petrol, 0, l_avcat, id, b_diesel, b_petrol, b_avtur, b_avcat).deliver_now 
+    elsif  surplus_avcat > 0 &&  surplus_diesel > 0 && l_diesel.emails==l_petrol.emails
+      NotificationMailer.notify_email_combine(l_diesel, 0, 0, l_avcat, id, b_diesel, b_petrol, b_avtur, b_avcat).deliver_now 
     else
       if surplus_diesel > 0
-        NotificationMailer.notify_email(limit_diesel, id).deliver_now
+        NotificationMailer.notify_email(l_diesel, id, b_diesel).deliver_now
       end
       if surplus_petrol > 0 
-        NotificationMailer.notify_email(limit_petrol, id).deliver_now
+        NotificationMailer.notify_email(l_petrol, id, b_petrol).deliver_now
       end
       if surplus_avtur > 0 
-        NotificationMailer.notify_email(limit_avtur, id).deliver_now
+        NotificationMailer.notify_email(l_avtur, id, b_avtur).deliver_now
       end
       if surplus_avcat > 0 
-        NotificationMailer.notify_email(limit_avcat, id).deliver_now
+        NotificationMailer.notify_email(l_avcat, id, b_avcat).deliver_now
       end
     end
   end
-  
+  #Surplus Notification via email - end
 end

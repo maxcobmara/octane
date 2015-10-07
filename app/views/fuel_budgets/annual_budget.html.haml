@@ -47,13 +47,12 @@
     %tbody  
       - fuel_budgets.group_by(&:fuel_type).each do |fuel_type, fuel_budgets2|
         %tr
-          %th{colspan: "6"}=fuel_type.shortname
+          %th{colspan: "4"}=fuel_type.shortname
         %tr
           %th= t 'fuel_budgets.code'
           %th= t 'fuel_budgets.year_starts_on'
           %th= t 'fuel_budgets.amount'
           %th= t 'fuel_budgets.unit_type_id'
-          %th
         - fuel_budgets2.each do |fuel_budget|
           %tr
             %td= fuel_budget.code

@@ -6,15 +6,15 @@ class FuelBudgetsController < ApplicationController
   # GET /fuel_budgets.json
   def index
     is_admin=current_user.roles[:user_roles][:administration]
-    if is_admin=="1" || current_user.staff_id
+    if is_admin=="1" || current_user.staff.unit_id
       @search = FuelBudget.search_by_role(is_admin, current_user.staff_id).search(params[:q])
       @fuel_budgets= @search.result
     end
     respond_to do |format|
-      if is_admin=="1" || current_user.staff_id
+      if is_admin=="1" || current_user.staff.unit_id
         format.html
       else
-        format.html {redirect_to root_path, notice: (t 'users.staff_required')}
+        format.html {redirect_to root_path, notice: (t 'menu.fuel_budgets')+(t 'users.staff_required')}
       end
     end
   end
@@ -92,8 +92,7 @@ class FuelBudgetsController < ApplicationController
       @start_from = (Date.today.beginning_of_year).strftime('%Y-%m-%d')
       @end_on = (Date.today.end_of_year).strftime('%Y-%m-%d')
     end
-    @depot_fuels=DepotFuel.all
-    @depot_fuels2=@depot_fuels.where('issue_date >=? and issue_date <=?', @start_from, @end_on)
+    @depot_fuels2=DepotFuel.where('issue_date >=? and issue_date <=?', @start_from, @end_on)
     @budget=FuelBudget.where('year_starts_on >=? and year_starts_on<=?', @start_from, @end_on)
     depot_budget=@budget.where(unit_id: FuelTank.pluck(:unit_id))
     @depot_budget_diesel=depot_budget.where(fuel_type: (FuelType.where(name: 'DIESEL')))
@@ -105,8 +104,10 @@ class FuelBudgetsController < ApplicationController
     @budget_petrol=unit_budget.where(fuel_type: (FuelType.where(name: 'PETROL')))
     @budget_avtur=unit_budget.where(fuel_type: (FuelType.where(name: 'AVTUR')))
     @budget_avcat=unit_budget.where(fuel_type: (FuelType.where(name: 'AVCAT')))
-    @fuel_issueds=FuelIssued.joins(:depot_fuel).where('depot_fuels.issue_date >=? and depot_fuels.issue_date <=?', @start_from, @end_on)
-    
+
+    #only records with receiver unit data takes into account (Fuel Issued may be used as lump sump amount of Fuel Usage)
+    @fuel_issueds=FuelIssued.joins(:depot_fuel).where('fuel_issueds.unit_id is not null').where('depot_fuels.issue_date >=? and depot_fuels.issue_date <=?', @start_from, @end_on)
+       
     if @fuel_issueds.count > 0    
     #unless @fuel_issueds.count > 0
       @unit_fuels=UnitFuel.where.not(unit_id: FuelTank.pluck(:unit_id))
@@ -126,70 +127,10 @@ class FuelBudgetsController < ApplicationController
       @all_avcat_depots=Unit.where(id: FuelTank.where(fuel_type: (FuelType.where(name: 'AVCAT'))).pluck(:unit_id))
 
       #####----------Usage Breakdown by Depot--start
-      @sub_diesel_usage=[]
-      @sub_petrol_usage=[]
-      @sub_avtur_usage=[]
-      @sub_avcat_usage=[]
- 
-      diesel_usages.group_by{|x|x.fuel_tank.unit}.each do |depot, dieselusages|
-        diesel_usages_vehicles=diesel_usages.where(id: dieselusages.map(&:id)).where(is_vehicle: true)
-        diesel_vehicle_ids=diesel_usages_vehicles.pluck(:vehicle_id).compact.uniq
-        sub_diesel_usage=[]
-        VehicleAssignment.all.each do |vas|   
-          vehicles_own= vas.vehicle_assignment_details.pluck(:vehicle_id)
-          usages_own=diesel_usages_vehicles.where(vehicle_id: vehicles_own)
-          sub_diesel_usage << [vas.unit_receiver, usages_own.sum(:amount)] if (vehicles_own & diesel_vehicle_ids !=[]) && diesel_vehicle_ids.count > 0
-        end
-        diesel_usages.where(id: dieselusages.map(&:id)).where(is_vehicle: false).group_by{|x|x.vessel.unit}.each do |unit_vessel, usage|
-          sub_diesel_usage << [unit_vessel, usage.sum(&:amount)]
-        end
-        @sub_diesel_usage << [depot, sub_diesel_usage]
-      end
-      
-      petrol_usages.group_by{|x|x.fuel_tank.unit}.each do |depot, petrolusages|
-        petrol_usages_vehicles=petrol_usages.where(id: petrolusages.map(&:id)).where(is_vehicle: true)
-        petrol_vehicle_ids=petrol_usages_vehicles.pluck(:vehicle_id).compact.uniq
-        sub_petrol_usage=[]
-        VehicleAssignment.all.each do |vas|
-          vehicles_own=vas.vehicle_assignment_details.pluck(:vehicle_id)
-          usages_own=petrol_usages_vehicles.where(vehicle_id: vehicles_own)
-          sub_petrol_usage << [vas.unit_receiver, usages_own.sum(:amount)]  if (vehicles_own & petrol_vehicle_ids !=[]) && petrol_vehicle_ids.count > 0
-        end
-        petrol_usages.where(id: petrolusages.map(&:id)).where(is_vehicle: false).group_by{|x|x.vessel.unit}.each do |unit_vessel, usage|
-          sub_petrol_usage << [unit_vessel, usage.sum(&:amount)]
-        end
-        @sub_petrol_usage << [depot, sub_petrol_usage]
-      end
-
-      avtur_usages.group_by{|x|x.fuel_tank.unit}.each do |depot, avturusages|
-        avtur_usages_vehicles=avtur_usages.where(id: avturusages.map(&:id)).where(is_vehicle: true)
-        avtur_vehicle_ids=avtur_usages_vehicles.pluck(:vehicle_id).compact.uniq
-        sub_avtur_usage=[]
-        VehicleAssignment.all.each do |vas|
-          vehicles_own=vas.vehicle_assignment_details.pluck(:vehicle_id)
-          usages_own=avtur_usages_vehicles.where(vehicle_id: vehicles_own).
-          sub_avtur_usage <<  [vas.unit_receiver, usages_own.sum(:amount)]  if (vehicles_own & avtur_vehicle_ids !=[]) && avtur_vehicle_ids.count > 0
-        end
-        avtur_usages.where(id: avturusages.map(&:id)).where(is_vehicle: false).group_by{|x|x.vessel.unit}.each do |unit_vessel, usage|
-          sub_avtur_usage << [unit_vessel, usage.sum(&:amount)]
-        end
-        @sub_avtur_usage << [depot, sub_avtur_usage]
-      end
-
-      avcat_usages.group_by{|x|x.fuel_tank.unit}.each do |depot, avcatusages|
-        avcat_usages_vehicles=avcat_usages.where(id: avcatusages.map(&:id)).where(is_vehicle: true)
-        avcat_vehicle_ids=avcat_usages_vehicles.pluck(:vehicle_id).compact.uniq
-        sub_avcat_usage=[]
-        VehicleAssignment.all.each do |vas|   
-          vehicles_own=vas.vehicle_assignment_details.pluck(:vehicle_id)
-          usages_own=avcat_usages_vehicles.where(vehicle_id: vehicles_own)
-          sub_avcat_usage << [vas.unit_receiver, usages_own.sum(:amount)] if (vehicles_own & avcat_vehicle_ids !=[]) && avcat_vehicle_ids.count > 0
-        end
-        avcat_usages.where(id: avcatusages.map(&:id)).where(is_vehicle: false).group_by{|x|x.vessel.unit}.each do |unit_vessel, usage|
-          sub_avcat_usage << [unit_vessel, usage.sum(&:amount)]
-        end
-        @sub_avcat_usage << [depot, sub_avcat_usage]
-      end
+      @sub_diesel_usage=FuelBudget.usages(diesel_usages)
+      @sub_petrol_usage=FuelBudget.usages(petrol_usages)
+      @sub_avtur_usage=FuelBudget.usages(avtur_usages)
+      @sub_avcat_usage=FuelBudget.usages(avcat_usages)
       #####----------Usage Breakdown by Depot---end
       ###-------------Unit Budget Vs Usage ---start
       @sub_diesel_usage2=[]
@@ -298,95 +239,40 @@ class FuelBudgetsController < ApplicationController
           @main_petrol_usage[Unit.where(id: depot_id).first.name]=petrol_issueds.sum(:quantity)
           @main_avtur_usage[Unit.where(id: depot_id).first.name]=avtur_issueds.sum(:quantity)
           @main_avcat_usage[Unit.where(id: depot_id).first.name]=avcat_issueds.sum(:quantity)
-          @sub_diesel_usage << diesel_issueds.group(:receiver).sum(:quantity)
-          @sub_petrol_usage << petrol_issueds.group(:receiver).sum(:quantity)
-          @sub_avtur_usage << avtur_issueds.group(:receiver).sum(:quantity)
-          @sub_avcat_usage << avcat_issueds.group(:receiver).sum(:quantity)
-          @sub_diesel_usage2=FuelIssued.where(depot_fuel_id: depot_fuels.map(&:id)).where(fuel_type: (FuelType.where(name: 'DIESEL'))).group(:receiver).sum(:quantity)
-          @sub_petrol_usage2=FuelIssued.where(depot_fuel_id: depot_fuels.map(&:id)).where(fuel_type: (FuelType.where(name: 'PETROL'))).group(:receiver).sum(:quantity)
-          @sub_avtur_usage2=FuelIssued.where(depot_fuel_id: depot_fuels.map(&:id)).where(fuel_type: (FuelType.where(name: 'AVTUR'))).group(:receiver).sum(:quantity)
-          @sub_avcat_usage2=FuelIssued.where(depot_fuel_id: depot_fuels.map(&:id)).where(fuel_type: (FuelType.where(name: 'AVCAT'))).group(:receiver).sum(:quantity)
+
+          #only records with 'receiving unit' data takes into account (Fuel Issued may be used as lump sump amount of Fuel Usage)
+          @sub_diesel_usage << diesel_issueds.where('unit_id is not null').group(:receiver).sum(:quantity)
+          @sub_petrol_usage << petrol_issueds.where('unit_id is not null').group(:receiver).sum(:quantity)
+          @sub_avtur_usage << avtur_issueds.where('unit_id is not null').group(:receiver).sum(:quantity)
+          @sub_avcat_usage << avcat_issueds.where('unit_id is not null').group(:receiver).sum(:quantity)
+          @sub_diesel_usage2=FuelIssued.where('unit_id is not null').where(depot_fuel_id: depot_fuels.map(&:id)).where(fuel_type: (FuelType.where(name: 'DIESEL'))).group(:receiver).sum(:quantity)
+          @sub_petrol_usage2=FuelIssued.where('unit_id is not null').where(depot_fuel_id: depot_fuels.map(&:id)).where(fuel_type: (FuelType.where(name: 'PETROL'))).group(:receiver).sum(:quantity)
+          @sub_avtur_usage2=FuelIssued.where('unit_id is not null').where(depot_fuel_id: depot_fuels.map(&:id)).where(fuel_type: (FuelType.where(name: 'AVTUR'))).group(:receiver).sum(:quantity)
+          @sub_avcat_usage2=FuelIssued.where('unit_id is not null').where(depot_fuel_id: depot_fuels.map(&:id)).where(fuel_type: (FuelType.where(name: 'AVCAT'))).group(:receiver).sum(:quantity)
+
           @depot_ids << depot_id
       end
       #USAGE section --- Unit Fuel only - start
       @unit_fuels=UnitFuel.where.not(unit_id: FuelTank.pluck(:unit_id)).sort_by{|x|x.unit.name}
       @d_unit_fuels=UnitFuel.where(unit_id: FuelTank.pluck(:unit_id)).where('issue_date >=? and issue_date <=?', @start_from, @end_on).sort_by{|x|x.unit.name}
-      @diesel_usage=Hash.new
       @diesel_usage2=Hash.new
-      @petrol_usage=Hash.new
       @petrol_usage2=Hash.new
-      @avtur_usage=Hash.new
       @avtur_usage2=Hash.new
-      @avcat_usage=Hash.new
       @avcat_usage2=Hash.new
-      #retrieve ALL Diesel & Petrol usage (within selected budget year) for each unit
-      @unit_fuels.group_by(&:unit).each do |unit, unitfuels|
-        budget_startdate=@budget.where(fuel_type: (FuelType.where(name: 'DIESEL'))).where(unit_id: unit.id).last.try(:year_starts_on).try(:strftime, '%Y-%m-%d')
-        if budget_startdate
-          if budget_startdate.to_date.year < Date.today.year
-            budget_enddate=budget_startdate.to_date+364.days
-          else
-            budget_enddate=Date.today
-          end
-          unitfuels2=UnitFuel.where(unit_id: unit.id).where('issue_date >=? and issue_date <=?', budget_startdate, budget_enddate)
-        else
-          #retrieve all usage within sel    ected year if budget not exist
-          unitfuels2=UnitFuel.where(unit_id: unit.id).where('issue_date >=? and issue_date <=?', @start_from, @end_on)
-        end
-        @diesel_usage[unit.name]=unitfuels2.sum(:d_vessel)+unitfuels2.sum(:d_vehicle)+unitfuels2.sum(:d_misctool)+unitfuels2.sum(:d_boat)
-      end
+      
+      @diesel_usage=FuelBudget.unit_usage(@unit_fuels, @budget,'DIESEL', @start_from, @end_on)
+      @petrol_usage=FuelBudget.unit_usage(@unit_fuels, @budget,'PETROL', @start_from, @end_on)
+      @avtur_usage=FuelBudget.unit_usage2(@unit_fuels, @budget, 'AVTUR', @start_from, @end_on)
+      @avcat_usage=FuelBudget.unit_usage2(@unit_fuels, @budget, 'AVCAT', @start_from, @end_on)
+      
       @d_unit_fuels.group_by(&:unit).each do |unit, unitfuels|
         @diesel_usage2[unit.name]=unitfuels.sum(&:d_vessel)+unitfuels.sum(&:d_vehicle)+unitfuels.sum(&:d_misctool)+unitfuels.sum(&:d_boat)
-      end
-    
-      @unit_fuels.group_by(&:unit).each do |unit, unitfuels|
-        budget_startdate=@budget.where(fuel_type_id: (FuelType.where(name: 'PETROL')).first.id).where(unit_id: unit.id).last.try(:year_starts_on).try(:strftime, '%Y-%m-%d')
-        if budget_startdate
-          if budget_startdate.to_date.year < Date.today.year
-            budget_enddate=budget_startdate.to_date+364.days
-          else
-            budget_enddate=Date.today
-          end
-          unitfuels2=UnitFuel.where(unit_id: unit.id).where('issue_date >=? and issue_date <=?', budget_startdate, budget_enddate)
-        else
-          unitfuels2=UnitFuel.where(unit_id: unit.id).where('issue_date >=? and issue_date <=?', @start_from, @end_on)
-        end
-        @petrol_usage[unit.name]=unitfuels2.sum(:p_vehicle)+unitfuels2.sum(:p_misctool)+unitfuels2.sum(:p_boat)
       end
       @d_unit_fuels.group_by(&:unit).each do |unit, unitfuels|
         @petrol_usage2[unit.name]=unitfuels.sum(&:p_vehicle)+unitfuels.sum(&:p_misctool)+unitfuels.sum(&:p_boat)
       end
-    
-      #retrieve ALL AVTUR & AVCAT usage (within selected budget year) for each unit
-      @unit_fuels.group_by(&:unit).each do |unit, unitfuels|
-        budget_startdate=@budget.where(fuel_type_id: (FuelType.where(name: 'AVTUR')).first.id).where(unit_id: unit.id).last.try(:year_starts_on).try(:strftime, '%Y-%m-%d')
-        if budget_startdate
-          if budget_startdate.to_date.year < Date.today.year
-            budget_enddate=budget_startdate.to_date+364.days
-          else
-            budget_enddate=Date.today
-          end
-          @avtur_usage[unit.name]=UnitFuel.joins(:add_fuels).where('add_fuels.fuel_type_id=?', (FuelType.where(name: 'AVTUR')).first.id).where(unit_id:   unit.id).where('issue_date >=? and issue_date<=?', budget_startdate, budget_enddate).sum(:quantity)
-        else
-          @avtur_usage[unit.name]=UnitFuel.joins(:add_fuels).where('add_fuels.fuel_type_id=?', (FuelType.where(name: 'AVTUR')).first.id).where(unit_id: unit.id).where('issue_date >=? and issue_date <=?', @start_from, @end_on).sum(:quantity)
-        end
-      end
       @d_unit_fuels.group_by(&:unit).each do |unit, unitfuels|
         @avtur_usage2[unit.name]=UnitFuel.joins(:add_fuels).where('add_fuels.fuel_type_id=?', (FuelType.where(name: 'AVTUR')).first.id).where(unit_id:   unit.id).where('issue_date >=? and issue_date <=?', @start_from, @end_on).sum(:quantity)
-      end
-    
-      @unit_fuels.group_by(&:unit).each do |unit, unitfuels|
-        budget_startdate=@budget.where(fuel_type_id: (FuelType.where(name: 'AVCAT')).first.id).where(unit_id: unit.id).last.try(:year_starts_on).try(:strftime, '%Y-%m-%d')
-        if budget_startdate
-          if budget_startdate.to_date.year < Date.today.year
-            budget_enddate=budget_startdate.to_date+364.days
-          else
-            budget_enddate=Date.today
-          end
-          @avcat_usage[unit.name]=UnitFuel.joins(:add_fuels).where('add_fuels.fuel_type_id=?', (FuelType.where(name: 'AVCAT')).first.id).where(unit_id: unit.id).where('issue_date >=? and issue_date <=?', budget_startdate, budget_enddate).sum(:quantity)
-        else
-          @avcat_usage[unit.name]=UnitFuel.joins(:add_fuels).where('add_fuels.fuel_type_id=?', (FuelType.where(name: 'AVCAT')).first.id).where(unit_id: unit.id).where('issue_date >=? and issue_date <=?', @start_from, @end_on).sum(:quantity)
-        end
       end
       @d_unit_fuels.group_by(&:unit).each do |unit, unitfuels|
         @avcat_usage2[unit.name]=UnitFuel.joins(:add_fuels).where('add_fuels.fuel_type_id=?', (FuelType.where(name: 'AVCAT')).first.id).where(unit_id:   unit.id).where('issue_date >=? and issue_date <=?', @start_from, @end_on).sum(:quantity)
@@ -394,10 +280,11 @@ class FuelBudgetsController < ApplicationController
       #USAGE section --- Unit Fuel only -- end
 
     else ###
-      diesel_usages=FuelTransaction.where(transaction_type: 'Usage').where(fuel_tank_id: FuelTank.where(fuel_type: (FuelType.where(name: 'DIESEL'))))
-      petrol_usages=FuelTransaction.where(transaction_type: 'Usage').where(fuel_tank_id: FuelTank.where(fuel_type: (FuelType.where(name: 'PETROL'))))
-      avtur_usages=FuelTransaction.where(transaction_type: 'Usage').where(fuel_tank_id: FuelTank.where(fuel_type: (FuelType.where(name: 'AVTUR'))))
-      avcat_usages=FuelTransaction.where(transaction_type: 'Usage').where(fuel_tank_id: FuelTank.where(fuel_type: (FuelType.where(name: 'AVCAT'))))
+      transact_usage=FuelTransaction.where(transaction_type: 'Usage')
+      diesel_usages=transact_usage.where(fuel_tank_id: FuelTank.where(fuel_type: (FuelType.where(name: 'DIESEL'))))
+      petrol_usages=transact_usage.where(fuel_tank_id: FuelTank.where(fuel_type: (FuelType.where(name: 'PETROL'))))
+      avtur_usages=transact_usage.where(fuel_tank_id: FuelTank.where(fuel_type: (FuelType.where(name: 'AVTUR'))))
+      avcat_usages=transact_usage.where(fuel_tank_id: FuelTank.where(fuel_type: (FuelType.where(name: 'AVCAT'))))
       @all_diesel_depots=Unit.where(id: FuelTank.where(fuel_type: (FuelType.where(name: 'DIESEL'))).pluck(:unit_id))
       @all_petrol_depots=Unit.where(id: FuelTank.where(fuel_type: (FuelType.where(name: 'PETROL'))).pluck(:unit_id))
       @all_avtur_depots=Unit.where(id: FuelTank.where(fuel_type: (FuelType.where(name: 'AVTUR'))).pluck(:unit_id))

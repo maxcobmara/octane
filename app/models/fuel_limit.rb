@@ -20,6 +20,7 @@ class FuelLimit < ActiveRecord::Base
     limit_amount.to_s+" "+limit_unit_type.short_name
   end
   
+  #report - fuel_budgets/budget_vs_usage_list
   def surpluses(budget_startdate, depot, fueltype)
     surplus_details=[]
     if budget_startdate.to_date.year==Date.today.year

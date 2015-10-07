@@ -4,15 +4,6 @@ Date : <%= Date.today.strftime("%d %b %Y")%>
 Depot : <%=@depot_fuel.depot.name %>
 Fuel Type : <%=@fuel_limit.fuel_type.name%>
 Limit Amount : <%=@fuel_limit.limit_amount%> <%=@fuel_limit.limit_unit_type.description%>
-<% if @fuel_limit.fuel_type.name=='DIESEL'%>
-  <%budget=@depot_fuel.diesel_budgets%>
-<% elsif @fuel_limit.fuel_type.name=='PETROL'%>
-  <%budget=@depot_fuel.petrol_budgets%>
-<% elsif @fuel_limit.fuel_type.name=='AVTUR'%>
-  <%budget=@depot_fuel.avtur_budgets%>
-<% elsif @fuel_limit.fuel_type.name=='AVCAT'%>
-  <%budget=@depot_fuel.avcat_budgets%>
-<% end%>
-Usage Amount : <%=@depot_fuel.usage_amount(@fuel_limit, budget)%> <%=@fuel_limit.limit_unit_type.description%>
-Surplus Amount : <%=@depot_fuel.surplus_amount(@fuel_limit, budget)%> <%=@fuel_limit.limit_unit_type.description%>
+Usage Amount : <%=@depot_fuel.usage_amount(@fuel_limit, @fuel_budget)%> <%=@fuel_limit.limit_unit_type.description%>
+Surplus Amount : <%=@depot_fuel.surplus_amount(@fuel_limit, @fuel_budget)%> <%=@fuel_limit.limit_unit_type.description%>
 

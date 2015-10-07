@@ -5,7 +5,7 @@ class FuelTypesController < ApplicationController
   # GET /fuel_types.json
   def index
     @fuel_types = FuelType.all
-	  @fuel_type = FuelType.new
+    @fuel_type = FuelType.new
   end
 
   # GET /fuel_types/1

@@ -5,16 +5,17 @@ class FuelIssuedsController < ApplicationController
   # GET /fuel_issueds
   # GET /fuel_issueds.json
   def index
+    # HACK - refer header - avoid Unit user, using direct url
     is_admin=current_user.roles[:user_roles][:administration]
-    if is_admin=="1" || current_user.staff_id
+    if is_admin=="1" || (current_user.staff.unit_id && Unit.is_depot.pluck(:id).include?(current_user.staff.unit_id))
       @search = FuelIssued.search_by_role(is_admin, current_user.staff_id).search(params[:q])
       @fuel_issueds = @search.result
     end
     respond_to do |format|
-      if is_admin=="1" || current_user.staff_id
+      if is_admin=="1" || (current_user.staff.unit_id && Unit.is_depot.pluck(:id).include?(current_user.staff.unit_id))
         format.html
       else
-        format.html {redirect_to root_path, notice: (t 'users.staff_required')}
+        format.html {redirect_to root_path, notice: (t 'fuel_issueds.title3')+(t 'users.depot_staff_required')}
       end
     end
   end
