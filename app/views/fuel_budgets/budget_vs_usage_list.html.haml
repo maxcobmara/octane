@@ -1316,10 +1316,10 @@
         %th{colspan: "5"} Total Usage
         %th=total_usage
         %th LITRE
-
-.small
-  ** Last updated :
-  - if @fuel_issueds.count > 0
-    =@fuel_issueds.last.updated_at.strftime('%d %b %Y') 
-  - else
-    =FuelTransaction.last.updated_at.strftime('%d %b %Y')
+- if @fuel_issueds.count > 0 || FuelTransaction.all.count > 0
+  .small
+    ** Last updated :
+    - if @fuel_issueds.count > 0
+      =@fuel_issueds.last.updated_at.strftime('%d %b %Y') 
+    - else
+      =FuelTransaction.last.updated_at.strftime('%d %b %Y')

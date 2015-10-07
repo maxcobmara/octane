@@ -6,17 +6,17 @@ class AddFuelsController < ApplicationController
   # GET /add_fuels.json
   def index
     is_admin=current_user.roles[:user_roles][:administration]
-    if is_admin=="1" || current_user.staff_id
+    if is_admin=="1" || current_user.staff.unit_id
       @search = AddFuel.search_by_role(is_admin, current_user.staff_id).search(params[:q])
       @add_fuels = @search.result
     end
     respond_to do |format|
-      if is_admin=="1" || current_user.staff_id
+      if is_admin=="1" || current_user.staff.unit_id
         format.html
         format.csv { send_data @add_fuels.to_csv }
         format.xls { send_data @add_fuels.to_csv(col_sep: "\t") }
       else
-        format.html {redirect_to root_path, notice: (t 'users.staff_required')}
+        format.html {redirect_to root_path, notice: (t 'add_fuels.title2')+(t 'users.staff_required')}
       end
     end
   end

@@ -6,15 +6,15 @@ class FuelTransactionsController < ApplicationController
   # GET /fuel_transactions.json
   def index
     is_admin=current_user.roles[:user_roles][:administration]
-    if is_admin=="1" || current_user.staff_id
+    if is_admin=="1" || current_user.staff.unit_id
       @search = FuelTransaction.search_by_role(is_admin, current_user.staff_id).search(params[:q])
       @fuel_transactions = @search.result
     end
     respond_to do |format|
-      if is_admin=="1" || current_user.staff_id
+      if is_admin=="1" || current_user.staff.unit_id
         format.html
       else
-        format.html {redirect_to root_path, notice: (t 'users.staff_required')}
+        format.html {redirect_to root_path, notice: "Fuel Transactions "+(t 'users.staff_required')}
       end
     end
   end
