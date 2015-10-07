@@ -104,8 +104,10 @@ class FuelBudgetsController < ApplicationController
     @budget_petrol=unit_budget.where(fuel_type: (FuelType.where(name: 'PETROL')))
     @budget_avtur=unit_budget.where(fuel_type: (FuelType.where(name: 'AVTUR')))
     @budget_avcat=unit_budget.where(fuel_type: (FuelType.where(name: 'AVCAT')))
-    @fuel_issueds=FuelIssued.joins(:depot_fuel).where('depot_fuels.issue_date >=? and depot_fuels.issue_date <=?', @start_from, @end_on)
-    
+
+    #only records with receiver unit data takes into account (Fuel Issued may be used as lump sump amount of Fuel Usage)
+    @fuel_issueds=FuelIssued.joins(:depot_fuel).where('fuel_issueds.unit_id is not null').where('depot_fuels.issue_date >=? and depot_fuels.issue_date <=?', @start_from, @end_on)
+       
     if @fuel_issueds.count > 0    
     #unless @fuel_issueds.count > 0
       @unit_fuels=UnitFuel.where.not(unit_id: FuelTank.pluck(:unit_id))
@@ -237,14 +239,17 @@ class FuelBudgetsController < ApplicationController
           @main_petrol_usage[Unit.where(id: depot_id).first.name]=petrol_issueds.sum(:quantity)
           @main_avtur_usage[Unit.where(id: depot_id).first.name]=avtur_issueds.sum(:quantity)
           @main_avcat_usage[Unit.where(id: depot_id).first.name]=avcat_issueds.sum(:quantity)
-          @sub_diesel_usage << diesel_issueds.group(:receiver).sum(:quantity)
-          @sub_petrol_usage << petrol_issueds.group(:receiver).sum(:quantity)
-          @sub_avtur_usage << avtur_issueds.group(:receiver).sum(:quantity)
-          @sub_avcat_usage << avcat_issueds.group(:receiver).sum(:quantity)
-          @sub_diesel_usage2=FuelIssued.where(depot_fuel_id: depot_fuels.map(&:id)).where(fuel_type: (FuelType.where(name: 'DIESEL'))).group(:receiver).sum(:quantity)
-          @sub_petrol_usage2=FuelIssued.where(depot_fuel_id: depot_fuels.map(&:id)).where(fuel_type: (FuelType.where(name: 'PETROL'))).group(:receiver).sum(:quantity)
-          @sub_avtur_usage2=FuelIssued.where(depot_fuel_id: depot_fuels.map(&:id)).where(fuel_type: (FuelType.where(name: 'AVTUR'))).group(:receiver).sum(:quantity)
-          @sub_avcat_usage2=FuelIssued.where(depot_fuel_id: depot_fuels.map(&:id)).where(fuel_type: (FuelType.where(name: 'AVCAT'))).group(:receiver).sum(:quantity)
+
+          #only records with 'receiving unit' data takes into account (Fuel Issued may be used as lump sump amount of Fuel Usage)
+          @sub_diesel_usage << diesel_issueds.where('unit_id is not null').group(:receiver).sum(:quantity)
+          @sub_petrol_usage << petrol_issueds.where('unit_id is not null').group(:receiver).sum(:quantity)
+          @sub_avtur_usage << avtur_issueds.where('unit_id is not null').group(:receiver).sum(:quantity)
+          @sub_avcat_usage << avcat_issueds.where('unit_id is not null').group(:receiver).sum(:quantity)
+          @sub_diesel_usage2=FuelIssued.where('unit_id is not null').where(depot_fuel_id: depot_fuels.map(&:id)).where(fuel_type: (FuelType.where(name: 'DIESEL'))).group(:receiver).sum(:quantity)
+          @sub_petrol_usage2=FuelIssued.where('unit_id is not null').where(depot_fuel_id: depot_fuels.map(&:id)).where(fuel_type: (FuelType.where(name: 'PETROL'))).group(:receiver).sum(:quantity)
+          @sub_avtur_usage2=FuelIssued.where('unit_id is not null').where(depot_fuel_id: depot_fuels.map(&:id)).where(fuel_type: (FuelType.where(name: 'AVTUR'))).group(:receiver).sum(:quantity)
+          @sub_avcat_usage2=FuelIssued.where('unit_id is not null').where(depot_fuel_id: depot_fuels.map(&:id)).where(fuel_type: (FuelType.where(name: 'AVCAT'))).group(:receiver).sum(:quantity)
+
           @depot_ids << depot_id
       end
       #USAGE section --- Unit Fuel only - start

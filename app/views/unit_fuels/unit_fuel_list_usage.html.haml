@@ -396,12 +396,15 @@
           = check_kin {number_with_precision(((external_supplieds.select {|p| p.fuel_type_id == 2 rescue false }).map(&:quantity).inject(:+)).to_f, :precision => 0)}
           litres
       - if @external_supply.count == 0
-        - @sources.each do |source|
-          %td{colspan: "3", style: "font-size:0.8em; padding-top:25px;"}
-            =Unit.where(id: source).first.name+" -  "
-            Petrol : 0.00 litres
-            &nbsp; | &nbsp;
-            Diesel : 0.00 litres
+        - if @sources.count > 0
+          - @sources.each do |source|
+            %td{colspan: "3", style: "font-size:0.8em; padding-top:25px;"}
+              =Unit.where(id: source).first.name.upcase+" -  "
+              Petrol : 0.00 litres
+              &nbsp; | &nbsp;
+              Diesel : 0.00 litres
+        - else
+          %td{colspan: "6", style: "font-size:0.8em; padding-top:25px;"}
     %tr
       %th No
       %th= t 'unit_fuels.unit_id'
@@ -457,12 +460,15 @@
           = check_kin {number_with_precision(((external_issueds.select {|p| p.fuel_type_id == 2 rescue false }).map(&:quantity).inject(:+)).to_f, :precision => 0)}
           litres
       - if @external_issue.count == 0
-        - @sources.each do |source|
-          %td{colspan: "3", style: "font-size:0.8em; padding-top:25px;"}
-            =Unit.where(id: source).first.name+" -  "
-            Petrol : 0.00 litres
-            &nbsp; | &nbsp;
-            Diesel : 0.00 litres
+        - if @sources.count > 0
+          - @sources.each do |source|
+            %td{colspan: "3", style: "font-size:0.8em; padding-top:25px;"}
+              =Unit.where(id: source).first.name.upcase+" -  "
+              Petrol : 0.00 litres
+              &nbsp; | &nbsp;
+              Diesel : 0.00 litres
+        - else
+          %td{colspan: "6", style: "font-size:0.8em; padding-top:25px;"}
     %tr
       %th No
       %th= t 'unit_fuels.unit_id'
