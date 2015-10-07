@@ -123,6 +123,8 @@ class UnitFuelsController < ApplicationController
     @external_supply=ExternalSupplied.joins(:unit_fuel).where( "unit_fuels.issue_date >= ? AND unit_fuels.issue_date <= ? ", @start_from, @end_on)
     @external_issue=ExternalIssued.joins(:unit_fuel).where( "unit_fuels.issue_date >= ? AND unit_fuels.issue_date <= ? ", @start_from, @end_on)
     @inden_usages=IndenUsage.joins(:unit_fuel).where( "unit_fuels.issue_date >= ? AND unit_fuels.issue_date <= ? ", @start_from, @end_on)
+    @other_fuels_type=AddFuel.where.not(fuel_type: FuelType.where('name LIKE (?) or name ILIKE (?) or name ILIKE (?)or name ILIKE (?)', 'AVTUR', 'AVCAT', 'PELINCIR', 'GRIS')).pluck(:fuel_type_id).compact.uniq
+    @sources=ExternalSupplied.all.sort_by{|x|x.resource.name}.reverse.map(&:source).compact.uniq
   end
   
   def fuel_type_usage_category

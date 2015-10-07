@@ -7,7 +7,7 @@ class Staff < ActiveRecord::Base
   belongs_to :unit, foreign_key: "unit_id"  
   belongs_to :position, :foreign_key => "position_id"
   belongs_to :expertise, :foreign_key => "expertise_id"
-  validates_presence_of :id_no, :name, :rank_id, :gender, :religion
+  validates_presence_of :id_no, :name, :rank_id, :gender, :religion, :unit_id
   validates_presence_of :position_id , :if => :rank_officer?
   validates_presence_of :expertise_id, :if => :rank_staff?
   has_one :user
