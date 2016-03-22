@@ -1,6 +1,6 @@
-class UsersController < ApplicationController  
+class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  filter_resource_access
+  #filter_resource_access
 
   def index
     @users = User.all
