@@ -1,7 +1,7 @@
 # config valid only for current version of Capistrano
 lock '3.5.0'
 
-set :application, 'uniformity'
+set :application, 'octane'
 set :scm, :git
 set :repo_url, 'git@github.com:maxcobmara/octane.git'
 set :scm_passphrase, ""
