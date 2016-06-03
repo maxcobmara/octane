@@ -45,14 +45,14 @@ set :keep_releases, 5
 set :stages, ["staging", "production"]
 
 set :rvm_type, :user                     # Defaults to: :auto
-set :rvm_ruby_version, '2.2.1@octane --create'      # Defaults to: 'default'
+set :rvm_ruby_version, '2.2.1@octane'      # Defaults to: 'default'
 set :rvm_custom_path, '/home/nurhashimah/.rvm/'  # only needed if not detected
 
 # set path to application
 shared_path = "/opt/app/octane/current/shared"
 
 namespace :deploy do
-  desc "Unicorn - load default var, mkdir & start unicorn service (uniformity)"
+  desc "Unicorn - load default var, mkdir & start unicorn service (octane)"
   task :run_unicorn_octane do
     invoke "load:defaults"
     invoke "unicorn:setup"
