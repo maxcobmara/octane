@@ -68,4 +68,9 @@ end
 
 group :production do
   gem 'rails_12factor', '0.0.2'
+  gem 'capistrano'
+  gem 'capistrano-rails', '~> 1.1'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rvm'
+  gem 'unicorn'
 end
