@@ -70,7 +70,11 @@
           %td=index+1
           %td= check_kin {depot_fuel.depot.unit_details}
           %td= check_kin {l(depot_fuel.issue_date)}
-          %td.right= bal_start=@last_prev_depot_fuel.fuel_balances.where(fuel_tank_id: tank_ids).sum(:current) if @last_prev_depot_fuel rescue 0
+          - if @last_prev_depot_fuel
+            - bal_start=@last_prev_depot_fuel.fuel_balances.where(fuel_tank_id: tank_ids).sum(:current)
+          - else
+            - bal_start=0
+          %td.right= bal_start
           %td.right= supplieds=depot_fuel.fuel_supplieds.where(fuel_type_id: ftype).sum(:quantity)
           %td.right= issueds=depot_fuel.fuel_issueds.where(fuel_type_id: ftype).sum(:quantity)
           %td.right= current=depot_fuel.fuel_balances.where(fuel_tank_id: tank_ids).sum(:current) 
