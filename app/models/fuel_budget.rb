@@ -26,6 +26,7 @@ class FuelBudget < ActiveRecord::Base
       fuel_usages_vehicles=usage_recs.where(id: fuelusages.map(&:id)).where(is_vehicle: true)
       fuel_vehicle_ids=fuel_usages_vehicles.pluck(:vehicle_id).compact.uniq
       sub_fuel_usage=[]
+      sub_diesel_usage=[]
       VehicleAssignment.all.each do |vas|   
         vehicles_own= vas.vehicle_assignment_details.pluck(:vehicle_id)
         usages_own=fuel_usages_vehicles.where(vehicle_id: vehicles_own)
