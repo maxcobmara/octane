@@ -19,15 +19,17 @@ class DepotFuel < ActiveRecord::Base
   
   def self.balance_before(depot_fuel)
     #depot_fuel = DepotFuel.find(depot_fuel_id)
-    @begin_last_month = depot_fuel.issue_date.last_month.at_beginning_of_month
-    @end_last_month = depot_fuel.issue_date.last_month.at_end_of_month
+    #@begin_last_month = depot_fuel.issue_date.last_month.at_beginning_of_month
+    #@end_last_month = depot_fuel.issue_date.last_month.at_end_of_month
     @current_unit = depot_fuel.unit_id
-    @prevmonth_depot_fuel=DepotFuel.where('unit_id=? AND issue_date >=? AND issue_date <=?', @current_unit, @begin_last_month, @end_last_month)
+    #@prevmonth_depot_fuel=DepotFuel.where('unit_id=? AND issue_date >=? AND issue_date <=?', @current_unit, @begin_last_month, @end_last_month)
+    @prevmonth_depot_fuel=DepotFuel.where( "issue_date < ? ", depot_fuel.issue_date).where(unit_id: depot_fuel.unit_id).order(issue_date: :asc).last
     @balance_before = []
     depot_fuel.depot.fuel_tanks.group_by(&:fuel_type_id).sort.each do |fuel_type, items|
         @tanks_by_type = depot_fuel.depot.fuel_tanks.where('fuel_type_id=?',fuel_type).pluck(:id)
-        if @prevmonth_depot_fuel.count!=0
-            @bal_of_tank = @prevmonth_depot_fuel[0].fuel_balances.where('fuel_tank_id IN (?)',@tanks_by_type).sum(:current) 
+        if @prevmonth_depot_fuel#.count!=0
+            #@bal_of_tank = @prevmonth_depot_fuel[0].fuel_balances.where('fuel_tank_id IN (?)',@tanks_by_type).sum(:current) 
+            @bal_of_tank = @prevmonth_depot_fuel.fuel_balances.where('fuel_tank_id IN (?)',@tanks_by_type).sum(:current) 
             @balance_before << @bal_of_tank if @bal_of_tank!=0
         else
             @balance_before << 0

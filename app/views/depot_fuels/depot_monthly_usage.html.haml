@@ -63,15 +63,18 @@
         %th= t 'fuel_balances.current'
         %th= t 'depot_fuels.usage_average'
     %tbody
-      - @monthly_usage.sort_by{|x|x.issue_date}.each_with_index do |depot_fuel, index|
+      - @monthly_usage.sort_by{|x|[x.unit_id, x.issue_date]}.each_with_index do |depot_fuel, index|
         - tank_ids=FuelTank.where(fuel_type_id: ftype).where(unit_id: depot_fuel.unit_id).pluck(:id)
         - days_count=Time.days_in_month(Date.today.month, Date.today.year)
         %tr
           %td=index+1
           %td= check_kin {depot_fuel.depot.unit_details}
           %td= check_kin {l(depot_fuel.issue_date)}
-          - if @last_prev_depot_fuel
-            - bal_start=@last_prev_depot_fuel.fuel_balances.where(fuel_tank_id: tank_ids).sum(:current)
+          - last_prev_depot_fuel=DepotFuel.where( "issue_date < ? ", depot_fuel.issue_date).where(unit_id: depot_fuel.unit_id).last
+          /- if @last_prev_depot_fuel
+          - if last_prev_depot_fuel
+            /- bal_start=@last_prev_depot_fuel.fuel_balances.where(fuel_tank_id: tank_ids).sum(:current)
+            - bal_start=last_prev_depot_fuel.fuel_balances.where(fuel_tank_id: tank_ids).sum(:current)
           - else
             - bal_start=0
           %td.right= bal_start
