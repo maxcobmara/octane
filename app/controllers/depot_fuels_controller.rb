@@ -101,7 +101,7 @@ class DepotFuelsController < ApplicationController
       @end_on = (Date.today.end_of_day).strftime('%Y-%m-%d')
     end
     @monthly_usage =DepotFuel.where('issue_date >=? and issue_date <=?', @start_from, @end_on)
-    @last_prev_depot_fuel = DepotFuel.where( "issue_date < ? ", @start_from).last
+    #@last_prev_depot_fuel = DepotFuel.where( "issue_date < ? ", @start_from).last
   end
   
   def import_excel
