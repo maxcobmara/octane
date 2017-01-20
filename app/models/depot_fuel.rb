@@ -127,7 +127,7 @@ class DepotFuel < ActiveRecord::Base
 			next_month = begin_month+1.month
 			end_day = 31 if (excel_month == 1)||(excel_month == 3)||(excel_month == 5)||(excel_month == 7)||(excel_month == 8)||(excel_month == 10)||(excel_month == 12)
 			end_day = 28 if (excel_month == 2)
-			end_day = 30 if (excel_month == 4)||(excel_month == 6)||(excel_month == 8)||(excel_month == 11)
+			end_day = 30 if (excel_month == 4)||(excel_month == 6)||(excel_month == 9)||(excel_month == 11)
 			
 			header = spreadsheet.row(10) 
 			(11..spreadsheet.last_row).each do |i|
