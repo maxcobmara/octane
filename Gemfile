@@ -58,6 +58,7 @@ group :development, :test do
   gem 'byebug'
   gem 'web-console', '~> 2.0'
   #gem 'spring'
+  gem 'seed_dump', '~> 3.3', '>= 3.3.1'
 end
 
 group :test do
