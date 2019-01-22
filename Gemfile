@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.1'
+gem 'rails', '4.2.11'
 # Use sqlite3 as the database for Active Record
 #Operational Gems
 gem 'pg',             '~> 0.17.1'
