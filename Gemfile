@@ -11,8 +11,8 @@ gem 'ransack',        '~> 1.6.6'
 gem 'chartkick',      '~> 1.3.2'
 gem 'groupdate',      '~> 2.4.0'
 gem 'declarative_authorization', git: 'https://github.com/stffn/declarative_authorization.git' #'~> 0.5.7'
-gem 'roo'
-gem 'roo-xls'
+gem 'roo',            '~> 2.3.2'
+gem 'roo-xls',        '~> 1.1.0'
 
 #Display Gems
 gem 'sass',         '~> 3.4.13'
@@ -24,8 +24,8 @@ gem 'uglifier',     '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails', '~> 4.0.3'
 gem 'jquery-ui-rails', '~> 5.0.3'
-gem 'haml',         '~> 4.0.6'
-gem 'haml-rails',   '~> 0.9.0'
+gem 'haml',         '~> 5.0.4'
+gem 'haml-rails',   '~> 1.0.0'
 gem "kaminari",     "~> 0.16.3"
 gem "bootstrap-kaminari-views", "~> 0.0.3"
 gem 'font-awesome-rails', '~> 4.3.0'
