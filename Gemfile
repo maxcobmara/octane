@@ -17,7 +17,7 @@ gem 'roo-xls',        '~> 1.1.0'
 #Display Gems
 gem 'sass',         '~> 3.4.13'
 gem 'sass-rails',   '~> 5.0'
-gem 'bootstrap-sass','~> 3.2.0.0'
+gem 'bootstrap-sass','~> 3.2.0.4'
 gem 'bootstrap-select-rails', '~> 1.6.3'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier',     '>= 1.3.0'
