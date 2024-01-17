@@ -3,7 +3,8 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.11'
 # Use sqlite3 as the database for Active Record
 #Operational Gems
-gem 'pg',             '~> 0.17.1'
+#gem 'pg',             '~> 0.17.1'. <-- pg unable to install use sqllite instead
+gem 'sqlite3',         '~> 1.3.13'
 gem 'thin',           '~> 1.6.3'
 gem 'devise',         '~> 3.5.1'
 gem 'ancestry',       '~> 2.1.0'
@@ -55,7 +56,7 @@ gem 'quiet_assets', '~> 1.1.0'
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
-  gem 'byebug'
+  #gem 'byebug'
   gem 'web-console', '~> 2.1.3'
   #gem 'spring'
   gem 'seed_dump', '~> 3.3', '>= 3.3.1'
@@ -69,9 +70,9 @@ end
 
 group :production do
   gem 'rails_12factor', '0.0.2'
-  gem 'capistrano'
-  gem 'capistrano-rails', '~> 1.1'
-  gem 'capistrano-bundler'
-  gem 'capistrano-rvm'
-  gem 'unicorn'
+  #gem 'capistrano'
+  #gem 'capistrano-rails', '~> 1.1'
+  #gem 'capistrano-bundler'
+  #gem 'capistrano-rvm'
+  #gem 'unicorn'
 end
