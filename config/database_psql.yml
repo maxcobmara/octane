@@ -1,0 +1,16 @@
+default: &default
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
+  port: 5432
+  adapter: postgresql
+  
+development:
+  <<: *default
+  #adapter: sqlite3
+  #database: db/navy_db_development.sqlite3
+  database: navy_db_development
+  username: postgres
+  password: YMN21
+  
+  #set sqlite as development until all upgrade to rails 5.
+  #note no models, need to make rails app as rails engine.
