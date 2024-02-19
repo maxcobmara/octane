@@ -1,39 +1,42 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.11'
+gem 'rails', '~> 5.0.7.2'
 # Use sqlite3 as the database for Active Record
 #Operational Gems
 #gem 'pg',             '~> 0.17.1'. <-- pg unable to install use sqllite instead
 gem 'sqlite3',         '~> 1.3.13'
 gem 'thin',           '~> 1.8rstart.0'
-gem 'devise',         '~> 3.5.1'
-gem 'ancestry',       '~> 2.1.0'
-gem 'ransack',        '~> 1.6.6'
+gem 'devise',         '~> 4.0.0'
+gem 'ancestry',       '~> 3.2.1'
+gem 'ransack',        '~> 2.0.0'
 gem 'chartkick',      '~> 1.3.2'
-gem 'groupdate',      '~> 2.4.0'
-gem 'declarative_authorization', git: 'https://github.com/stffn/declarative_authorization.git' #'~> 0.5.7'
-gem 'roo',            '~> 2.3.2'
-gem 'roo-xls',        '~> 1.2.0'
+gem 'groupdate',      '~> 3.0.0'
+#gem 'declarative_authorization', git: 'https://github.com/stffn/declarative_authorization.git' #'~> 0.5.7'
+gem 'authoreyes', '~> 0.2.0'
+#gem 'declarative_authorization', git: 'https://github.com/Xymist/declarative_authorization.git'
+gem 'roo',            '~> 2.5.0'
+#gem 'roo-xls',        '~> 1.2.0'<-- deprecated
 
 #Display Gems
-gem 'sass',         '~> 3.4.25'
-gem 'sass-rails',   '~> 5.0'
-gem 'bootstrap-sass','~> 3.2.0.4'
+gem 'sass',         '~> 3.5.0'
+gem 'sass-rails',   '~> 6.0.0'
+gem 'bootstrap-sass','~> 3.4.0'
 gem 'bootstrap-select-rails', '~> 1.6.3'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier',     '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
-gem 'jquery-rails', '~> 4.1.O'
-gem 'jquery-ui-rails', '~> 5.0.3'
-gem 'haml',         '~> 5.0.4'
-gem 'haml-rails',   '~> 1.0.0'
-gem "kaminari",     "~> 0.16.3"
-gem "bootstrap-kaminari-views", "~> 0.0.3"
-gem 'font-awesome-rails', '~> 4.3.0'
+gem 'jquery-rails', '~> 4.4.O'
+gem 'jquery-ui-rails', '~> 6.0.0' #--- deprecated?
+gem 'haml',         '~> 5.1.0'
+# 'haml-rails',   '~> 1.0.0'
+gem "kaminari",     "~> 1.2.0"
+#gem "bootstrap-kaminari-views", "~> 0.0.3" deprecated
+gem 'font-awesome-rails', '~> 4.5.0'
 
 #compatability
-gem 'bigdecimal', '1.3.0'
-gem 'loofah', '~>2.19.1'
+#gem 'bigdecimal', '1.3.0'
+gem 'loofah', '~> 2.9.0'
+gem 'nokogiri', '~> 1.10.0'
 
 
 
@@ -48,7 +51,7 @@ gem 'loofah', '~>2.19.1'
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
-gem 'quiet_assets', '~> 1.1.0'
+#gem 'quiet_assets', '~> 1.1.0' <-- deprecated
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -61,14 +64,14 @@ gem 'quiet_assets', '~> 1.1.0'
 
 group :development, :test do
   #gem 'byebug'
-  gem 'web-console', '~> 3.1.0'
+  gem 'web-console', '~> 3.4.0'
   #gem 'spring'
   gem 'seed_dump', '~> 3.3', '>= 3.3.1'
 end
 
 group :test do
   gem 'minitest-reporters', '1.0.5'
-  gem 'mini_backtrace',     '0.1.3'
+  #gem 'mini_backtrace',     '0.1.3'  deprecated
   gem 'guard-minitest',     '2.4.6'
 end
 
