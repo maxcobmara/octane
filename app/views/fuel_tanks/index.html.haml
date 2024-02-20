@@ -17,7 +17,7 @@
       %br
 
 .btn-group{"aria-label" => "sidebar", :role => "group", style: "float:right;"}
-  - permitted_to? :manage, :fuel_tanks do
+  - if can? :manage, :fuel_tanks
     .btn.btn-default= link_to content_tag(:i, fa_icon("asterisk", text: (t 'actions.new'))), new_fuel_tank_path
   .btn.btn-default= link_to content_tag(:i, fa_icon("search", text: (t 'actions.search'))), "#", class: "toga"
   .btn.btn-default= link_to(fa_icon("print", text: (t 'actions.print')), "javascript:print()")

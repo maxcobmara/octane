@@ -1,5 +1,5 @@
 class ExternalSuppliedsController < ApplicationController
-  filter_resource_access
+  load_and_authorize_resource
   before_action :set_external_supplied, only: [:show, :edit, :update, :destroy]
 
   # GET /external_supplieds

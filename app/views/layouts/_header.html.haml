@@ -19,7 +19,7 @@
     #bs-example-navbar-collapse-1.collapse.navbar-collapse
       %ul.nav.navbar-nav
         - if user_signed_in? && !current_user.roles.blank?
-          - can? :read, :unit_fuels do
+          - if can? :read, :unit_fuels
             %li.dropdown
               %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
                 Do
@@ -37,58 +37,58 @@
                 
                 /HACK - suppose require different account type - accessible to 'Depot Data Entry' & Admin only
                 - if (current_user.roles && current_user.roles[:user_roles][:administration]=="1") || Unit.is_depot.pluck(:id).include?(current_user.staff.unit_id)
-                  - can? :import_excel, :depot_fuels do
+                  - if can? :import_excel, :depot_fuels
                     %li= link_to content_tag(:li, fa_icon("file-excel-o", text: (t 'actions.import_excel'))), import_excel_depot_fuel_path
                     %li.divider
-                  - can? :read, :depot_fuels do
+                  - if can? :read, :depot_fuels
                     %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'menu.depot_fuels'), depot_fuels_path
-                  - can? :read, :fuel_supplieds do
+                  - if can? :read, :fuel_supplieds
                     %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'fuel_supplieds.title3'), fuel_supplieds_path
-                  - can? :read, :fuel_issueds do
+                  - if can? :read, :fuel_issueds
                     %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'fuel_issueds.title3'), fuel_issueds_path
                   %li.divider
 
-                - can? :read, :unit_fuels do
+                - if can? :read, :unit_fuels
                   %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'menu.unit_fuels'), unit_fuels_path
-                - can? :read, :add_fuels do
+                - if can? :read, :add_fuels
                   %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'add_fuels.title2'), add_fuels_path
-                - can? :read, :external_issueds do
+                - if can? :read, :external_issueds
                   %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'external_issueds.title'), external_issueds_path
-                - can? :read, :external_supplieds do
+                - if can? :read, :external_supplieds
                   %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'external_supplieds.title'), external_supplieds_path
-                - can? :read, :inden_usages do
+                - if can? :read, :inden_usages
                   %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'inden_usages.title'), inden_usages_path
                   %li.divider
-                - can? :read, :fuel_budgets do
+                - if can? :read, :fuel_budgets
                   %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'menu.fuel_budgets'), fuel_budgets_path
-                - can? :read, :fuel_limits do
+                - if can? :read, :fuel_limits
                   /HACK - suppose require different account type - accessible to 'Depot Data Entry' & Admin only
                   - if (current_user.roles && current_user.roles[:user_roles][:administration]=="1") || Unit.is_depot.pluck(:id).include?(current_user.staff.unit_id)
                     %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'menu.fuel_limits'), fuel_limits_path
-          - can? :read, :units do
+          - if can? :read, :units
             %li.dropdown
               %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
                 Manage
                 %span.caret
               %ul.dropdown-menu{:role => "menu"}
-                - can? :read, :units do
+                - if can? :read, :units
                   %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'units.list3'), units_path
                   %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'menu.depot_listing'), units_path(:id=>1)
-                - can? :read, :vessels do
+                - if can? :read, :vessels
                   %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'menu.vessel_listing'), vessels_path
-                - can? :read, :inden_cards do
+                - if can? :read, :inden_cards
                   %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'menu.inden_card_listing'), inden_cards_path
                   %li.divider
-                - can? :read, :fuel_types do
+                - if can? :read, :fuel_types
                   %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'fuel_types.title'), fuel_types_path
-                - can? :read, :unit_types do
+                - if can? :read, :unit_types
                   %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'unit_types.title'), unit_types_path
-                - can? :read, :vessels do
+                - if can? :read, :vessels
                   %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'menu.vessel_type'), vessel_types_path
-                - can? :read, :vessel_categories do
+                - if can? :read, :vessel_categories
                   %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'menu.vessel_category'), vessel_categories_path
                   %li.divider
-                - can? :read, :fuel_tanks do
+                - if can? :read, :fuel_tanks
                   %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'menu.fuel_tank_listing'), fuel_tanks_path
 
         %li.dropdown
@@ -110,21 +110,21 @@
             
             //%li= link_to (t 'menu.fuel_usage_by_vehicle_vessel'), vehicle_vessel_usage_fuel_transactions_path - this report use FUEL Transactions as source
             //%li= link_to (t 'menu.fuel_type_per_quarter'),  daily_usage_unit_fuels_path - same as 'unit fuel list usage' (Unit Fuel Usage Report), except this 1 not complete & has no date search
-            - can? :unit_fuel_usage, :unit_fuels do
+            - if can? :unit_fuel_usage, :unit_fuels
               %li= link_to (t 'menu.fuel_usage_graph_report'),      unit_fuel_usage_unit_fuels_path
-            - can? :unit_fuel_list_usage, :unit_fuels do
+            - if can? :unit_fuel_list_usage, :unit_fuels
               %li= link_to (t 'menu.fuel_usage_list_report'),      unit_fuel_list_usage_unit_fuels_path
-            - can? :annual_usage_report, :unit_fuels do
+            - if can? :annual_usage_report, :unit_fuels
               %li= link_to (t 'menu.annual_usage_report'),    annual_usage_report_unit_fuels_path
             %li.divider
-            - can? :annual_budget, :fuel_budgets do
+            - if can? :annual_budget, :fuel_budgets
               %li= link_to (t 'menu.annual_budget'), annual_budget_fuel_budgets_path
-            - can? :budget_vs_usage, :fuel_budgets do
+            - if can? :budget_vs_usage, :fuel_budgets
               %li= link_to (t 'menu.budget_usage_chart_report'),   budget_vs_usage_fuel_budgets_path
-            - can? :budget_vs_usage_list, :fuel_budgets do
+            - if can? :budget_vs_usage_list, :fuel_budgets
               %li= link_to ( t 'menu.budget_usage_chart_list'),   budget_vs_usage_list_fuel_budgets_path
             
-          - can? :read, :users do
+          - if can? :read, :users
             %li.dropdown
               %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
                 = (t 'menu.admin')

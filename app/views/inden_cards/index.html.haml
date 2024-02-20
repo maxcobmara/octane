@@ -4,7 +4,7 @@
   %h1= t 'inden_cards.title', :default => model_class.model_name.human.pluralize
 
 .btn-group{"aria-label" => "sidebar", :role => "group", style: "float:right;"}
-  - permitted_to? :create, :inden_cards do
+  - if can? :create, :inden_cards
     .btn.btn-default= link_to content_tag(:i, fa_icon("asterisk", text: (t 'actions.new'))), new_inden_card_path
   .btn.btn-default= link_to content_tag(:i, fa_icon("search", text: (t 'actions.search'))), "#", class: "toga"
   .btn.btn-default= link_to(fa_icon("print", text: (t 'actions.print')), "javascript:print()")

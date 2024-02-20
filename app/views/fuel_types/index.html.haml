@@ -7,7 +7,7 @@
 .row
   .col-md-1
     .btn-group-vertical{"aria-label" => "sidebar", :role => "group"}
-      - permitted_to? :create, :fuel_types do
+      - if can? :create, :fuel_types
         .btn.btn-default= link_to content_tag(:i, fa_icon("asterisk", text: (t 'actions.new'))), new_fuel_type_path, id: "add_new_type", remote: true
 
   .col-md-10.index_main
@@ -25,12 +25,12 @@
             %td= fuel_type.shortname
             %td= fuel_type.name
             %td
-              - permitted_to? :manage, :fuel_types do
+              - if can? :manage, :fuel_types
                 - if fuel_type.valid_for_removal==true
                   = link_to (fa_icon "trash-o"), fuel_type, method: :delete, data: { confirm: 'Are you sure?' }, remote: true
                 - else
                   *
-    - permitted_to? :manage, :fuel_types do      
+    - if can? :manage, :fuel_types 
       * Removal of record is prohibited as fuel type are still in use (Tank, Fuel Limit, Fuel Budget, Fuel Transaction
       \- In / Out, Other Fuel
       \- Unit, External Supplieds, External Issueds, Fuel Issued or Fuel Supplied)

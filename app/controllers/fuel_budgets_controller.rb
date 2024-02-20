@@ -1,5 +1,5 @@
 class FuelBudgetsController < ApplicationController
-  filter_access_to :all, :except => [:annual_budget, :budget_vs_usage, :budget_vs_usage_list]
+  load_and_authorize_resource except: [:annual_budget, :budget_vs_usage, :budget_vs_usage_list]
   before_action :set_fuel_budget, only: [:show, :edit, :update, :destroy]
 
   # GET /fuel_budgets

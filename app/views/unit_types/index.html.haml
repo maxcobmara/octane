@@ -6,7 +6,7 @@
 .row
   .col-md-1
     .btn-group-vertical{"aria-label" => "sideBar", :role => "group"}
-      - permitted_to? :create, :fuel_types do
+      - if can? :create, :fuel_types
         .btn.btn-default= link_to content_tag(:i, fa_icon("asterisk", text: (t 'actions.new'))), new_unit_type_path, id: "add_new_type", remote: true
   .col-md-10.index_main
     %table.table.table-condensed.table-hover#unit_type_list{:style => "width:60%;"}
@@ -23,12 +23,12 @@
             %td= unit_type.short_name
             %td= unit_type.description
             %td
-              - permitted_to? :manage, :fuel_types do
+              - if can? :manage, :fuel_types
                 - if unit_type.valid_for_removal==true
                   = link_to (fa_icon "trash-o"), unit_type, method: :delete, data: { confirm: 'Are you sure?' }, remote: true
                 - else
                   *
-    - permitted_to? :manage, :fuel_types do
+    - if can? :manage, :fuel_types
       * Removal of record is prohibited as unit type are still in use (Tank, Fuel Limit, Fuel Budget, Fuel Transaction
       \- In / Out, Other Fuel
       \- Unit, External Supplieds, External Issueds, Fuel Issued, Fuel Supplied or Storage Tank Balance)
