@@ -1,5 +1,5 @@
 class FuelIssuedsController < ApplicationController
-  filter_resource_access
+  load_and_authorize_resource
   before_action :set_fuel_issued, only: [:show, :edit, :update, :destroy]
 
   # GET /fuel_issueds
