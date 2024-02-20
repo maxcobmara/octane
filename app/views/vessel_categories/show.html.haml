@@ -18,7 +18,7 @@
   %dd
     .form-actions
       = link_to content_tag(:i, "", :class => "fa fa-arrow-left ") + " " + t('.back', :default => t("helpers.links.back")), vessel_categories_path, :class => 'btn btn-default'
-      - permitted_to? :manage, :vessel_categories do
+      - if can? :manage, :vessel_categories
         = link_to content_tag(:i, "", :class => "fa fa-edit") + " " + t('.edit', :default => t("helpers.links.edit")), |
           edit_vessel_category_path(@vessel_category), :class => 'btn btn-default'
         - if @vessel_category.valid_for_removal==true

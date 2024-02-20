@@ -146,9 +146,9 @@
 %br
 .form-actions
   .btn.btn-default= link_to content_tag(:i, "", class: "fa fa-arrow-left ") + " " + t('.back', :default => t("helpers.links.back")), depot_fuels_path
-  - permitted_to? :update, :depot_fuels do
+  - if can? :update, :depot_fuels
     .btn.btn-default= link_to content_tag(:i, "", class: "fa fa-edit") + " " + t('.edit', :default => t("helpers.links.edit")), edit_depot_fuel_path(@depot_fuel)
-  - permitted_to? :delete, :depot_fuels do
+  - if can? :delete, :depot_fuels
     = link_to content_tag(:i, "", :class => "fa fa-trash-o icon-white") + " " + t('.destroy', :default => t("helpers.links.destroy")), |
       depot_fuel_path(@depot_fuel),                                                                                                    |
       :method => 'delete',                                                                                                           |

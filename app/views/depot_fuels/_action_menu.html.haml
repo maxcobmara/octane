@@ -3,22 +3,22 @@
   %button.btn.dropdown-toggle{"data-toggle" => "dropdown"}
    .span.caret
   %ul.dropdown-menu.pull-right.action_menu
-   - permitted_to? :create, :fuel_supplieds do
+   - if can? :create, :fuel_supplieds
     /HACK - suppose require different account type - accessible to 'Depot Data Entry' & Admin only
     - if (current_user.roles && current_user.roles[:user_roles][:administration]=="1") || Unit.is_depot.pluck(:id).include?(current_user.staff.unit_id)
      %li= link_to content_tag(:li, fa_icon("plus", text: t('fuel_supplieds.new_supplied'))), new_fuel_supplied_path(:depot_fuel_id => depot_fuel)
-   - permitted_to? :create, :fuel_issueds do
+   - if can? :create, :fuel_issueds
     /HACK - suppose require different account type - accessible to 'Depot Data Entry' & Admin only
     - if (current_user.roles && current_user.roles[:user_roles][:administration]=="1") || Unit.is_depot.pluck(:id).include?(current_user.staff.unit_id)
      %li= link_to content_tag(:li, fa_icon("minus", text: t('fuel_issueds.new_issued'))), new_fuel_issued_path(:depot_fuel_id => depot_fuel)
-   - permitted_to? :create, :fuel_balances do
+   - if can? :create, :fuel_balances
     /HACK - suppose require different account type - accessible to 'Depot Data Entry' & Admin only
     - if (current_user.roles && current_user.roles[:user_roles][:administration]=="1") || Unit.is_depot.pluck(:id).include?(current_user.staff.unit_id)
      %li= link_to content_tag(:li, fa_icon("tint", text: t('fuel_balances.new_balance'))), new_fuel_balance_path(:depot_fuel_id => depot_fuel)
    %li= link_to content_tag(:li, fa_icon("eye", text: (t 'actions.show'))), depot_fuel
-   - permitted_to? :update, :depot_fuels do
+   - if can? :update, :depot_fuels
     %li= link_to content_tag(:li, fa_icon("pencil", text: (t 'actions.edit'))), edit_depot_fuel_path(depot_fuel)
-   - permitted_to? :delete, :depot_fuels do
+   - if can? :delete, :depot_fuels
     %li.danger= link_to content_tag(:li, fa_icon("trash-o", text: (t 'actions.delete'))), depot_fuel_path(depot_fuel), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }
 
       

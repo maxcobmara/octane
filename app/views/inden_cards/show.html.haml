@@ -33,7 +33,7 @@
   %dd
     .form-actions
       = link_to content_tag(:i, "", :class => "fa fa-arrow-left ") + " " + t('.back', :default => t("helpers.links.back")), inden_cards_path, :class => 'btn btn-default'
-      - permitted_to? :manage, :inden_cards do
+      - if can? :manage, :inden_cards
         = link_to content_tag(:i, "", :class => "fa fa-edit") + " " + t('.edit', :default => t("helpers.links.edit")), |
           edit_inden_card_path(@inden_card), :class => 'btn btn-default'
         = link_to content_tag(:i, "", :class => "fa fa-trash-o icon-white") + " " + t('.destroy', :default => t("helpers.links.destroy")), |

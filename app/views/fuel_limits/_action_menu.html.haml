@@ -4,8 +4,8 @@
    .span.caret
   %ul.dropdown-menu.pull-right.action_menu
    %li= link_to content_tag(:li, fa_icon("eye", text: (t 'actions.show'))), fuel_limit
-   - permitted_to? :update, :fuel_limits do
+   - if can? :update, :fuel_limits
     %li= link_to content_tag(:li, fa_icon("pencil", text: (t 'actions.edit'))), edit_fuel_limit_path(fuel_limit)
-   - permitted_to? :delete, :fuel_limits do
+   - if can? :delete, :fuel_limits
     %li.danger= link_to content_tag(:li, fa_icon("trash-o", text: (t 'actions.delete'))), fuel_limit_path(fuel_limit), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }
       

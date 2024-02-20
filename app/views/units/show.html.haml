@@ -28,7 +28,7 @@
   - if Vessel.pluck(:unit_id).include?(@unit.id)
     .btn.btn-default= link_to content_tag(:i, "", class: "fa fa-arrow-left ") + " " + t('.back', :default => t("helpers.links.back_to_vessels")), vessels_path
   .btn.btn-default= link_to content_tag(:i, "", class: "fa fa-arrow-left ") + " " + t('.back', :default => t("helpers.links.back_to_units")), units_path
-  - permitted_to? :manage, :units do
+  - if can? :manage, :units
     .btn.btn-default= link_to content_tag(:i, "", class: "fa fa-edit") + " " + t('.edit', :default => t("helpers.links.edit")), edit_unit_path(@unit)
     = link_to content_tag(:i, " New Node", :class => "fa fa-leaf"), new_unit_path(:parent_id => @unit), :class => 'btn btn-info'
     - if Unit.is_depot.pluck(:id).include?(@unit.id)

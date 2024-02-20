@@ -21,7 +21,7 @@
   %dd
     .form-actions
       = link_to content_tag(:i, "", :class => "fa fa-arrow-left ") + " " + t('.back', :default => t("helpers.links.back")), vessels_path, :class => 'btn btn-default'
-      - permitted_to? :manage, :vessels do
+      - if can? :manage, :vessels
         = link_to content_tag(:i, "", :class => "fa fa-edit") + " " + t('.edit', :default => t("helpers.links.edit")), |
           edit_vessel_path(@vessel), :class => 'btn btn-default'
         = link_to content_tag(:i, "", :class => "fa fa-trash-o icon-white") + " " + t('.destroy', :default => t("helpers.links.destroy")), |

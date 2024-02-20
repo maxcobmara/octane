@@ -7,7 +7,7 @@
 .row
   .col-md-2
     .btn-group-vertical{"aria-label" => "sidebar", :role => "group"}
-      - permitted_to? :create, :depot_fuels do
+      - if can? :create, :depot_fuels
         /HACK - suppose require different account type - accessible to 'Depot Data Entry' & Admin only
         - if (current_user.roles && current_user.roles[:user_roles][:administration]=="1") || Unit.is_depot.pluck(:id).include?(current_user.staff.unit_id)
           .btn.btn-default= link_to content_tag(:i, fa_icon("asterisk", text: (t 'actions.new'))), new_depot_fuel_path

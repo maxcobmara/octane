@@ -26,7 +26,7 @@
 
 .form-actions
   .btn.btn-default= link_to content_tag(:i, "", :class => "fa fa-arrow-left ") + " " + t('.back', :default => t("helpers.links.back")), fuel_tanks_path
-  - permitted_to? :manage, :fuel_tanks do
+  - if can? :manage, :fuel_tanks
     .btn.btn-default= link_to content_tag(:i, "", :class => "fa fa-edit") + " " + t('.edit', :default => t("helpers.links.edit")), |
       edit_fuel_tank_path(@fuel_tank)
     = link_to content_tag(:i, "", :class => "fa fa-trash-o icon-white") + " " + t('.destroy', :default => t("helpers.links.destroy")), |
