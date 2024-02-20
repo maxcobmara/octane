@@ -1,7 +1,9 @@
 class DepotFuelsController < ApplicationController
   before_filter :set_depot_fuel, :only => [:show, :edit, :update, :destroy]
-  filter_access_to :index, :create, :import_excel, :attribute_check => false
-  filter_access_to :show, :edit, :update, :destroy, :attribute_check => true
+  
+  load_and_authorize_resource
+  #filter_access_to :index, :create, :import_excel, :attribute_check => false
+  #filter_access_to :show, :edit, :update, :destroy, :attribute_check => true.  e.g. DepotFuel.accessible_by(current_ability)
   
   # GET /depot_fuels
   # GET /depot_fuels.json

@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
     tank_capacity_chart_fuel_tanks_path
   end
 
-  before_filter { |c| Authorization.current_user = c.current_user }
+  #before_filter { |c| Authorization.current_user = c.current_user }
   def permission_denied
     flash[:danger] = "Sorry, you are not allowed to access that page.";
     redirect_to root_url

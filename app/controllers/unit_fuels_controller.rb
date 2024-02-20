@@ -1,5 +1,6 @@
 class UnitFuelsController < ApplicationController
-  filter_access_to :all, :except => [:fuel_type_usage_category, :unit_fuel_usage, :unit_fuel_list_usage, :annual_usage_report]
+  load_and_authorize_resource except: [:fuel_type_usage_category, :unit_fuel_usage, :unit_fuel_list_usage, :annual_usage_report]
+  #filter_access_to :all, :except => [:fuel_type_usage_category, :unit_fuel_usage, :unit_fuel_list_usage, :annual_usage_report]
   before_action :set_unit_fuel, only: [:show, :edit, :update, :destroy]
 
   # GET /unit_fuels

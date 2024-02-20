@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 5.0.7.2'
+gem 'rails', '~> 5.0.7.2'   #March 29, 2018
 # Use sqlite3 as the database for Active Record
 #Operational Gems
 #gem 'pg',             '~> 0.17.1'. <-- pg unable to install use sqllite instead
@@ -12,8 +12,11 @@ gem 'ransack',        '~> 2.0.0'
 gem 'chartkick',      '~> 1.3.2'
 gem 'groupdate',      '~> 3.0.0'
 #gem 'declarative_authorization', git: 'https://github.com/stffn/declarative_authorization.git' #'~> 0.5.7'
-gem 'authoreyes', '~> 0.2.0'
+gem 'authoreyes',   '~> 0.2.0'
 #gem 'declarative_authorization', git: 'https://github.com/Xymist/declarative_authorization.git'
+gem 'cancancan',    '~> 2.2'
+
+
 gem 'roo',            '~> 2.5.0'
 #gem 'roo-xls',        '~> 1.2.0'<-- deprecated
 
@@ -27,7 +30,9 @@ gem 'uglifier',     '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails', '~> 4.4.O'
 gem 'jquery-ui-rails', '~> 6.0.0' #--- deprecated?
+
 gem 'haml',         '~> 5.1.0'
+gem 'slim',         '~> 4.0.0'   #<-- migrate haml to slim as you go
 # 'haml-rails',   '~> 1.0.0'
 gem "kaminari",     "~> 1.2.0"
 #gem "bootstrap-kaminari-views", "~> 0.0.3" deprecated
@@ -63,17 +68,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
-  #gem 'byebug'
   gem 'web-console', '~> 3.4.0'
-  #gem 'spring'
   gem 'seed_dump', '~> 3.3', '>= 3.3.1'
 end
 
-group :test do
-  gem 'minitest-reporters', '1.0.5'
-  #gem 'mini_backtrace',     '0.1.3'  deprecated
-  gem 'guard-minitest',     '2.4.6'
-end
 
 group :production do
   gem 'rails_12factor', '0.0.2'

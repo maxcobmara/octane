@@ -19,76 +19,76 @@
     #bs-example-navbar-collapse-1.collapse.navbar-collapse
       %ul.nav.navbar-nav
         - if user_signed_in? && !current_user.roles.blank?
-          - permitted_to? :read, :unit_fuels do
+          - can? :read, :unit_fuels do
             %li.dropdown
               %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
                 Do
                 %span.caret
               %ul.dropdown-menu{:role => "menu"}
-                - permitted_to? :create, :fuel_transactions do
+                - if can? :create, :fuel_transactions
                   /HACK - suppose require different account type - accessible to 'Depot Data Entry' & Admin only
                   - if (current_user.roles && current_user.roles[:user_roles][:administration]=="1") || Unit.is_depot.pluck(:id).include?(current_user.staff.unit_id)
                     %li= link_to "Add Fuel", new_fuel_transaction_path(transaction_type: 'Resupply')
                     %li= link_to "Use Fuel", new_fuel_transaction_path(transaction_type: 'Usage')
                     %li.divider
-                - permitted_to? :read, :fuel_transactions do
+                - if can? :read, :fuel_transactions
                   %li= link_to "Fuel Transactions", fuel_transactions_path
                   %li.divider
                 
                 /HACK - suppose require different account type - accessible to 'Depot Data Entry' & Admin only
                 - if (current_user.roles && current_user.roles[:user_roles][:administration]=="1") || Unit.is_depot.pluck(:id).include?(current_user.staff.unit_id)
-                  - permitted_to? :import_excel, :depot_fuels do
+                  - can? :import_excel, :depot_fuels do
                     %li= link_to content_tag(:li, fa_icon("file-excel-o", text: (t 'actions.import_excel'))), import_excel_depot_fuel_path
                     %li.divider
-                  - permitted_to? :read, :depot_fuels do
+                  - can? :read, :depot_fuels do
                     %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'menu.depot_fuels'), depot_fuels_path
-                  - permitted_to? :read, :fuel_supplieds do
+                  - can? :read, :fuel_supplieds do
                     %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'fuel_supplieds.title3'), fuel_supplieds_path
-                  - permitted_to? :read, :fuel_issueds do
+                  - can? :read, :fuel_issueds do
                     %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'fuel_issueds.title3'), fuel_issueds_path
                   %li.divider
 
-                - permitted_to? :read, :unit_fuels do
+                - can? :read, :unit_fuels do
                   %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'menu.unit_fuels'), unit_fuels_path
-                - permitted_to? :read, :add_fuels do
+                - can? :read, :add_fuels do
                   %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'add_fuels.title2'), add_fuels_path
-                - permitted_to? :read, :external_issueds do
+                - can? :read, :external_issueds do
                   %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'external_issueds.title'), external_issueds_path
-                - permitted_to? :read, :external_supplieds do
+                - can? :read, :external_supplieds do
                   %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'external_supplieds.title'), external_supplieds_path
-                - permitted_to? :read, :inden_usages do
+                - can? :read, :inden_usages do
                   %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'inden_usages.title'), inden_usages_path
                   %li.divider
-                - permitted_to? :read, :fuel_budgets do
+                - can? :read, :fuel_budgets do
                   %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'menu.fuel_budgets'), fuel_budgets_path
-                - permitted_to? :read, :fuel_limits do
+                - can? :read, :fuel_limits do
                   /HACK - suppose require different account type - accessible to 'Depot Data Entry' & Admin only
                   - if (current_user.roles && current_user.roles[:user_roles][:administration]=="1") || Unit.is_depot.pluck(:id).include?(current_user.staff.unit_id)
                     %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'menu.fuel_limits'), fuel_limits_path
-          - permitted_to? :read, :units do
+          - can? :read, :units do
             %li.dropdown
               %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
                 Manage
                 %span.caret
               %ul.dropdown-menu{:role => "menu"}
-                - permitted_to? :read, :units do
+                - can? :read, :units do
                   %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'units.list3'), units_path
                   %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'menu.depot_listing'), units_path(:id=>1)
-                - permitted_to? :read, :vessels do
+                - can? :read, :vessels do
                   %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'menu.vessel_listing'), vessels_path
-                - permitted_to? :read, :inden_cards do
+                - can? :read, :inden_cards do
                   %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'menu.inden_card_listing'), inden_cards_path
                   %li.divider
-                - permitted_to? :read, :fuel_types do
+                - can? :read, :fuel_types do
                   %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'fuel_types.title'), fuel_types_path
-                - permitted_to? :read, :unit_types do
+                - can? :read, :unit_types do
                   %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'unit_types.title'), unit_types_path
-                - permitted_to? :read, :vessels do
+                - can? :read, :vessels do
                   %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'menu.vessel_type'), vessel_types_path
-                - permitted_to? :read, :vessel_categories do
+                - can? :read, :vessel_categories do
                   %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'menu.vessel_category'), vessel_categories_path
                   %li.divider
-                - permitted_to? :read, :fuel_tanks do
+                - can? :read, :fuel_tanks do
                   %li= link_to content_tag(:i, "", :class => "icon-numb") + (t 'menu.fuel_tank_listing'), fuel_tanks_path
 
         %li.dropdown
@@ -96,35 +96,35 @@
             Reports
             %span.caret
           %ul.dropdown-menu{:role => "menu"}
-            - permitted_to? :tank_capacity_chart, :fuel_tanks do
+            - if can? :tank_capacity_chart, :fuel_tanks
               %li= link_to (t 'menu.tank_capacity_chart_report'),   tank_capacity_chart_fuel_tanks_path
-            - permitted_to? :tank_capacity_list, :fuel_tanks do 
+            - if can? :tank_capacity_list, :fuel_tanks
               %li= link_to (t 'menu.tank_capacity_list_report'),   tank_capacity_list_fuel_tanks_path
-            - permitted_to? :read, :fuel_balances do
+            - if can? :read, :fuel_balances
               %li= link_to (t 'menu.fuel_balances'), fuel_balances_path
-            - permitted_to? :read, :depot_fuels do
+            - if can? :read, :depot_fuels
               %li= link_to (t 'report.depot_fuel_usage'), depot_monthly_usage_depot_fuels_path
             %li.divider
-            - permitted_to? :fuel_type_usage_category, :unit_fuels do
+            - if can? :fuel_type_usage_category, :unit_fuels
               %li= link_to (t 'menu.fuel_usage_by_vehicle_vessel'), fuel_type_usage_category_unit_fuels_path
             
             //%li= link_to (t 'menu.fuel_usage_by_vehicle_vessel'), vehicle_vessel_usage_fuel_transactions_path - this report use FUEL Transactions as source
             //%li= link_to (t 'menu.fuel_type_per_quarter'),  daily_usage_unit_fuels_path - same as 'unit fuel list usage' (Unit Fuel Usage Report), except this 1 not complete & has no date search
-            - permitted_to? :unit_fuel_usage, :unit_fuels do
+            - can? :unit_fuel_usage, :unit_fuels do
               %li= link_to (t 'menu.fuel_usage_graph_report'),      unit_fuel_usage_unit_fuels_path
-            - permitted_to? :unit_fuel_list_usage, :unit_fuels do
+            - can? :unit_fuel_list_usage, :unit_fuels do
               %li= link_to (t 'menu.fuel_usage_list_report'),      unit_fuel_list_usage_unit_fuels_path
-            - permitted_to? :annual_usage_report, :unit_fuels do
+            - can? :annual_usage_report, :unit_fuels do
               %li= link_to (t 'menu.annual_usage_report'),    annual_usage_report_unit_fuels_path
             %li.divider
-            - permitted_to? :annual_budget, :fuel_budgets do
+            - can? :annual_budget, :fuel_budgets do
               %li= link_to (t 'menu.annual_budget'), annual_budget_fuel_budgets_path
-            - permitted_to? :budget_vs_usage, :fuel_budgets do
+            - can? :budget_vs_usage, :fuel_budgets do
               %li= link_to (t 'menu.budget_usage_chart_report'),   budget_vs_usage_fuel_budgets_path
-            - permitted_to? :budget_vs_usage_list, :fuel_budgets do
+            - can? :budget_vs_usage_list, :fuel_budgets do
               %li= link_to ( t 'menu.budget_usage_chart_list'),   budget_vs_usage_list_fuel_budgets_path
             
-          - permitted_to? :read, :users do
+          - can? :read, :users do
             %li.dropdown
               %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
                 = (t 'menu.admin')
