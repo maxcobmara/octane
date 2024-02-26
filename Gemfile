@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '5.2.3'   #March 29, 2018
+gem 'rails', '5.2.4'   #March 29, 2018
 # Use sqlite3 as the database for Active Record
 #Operational Gems
 #gem 'pg',             '~> 0.17.1'. <-- pg unable to install use sqllite instead
