@@ -12,7 +12,7 @@ gem 'ransack',        '~> 2.0.0'
 gem 'chartkick',      '~> 1.3.2'
 gem 'groupdate',      '~> 3.0.0'
 #gem 'declarative_authorization', git: 'https://github.com/stffn/declarative_authorization.git' #'~> 0.5.7'
-gem 'authoreyes',   '~> 0.2.0'
+#gem 'authoreyes',   '~> 0.2.0'
 #gem 'declarative_authorization', git: 'https://github.com/Xymist/declarative_authorization.git'
 gem 'cancancan',    '~> 2.2'
 
