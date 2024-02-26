@@ -1,5 +1,5 @@
 class DepotFuelsController < ApplicationController
-  before_filter :set_depot_fuel, :only => [:show, :edit, :update, :destroy]
+  before_action :set_depot_fuel, :only => [:show, :edit, :update, :destroy]
   
   load_and_authorize_resource
   #filter_access_to :index, :create, :import_excel, :attribute_check => false

@@ -1,13 +1,13 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 5.0.7.2'   #March 29, 2018
+gem 'rails', '5.1.7'   #March 29, 2018
 # Use sqlite3 as the database for Active Record
 #Operational Gems
 #gem 'pg',             '~> 0.17.1'. <-- pg unable to install use sqllite instead
 gem 'sqlite3',         '~> 1.3.13'
-gem 'thin',           '~> 1.8rstart.0'
-gem 'devise',         '~> 4.0.0'
-gem 'ancestry',       '~> 3.2.1'
+gem 'thin',           '~> 1.8.0'
+gem "devise",         "~> 4.3.0"
+gem "ancestry",       "~> 3.2.1"
 gem 'ransack',        '~> 2.0.0'
 gem 'chartkick',      '~> 1.3.2'
 gem 'groupdate',      '~> 3.0.0'
@@ -26,17 +26,17 @@ gem 'sass-rails',   '~> 6.0.0'
 gem 'bootstrap-sass','~> 3.4.0'
 gem 'bootstrap-select-rails', '~> 1.6.3'
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier',     '>= 1.3.0'
-gem 'coffee-rails', '~> 4.1.0'
+gem 'uglifier',     '~> 2.1.1'
+gem 'coffee-rails', '~> 4.2.0'
 gem 'jquery-rails', '~> 4.4.O'
-gem 'jquery-ui-rails', '~> 6.0.0' #--- deprecated?
+gem 'jquery-ui-rails', '~> 6.0.0'
 
 gem 'haml',         '~> 5.1.0'
 gem 'slim',         '~> 4.0.0'   #<-- migrate haml to slim as you go
 # 'haml-rails',   '~> 1.0.0'
 gem "kaminari",     "~> 1.2.0"
 #gem "bootstrap-kaminari-views", "~> 0.0.3" deprecated
-gem 'font-awesome-rails', '~> 4.5.0'
+gem 'font-awesome-rails', '~> 4.7.0'
 
 #compatability
 #gem 'bigdecimal', '1.3.0'
@@ -68,7 +68,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
-  gem 'web-console', '~> 3.4.0'
+  gem 'web-console', '~> 3.5.0'
   gem 'seed_dump', '~> 3.3', '>= 3.3.1'
 end
 
