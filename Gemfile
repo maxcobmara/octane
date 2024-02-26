@@ -1,14 +1,14 @@
 source 'https://rubygems.org'
 
-gem 'rails', '5.1.7'   #March 29, 2018
+gem 'rails', '5.2.3'   #March 29, 2018
 # Use sqlite3 as the database for Active Record
 #Operational Gems
 #gem 'pg',             '~> 0.17.1'. <-- pg unable to install use sqllite instead
 gem 'sqlite3',         '~> 1.3.13'
 gem 'thin',           '~> 1.8.0'
-gem "devise",         "~> 4.3.0"
+gem "devise",         "~> 4.4.0"
 gem "ancestry",       "~> 3.2.1"
-gem 'ransack',        '~> 2.0.0'
+gem 'ransack',        '~> 2.1.0'
 gem 'chartkick',      '~> 1.3.2'
 gem 'groupdate',      '~> 3.0.0'
 #gem 'declarative_authorization', git: 'https://github.com/stffn/declarative_authorization.git' #'~> 0.5.7'
