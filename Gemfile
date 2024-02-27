@@ -9,7 +9,7 @@ gem 'thin',           '~> 1.8.0'
 gem "devise",         "~> 4.4.0"
 gem "ancestry",       "~> 3.2.1"
 gem 'ransack',        '~> 2.1.0'
-gem 'chartkick',      '~> 1.3.2'
+gem 'chartkick',      '~> 3.4.2'
 gem 'groupdate',      '~> 3.0.0'
 #gem 'declarative_authorization', git: 'https://github.com/stffn/declarative_authorization.git' #'~> 0.5.7'
 #gem 'authoreyes',   '~> 0.2.0'

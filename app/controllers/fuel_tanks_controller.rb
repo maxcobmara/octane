@@ -90,11 +90,11 @@ class FuelTanksController < ApplicationController
     @avtur  = @capacity.where(fuel_type: (FuelType.where(name: 'AVTUR'))).group(:unit).sum(:capacity)
     @avcat =  @capacity.where(fuel_type: (FuelType.where(name: 'AVCAT'))).group(:unit).sum(:capacity)
 
-    @fuel_tanks = FuelTank.where("capacity > ?", 0).order(fuel_type_id: :asc).all
+    @fuel_tanks = FuelTank.where("capacity > ?", 0).order(fuel_type_id: :asc).includes([:unit])
   end
 
   def tank_capacity_list
-    @fuel_tanks = FuelTank.where("capacity > ?", 0).order(fuel_type_id: :asc).all
+    @fuel_tanks = FuelTank.where("capacity > ?", 0).includes([:unit, :fuel_type, :unittype]).order(fuel_type_id: :asc)
   end
 
   private
