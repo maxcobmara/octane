@@ -1,14 +1,14 @@
 source 'https://rubygems.org'
 
-gem 'rails', '5.2.5'   #March 29, 2018
+gem 'rails', '5.2.8.1'   #May 5, 2021
 # Use sqlite3 as the database for Active Record
 #Operational Gems
 #gem 'pg',             '~> 0.17.1'. <-- pg unable to install use sqllite instead
-gem 'sqlite3',         '~> 1.3.13'
+gem 'sqlite3',         '~> 1.4.4'
 gem 'thin',           '~> 1.8.0'
-gem "devise",         "~> 4.4.0"
+gem "devise",         "~> 4.5.0"
 gem "ancestry",       "~> 3.2.1"
-gem 'ransack',        '~> 2.1.0'
+gem 'ransack',        '~> 2.3.0'
 gem 'chartkick',      '~> 3.4.2'
 gem 'groupdate',      '~> 3.0.0'
 #gem 'declarative_authorization', git: 'https://github.com/stffn/declarative_authorization.git' #'~> 0.5.7'
@@ -21,18 +21,18 @@ gem 'roo',            '~> 2.5.0'
 #gem 'roo-xls',        '~> 1.2.0'<-- deprecated
 
 #Display Gems
-gem 'sass',         '~> 3.5.0'
-gem 'sass-rails',   '~> 6.0.0'
+#gem 'sass',         '~> 3.5.0' <-- deprecated
+#gem 'sass-rails',   '~> 6.0.0' <-- deprecated
 gem 'bootstrap-sass','~> 3.4.0'
 gem 'bootstrap-select-rails', '~> 1.6.3'
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier',     '~> 2.1.1'
-gem 'coffee-rails', '~> 4.2.0'
-gem 'jquery-rails', '~> 4.4.O'
-gem 'jquery-ui-rails', '~> 6.0.0'
+gem 'uglifier',     '~> 2.7.2'
+gem 'coffee-rails', '~> 5.0.0'
+#gem 'jquery-rails', '~> 4.4.O' <-- deprecated in 5.2.8.1
+#gem 'jquery-ui-rails', '~> 6.0.0' <deprecated
 
-gem 'haml',         '~> 5.1.0'
-gem 'slim',         '~> 4.0.0'   #<-- migrate haml to slim as you go
+gem 'haml',         '~> 5.2.0'
+gem 'slim',         '~> 4.1.0'   #<-- migrate haml to slim as you go
 # 'haml-rails',   '~> 1.0.0'
 gem "kaminari",     "~> 1.2.0"
 #gem "bootstrap-kaminari-views", "~> 0.0.3" deprecated
@@ -41,7 +41,8 @@ gem 'font-awesome-rails', '~> 4.7.0'
 #compatability
 #gem 'bigdecimal', '1.3.0'
 gem 'loofah', '~> 2.9.0'
-gem 'nokogiri', '~> 1.10.0'
+gem 'nokogiri', '~> 1.11.0'
+gem 'psych', '~> 3.3.0' 
 
 
 
@@ -55,7 +56,7 @@ gem 'nokogiri', '~> 1.10.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc', '~> 0.4.0', group: :doc
+gem 'sdoc', '~> 0.4.2', group: :doc
 #gem 'quiet_assets', '~> 1.1.0' <-- deprecated
 
 # Use ActiveModel has_secure_password
@@ -68,7 +69,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
-  gem 'web-console', '~> 3.5.0'
+  gem 'web-console', '~> 3.6.0'
   gem 'seed_dump', '~> 3.3', '>= 3.3.1'
   gem 'bullet', '~> 6.0'
 end
